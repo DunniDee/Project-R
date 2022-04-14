@@ -7,6 +7,7 @@ public class gs_GunController : MonoBehaviour
     public gs_GunData m_GunData;
     [Space]
 
+    Script_WeaponAnimatior m_Animator;
     AudioSource AS;
 
     [Header("Keybinds")]
@@ -39,7 +40,7 @@ public class gs_GunController : MonoBehaviour
     {
         FiringPoint = transform.GetChild(0);
         AS = gameObject.GetComponent<AudioSource>();
-
+        m_Animator = GetComponentInChildren<Script_WeaponAnimatior>();
         //Setting Gun Stats
         m_Damage = m_GunData.Damage;
         m_Ammo = m_GunData.AmmoCount;
@@ -118,6 +119,7 @@ public class gs_GunController : MonoBehaviour
     private IEnumerator Reload()
     {
         m_IsReloading = true;
+        m_Animator.Reload();
         yield return new WaitForSeconds(m_GunData.ReloadTime);
         m_IsReloading = false;
         m_Ammo = m_GunData.AmmoCount;
@@ -151,6 +153,7 @@ public class gs_GunController : MonoBehaviour
             break;
 
             case gs_Types.gs_ShotType.Projectile:
+            m_Animator.Shoot();
             for (int i = 0; i < m_ShotCount; i++)
             {
                 ShootProjectile();
