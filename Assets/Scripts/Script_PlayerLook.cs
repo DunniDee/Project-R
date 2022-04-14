@@ -13,12 +13,17 @@ public class Script_PlayerLook : MonoBehaviour
     [Header("Camera")]
     [SerializeField] private Transform CameraHolder;
     [SerializeField] private Transform CameraRotator;
+    bool hasLanded;
+    [SerializeField] private Transform CameraRecoiler;
     [SerializeField] private Transform CameraShaker;
     [SerializeField] private Camera MainCam;
+    [SerializeField] private Camera FPCam;
     [Space]
 
     [Header("Orientation")]
     [SerializeField] private Transform Orientation;
+
+    [SerializeField] private Quaternion RecoilRotation;
 
     Script_AdvancedMotor Motor;
 
@@ -30,6 +35,7 @@ public class Script_PlayerLook : MonoBehaviour
     float m_MouseY;
     float m_Multiplier = 0.01f;
 
+    //Tilt Variables
     float m_XRotation;
     float m_YRotation;
     float m_XCamRotation;
@@ -37,18 +43,24 @@ public class Script_PlayerLook : MonoBehaviour
 
     float m_HeadbobTimer = 0;
 
-    //CamShake
+    //Shake Variables
     float m_ShakeTime = 0;
     float m_ShakeLerp = 0;
     float m_ShakeAmplitude = 0;
     float m_CurShakeAmplitude = 0;
 
-    //Recoil
+    //Recoil Variables
     float m_SlerpSpeed = 0;
     float m_RecoilTime = 0;
     float m_RecoilLerp = 0;
     float m_RecoilAngle = 0;
     float m_CurRecoilAngle = 0;
+
+    //FOV Variables
+    float m_MinFov = 80;
+    float m_MaxFov = 90;
+    float m_CurFov = 80;
+    float m_FovAccel = 5;
 
 
     private void Start()
@@ -87,57 +99,54 @@ public class Script_PlayerLook : MonoBehaviour
 
         Debug.DrawLine(MainCam.transform.position, hit.point, Color.red);
 
-        tiltCam();
+
+        //Camera Effects
+        // Tilt();
         Shake();
         Recoil();
-        //mouse input
+        FOV();
+
+
+        //Camera Movement
         MoveCam();
     }
 
-    void tiltCam()
+    void Tilt()
     {
-        if(Motor.getRawDirection().sqrMagnitude != 0 && Motor.GetIsGrounded())
-        {
-            if (Motor.GetIsSprinting())
-            {
-                m_HeadbobTimer += Time.deltaTime  * 9;
-                CameraShaker.localPosition = new Vector3(0.025f * Mathf.Sin(m_HeadbobTimer),0.025f * Mathf.Sin(m_HeadbobTimer * 2) * Time.deltaTime,0);
-            }
-            else if (Motor.GetIsCrouching())
-            {
-                m_HeadbobTimer += Time.deltaTime  * 3;
-                CameraShaker.localPosition = new Vector3(0.025f * Mathf.Sin(m_HeadbobTimer),0.025f * Mathf.Sin(m_HeadbobTimer * 2) * Time.deltaTime,0); 
-            }
-            else
-            {
-                 m_HeadbobTimer += Time.deltaTime  * 6;
-               CameraShaker.localPosition = new Vector3(0.025f * Mathf.Sin(m_HeadbobTimer),0.025f * Mathf.Sin(m_HeadbobTimer * 2) * Time.deltaTime,0); 
-            }
-        }
-        else
-        {
-            CameraShaker.localPosition = Vector3.Lerp(MainCam.transform.localPosition, Vector3.zero, Time.deltaTime * 5);
-            m_HeadbobTimer = 0;
-        }
+        // if(Motor.getRawDirection().sqrMagnitude != 0 && Motor.GetIsGrounded())
+        // {
+        //     if (Motor.GetIsSprinting())
+        //     {
+        //         m_HeadbobTimer += Time.deltaTime  * 9;
+        //         CameraRotator.localRotation = Quaternion.Euler(0.25f * Mathf.Sin(m_HeadbobTimer * 2), 0.25f * Mathf.Sin(m_HeadbobTimer), 0);
+                
+        //         CameraRotator.localPosition = new Vector3(0.025f * Mathf.Sin(m_HeadbobTimer), 0.025f * Mathf.Sin(m_HeadbobTimer * 2), 0);
+        //     }
+        //     else if (Motor.GetIsCrouching())
+        //     {
+        //         m_HeadbobTimer += Time.deltaTime  * 3;
+        //         CameraRotator.localRotation =   Quaternion.Euler(0.1f * Mathf.Sin(m_HeadbobTimer * 2), 0.1f * Mathf.Sin(m_HeadbobTimer), 0); 
 
-        // m_XCamRotation = Mathf.Lerp(m_XCamRotation, Motor.getRawDirection().x, Time.deltaTime);
-        // m_YCamRotation = Mathf.Lerp(m_YCamRotation, Motor.getRawDirection().y, Time.deltaTime);
+        //         CameraRotator.localPosition = new Vector3(0.025f * Mathf.Sin(m_HeadbobTimer), 0.025f * Mathf.Sin(m_HeadbobTimer * 2), 0);
+        //     }
+        //     else
+        //     {
+        //         m_HeadbobTimer += Time.deltaTime  * 6;
+        //         CameraRotator.localRotation =   Quaternion.Euler(0.1f * Mathf.Sin(m_HeadbobTimer * 2), 0.1f * Mathf.Sin(m_HeadbobTimer), 0); 
 
-         //CameraRotator.localRotation = Quaternion.Euler(m_YCamRotation,0,-m_XCamRotation);
+        //         CameraRotator.localPosition = new Vector3(0.025f * Mathf.Sin(m_HeadbobTimer), 0.025f * Mathf.Sin(m_HeadbobTimer * 2), 0);
+        //     }
+        // }
+        // else
+        // {
+        //     CameraRotator.localRotation =  Quaternion.Slerp(CameraRotator.localRotation, Quaternion.Euler(Vector3.zero), Time.deltaTime * 5);
+        //     m_HeadbobTimer = 0;
+        // }
+
+
     }
 
-    void MoveCam()
-    {
-        if (Motor.GetIsCrouching())
-        {
-            CameraHolder.localPosition = new Vector3(0,Mathf.Lerp(CameraHolder.localPosition.y, 0.75f, Time.deltaTime * 3),0);
-        }
-        else
-        {
-            CameraHolder.localPosition = new Vector3(0,Mathf.Lerp(CameraHolder.localPosition.y, 1.75f, Time.deltaTime * 3),0);
-        }
-    }
-
+    // Set Camera Sake 
     public void SetShake(float Time, float Amplitude)
     {
         m_ShakeTime = Time;
@@ -157,14 +166,12 @@ public class Script_PlayerLook : MonoBehaviour
         }
     }
 
-    public void SetRecoil(float SlerpAcceleration,float Time,float XRot, Quaternion Rotation)
+    public void SetRecoil(float SlerpAcceleration,float Time, Quaternion Rotation)
     {
         m_SlerpSpeed = SlerpAcceleration;
         m_RecoilTime = Time;
         m_RecoilLerp = Time;
-        m_RecoilAngle = XRot;
-        
-        CameraRotator.localRotation = CameraRotator.localRotation * Rotation;
+        RecoilRotation = CameraRecoiler.localRotation * Rotation;
     }
 
     void Recoil()
@@ -174,9 +181,44 @@ public class Script_PlayerLook : MonoBehaviour
             m_RecoilTime -=Time.deltaTime;
 
             m_CurRecoilAngle = Mathf.Lerp(0,m_RecoilAngle, m_RecoilTime/m_RecoilLerp);
+
+            RecoilRotation = Quaternion.Slerp(Quaternion.Euler(Vector3.zero),RecoilRotation, m_RecoilTime/m_RecoilLerp);
         }
 
-        CameraRotator.localRotation = Quaternion.Slerp(CameraRotator.localRotation, Quaternion.Euler(-m_CurRecoilAngle,0,0), m_SlerpSpeed  * Time.deltaTime);
+        CameraRecoiler.localRotation = Quaternion.Slerp(CameraRecoiler.localRotation, RecoilRotation ,m_SlerpSpeed  * Time.deltaTime);
+    }
+
+    void MoveCam()
+    {
+        //Crouching
+        if (Motor.GetIsCrouching())
+        {
+            CameraHolder.localPosition = new Vector3(0,Mathf.Lerp(CameraHolder.localPosition.y, 0.75f, Time.deltaTime * 3),0);
+        }
+        else
+        {
+            CameraHolder.localPosition = new Vector3(0,Mathf.Lerp(CameraHolder.localPosition.y, 1.75f, Time.deltaTime * 3),0);
+        }
+    }
+
+    void FOV()
+    {
+        if (Motor.GetIsSprinting())
+        {
+            if (m_CurFov != m_MaxFov)
+            {
+                m_CurFov = Mathf.Lerp(m_CurFov,m_MaxFov,m_FovAccel * Time.deltaTime);    
+            }
+        }
+        else
+        {
+            if (m_CurFov != m_MinFov)
+            {
+                m_CurFov = Mathf.Lerp(m_CurFov,m_MinFov,m_FovAccel * Time.deltaTime);    
+            }
+        }
+
+        MainCam.fieldOfView = m_CurFov;
     }
 
     public Vector3 getAimPoint()

@@ -164,8 +164,8 @@ public class gs_GunController : MonoBehaviour
         m_Ammo--;
         AS.PlayOneShot(m_GunData.ShootSound);
 
-            Look.SetShake(0.25f, 0.15f);
-            Look.SetRecoil(3,0.5f,2,Quaternion.Euler(-0.25f,Random.Range(-0.25f,0.25f),0));
+            Look.SetShake(0.25f, 0.1f);
+            Look.SetRecoil(3,0.5f,Quaternion.Euler(Random.Range(-8,0),Random.Range(-4f,4f),0));
     }
 
     private void ShootHitscan() // Edit this Section for Hitscan Collisions
