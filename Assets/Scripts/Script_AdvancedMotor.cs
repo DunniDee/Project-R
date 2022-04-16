@@ -58,9 +58,9 @@ private float MoveSpeed = 0;
     {
         return RB;
     }
-    private bool OnSlope()
+    public bool OnSlope()
     {
-        if (Physics.Raycast(Orientation.position, Vector3.down, out m_SlopeHit, 1))
+        if (Physics.Raycast(Orientation.position, Vector3.down, out m_SlopeHit, 0.5f, GroundMask))
         {
             if (m_SlopeHit.normal != Vector3.up)
             {
@@ -219,7 +219,7 @@ private float MoveSpeed = 0;
             m_CapsuleCollider.center = new Vector3(0, Mathf.Lerp(m_CapsuleCollider.center.y, 0.5f, Time.deltaTime * 5),0);
 
             TempModel.localScale = new Vector3(1, Mathf.Lerp(  TempModel.localScale.y, 0.5f, Time.deltaTime * 5),1);
-            TempModel.localPosition = new Vector3(0, Mathf.Lerp(  TempModel.localPosition.y, -0.5f, Time.deltaTime * 5),0);
+            TempModel.localPosition = new Vector3(0, Mathf.Lerp(  TempModel.localPosition.y, 0.5f, Time.deltaTime * 5),0);
         }
         else
         {
@@ -227,7 +227,7 @@ private float MoveSpeed = 0;
             m_CapsuleCollider.center = new Vector3(0, Mathf.Lerp(m_CapsuleCollider.center.y, 1, Time.deltaTime * 5),0);
 
             TempModel.localScale = new Vector3(1, Mathf.Lerp(  TempModel.localScale.y, 1, Time.deltaTime * 5),1);
-            TempModel.localPosition = new Vector3(0, Mathf.Lerp(  TempModel.localPosition.y, 0, Time.deltaTime * 5),0);
+            TempModel.localPosition = new Vector3(0, Mathf.Lerp(  TempModel.localPosition.y, 1, Time.deltaTime * 5),0);
         }
     }
 

@@ -19,6 +19,13 @@ public class gs_GunController : MonoBehaviour
     [SerializeField] Transform FiringPoint;
     [SerializeField] Script_PlayerLook Look;
 
+    [SerializeField] float Recoil;
+    [SerializeField] float RecoilTime;
+    [SerializeField] float SlerpSpeed;
+    [SerializeField] float ShakeTime;
+    [SerializeField] float ShakeAmplitude;
+
+
     // Gun Variables
     public float m_Damage;
     public float m_Ammo;
@@ -153,7 +160,6 @@ public class gs_GunController : MonoBehaviour
             break;
 
             case gs_Types.gs_ShotType.Projectile:
-            m_Animator.Shoot();
             for (int i = 0; i < m_ShotCount; i++)
             {
                 ShootProjectile();
@@ -164,11 +170,12 @@ public class gs_GunController : MonoBehaviour
             Debug.LogError("Error with GunData.ShotType");
             break;
         }
-        m_Ammo--;
-        AS.PlayOneShot(m_GunData.ShootSound);
+            m_Ammo--;
+            AS.PlayOneShot(m_GunData.ShootSound);
+            m_Animator.Shoot();
 
-            Look.SetShake(0.25f, 0.1f);
-            Look.SetRecoil(3,0.5f,Quaternion.Euler(Random.Range(-8,0),Random.Range(-4f,4f),0));
+            Look.SetShake(ShakeTime, ShakeAmplitude);
+            Look.SetRecoil(SlerpSpeed,RecoilTime,Quaternion.Euler(Random.Range(-Recoil/2f, 0),Random.Range(-Recoil/2,Recoil/2),0));
     }
 
     private void ShootHitscan() // Edit this Section for Hitscan Collisions

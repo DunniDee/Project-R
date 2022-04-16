@@ -209,6 +209,7 @@ GameObject:
   m_Component:
   - component: {fileID: 416245862690685657}
   - component: {fileID: 416245862690685656}
+  - component: {fileID: 5439953371750613621}
   - component: {fileID: 416245862690685659}
   - component: {fileID: 416245862690685661}
   - component: {fileID: 9145481442927801832}
@@ -270,6 +271,18 @@ MonoBehaviour:
   m_IsGrounded: 0
   m_IsSprinting: 0
   m_IsCrouching: 0
+--- !u!114 &5439953371750613621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 416245862690685660}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0b1b1e10b987234292050b2dec108d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &416245862690685659
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -286,11 +299,13 @@ MonoBehaviour:
   SenseY: 75
   CameraHolder: {fileID: 416245863308716777}
   CameraRotator: {fileID: 1048393506165283870}
+  Gun: {fileID: 0}
   CameraRecoiler: {fileID: 8548495881754985811}
   CameraShaker: {fileID: 6674352633421862138}
   MainCam: {fileID: 9145481441785337169}
   FPCam: {fileID: 0}
   Orientation: {fileID: 416245862727353376}
+  RecoilRotation: {x: 0, y: 0, z: 0, w: 0}
   AimPoint: {x: 0, y: 0, z: 0}
 --- !u!54 &416245862690685661
 Rigidbody:

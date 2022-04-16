@@ -13,6 +13,7 @@ public class Script_PlayerLook : MonoBehaviour
     [Header("Camera")]
     [SerializeField] private Transform CameraHolder;
     [SerializeField] private Transform CameraRotator;
+    [SerializeField] private Transform Gun;
     bool hasLanded;
     [SerializeField] private Transform CameraRecoiler;
     [SerializeField] private Transform CameraShaker;
@@ -55,6 +56,9 @@ public class Script_PlayerLook : MonoBehaviour
     float m_RecoilLerp = 0;
     float m_RecoilAngle = 0;
     float m_CurRecoilAngle = 0;
+
+    //Sway Variables
+    float m_SwaySlerp = 5;
 
     //FOV Variables
     float m_MinFov = 80;
@@ -104,6 +108,7 @@ public class Script_PlayerLook : MonoBehaviour
         // Tilt();
         Shake();
         Recoil();
+        WeaponSway();
         FOV();
 
 
@@ -172,6 +177,7 @@ public class Script_PlayerLook : MonoBehaviour
         m_RecoilTime = Time;
         m_RecoilLerp = Time;
         RecoilRotation = CameraRecoiler.localRotation * Rotation;
+        RecoilRotation = Gun.localRotation * Rotation;
     }
 
     void Recoil()
@@ -186,6 +192,7 @@ public class Script_PlayerLook : MonoBehaviour
         }
 
         CameraRecoiler.localRotation = Quaternion.Slerp(CameraRecoiler.localRotation, RecoilRotation ,m_SlerpSpeed  * Time.deltaTime);
+        //Gun.localRotation = Quaternion.Slerp(Gun.localRotation, RecoilRotation ,m_SlerpSpeed * Time.deltaTime);
     }
 
     void MoveCam()
@@ -199,6 +206,19 @@ public class Script_PlayerLook : MonoBehaviour
         {
             CameraHolder.localPosition = new Vector3(0,Mathf.Lerp(CameraHolder.localPosition.y, 1.75f, Time.deltaTime * 3),0);
         }
+    }
+
+    public void SetWeaponSway(float speed)
+    {
+        m_SwaySlerp = speed;
+    }
+    void WeaponSway()
+    {
+        Quaternion RotX = Quaternion.AngleAxis(-m_MouseY, Vector3.right);
+        Quaternion RotY = Quaternion.AngleAxis(m_MouseX, Vector3.up);
+
+        Quaternion TargetRotation = RotX * RotY;
+        Gun.localRotation = Quaternion.Slerp(Gun.localRotation, TargetRotation,m_SwaySlerp * Time.deltaTime);
     }
 
     void FOV()

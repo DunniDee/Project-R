@@ -12,7 +12,7 @@ public class script_CamAnimator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Motor.GetIsGrounded())
+        if (Motor.GetIsGrounded() || Motor.OnSlope())
         {
             if (!m_HasLadned)
             {
