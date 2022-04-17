@@ -2076,7 +2076,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh114588
+  m_Name: pb_Mesh134936
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -5937,6 +5937,67 @@ MonoBehaviour:
   m_AreaLightEmissiveMeshShadowCastingMode: 0
   m_AreaLightEmissiveMeshMotionVectorGenerationMode: 0
   m_AreaLightEmissiveMeshLayer: -1
+--- !u!1 &2082249486 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 289960336273747030, guid: 9f24c08aa4561bf4c9334e3493489ec1,
+    type: 3}
+  m_PrefabInstance: {fileID: 9163610149664571130}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2082249489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2082249486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dce57007592540347a797623343eeed2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AbilityName: JetBoost
+  Icon: {fileID: 0}
+  Durration: 1
+  Cooldown: 3
+  AbilityKey: 113
+  Force: 1250
+--- !u!114 &2082249495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2082249486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af096bb4be2543a4e8e24a700f48e777, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AbilityName: Grenade
+  Icon: {fileID: 0}
+  Durration: 0
+  Cooldown: 1
+  AbilityKey: 324
+  Force: 15
+  Grenade: {fileID: 5738064772805965437, guid: b592337831ca14d4a9fd0b42aea6076a, type: 3}
+--- !u!114 &2082249496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2082249486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55d71e960b5a3f949a8cb87616a0bc9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AbilityName: Charge
+  Icon: {fileID: 0}
+  Durration: 5
+  Cooldown: 5
+  AbilityKey: 101
+  Force: 1000
 --- !u!1001 &9163610149664571130
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5944,6 +6005,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1010420573, guid: 9f24c08aa4561bf4c9334e3493489ec1, type: 3}
+      propertyPath: ScrollLeft
+      value: 49
+      objectReference: {fileID: 0}
+    - target: {fileID: 1010420573, guid: 9f24c08aa4561bf4c9334e3493489ec1, type: 3}
+      propertyPath: ScrollRight
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 289960336273747027, guid: 9f24c08aa4561bf4c9334e3493489ec1,
         type: 3}
       propertyPath: m_RootOrder
@@ -6004,5 +6073,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 585335874, guid: 9f24c08aa4561bf4c9334e3493489ec1, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 9f24c08aa4561bf4c9334e3493489ec1, type: 3}
