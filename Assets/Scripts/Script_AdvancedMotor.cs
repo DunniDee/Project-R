@@ -49,6 +49,7 @@ private float MoveSpeed = 0;
     [SerializeField] private bool m_IsSprinting = false;
     [SerializeField] private bool m_IsCrouching = false;
 
+
     private Vector3 m_MoveDirection;
     private Vector3 m_SlopeMoveDirection;
 
