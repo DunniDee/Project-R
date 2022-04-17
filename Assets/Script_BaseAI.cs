@@ -11,7 +11,7 @@ public class Script_BaseAI : MonoBehaviour
     public Rigidbody rigidBody;
     private Animator m_Animator;
     private Script_Ragdoll m_Ragdoll;
-
+    private Script_UIHealth m_UIHealth;
     
 
     [Header("AI Properties")]
@@ -51,25 +51,33 @@ public class Script_BaseAI : MonoBehaviour
         m_Ragdoll.ActivateRagdoll();
         m_Animator.enabled = false;
         Agent.enabled = false;
+        m_UIHealth.gameObject.SetActive(false);
     }
 
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
         m_Animator = GetComponentInChildren<Animator>();
         Agent = GetComponent<NavMeshAgent>();
         rigidBody = GetComponent<Rigidbody>();
         m_Ragdoll = GetComponent<Script_Ragdoll>();
-
+        m_UIHealth = GetComponentInChildren<Script_UIHealth>();
+        
         m_fHealth = maxHealth;
+
+        m_UIHealth.HealthSlider.maxValue = maxHealth;
+        m_UIHealth.HealthSlider.value = m_fHealth;
     }
 
+    void UpdateUIHealth(){
+        m_UIHealth.HealthSlider.value = m_fHealth;
+    }
     // Update is called once per frame
     void Update()
     {
         if(Agent.enabled){
             MoveTo(Player.position);
         }
-
+        UpdateUIHealth();
     }
 }

@@ -5,16 +5,18 @@ using UnityEngine;
 public class Script_Projectile : MonoBehaviour
 {
     public float Damage = 10f;
-
+    
     void RayCast(){
         RaycastHit hit;
-        if(Physics.Raycast(transform.position, transform.forward, out hit, 1f,LayerMask.NameToLayer("Enemy"))){
-            hit.collider.gameObject.GetComponent<CustomCollider>().TakeDamage(Damage, CustomCollider.DamageType.Critical);
-            
+        if(Physics.Raycast(transform.position, transform.forward, out hit, 1f)){
+            var hitCollider = hit.collider.gameObject.GetComponent<CustomCollider>();
+            hitCollider.TakeDamage(Damage, hitCollider.damageType);
+            Destroy(gameObject);
         }
     }
+    
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         RayCast();
     }
