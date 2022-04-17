@@ -7,38 +7,38 @@ using gs_Types;
 [CreateAssetMenuAttribute(fileName ="New Gun Data",menuName ="Gun Data")]
 public class gs_GunData : ScriptableObject
 {
-    [HideInInspector] public GameObject prefab;
-    [HideInInspector] public float Damage;
-    [HideInInspector] public float MaxDamage;
-    [HideInInspector] public float FireRate;
-    [HideInInspector] public float MaxFireRate;
-    [HideInInspector] public float RampUpTime;
-    [HideInInspector] public float ReloadTime;
-    [HideInInspector] public float AmmoCount;
-    [HideInInspector] public float SpreadAngle;
-    [HideInInspector] public float MinSpreadAngle;
-    [HideInInspector] public int ShotCount;
-    [HideInInspector] public int MaxShotCount;
-    [HideInInspector] public float Recoil;
-    [HideInInspector] public float BurstCount;
-    [HideInInspector] public float BurstDelay;
+    public GameObject prefab;
+    public float Damage;
+    public float MaxDamage;
+    public float FireRate;
+    public float MaxFireRate;
+    public float RampUpTime;
+    public float ReloadTime;
+    public float AmmoCount;
+    public float SpreadAngle;
+    public float MinSpreadAngle;
+    public int ShotCount;
+    public int MaxShotCount;
+    public float Recoil;
+    public float BurstCount;
+    public float BurstDelay;
 
-    [HideInInspector] public gs_TriggerType TriggerType;
-    [HideInInspector] public float ChargeTime;
+    public gs_TriggerType TriggerType;
+    public float ChargeTime;
 
-    [HideInInspector] public gs_ChargeType ChargeType;
-    [HideInInspector] public gs_ShotType ShotType;
+    public gs_ChargeType ChargeType;
+    public gs_ShotType ShotType;
 
-    [HideInInspector] public GameObject Projectile;
-    [HideInInspector] public float ProjectileForce;
-    [HideInInspector] public float MaxProjectileForce;
-    [HideInInspector] public float ProjectileLifetime;
+    public GameObject Projectile;
+    public float ProjectileForce;
+    public float MaxProjectileForce;
+    public float ProjectileLifetime;
 
-    [HideInInspector] public float ChargeProjectileForce;
-    [HideInInspector] public bool ApplyGravity;
+    public float ChargeProjectileForce;
+    public bool ApplyGravity;
 
-    [HideInInspector] public string Name;
+    public string Name;
 
-    [HideInInspector] public AudioClip ShootSound;
-    [HideInInspector] public AudioClip ReloadSound;
+    public AudioClip ShootSound;
+    public AudioClip ReloadSound;
 }
