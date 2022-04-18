@@ -1,0 +1,122 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public abstract class Script_WeaponBase : MonoBehaviour
+{
+    [Header("Gun Variables")]
+    [SerializeField] protected string GunName;
+    [SerializeField] protected Sprite Icon;
+    [SerializeField] protected KeyCode ShootKey = KeyCode.Mouse0;
+    [SerializeField] protected KeyCode ReloadKey = KeyCode.R;
+
+    [Space]
+
+    [Header("Shot Variables")]
+    [SerializeField] protected float FireRate;
+    [SerializeField] protected float SpreadAngle;
+     protected float ShotTimer;
+    [SerializeField] protected int ShotCount;
+
+    [Space]
+
+    [Header("Reload Variables")]
+    [SerializeField] protected int MagCount;
+    protected int CurMagCount;
+    [SerializeField] protected float ReloadTime;
+    protected float CurReloadTime;
+    protected bool IsReloading = false;
+
+    [Space]
+
+    [Header("Recoil Variables")]
+    [SerializeField] protected float Recoil; // angle to recoil by
+    [SerializeField] protected float RecoilTime; // time it takes to return to forward looking
+    [SerializeField] protected float SlerpSpeed; // speed it slerps to the specified recoil angle
+    [SerializeField] protected float ShakeTime; // time the screen shakes for
+    [SerializeField] protected float ShakeAmplitude; // amplitude of the screen shake
+
+    [Space]
+
+    [Header("Audio Clips")]
+    [SerializeField] protected AudioClip ShootSound; // angle to recoil by
+    [SerializeField] protected AudioClip ReloadSound; // angle to recoil by
+
+    [Space]
+
+    [Header("Shoot Position")]
+    [SerializeField] protected Transform FiringPoint; // where the bullets come out of
+
+    [Space]
+
+    [Header("Animation Variables")]
+    [SerializeField] protected Animator Anim;
+    protected int ShootHash;
+    protected int ReloadHash;
+    protected float m_zVelocity;
+    protected float m_xVelocity;
+    protected int zVelHash;
+    protected int xVelHash;
+
+    //Hidden Variables
+    protected Script_AdvancedMotor Motor;
+    protected Script_PlayerLook Look;
+    protected AudioSource AS;
+
+    protected virtual IEnumerator IE_Reload()
+    {
+        IsReloading = true;
+        yield return new WaitForSeconds(ReloadTime);
+        IsReloading = false;
+        CurMagCount = MagCount;
+    }
+
+    protected virtual void Shoot(){}
+    protected virtual void Reload()
+    {
+        if ((CurMagCount < 1 && ShotTimer < 1 && !IsReloading) ||
+            (CurMagCount < MagCount && ShotTimer < 1 && !IsReloading && Input.GetKey(ReloadKey)))
+        {
+            StartCoroutine(IE_Reload());
+            AS.PlayOneShot(ReloadSound);
+            Anim.SetTrigger(ReloadHash);
+        }
+    }
+
+    protected virtual void Initialize() // make sure to call initialise in the start of other sublcasses
+    {
+        Motor = gameObject.GetComponent<Script_AdvancedMotor>();
+        Look = gameObject.GetComponent<Script_PlayerLook>();
+        AS = gameObject.GetComponent<AudioSource>();
+
+        CurMagCount = MagCount;
+
+        ShootHash = Animator.StringToHash("Shoot");
+        ReloadHash = Animator.StringToHash("Reload");
+        zVelHash = Animator.StringToHash("zVelocity");
+        xVelHash = Animator.StringToHash("xVelocity");
+        
+    }
+
+    protected void Animate() // make sure to call in update
+    {
+        if (Motor.GetIsSprinting())
+        {
+            m_zVelocity = Mathf.Lerp(m_zVelocity,Motor.getRawDirection().y * 2, Time.deltaTime * 5);
+        }
+        else
+        {
+            m_zVelocity = Mathf.Lerp(m_zVelocity,Motor.getRawDirection().y, Time.deltaTime * 5);
+        }
+        m_xVelocity = Mathf.Lerp(m_xVelocity,Motor.getRawDirection().x, Time.deltaTime * 5);
+
+        Anim.SetFloat(zVelHash, m_zVelocity);
+        Anim.SetFloat(xVelHash, m_xVelocity);
+    }
+
+    protected void SetRecoil()
+    {
+        Look.SetShake(ShakeTime, ShakeAmplitude);
+        Look.SetRecoil(SlerpSpeed,RecoilTime,Quaternion.Euler(Random.Range(-Recoil, 0),Random.Range(-Recoil/2,Recoil/2),0));
+    }
+}

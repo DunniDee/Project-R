@@ -118,36 +118,6 @@ public class Script_PlayerLook : MonoBehaviour
 
     void Tilt()
     {
-        // if(Motor.getRawDirection().sqrMagnitude != 0 && Motor.GetIsGrounded())
-        // {
-        //     if (Motor.GetIsSprinting())
-        //     {
-        //         m_HeadbobTimer += Time.deltaTime  * 9;
-        //         CameraRotator.localRotation = Quaternion.Euler(0.25f * Mathf.Sin(m_HeadbobTimer * 2), 0.25f * Mathf.Sin(m_HeadbobTimer), 0);
-                
-        //         CameraRotator.localPosition = new Vector3(0.025f * Mathf.Sin(m_HeadbobTimer), 0.025f * Mathf.Sin(m_HeadbobTimer * 2), 0);
-        //     }
-        //     else if (Motor.GetIsCrouching())
-        //     {
-        //         m_HeadbobTimer += Time.deltaTime  * 3;
-        //         CameraRotator.localRotation =   Quaternion.Euler(0.1f * Mathf.Sin(m_HeadbobTimer * 2), 0.1f * Mathf.Sin(m_HeadbobTimer), 0); 
-
-        //         CameraRotator.localPosition = new Vector3(0.025f * Mathf.Sin(m_HeadbobTimer), 0.025f * Mathf.Sin(m_HeadbobTimer * 2), 0);
-        //     }
-        //     else
-        //     {
-        //         m_HeadbobTimer += Time.deltaTime  * 6;
-        //         CameraRotator.localRotation =   Quaternion.Euler(0.1f * Mathf.Sin(m_HeadbobTimer * 2), 0.1f * Mathf.Sin(m_HeadbobTimer), 0); 
-
-        //         CameraRotator.localPosition = new Vector3(0.025f * Mathf.Sin(m_HeadbobTimer), 0.025f * Mathf.Sin(m_HeadbobTimer * 2), 0);
-        //     }
-        // }
-        // else
-        // {
-        //     CameraRotator.localRotation =  Quaternion.Slerp(CameraRotator.localRotation, Quaternion.Euler(Vector3.zero), Time.deltaTime * 5);
-        //     m_HeadbobTimer = 0;
-        // }
-
 
     }
 
