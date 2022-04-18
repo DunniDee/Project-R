@@ -5,8 +5,8 @@ using UnityEngine;
 public class CustomCollider : MonoBehaviour
 {
     public enum DamageType {
-        Critical,
         Normal,
+        Critical,
     }
 
     public DamageType damageType;
