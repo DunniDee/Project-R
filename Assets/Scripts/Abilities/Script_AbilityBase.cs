@@ -1,14 +1,20 @@
-using System.Net.Mime;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Script_AbilityBase : MonoBehaviour
 {
-    [SerializeField] protected String AbilityName;
+    public enum AbilityType
+    {
+        Damage,
+        Utility,
+        Mobility,
+        Ultimate,
+    }
+
+    [SerializeField] protected string AbilityName;
     [SerializeField] protected Sprite Icon;
-    
+    [SerializeField] protected AbilityType CurAbilityType;
     [SerializeField] protected float Durration;
     protected float CurrentDurration;
    [SerializeField] protected float Cooldown;
@@ -18,7 +24,7 @@ public abstract class Script_AbilityBase : MonoBehaviour
 
     virtual protected void Update()
     {
-                //Activating Ability
+        //Activating Ability
         if (Input.GetKeyDown(AbilityKey) && CurrentCooldown <= 0)
         {
             OnAbilityStart();

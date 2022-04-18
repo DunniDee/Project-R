@@ -181,7 +181,7 @@ private float MoveSpeed = 0;
             }
         }
 
-        if (m_VerticalMovement > 0 && Input.GetKey(SprintKey) && !m_IsCrouching)
+        if (m_VerticalMovement > 0 && Input.GetKeyDown(SprintKey) && !m_IsCrouching || m_IsSprinting && m_VerticalMovement > 0)
         {
             m_IsSprinting = true;
         }
@@ -251,6 +251,11 @@ private float MoveSpeed = 0;
     public bool GetIsSprinting()
     {
         return m_IsSprinting;
+    }
+
+    public void SetIsSprinting(bool _input)
+    {
+        m_IsSprinting = _input;
     }
 
     public bool GetIsCrouching()
