@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapon_FullAutoProjectileWeapon : Script_ProjectileWeapon
+public class Weapon_SemiAutioProjectile : Script_ProjectileWeapon
 {
+    // Start is called before the first frame update
     private void Start()
     {
         Initialize();
@@ -19,7 +20,7 @@ public class Weapon_FullAutoProjectileWeapon : Script_ProjectileWeapon
             ShotTimer-= Time.deltaTime;
         }
 
-        if (Input.GetKey(ShootKey) && CurMagCount > 0 && ShotTimer <= 0 && !IsReloading)
+        if (Input.GetKeyDown(ShootKey) && CurMagCount > 0 && ShotTimer <= 0 && !IsReloading)
         {
             Shoot();
             Motor.SetIsSprinting(false);
@@ -27,6 +28,6 @@ public class Weapon_FullAutoProjectileWeapon : Script_ProjectileWeapon
 
         Reload();
 
-        Animate();
+        Animate(); 
     }
 }

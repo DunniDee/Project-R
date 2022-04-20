@@ -15,22 +15,25 @@ public class Script_ProjectileWeapon : Script_WeaponBase
 
     protected override void Shoot()
     {
-        for (int i = 0; i < ShotCount; i++)
+        if (CurMagCount > 0)
         {
-            Quaternion ProjectileSpread = FiringPoint.rotation * Quaternion.Euler(0, 0, Random.Range(0.0f, 360.0f)) * Quaternion.Euler(Random.Range(0.0f, SpreadAngle / 2), 0, 0);
+            for (int i = 0; i < ShotCount; i++)
+            {
+                Quaternion ProjectileSpread = FiringPoint.rotation * Quaternion.Euler(0, 0, Random.Range(0.0f, 360.0f)) * Quaternion.Euler(Random.Range(0.0f, SpreadAngle / 2), 0, 0);
 
-            GameObject Proj = Instantiate(Projectile, FiringPoint.position, ProjectileSpread);
-            Rigidbody RB = Proj.GetComponent<Rigidbody>();
-            RB.useGravity = ApplyGravity;
-            RB.AddForce(Proj.transform.forward * ProjectileForce, ForceMode.VelocityChange);
-            GameObject.Destroy(Proj, ProjectileLifetime);
+                GameObject Proj = Instantiate(Projectile, FiringPoint.position, ProjectileSpread);
+                Rigidbody RB = Proj.GetComponent<Rigidbody>();
+                RB.useGravity = ApplyGravity;
+                RB.AddForce(Proj.transform.forward * ProjectileForce, ForceMode.VelocityChange);
+                GameObject.Destroy(Proj, ProjectileLifetime);
+            }
+
+            SetRecoil();
+            AS.PlayOneShot(ShootSound);
+            Anim.SetTrigger(ShootHash);
+
+            CurMagCount--;
+            ShotTimer = FireRate;   
         }
-
-        SetRecoil();
-        AS.PlayOneShot(ShootSound);
-        Anim.SetTrigger(ShootHash);
-
-        CurMagCount--;
-        ShotTimer = FireRate;
     }
 }

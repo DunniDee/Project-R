@@ -172,6 +172,7 @@ private float MoveSpeed = 0;
         if (Input.GetKey(CrouchKey) && m_IsGrounded)
         {
             m_IsCrouching = true;
+            m_IsSprinting = false;
         }
         else
         {
