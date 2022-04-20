@@ -127,6 +127,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1161484414}
+  - {fileID: 1684428822}
+  - {fileID: 1320807747}
   m_Father: {fileID: 2471164139294075380}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2419,7 +2421,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1161484414
 Transform:
   m_ObjectHideFlags: 0
@@ -2868,7 +2870,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1320807747
 Transform:
   m_ObjectHideFlags: 0
@@ -2877,13 +2879,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1320807746}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.412, y: -0.20900011, z: 0.652}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1325820914}
   - {fileID: 1648951672}
-  m_Father: {fileID: 2471164139294075380}
-  m_RootOrder: 4
+  m_Father: {fileID: 149817098}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1325820913
 GameObject:
@@ -3647,13 +3649,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1684428821}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.412, y: -0.20900011, z: 0.652}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1810500452}
   - {fileID: 2050840647}
-  m_Father: {fileID: 2471164139294075380}
-  m_RootOrder: 3
+  m_Father: {fileID: 149817098}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1717975691
 GameObject:
@@ -4750,8 +4752,6 @@ Transform:
   - {fileID: 8875903834240277077}
   - {fileID: 554297436}
   - {fileID: 149817098}
-  - {fileID: 1684428822}
-  - {fileID: 1320807747}
   m_Father: {fileID: 597040710191315037}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4817,11 +4817,12 @@ GameObject:
   - component: {fileID: 8875903833702973399}
   - component: {fileID: 8875903833702973398}
   - component: {fileID: 8875903833702973397}
+  - component: {fileID: 135360480}
   - component: {fileID: 8875903833702973395}
   - component: {fileID: 1562396902}
   - component: {fileID: 135360479}
   - component: {fileID: 135360473}
-  - component: {fileID: 135360480}
+  - component: {fileID: 5452307563380339875}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -4904,6 +4905,20 @@ MonoBehaviour:
   Orientation: {fileID: 8875903833756416302}
   RecoilRotation: {x: 0, y: 0, z: 0, w: 0}
   AimPoint: {x: 0, y: 0, z: 0}
+--- !u!114 &135360480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8875903833702973394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19939127dec96614dbb6f84fd6c5a187, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Motor: {fileID: 8875903833702973398}
+  Rotator: {fileID: 1626640757}
 --- !u!54 &8875903833702973395
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5037,35 +5052,35 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8875903833702973394}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2e05b6566072c2c41aaeb3ff9959ea09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GunName: 
+  GunName: PlazmaRifle
   Icon: {fileID: 0}
   ShootKey: 323
   ReloadKey: 114
-  FireRate: 0.05
-  SpreadAngle: 2
+  FireRate: 0.1
+  SpreadAngle: 1
   ShotCount: 1
   MagCount: 32
   ReloadTime: 3
-  Recoil: 15
-  RecoilTime: 2
-  SlerpSpeed: 2
+  Recoil: 10
+  RecoilTime: 0.25
+  SlerpSpeed: 3
   ShakeTime: 0.5
   ShakeAmplitude: 0.25
-  ShootSound: {fileID: 8300000, guid: 3684f4a2b6b8bf2478a026a4dd4ead1d, type: 3}
+  ShootSound: {fileID: 8300000, guid: a3a089001884bc246bac6ee8eb4c2379, type: 3}
   ReloadSound: {fileID: 8300000, guid: df0b8e227d57b3c41b695b642366b62a, type: 3}
   FiringPoint: {fileID: 1810500452}
-  Anim: {fileID: 95992764300144346}
+  Anim: {fileID: 2058074021}
   Projectile: {fileID: 8627595607377944050, guid: dc75d4a92dd7eb84d912162b053e6aff,
     type: 3}
   ProjectileLifetime: 3
   ProjectileForce: 200
   ApplyGravity: 0
---- !u!114 &135360480
+--- !u!114 &5452307563380339875
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5074,11 +5089,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 8875903833702973394}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19939127dec96614dbb6f84fd6c5a187, type: 3}
+  m_Script: {fileID: 11500000, guid: dc66fac0bf2b0b54ebc0c23116e485f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Motor: {fileID: 8875903833702973398}
-  Rotator: {fileID: 1626640757}
+  GunName: 
+  Icon: {fileID: 0}
+  ShootKey: 323
+  ReloadKey: 114
+  FireRate: 1
+  SpreadAngle: 1
+  ShotCount: 1
+  MagCount: 12
+  ReloadTime: 2
+  Recoil: 5
+  RecoilTime: 1
+  SlerpSpeed: 2
+  ShakeTime: 1
+  ShakeAmplitude: 0.5
+  ShootSound: {fileID: 8300000, guid: 3b96e65b4072bef449372ad529a1de55, type: 3}
+  ReloadSound: {fileID: 8300000, guid: 91d7b5a1d504cb344afed969a0b3b649, type: 3}
+  FiringPoint: {fileID: 1325820914}
+  Anim: {fileID: 1648951673}
+  Projectile: {fileID: 8627595607377944050, guid: dc75d4a92dd7eb84d912162b053e6aff,
+    type: 3}
+  ProjectileLifetime: 3
+  ProjectileForce: 100
+  ApplyGravity: 0
 --- !u!1 &8875903833756416301
 GameObject:
   m_ObjectHideFlags: 0
@@ -5400,12 +5436,6 @@ PrefabInstance:
 --- !u!4 &4667303551976858 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4667303085788258, guid: c725aeaffe30d5643937d0d3663fb9a0,
-    type: 3}
-  m_PrefabInstance: {fileID: 1681558008}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &95992764300144346 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 95992765978289954, guid: c725aeaffe30d5643937d0d3663fb9a0,
     type: 3}
   m_PrefabInstance: {fileID: 1681558008}
   m_PrefabAsset: {fileID: 0}
@@ -5734,6 +5764,12 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 722687c0347391140bccf69d85faf9cc, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b35f09eda4fe2864c8571d659e5d86e8, type: 3}
+--- !u!95 &2058074021 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9500000, guid: b35f09eda4fe2864c8571d659e5d86e8,
+    type: 3}
+  m_PrefabInstance: {fileID: 2050704069}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2050840647 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400002, guid: b35f09eda4fe2864c8571d659e5d86e8,

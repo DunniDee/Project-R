@@ -98,7 +98,8 @@ public class Script_PlayerLook : MonoBehaviour
         }
         else
         {
-            AimPoint = MainCam.transform.forward * 1000;
+            AimPoint =  MainCam.transform.position + MainCam.transform.forward * 1000;
+
         }
 
         Debug.DrawLine(MainCam.transform.position, hit.point, Color.red);
@@ -182,13 +183,14 @@ public class Script_PlayerLook : MonoBehaviour
     {
         m_SwaySlerp = speed;
     }
+
     void WeaponSway()
     {
         Quaternion RotX = Quaternion.AngleAxis(-m_MouseY, Vector3.right);
         Quaternion RotY = Quaternion.AngleAxis(m_MouseX, Vector3.up);
 
         Quaternion TargetRotation = RotX * RotY;
-        Gun.localRotation = Quaternion.Slerp(Gun.localRotation, TargetRotation,m_SwaySlerp * Time.deltaTime);
+        Gun.localRotation = Quaternion.Slerp(Gun.localRotation, TargetRotation, m_SwaySlerp * Time.deltaTime);
     }
 
     void FOV()
