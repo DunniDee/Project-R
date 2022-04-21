@@ -1,16 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.AI.Navigation;
 
 public class Script_LevelManager : MonoBehaviour
 {
     [SerializeField] GameObject[] LevelSections;
+    [SerializeField] NavMeshSurface[] surfaces;
     // Start is called before the first frame update
     void Start()
     {
         Shuffle();
         Arrange();
-        SetStatic();
+        RebakeNavMesh();
     }
 
     void Shuffle()
@@ -47,14 +49,23 @@ public class Script_LevelManager : MonoBehaviour
         } 
     }
 
+    void RebakeNavMesh()
+    {
+        for (int i = 0; i < surfaces.Length; i++) 
+        {
+            surfaces [i].BuildNavMesh ();    
+        }   
+    }
+
+
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.P))
         {
             Shuffle();
             Arrange();
-            SetStatic();
+            RebakeNavMesh();
         }
     }
 }
