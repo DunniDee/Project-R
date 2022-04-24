@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Script_BaseAI : MonoBehaviour
+public class Script_BaseAI : MonoBehaviour, IDamageable
 {
     [Header("Internal Components")]
     public Transform Player;
@@ -37,7 +37,27 @@ public class Script_BaseAI : MonoBehaviour
         return m_Animator;
     }
 
-    public void TakeDamage(float _Damage, CustomCollider.DamageType _DamageType)
+    // public void TakeDamage(float _Damage, CustomCollider.DamageType _DamageType)
+    // {
+    //     if(StateMachine.currentStateID == AIStateID.Idle)
+    //     {
+    //         StateMachine.ChangeState(AIStateID.ChasePlayer);
+    //     }
+    //     switch(_DamageType){
+    //         case CustomCollider.DamageType.Critical:
+    //             m_Health -= _Damage * 2;
+    //             break;
+    //         case CustomCollider.DamageType.Normal:
+    //             m_Health -= _Damage;
+    //             break;
+    //     }
+    //     if (m_Health <= 0)
+    //     {
+    //         StateMachine.ChangeState(AIStateID.Death);
+    //     }
+    // }
+
+        public void Damage(float _Damage, CustomCollider.DamageType _DamageType)
     {
         if(StateMachine.currentStateID == AIStateID.Idle)
         {

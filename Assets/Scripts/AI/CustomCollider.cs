@@ -21,7 +21,7 @@ public class CustomCollider : MonoBehaviour
     }
 
     void Awake(){
-        takeDamageEvent += GetComponentInParent<Script_BaseAI>().TakeDamage;
+        takeDamageEvent += GetComponentInParent<IDamageable>().Damage;
         if(gameObject.tag == "Head"){
             damageType = DamageType.Critical;
         }

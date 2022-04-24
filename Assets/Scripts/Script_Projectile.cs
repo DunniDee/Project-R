@@ -8,17 +8,31 @@ public class Script_Projectile : MonoBehaviour
     
     void RayCast(){
         RaycastHit hit;
-        if(Physics.Raycast(transform.position, transform.forward, out hit, 1f)){
+        if(Physics.Raycast(transform.position, transform.forward, out hit, 5))
+        {
             var hitCollider = hit.collider.gameObject.GetComponent<CustomCollider>();
-            hitCollider.TakeDamage(Damage, hitCollider.damageType);
-            Destroy(gameObject);
+            if (hitCollider != null)
+            {
+                hitCollider.TakeDamage(Damage, hitCollider.damageType);
+                Destroy(gameObject);
+            }
         }
     }
     
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         RayCast();
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        var hitCollider = other.gameObject.GetComponent<CustomCollider>();
+        if (hitCollider != null)
+        {
+            hitCollider.TakeDamage(Damage, hitCollider.damageType);
+            Destroy(gameObject);
+        }
     }
 
     void OnDrawGizmos(){
