@@ -23,8 +23,11 @@ public class Script_ProjectileWeapon : Script_WeaponBase
 
                 GameObject Proj = Instantiate(Projectile, FiringPoint.position, ProjectileSpread);
                 Rigidbody RB = Proj.GetComponent<Rigidbody>();
-                RB.useGravity = ApplyGravity;
-                RB.AddForce(Proj.transform.forward * ProjectileForce, ForceMode.VelocityChange);
+                if (RB != null)
+                {   
+                    RB.useGravity = ApplyGravity;
+                    RB.AddForce(Proj.transform.forward * ProjectileForce, ForceMode.VelocityChange);
+                }
                 GameObject.Destroy(Proj, ProjectileLifetime);
             }
 
