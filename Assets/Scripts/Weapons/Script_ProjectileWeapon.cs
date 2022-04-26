@@ -37,6 +37,7 @@ public class Script_ProjectileWeapon : Script_WeaponBase
 
             SetBloom();
             SetRecoil();
+            
             AS.PlayOneShot(ShootSound);
             Anim.SetTrigger(ShootHash);
 

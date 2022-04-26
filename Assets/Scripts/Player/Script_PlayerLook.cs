@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Script_PlayerLook : MonoBehaviour
 {
@@ -26,6 +27,11 @@ public class Script_PlayerLook : MonoBehaviour
 
     [SerializeField] private Quaternion RecoilRotation;
 
+    [Space]
+
+    [Header("Crosshair")]
+
+    [SerializeField] RectTransform Crosshair;
     Script_AdvancedMotor Motor;
 
     RaycastHit hit;
@@ -71,6 +77,7 @@ public class Script_PlayerLook : MonoBehaviour
     public float m_CurX;
     float m_LastXRot;
 
+    float CrosshairSize = 0;
 
     private void Start()
     {
@@ -176,6 +183,7 @@ public class Script_PlayerLook : MonoBehaviour
             }
         }
 
+        Crosshair.sizeDelta = new Vector2(CrosshairSize * 10, CrosshairSize * 10);
 
         CameraRecoiler.localRotation = Quaternion.Slerp(CameraRecoiler.localRotation, RecoilRotation ,m_SlerpSpeed  * Time.deltaTime);
         //Gun.localRotation = Quaternion.Slerp(Gun.localRotation, RecoilRotation ,m_SlerpSpeed * Time.deltaTime);
@@ -231,5 +239,10 @@ public class Script_PlayerLook : MonoBehaviour
     public Vector3 getAimPoint()
     {
         return AimPoint;
+    }
+
+    public void SetCrosshairSize(float Size)
+    {
+        CrosshairSize = Size;
     }
 }

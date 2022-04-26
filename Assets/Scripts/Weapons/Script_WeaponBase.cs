@@ -128,6 +128,7 @@ public abstract class Script_WeaponBase : MonoBehaviour
     {
         CurrentSpreadAngle -= Time.deltaTime * SpreadSlerp;
         CurrentSpreadAngle = Mathf.Clamp(CurrentSpreadAngle,MinSpreadAngle,MaxSpreadAngle);
+        Look.SetCrosshairSize(CurrentSpreadAngle);
         Debug.Log(CurrentSpreadAngle);
     }
 

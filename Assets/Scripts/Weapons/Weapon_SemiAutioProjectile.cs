@@ -11,7 +11,7 @@ public class Weapon_SemiAutioProjectile : Script_ProjectileWeapon
     }
 
     // Update is called once per frame
-    new void Update()
+    void Update()
     {
         FiringPoint.transform.LookAt(Look.getAimPoint());
 
@@ -30,6 +30,6 @@ public class Weapon_SemiAutioProjectile : Script_ProjectileWeapon
 
         Animate(); 
 
-        //UpdateBloom();
+        UpdateBloom();
     }
 }
