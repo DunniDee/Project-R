@@ -14,7 +14,11 @@ public abstract class Script_WeaponBase : MonoBehaviour
 
     [Header("Shot Variables")]
     [SerializeField] protected float FireRate;
-    [SerializeField] protected float SpreadAngle;
+    [SerializeField] protected float MinSpreadAngle;
+    [SerializeField] protected float MaxSpreadAngle;
+    [SerializeField] protected float SpreadIncrement;
+    [SerializeField] protected float SpreadSlerp;
+    [SerializeField] protected float CurrentSpreadAngle;
      protected float ShotTimer;
     [SerializeField] protected int ShotCount;
 
@@ -117,6 +121,19 @@ public abstract class Script_WeaponBase : MonoBehaviour
     protected void SetRecoil()
     {
         Look.SetShake(ShakeTime, ShakeAmplitude);
-        Look.SetRecoil(SlerpSpeed,RecoilTime,Quaternion.Euler(Random.Range(-Recoil, 0),Random.Range(-Recoil/2,Recoil/2),0));
+        Look.SetRecoil(SlerpSpeed,RecoilTime,Quaternion.Euler(-Recoil,Random.Range(-Recoil/2,Recoil/2),0));
+    }
+
+    protected void UpdateBloom()
+    {
+        CurrentSpreadAngle -= Time.deltaTime * SpreadSlerp;
+        CurrentSpreadAngle = Mathf.Clamp(CurrentSpreadAngle,MinSpreadAngle,MaxSpreadAngle);
+        Debug.Log(CurrentSpreadAngle);
+    }
+
+    protected void SetBloom()
+    {
+        CurrentSpreadAngle += SpreadIncrement;
+        CurrentSpreadAngle = Mathf.Clamp(CurrentSpreadAngle,MinSpreadAngle,MaxSpreadAngle);
     }
 }

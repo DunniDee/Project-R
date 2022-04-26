@@ -66,6 +66,11 @@ public class Script_PlayerLook : MonoBehaviour
     float m_CurFov = 80;
     float m_FovAccel = 5;
 
+    float TiltLerp;
+
+    public float m_CurX;
+    float m_LastXRot;
+
 
     private void Start()
     {
@@ -79,6 +84,8 @@ public class Script_PlayerLook : MonoBehaviour
 
     private void Update()
     {
+        m_LastXRot = m_XRotation;
+
         m_MouseX = Input.GetAxisRaw("Mouse X");
         m_MouseY = Input.GetAxisRaw("Mouse Y");
 
@@ -89,7 +96,9 @@ public class Script_PlayerLook : MonoBehaviour
 
         m_XRotation = Mathf.Clamp(m_XRotation, -89.9f, 89.9f);
 
-        CameraHolder.localRotation = Quaternion.Euler(m_XRotation, m_YRotation, 0);
+        TiltLerp = Mathf.Lerp(TiltLerp,Motor.getRawDirection().x, Time.deltaTime * 5);
+
+        CameraHolder.localRotation = Quaternion.Euler(m_XRotation, m_YRotation, -TiltLerp);
         Orientation.transform.rotation = Quaternion.Euler(0, m_YRotation, 0);
 
         if (Physics.Raycast(MainCam.transform.position, MainCam.transform.forward, out hit, 1000))
@@ -159,8 +168,14 @@ public class Script_PlayerLook : MonoBehaviour
 
             m_CurRecoilAngle = Mathf.Lerp(0,m_RecoilAngle, m_RecoilTime/m_RecoilLerp);
 
-            RecoilRotation = Quaternion.Slerp(Quaternion.Euler(Vector3.zero),RecoilRotation, m_RecoilTime/m_RecoilLerp);
+            RecoilRotation = Quaternion.Slerp(Quaternion.Euler(m_CurX,0,0),RecoilRotation, m_RecoilTime/m_RecoilLerp);
+
+            if (m_LastXRot < m_XRotation)
+            {
+                m_CurX = RecoilRotation.x;
+            }
         }
+
 
         CameraRecoiler.localRotation = Quaternion.Slerp(CameraRecoiler.localRotation, RecoilRotation ,m_SlerpSpeed  * Time.deltaTime);
         //Gun.localRotation = Quaternion.Slerp(Gun.localRotation, RecoilRotation ,m_SlerpSpeed * Time.deltaTime);
@@ -171,11 +186,11 @@ public class Script_PlayerLook : MonoBehaviour
         //Crouching
         if (Motor.GetIsCrouching())
         {
-            CameraHolder.localPosition = new Vector3(0,Mathf.Lerp(CameraHolder.localPosition.y, 0.75f, Time.deltaTime * 3),0);
+            CameraHolder.localPosition = new Vector3(0,Mathf.Lerp(CameraHolder.localPosition.y, 0.75f, Time.deltaTime * Motor.GetCrouchSlerp()),0);
         }
         else
         {
-            CameraHolder.localPosition = new Vector3(0,Mathf.Lerp(CameraHolder.localPosition.y, 1.75f, Time.deltaTime * 3),0);
+            CameraHolder.localPosition = new Vector3(0,Mathf.Lerp(CameraHolder.localPosition.y, 1.75f, Time.deltaTime *  Motor.GetCrouchSlerp()),0);
         }
     }
 

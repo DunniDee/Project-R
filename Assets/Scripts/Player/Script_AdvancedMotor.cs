@@ -11,6 +11,8 @@ private float MoveSpeed = 0;
     [SerializeField] private float Acceleration = 15;
     [SerializeField] private float AirSpeedMultiplier = 0.6f;
 
+    [SerializeField] private float CrouchSlerp = 10;
+
     [SerializeField] private float GroundDrag = 3;
     [SerializeField] private float AirDrag = 1.5f;
 
@@ -217,19 +219,19 @@ private float MoveSpeed = 0;
     {
         if (m_IsCrouching)
         {
-            m_CapsuleCollider.height = Mathf.Lerp(m_CapsuleCollider.height, 1, Time.deltaTime * 5);
-            m_CapsuleCollider.center = new Vector3(0, Mathf.Lerp(m_CapsuleCollider.center.y, 0.5f, Time.deltaTime * 5),0);
+            m_CapsuleCollider.height = Mathf.Lerp(m_CapsuleCollider.height, 1, Time.deltaTime * CrouchSlerp);
+            m_CapsuleCollider.center = new Vector3(0, Mathf.Lerp(m_CapsuleCollider.center.y, 0.5f, Time.deltaTime * CrouchSlerp),0);
 
-            TempModel.localScale = new Vector3(1, Mathf.Lerp(  TempModel.localScale.y, 0.5f, Time.deltaTime * 5),1);
-            TempModel.localPosition = new Vector3(0, Mathf.Lerp(  TempModel.localPosition.y, 0.5f, Time.deltaTime * 5),0);
+            TempModel.localScale = new Vector3(1, Mathf.Lerp(  TempModel.localScale.y, 0.5f, Time.deltaTime * CrouchSlerp),1);
+            TempModel.localPosition = new Vector3(0, Mathf.Lerp(  TempModel.localPosition.y, 0.5f, Time.deltaTime * CrouchSlerp),0);
         }
         else
         {
-            m_CapsuleCollider.height = Mathf.Lerp(m_CapsuleCollider.height, 2, Time.deltaTime * 5);
-            m_CapsuleCollider.center = new Vector3(0, Mathf.Lerp(m_CapsuleCollider.center.y, 1, Time.deltaTime * 5),0);
+            m_CapsuleCollider.height = Mathf.Lerp(m_CapsuleCollider.height, 2, Time.deltaTime * CrouchSlerp);
+            m_CapsuleCollider.center = new Vector3(0, Mathf.Lerp(m_CapsuleCollider.center.y, 1, Time.deltaTime * CrouchSlerp),0);
 
-            TempModel.localScale = new Vector3(1, Mathf.Lerp(  TempModel.localScale.y, 1, Time.deltaTime * 5),1);
-            TempModel.localPosition = new Vector3(0, Mathf.Lerp(  TempModel.localPosition.y, 1, Time.deltaTime * 5),0);
+            TempModel.localScale = new Vector3(1, Mathf.Lerp(  TempModel.localScale.y, 1, Time.deltaTime * CrouchSlerp),1);
+            TempModel.localPosition = new Vector3(0, Mathf.Lerp(  TempModel.localPosition.y, 1, Time.deltaTime * CrouchSlerp),0);
         }
     }
 
@@ -263,4 +265,9 @@ private float MoveSpeed = 0;
     {
         return m_IsCrouching;
     }
-}
+
+    public float GetCrouchSlerp()
+    {
+        return CrouchSlerp;
+    }
+}   

@@ -28,5 +28,7 @@ public class Weapon_FullAutoProjectile : Script_ProjectileWeapon
         Reload();
 
         Animate();
+
+        UpdateBloom();
     }
 }

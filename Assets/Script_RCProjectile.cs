@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class Script_RCProjectile : MonoBehaviour
 {
+    [SerializeField] float Lifetime;
     [SerializeField] float Speed;
     [SerializeField] float Damage;
 
-    // Start is called before the first frame update
-    void Start()
+    TrailRenderer Trail;
+
+    private void Start() 
     {
-        
+        Trail = gameObject.GetComponent<TrailRenderer>();
     }
 
     // Update is called once per frame
@@ -28,11 +30,43 @@ public class Script_RCProjectile : MonoBehaviour
             {
                 hitCollider.TakeDamage(Damage, hitCollider.damageType);
             }
-            Destroy(gameObject);
+            gameObject.SetActive(false);
+            //Bounce
+            //transform.LookAt(transform.position + Vector3.Reflect(hit.point - transform.position, hit.normal));
         }
 
         Debug.DrawLine(transform.position, NextPos, Color.red);
 
         transform.position = NextPos;
+
+        if (Lifetime > 0)
+        {
+            Lifetime-= Time.deltaTime;
+        }
+        else
+        {
+            Disable();
+        }
+    }
+
+    public void SetlifeTime(float time)
+    {
+        Lifetime = time;
+    }
+
+    public void SetDamage(float damage)
+    {
+        Damage = damage;
+    }
+
+    public void SetSpeed(float speed)
+    {
+        Speed = speed;
+    }
+
+    public void Disable()
+    {
+        gameObject.SetActive(false);
+        Trail.Clear();
     }
 }
