@@ -6,13 +6,37 @@ using Unity.AI.Navigation;
 public class Script_LevelManager : MonoBehaviour
 {
     [SerializeField] GameObject[] LevelSections;
+    [SerializeField] GameObject EndRoom;
+    [SerializeField] GameObject[] EnemySpawnPos;
+    [SerializeField] GameObject[] EnemyList;
     [SerializeField] NavMeshSurface[] surfaces;
+
+    [SerializeField] GameObject DummyPrefab;
     // Start is called before the first frame update
     void Start()
     {
+        GetSpawnPoints();
+
         Shuffle();
         Arrange();
         RebakeNavMesh();
+
+        SpawnEnemies();
+    }
+
+    void GetSpawnPoints()
+    {
+        EnemySpawnPos = GameObject.FindGameObjectsWithTag("EnemySpawnPos");
+    }
+
+    void SpawnEnemies()
+    {
+        foreach (var Pos in EnemySpawnPos)
+        {
+            ObjectPooler.Instance.GetObject(DummyPrefab);
+            DummyPrefab.transform.position = Pos.transform.position;
+            DummyPrefab.transform.rotation = Pos.transform.rotation;
+        }
     }
 
     void Shuffle()
@@ -37,8 +61,11 @@ public class Script_LevelManager : MonoBehaviour
         for (int i = 1; i < LevelSections.Length; i++)
         {
             LevelSections[i].transform.localPosition = LevelSections[i-1].transform.GetChild(0).transform.position; 
-            LevelSections[i].transform.localRotation = LevelSections[i-1].transform.GetChild(0).transform.rotation; 
+            LevelSections[i].transform.localRotation = LevelSections[i-1].transform.GetChild(0).transform.rotation;
         } 
+
+        EndRoom.transform.localPosition = LevelSections[LevelSections.Length - 1].transform.GetChild(0).transform.position; 
+        EndRoom.transform.localRotation = LevelSections[LevelSections.Length - 1].transform.GetChild(0).transform.rotation;
     }
 
     void SetStatic()
