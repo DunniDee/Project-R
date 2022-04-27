@@ -36,7 +36,11 @@ public class Script_SeekingRCProjectile : Script_RCProjectile
         }
         else
         {
-            NextPos =  Vector3.MoveTowards(NextPos,SeekPos.position, SeekSpeed * Time.deltaTime);   
+            if ((transform.position - NextPos).sqrMagnitude > 25)
+            {
+                SeekPos = null;
+            }
+            NextPos =  Vector3.MoveTowards(NextPos,SeekPos.position, SeekSpeed * Time.deltaTime);
         }
 
         float distance = (transform.position - NextPos).magnitude;
@@ -55,7 +59,7 @@ public class Script_SeekingRCProjectile : Script_RCProjectile
         }
 
         Debug.DrawLine(transform.position, NextPos, Color.red);
-
+        transform.LookAt(NextPos);
         transform.position = NextPos;
 
         if (Lifetime > 0)
