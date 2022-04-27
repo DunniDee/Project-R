@@ -206,8 +206,8 @@ Transform:
   m_LocalPosition: {x: 0.412, y: -0.20899999, z: 0.652}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1161484414}
   - {fileID: 1684428822}
+  - {fileID: 1161484414}
   - {fileID: 1320807747}
   m_Father: {fileID: 2471164139294075380}
   m_RootOrder: 2
@@ -2771,7 +2771,7 @@ Transform:
   m_Children:
   - {fileID: 4667303551976858}
   m_Father: {fileID: 149817098}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1162325554
 GameObject:
@@ -4167,7 +4167,7 @@ Transform:
   - {fileID: 1810500452}
   - {fileID: 2050840647}
   m_Father: {fileID: 149817098}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1717975691
 GameObject:
@@ -5587,7 +5587,6 @@ GameObject:
   - component: {fileID: 135360473}
   - component: {fileID: 21112233729594292}
   - component: {fileID: 5452307563380339875}
-  - component: {fileID: 1462123665}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -5843,16 +5842,17 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8875903833702973394}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2e05b6566072c2c41aaeb3ff9959ea09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GunName: Uzi
+  GunName: Scar
   Icon: {fileID: 0}
   ShootKey: 323
   ReloadKey: 114
-  FireRate: 0.085
+  Damage: 25
+  FireRate: 0.1
   MinSpreadAngle: 0
   MaxSpreadAngle: 5
   SpreadIncrement: 1
@@ -5870,10 +5870,10 @@ MonoBehaviour:
   ReloadSound: {fileID: 8300000, guid: df0b8e227d57b3c41b695b642366b62a, type: 3}
   FiringPoint: {fileID: 1810500452}
   Anim: {fileID: 2058074021}
-  Projectile: {fileID: 5964571975337414563, guid: b61557a25f3cdec4fab0698c18242718,
+  Projectile: {fileID: 1226951663757066043, guid: 25d2afebe562bfb4db8b9f8a228c53b1,
     type: 3}
   ProjectileLifetime: 3
-  ProjectileForce: 100
+  ProjectileForce: 500
   ApplyGravity: 0
 --- !u!114 &21112233729594292
 MonoBehaviour:
@@ -5887,32 +5887,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e05b6566072c2c41aaeb3ff9959ea09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GunName: PlazmaRifle
+  GunName: Uzi
   Icon: {fileID: 0}
   ShootKey: 323
   ReloadKey: 114
-  FireRate: 0.1
+  Damage: 15
+  FireRate: 0.05
   MinSpreadAngle: 0
   MaxSpreadAngle: 10
-  SpreadIncrement: 10
+  SpreadIncrement: 1
   SpreadSlerp: 10
   CurrentSpreadAngle: 0
   ShotCount: 1
-  MagCount: 32
-  ReloadTime: 3
-  Recoil: 7.5
+  MagCount: 64
+  ReloadTime: 1.5
+  Recoil: 15
   RecoilTime: 0.25
   SlerpSpeed: 2
   ShakeTime: 0.25
   ShakeAmplitude: 0.25
-  ShootSound: {fileID: 8300000, guid: a3a089001884bc246bac6ee8eb4c2379, type: 3}
+  ShootSound: {fileID: 8300000, guid: d20fb3f9340784f4291a707c72015534, type: 3}
   ReloadSound: {fileID: 8300000, guid: df0b8e227d57b3c41b695b642366b62a, type: 3}
   FiringPoint: {fileID: 1810500452}
-  Anim: {fileID: 2058074021}
+  Anim: {fileID: 95992764300144346}
   Projectile: {fileID: 5964571975337414563, guid: b61557a25f3cdec4fab0698c18242718,
     type: 3}
   ProjectileLifetime: 3
-  ProjectileForce: 100
+  ProjectileForce: 750
   ApplyGravity: 0
 --- !u!114 &5452307563380339875
 MonoBehaviour:
@@ -5930,41 +5931,30 @@ MonoBehaviour:
   Icon: {fileID: 0}
   ShootKey: 323
   ReloadKey: 114
-  FireRate: 1
+  Damage: 50
+  FireRate: 0.3
   MinSpreadAngle: 0
-  MaxSpreadAngle: 0
-  SpreadIncrement: 0
-  SpreadSlerp: 0
+  MaxSpreadAngle: 10
+  SpreadIncrement: 10
+  SpreadSlerp: 15
   CurrentSpreadAngle: 0
   ShotCount: 1
   MagCount: 12
   ReloadTime: 2
-  Recoil: 5
-  RecoilTime: 1
-  SlerpSpeed: 2
-  ShakeTime: 1
+  Recoil: 15
+  RecoilTime: 0.5
+  SlerpSpeed: 3
+  ShakeTime: 0.5
   ShakeAmplitude: 0.5
   ShootSound: {fileID: 8300000, guid: 3b96e65b4072bef449372ad529a1de55, type: 3}
   ReloadSound: {fileID: 8300000, guid: 91d7b5a1d504cb344afed969a0b3b649, type: 3}
   FiringPoint: {fileID: 1325820914}
   Anim: {fileID: 1648951673}
-  Projectile: {fileID: 8627595607377944050, guid: dc75d4a92dd7eb84d912162b053e6aff,
+  Projectile: {fileID: 5964571975337414563, guid: b61557a25f3cdec4fab0698c18242718,
     type: 3}
   ProjectileLifetime: 3
-  ProjectileForce: 100000
+  ProjectileForce: 1000
   ApplyGravity: 0
---- !u!114 &1462123665
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8875903833702973394}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c4ce4c796dbafa46a20186f2ed486a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8875903833756416301
 GameObject:
   m_ObjectHideFlags: 0
@@ -6538,6 +6528,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c725aeaffe30d5643937d0d3663fb9a0, type: 3}
+--- !u!95 &95992764300144346 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 95992765978289954, guid: c725aeaffe30d5643937d0d3663fb9a0,
+    type: 3}
+  m_PrefabInstance: {fileID: 1681558008}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4667303551976858 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4667303085788258, guid: c725aeaffe30d5643937d0d3663fb9a0,
@@ -6869,15 +6865,15 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 722687c0347391140bccf69d85faf9cc, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b35f09eda4fe2864c8571d659e5d86e8, type: 3}
---- !u!4 &2050840647 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400002, guid: b35f09eda4fe2864c8571d659e5d86e8,
-    type: 3}
-  m_PrefabInstance: {fileID: 2050704069}
-  m_PrefabAsset: {fileID: 0}
 --- !u!95 &2058074021 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 9500000, guid: b35f09eda4fe2864c8571d659e5d86e8,
+    type: 3}
+  m_PrefabInstance: {fileID: 2050704069}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2050840647 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400002, guid: b35f09eda4fe2864c8571d659e5d86e8,
     type: 3}
   m_PrefabInstance: {fileID: 2050704069}
   m_PrefabAsset: {fileID: 0}

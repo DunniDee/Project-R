@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Script_RCProjectile : MonoBehaviour
+public class Script_SeekingRCProjectile : Script_RCProjectile
 {
-    [SerializeField] protected float Lifetime;
-    [SerializeField] protected float Speed;
-    [SerializeField] protected float Damage;
+    [SerializeField] float SeekSpeed;
+
 
     TrailRenderer Trail;
-
+    Transform SeekPos;
+    
     private void Start() 
     {
         Trail = gameObject.GetComponent<TrailRenderer>();
@@ -19,6 +19,25 @@ public class Script_RCProjectile : MonoBehaviour
     void Update()
     {
         Vector3 NextPos = transform.position + transform.forward * Speed * Time.deltaTime;
+
+        if (SeekPos == null)
+        {
+            RaycastHit[] Hits;
+            Hits = Physics.SphereCastAll(NextPos,5,transform.forward);
+
+            foreach (var _hit in Hits)
+            {
+                if (_hit.transform.GetComponent<CustomCollider>())
+                {
+                    SeekPos = _hit.transform;
+                    return;
+                }
+            }
+        }
+        else
+        {
+            NextPos =  Vector3.MoveTowards(NextPos,SeekPos.position, SeekSpeed * Time.deltaTime);   
+        }
 
         float distance = (transform.position - NextPos).magnitude;
 
@@ -49,23 +68,24 @@ public class Script_RCProjectile : MonoBehaviour
         }
     }
 
-    public void SetlifeTime(float time)
+    new public void SetlifeTime(float time)
     {
         Lifetime = time;
     }
 
-    public void SetDamage(float damage)
+    new public void SetDamage(float damage)
     {
         Damage = damage;
     }
 
-    public void SetSpeed(float speed)
+    new public void SetSpeed(float speed)
     {
         Speed = speed;
     }
 
-    public void Disable()
+    new public void Disable()
     {
+        SeekPos = null;
         Trail.Clear();
         ObjectPooler.Instance.ReturnObject(this.gameObject);
     }
