@@ -15,6 +15,8 @@ public class Script_MovingDummy : MonoBehaviour
         Dummy = transform.GetChild(0);
         WaypointA = transform.GetChild(1);
         WaypointB = transform.GetChild(2);
+
+        Speed = Random.Range(0,5);
     }
 
     // Update is called once per frame
