@@ -17,11 +17,21 @@ public class CustomCollider : MonoBehaviour
         if(takeDamageEvent != null){
             Debug.Log("Taking Damage");
             takeDamageEvent(_Damage,damageType);
+
+            if (_DamageType == DamageType.Normal)
+            {
+                Script_HitMarker.current.Hit();
+            }
+            else
+            {
+                Script_HitMarker.current.CritHit();
+            }
+        
         }
     }
 
     void Awake(){
-        takeDamageEvent += GetComponentInParent<Script_BaseAI>().TakeDamage;
+        takeDamageEvent += GetComponentInParent<IDamageable>().Damage;
         if(gameObject.tag == "Head"){
             damageType = DamageType.Critical;
         }

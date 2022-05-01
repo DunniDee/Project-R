@@ -15,22 +15,39 @@ public class Script_ProjectileWeapon : Script_WeaponBase
 
     protected override void Shoot()
     {
-        for (int i = 0; i < ShotCount; i++)
+        if (CurMagCount > 0)
         {
-            Quaternion ProjectileSpread = FiringPoint.rotation * Quaternion.Euler(0, 0, Random.Range(0.0f, 360.0f)) * Quaternion.Euler(Random.Range(0.0f, SpreadAngle / 2), 0, 0);
+            for (int i = 0; i < ShotCount; i++)
+            {
+                Quaternion ProjectileSpread = FiringPoint.rotation * Quaternion.Euler(0, 0, Random.Range(0.0f, 360.0f)) * Quaternion.Euler(Random.Range(0.0f, CurrentSpreadAngle / 2), 0, 0);
+                GameObject Proj = ObjectPooler.Instance.GetObject(Projectile);
 
-            GameObject Proj = Instantiate(Projectile, FiringPoint.position, ProjectileSpread);
-            Rigidbody RB = Proj.GetComponent<Rigidbody>();
-            RB.useGravity = ApplyGravity;
-            RB.AddForce(Proj.transform.forward * ProjectileForce, ForceMode.VelocityChange);
-            GameObject.Destroy(Proj, ProjectileLifetime);
+                Proj.transform.position = FiringPoint.position;
+                Proj.transform.rotation = ProjectileSpread;
+
+                Rigidbody RB = Proj.GetComponent<Rigidbody>();
+                if (RB != null)
+                {   
+                    RB.useGravity = ApplyGravity;
+                    RB.AddForce(Proj.transform.forward * ProjectileForce, ForceMode.VelocityChange);
+                }
+                else
+                {
+                    Script_RCProjectile temp = Proj.GetComponent<Script_RCProjectile>();
+                    temp.SetDamage(Damage);
+                    temp.SetlifeTime(ProjectileLifetime);
+                    temp.SetSpeed(ProjectileForce);
+                }
+            }
+
+            SetBloom();
+            SetRecoil();
+            
+            AS.PlayOneShot(ShootSound);
+            Anim.SetTrigger(ShootHash);
+
+            CurMagCount--;
+            ShotTimer = FireRate;   
         }
-
-        SetRecoil();
-        AS.PlayOneShot(ShootSound);
-        Anim.SetTrigger(ShootHash);
-
-        CurMagCount--;
-        ShotTimer = FireRate;
     }
 }

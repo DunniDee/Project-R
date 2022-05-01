@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Script_PlayerLook : MonoBehaviour
 {
@@ -26,6 +27,11 @@ public class Script_PlayerLook : MonoBehaviour
 
     [SerializeField] private Quaternion RecoilRotation;
 
+    [Space]
+
+    [Header("Crosshair")]
+
+    [SerializeField] RectTransform Crosshair;
     Script_AdvancedMotor Motor;
 
     RaycastHit hit;
@@ -66,6 +72,12 @@ public class Script_PlayerLook : MonoBehaviour
     float m_CurFov = 80;
     float m_FovAccel = 5;
 
+    float TiltLerp;
+
+    public float m_CurX;
+    float m_LastXRot;
+
+    float CrosshairSize = 0;
 
     private void Start()
     {
@@ -79,6 +91,8 @@ public class Script_PlayerLook : MonoBehaviour
 
     private void Update()
     {
+        m_LastXRot = m_XRotation;
+
         m_MouseX = Input.GetAxisRaw("Mouse X");
         m_MouseY = Input.GetAxisRaw("Mouse Y");
 
@@ -89,7 +103,9 @@ public class Script_PlayerLook : MonoBehaviour
 
         m_XRotation = Mathf.Clamp(m_XRotation, -89.9f, 89.9f);
 
-        CameraHolder.localRotation = Quaternion.Euler(m_XRotation, m_YRotation, 0);
+        TiltLerp = Mathf.Lerp(TiltLerp,Motor.getRawDirection().x, Time.deltaTime * 5);
+
+        CameraHolder.localRotation = Quaternion.Euler(m_XRotation, m_YRotation, -TiltLerp);
         Orientation.transform.rotation = Quaternion.Euler(0, m_YRotation, 0);
 
         if (Physics.Raycast(MainCam.transform.position, MainCam.transform.forward, out hit, 1000))
@@ -98,7 +114,8 @@ public class Script_PlayerLook : MonoBehaviour
         }
         else
         {
-            AimPoint = MainCam.transform.forward * 1000;
+            AimPoint =  MainCam.transform.position + MainCam.transform.forward * 1000;
+
         }
 
         Debug.DrawLine(MainCam.transform.position, hit.point, Color.red);
@@ -158,8 +175,15 @@ public class Script_PlayerLook : MonoBehaviour
 
             m_CurRecoilAngle = Mathf.Lerp(0,m_RecoilAngle, m_RecoilTime/m_RecoilLerp);
 
-            RecoilRotation = Quaternion.Slerp(Quaternion.Euler(Vector3.zero),RecoilRotation, m_RecoilTime/m_RecoilLerp);
+            RecoilRotation = Quaternion.Slerp(Quaternion.Euler(m_CurX,0,0),RecoilRotation, m_RecoilTime/m_RecoilLerp);
+
+            if (m_LastXRot < m_XRotation)
+            {
+                m_CurX = RecoilRotation.x;
+            }
         }
+
+        Crosshair.sizeDelta = new Vector2(CrosshairSize * 10, CrosshairSize * 10);
 
         CameraRecoiler.localRotation = Quaternion.Slerp(CameraRecoiler.localRotation, RecoilRotation ,m_SlerpSpeed  * Time.deltaTime);
         //Gun.localRotation = Quaternion.Slerp(Gun.localRotation, RecoilRotation ,m_SlerpSpeed * Time.deltaTime);
@@ -170,11 +194,11 @@ public class Script_PlayerLook : MonoBehaviour
         //Crouching
         if (Motor.GetIsCrouching())
         {
-            CameraHolder.localPosition = new Vector3(0,Mathf.Lerp(CameraHolder.localPosition.y, 0.75f, Time.deltaTime * 3),0);
+            CameraHolder.localPosition = new Vector3(0,Mathf.Lerp(CameraHolder.localPosition.y, 0.75f, Time.deltaTime * Motor.GetCrouchSlerp()),0);
         }
         else
         {
-            CameraHolder.localPosition = new Vector3(0,Mathf.Lerp(CameraHolder.localPosition.y, 1.75f, Time.deltaTime * 3),0);
+            CameraHolder.localPosition = new Vector3(0,Mathf.Lerp(CameraHolder.localPosition.y, 1.75f, Time.deltaTime *  Motor.GetCrouchSlerp()),0);
         }
     }
 
@@ -182,13 +206,14 @@ public class Script_PlayerLook : MonoBehaviour
     {
         m_SwaySlerp = speed;
     }
+
     void WeaponSway()
     {
         Quaternion RotX = Quaternion.AngleAxis(-m_MouseY, Vector3.right);
         Quaternion RotY = Quaternion.AngleAxis(m_MouseX, Vector3.up);
 
         Quaternion TargetRotation = RotX * RotY;
-        Gun.localRotation = Quaternion.Slerp(Gun.localRotation, TargetRotation,m_SwaySlerp * Time.deltaTime);
+        Gun.localRotation = Quaternion.Slerp(Gun.localRotation, TargetRotation, m_SwaySlerp * Time.deltaTime);
     }
 
     void FOV()
@@ -214,5 +239,10 @@ public class Script_PlayerLook : MonoBehaviour
     public Vector3 getAimPoint()
     {
         return AimPoint;
+    }
+
+    public void SetCrosshairSize(float Size)
+    {
+        CrosshairSize = Size;
     }
 }

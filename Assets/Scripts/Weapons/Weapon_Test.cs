@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapon_Test : Script_ProjectileWeapon
+public class Weapon_FullAutoProjectileWeapon : Script_ProjectileWeapon
 {
     private void Start()
     {
@@ -12,6 +12,8 @@ public class Weapon_Test : Script_ProjectileWeapon
     // Update is called once per frame
     void Update()
     {
+        FiringPoint.transform.LookAt(Look.getAimPoint());
+
         if (ShotTimer > 0)
         {
             ShotTimer-= Time.deltaTime;
