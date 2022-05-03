@@ -68,6 +68,15 @@ public abstract class Script_WeaponBase : MonoBehaviour
     protected Script_PlayerLook Look;
     protected AudioSource AS;
 
+    //Delegate for Ammo UI    
+    public delegate void OnAmmoChangeDelegate(int _ammo);
+    public OnAmmoChangeDelegate onAmmoChangeEvent;
+
+    public int GetMagCount()
+    {
+        return MagCount;
+    }
+    
     protected virtual IEnumerator IE_Reload()
     {
         IsReloading = true;
