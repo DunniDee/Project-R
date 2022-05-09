@@ -83,6 +83,10 @@ public abstract class Script_WeaponBase : MonoBehaviour
         yield return new WaitForSeconds(ReloadTime);
         IsReloading = false;
         CurMagCount = MagCount;
+        if(onAmmoChangeEvent != null)
+        {
+            onAmmoChangeEvent(CurMagCount);
+        }
     }
 
     protected virtual void Shoot(){}
@@ -94,6 +98,7 @@ public abstract class Script_WeaponBase : MonoBehaviour
             StartCoroutine(IE_Reload());
             AS.PlayOneShot(ReloadSound);
             Anim.SetTrigger(ReloadHash);
+           
         }
     }
 

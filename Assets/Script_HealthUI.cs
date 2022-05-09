@@ -7,6 +7,8 @@ using TMPro;
 public class Script_HealthUI : MonoBehaviour
 {
     
+    public Slider m_healthSlider;
+
     // Start is called before the first frame update
     void Start()
     {
