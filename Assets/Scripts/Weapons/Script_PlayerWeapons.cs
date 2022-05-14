@@ -19,7 +19,8 @@ public class Script_PlayerWeapons : MonoBehaviour
 
     float EquipTimer = 0;
 
-    enum Equip
+    
+     public enum Equip
     {
         Primary,
         Secondary,
@@ -27,6 +28,36 @@ public class Script_PlayerWeapons : MonoBehaviour
     }
 
     [SerializeField] Equip CurrentEquip = Equip.Primary;
+
+    public Script_WeaponBase getPrimaryWeapon()
+    {
+        return Primary;
+    }
+
+    public Script_WeaponBase getSecondaryWeapon()
+    {
+        return Secondary;
+    }
+
+    public Script_WeaponBase getMeleeWeapon()
+    {
+        return Melee;
+    }
+
+    public Script_WeaponBase getCurrentEquip()
+    {
+        switch(CurrentEquip)
+        {
+            case Equip.Primary:
+                return Primary;
+            case Equip.Secondary:
+                return Secondary;
+            case Equip.Melee:
+                return Melee;
+            default:
+                return null;
+        }
+    }
 
     private void Start() 
     {

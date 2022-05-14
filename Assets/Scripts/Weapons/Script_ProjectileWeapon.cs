@@ -12,7 +12,7 @@ public class Script_ProjectileWeapon : Script_WeaponBase
     [SerializeField] protected float ProjectileForce;
     [SerializeField] protected bool ApplyGravity;
 
-
+    
     protected override void Shoot()
     {
         if (CurMagCount > 0)
@@ -47,6 +47,11 @@ public class Script_ProjectileWeapon : Script_WeaponBase
             Anim.SetTrigger(ShootHash);
 
             CurMagCount--;
+
+            if(onAmmoChangeEvent != null)
+            {
+                onAmmoChangeEvent(CurMagCount);
+            }
             ShotTimer = FireRate;   
         }
     }
