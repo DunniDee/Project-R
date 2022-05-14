@@ -10,9 +10,13 @@ public class AIStateConfig : ScriptableObject
     public float maxHealth = 100f;
     
     [Header("Chase Properties")]
+    public float ChaseSpeed = 7.0f;
     public float maxTime = 1.0f;
     public float maxDistance = 1.0f;
+    
     [Header("Idle Properties")]
+    public float WanderSpeed = 2.0f;
     public float maxSightDistance = 5.0f;
+    public float wanderRadius = 10.0f;
     
 }

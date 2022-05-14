@@ -79,6 +79,10 @@ public class Script_PlayerLook : MonoBehaviour
 
     float CrosshairSize = 0;
 
+    [SerializeField] bool isActive = true;
+    public void SetPlayerLookState(bool _isActive){
+        isActive = _isActive;
+    }
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -91,7 +95,9 @@ public class Script_PlayerLook : MonoBehaviour
 
     private void Update()
     {
-        m_LastXRot = m_XRotation;
+        if(isActive)
+        {
+            m_LastXRot = m_XRotation;
 
         m_MouseX = Input.GetAxisRaw("Mouse X");
         m_MouseY = Input.GetAxisRaw("Mouse Y");
@@ -131,6 +137,8 @@ public class Script_PlayerLook : MonoBehaviour
 
         //Camera Movement
         MoveCam();
+        }
+        
     }
 
     void Tilt()

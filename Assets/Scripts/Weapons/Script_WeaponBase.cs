@@ -68,12 +68,25 @@ public abstract class Script_WeaponBase : MonoBehaviour
     protected Script_PlayerLook Look;
     protected AudioSource AS;
 
+    //Delegate for Ammo UI    
+    public delegate void OnAmmoChangeDelegate(int _ammo);
+    public OnAmmoChangeDelegate onAmmoChangeEvent;
+
+    public int GetMagCount()
+    {
+        return MagCount;
+    }
+    
     protected virtual IEnumerator IE_Reload()
     {
         IsReloading = true;
         yield return new WaitForSeconds(ReloadTime);
         IsReloading = false;
         CurMagCount = MagCount;
+        if(onAmmoChangeEvent != null)
+        {
+            onAmmoChangeEvent(CurMagCount);
+        }
     }
 
     protected virtual void Shoot(){}
@@ -85,6 +98,7 @@ public abstract class Script_WeaponBase : MonoBehaviour
             StartCoroutine(IE_Reload());
             AS.PlayOneShot(ReloadSound);
             Anim.SetTrigger(ReloadHash);
+           
         }
     }
 
