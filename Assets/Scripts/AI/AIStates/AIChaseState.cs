@@ -15,6 +15,7 @@ public class AIChaseState : AIState
 
     public void Enter(Script_BaseAI agent)
     {
+        agent.GetNavMeshAgent().speed = agent.Config.ChaseSpeed;
         if(!playerTransform){
             playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         }

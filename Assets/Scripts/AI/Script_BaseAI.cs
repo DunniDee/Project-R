@@ -92,6 +92,8 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
         m_Ragdoll = GetComponent<Script_Ragdoll>();
         m_UIHealth = GetComponentInChildren<Script_UIHealth>();
         
+        Player = GameObject.FindGameObjectWithTag("Player").transform;
+
         //Set the Inital State of the AI.
         StateMachine = new Script_AIStateMachine(this);
         StateMachine.RegisterState(new AIChaseState());
