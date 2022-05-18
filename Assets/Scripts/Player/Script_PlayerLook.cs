@@ -91,6 +91,9 @@ public class Script_PlayerLook : MonoBehaviour
         m_YRotation = transform.rotation.y;
 
         Motor = gameObject.GetComponent<Script_AdvancedMotor>();
+
+        //Set OnTakeDamage Delegate
+        GetComponent<Scr_PlayerHealth>().OnTakeDamageEvent += SetShake;
     }
 
     private void Update()

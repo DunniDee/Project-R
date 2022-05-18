@@ -2,11 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AIIdleState : AIState
+public class AIMoveState : AIState
 {
-    float idleTimer = 0.0f;
-    float waitTime = 2.0f;
-    private void FieldOfView(Script_BaseAI agent)
+     private void FieldOfView(Script_BaseAI agent)
     {
         Vector3 PlayerDir = (agent.Player.position - agent.transform.position);
        if(PlayerDir.magnitude > agent.Config.maxSightDistance)
@@ -24,45 +22,47 @@ public class AIIdleState : AIState
        }
     }
 
-  
+    //overrides
     public AIStateID getID()
     {
-        return AIStateID.Idle;
+        return AIStateID.Moving;
     }
 
+    void MoveToPosition(Script_BaseAI agent)
+    {
+        agent.GetNavMeshAgent().SetDestination(agent.transform.position +
+         new Vector3(Random.Range(-agent.Config.WanderExtents.x, agent.Config.WanderExtents.y), 0, Random.Range(-agent.Config.WanderExtents.x, agent.Config.WanderExtents.y)));
+    }
+    //Chose random point to move to
     public void Enter(Script_BaseAI agent)
     {
-        idleTimer = waitTime;
-        agent.GetNavMeshAgent().speed = agent.Config.WanderSpeed;
+         MoveToPosition(agent);
     }
 
     public void Update(Script_BaseAI agent)
     {
-        if(!agent.enabled){
-            return;
-        }
         FieldOfView(agent);
         switch(agent.GetIsInCombat())
         {
             case false:
-                if(idleTimer > 0.0f)
+                if(agent.transform.position == agent.GetNavMeshAgent().destination)
                 {
-                    idleTimer -= Time.deltaTime;
-                }
-                else if(idleTimer <= 0.0f)
-                {
-                    idleTimer = waitTime;
-                    agent.StateMachine.ChangeState(AIStateID.Moving);
+                     agent.StateMachine.ChangeState(AIStateID.Idle);
                 }
                 break;
             case true:
-                agent.StateMachine.ChangeState(AIStateID.ShootPlayer);
+                if(agent.transform.position == agent.GetNavMeshAgent().destination)
+                {
+                    agent.StateMachine.ChangeState(AIStateID.ShootPlayer);
+                }
                 break;
         }
+       
     }
 
     public void Exit(Script_BaseAI agent)
     {
-       
-    }     
+        
+    }
+
 }
