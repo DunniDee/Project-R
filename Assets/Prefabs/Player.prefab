@@ -251,6 +251,7 @@ MonoBehaviour:
   CrouchSpeed: 10
   Acceleration: 15
   AirSpeedMultiplier: 0.4
+  CrouchSlerp: 10
   GroundDrag: 4
   AirDrag: 1.5
   MaxJumps: 1
@@ -292,7 +293,10 @@ MonoBehaviour:
   FPCam: {fileID: 0}
   Orientation: {fileID: 416245862727353376}
   RecoilRotation: {x: 0, y: 0, z: 0, w: 0}
+  Crosshair: {fileID: 0}
   AimPoint: {x: 0, y: 0, z: 0}
+  m_CurX: 0
+  isActive: 1
 --- !u!54 &416245862690685661
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -870,7 +874,7 @@ Camera:
   m_FOVAxisMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
-  m_FocalLength: 21.451567
+  m_FocalLength: 10.392304
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -878,8 +882,8 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.1
-  far clip plane: 1000
-  field of view: 58.445274
+  far clip plane: 10000
+  field of view: 98.21322
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
