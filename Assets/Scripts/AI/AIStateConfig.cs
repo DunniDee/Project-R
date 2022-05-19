@@ -19,4 +19,7 @@ public class AIStateConfig : ScriptableObject
     public float maxSightDistance = 5.0f;
     public float wanderRadius = 10.0f;
     
+    [Header("Shooting Properties")]
+    public GameObject projectile;
+    
 }
