@@ -12,6 +12,11 @@ public class Scr_EnemyProjectile : MonoBehaviour
             collision.GetComponent<Scr_PlayerHealth>().TakeDamage(m_fDamage);
             Destroy(gameObject);
         }
+        else
+        {
+            Destroy(gameObject);
+        }
+        
     }
     // Start is called before the first frame update
     void Start()
