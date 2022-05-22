@@ -104,6 +104,8 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
 
         m_UIHealth.HealthSlider.maxValue = Config.maxHealth;
         m_UIHealth.HealthSlider.value = m_Health;
+
+        GetComponent<Scr_AISensor>().OnPlayerFoundEvent += StateMachine.ChangeState;
     }
 
     void UpdateUIHealth(){
