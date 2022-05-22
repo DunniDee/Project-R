@@ -3174,7 +3174,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1161484413}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.017, y: -0.056, z: -0.114}
+  m_LocalPosition: {x: -0.0575, y: -0.03, z: -0.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4667303551976858}
@@ -3725,7 +3725,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1320807746}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.025, y: 0.045, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1325820914}
@@ -4570,7 +4570,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1684428821}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.0725, y: 0.03, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1810500452}
@@ -6341,12 +6341,15 @@ MonoBehaviour:
   ReloadKey: 114
   Damage: 25
   FireRate: 0.1
-  MinSpreadAngle: 0
+  MinSpreadAngle: 3
   MaxSpreadAngle: 5
   SpreadIncrement: 1
   SpreadSlerp: 5
   CurrentSpreadAngle: 0
   ShotCount: 1
+  ADSFovZoom: 20
+  ADSMinSpreadAngle: 0
+  ADSMaxSpreadAngle: 3
   MagCount: 32
   ReloadTime: 3
   Recoil: 10
@@ -6354,6 +6357,8 @@ MonoBehaviour:
   SlerpSpeed: 2
   ShakeTime: 0.25
   ShakeAmplitude: 0.25
+  ADSShakeMultiplier: 0
+  ADSRecoilMultiplier: 0
   ShootSound: {fileID: 8300000, guid: a3a089001884bc246bac6ee8eb4c2379, type: 3}
   ReloadSound: {fileID: 8300000, guid: df0b8e227d57b3c41b695b642366b62a, type: 3}
   FiringPoint: {fileID: 1810500452}
@@ -6361,7 +6366,7 @@ MonoBehaviour:
   Projectile: {fileID: 5964571975337414563, guid: b61557a25f3cdec4fab0698c18242718,
     type: 3}
   ProjectileLifetime: 5
-  ProjectileForce: 100
+  ProjectileForce: 500
   ApplyGravity: 0
 --- !u!114 &21112233729594292
 MonoBehaviour:
@@ -6381,12 +6386,15 @@ MonoBehaviour:
   ReloadKey: 114
   Damage: 15
   FireRate: 0.05
-  MinSpreadAngle: 0
+  MinSpreadAngle: 5
   MaxSpreadAngle: 10
   SpreadIncrement: 1
   SpreadSlerp: 10
   CurrentSpreadAngle: 0
   ShotCount: 1
+  ADSFovZoom: 10
+  ADSMinSpreadAngle: 2
+  ADSMaxSpreadAngle: 7
   MagCount: 64
   ReloadTime: 1.5
   Recoil: 15
@@ -6394,6 +6402,8 @@ MonoBehaviour:
   SlerpSpeed: 2
   ShakeTime: 0.25
   ShakeAmplitude: 0.25
+  ADSShakeMultiplier: 0
+  ADSRecoilMultiplier: 0
   ShootSound: {fileID: 8300000, guid: d20fb3f9340784f4291a707c72015534, type: 3}
   ReloadSound: {fileID: 8300000, guid: df0b8e227d57b3c41b695b642366b62a, type: 3}
   FiringPoint: {fileID: 1810500452}
@@ -6427,6 +6437,9 @@ MonoBehaviour:
   SpreadSlerp: 15
   CurrentSpreadAngle: 0
   ShotCount: 1
+  ADSFovZoom: 30
+  ADSMinSpreadAngle: 0
+  ADSMaxSpreadAngle: 10
   MagCount: 12
   ReloadTime: 2
   Recoil: 15
@@ -6434,6 +6447,8 @@ MonoBehaviour:
   SlerpSpeed: 3
   ShakeTime: 0.5
   ShakeAmplitude: 0.5
+  ADSShakeMultiplier: 0
+  ADSRecoilMultiplier: 0
   ShootSound: {fileID: 8300000, guid: 3b96e65b4072bef449372ad529a1de55, type: 3}
   ReloadSound: {fileID: 8300000, guid: 91d7b5a1d504cb344afed969a0b3b649, type: 3}
   FiringPoint: {fileID: 1325820914}
