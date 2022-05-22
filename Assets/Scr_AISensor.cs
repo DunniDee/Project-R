@@ -28,7 +28,8 @@ public class Scr_AISensor : MonoBehaviour
     {
         Mesh mesh  = new Mesh();
 
-        int numTri = 8;
+        int segments = 10;
+        int numTri = (segments * 4) + 2 + 2;
         int numVert = numTri * 3;
 
         Vector3[] vertices = new Vector3[numVert];
@@ -39,18 +40,84 @@ public class Scr_AISensor : MonoBehaviour
         Vector3 bottomRight = Quaternion.Euler(0,angle,0) * Vector3.forward * distance;
 
         Vector3 topCenter = bottomCenter + Vector3.up * height;
-        Vector3 topLeft = bottomLeft + Vector3.up * distance;
-        Vector3 topRight = bottomRight + Vector3.up * distance;
+        Vector3 topLeft = bottomLeft + Vector3.up * height;
+        Vector3 topRight = bottomRight + Vector3.up * height;
         int ver = 0;
 
         // left side
+        vertices[ver++] = bottomCenter;
+        vertices[ver++] = bottomLeft;
+        vertices[ver++] = topLeft;
+
+        vertices[ver++] = topLeft;
+        vertices[ver++] = topCenter;
+        vertices[ver++] = bottomCenter;
 
         // right side
+        vertices[ver++] = bottomCenter;
+        vertices[ver++] = topCenter;
+        vertices[ver++] = topRight;
 
-        // far side
+        vertices[ver++] = topRight;
+        vertices[ver++] = bottomRight;
+        vertices[ver++] = bottomCenter;
 
-        // top
+        float currentAngle = -angle;
+        float deltaAngle = (angle * 2) / segments;
+        for(int i = 0; i < segments; ++i)
+        {
+            
+            bottomLeft = Quaternion.Euler(0,currentAngle,0) * Vector3.forward * distance;
+            bottomRight = Quaternion.Euler(0,currentAngle + deltaAngle,0) * Vector3.forward * distance;
+
+
+            topLeft = bottomLeft + Vector3.up * height;
+            topRight = bottomRight + Vector3.up * height;
         
-        // bottom 
+             // far side
+            vertices[ver++] = bottomLeft;
+            vertices[ver++] = bottomRight;
+            vertices[ver++] = topRight;
+
+            vertices[ver++] = topRight;
+            vertices[ver++] = topLeft;
+            vertices[ver++] = bottomLeft;
+            // top
+            vertices[ver++] = topCenter;
+            vertices[ver++] = topLeft;
+            vertices[ver++] = topRight;
+        
+            // bottom 
+            vertices[ver++] = bottomCenter;
+            vertices[ver++] = bottomLeft;
+            vertices[ver++] = bottomRight;
+
+            currentAngle += deltaAngle;
+        }
+       
+
+        for(int i = 0; i < numVert; i++){
+            triangles[i] = i;
+        }
+
+        mesh.vertices = vertices;
+        mesh.triangles = triangles;
+        mesh.RecalculateNormals();
+
+        return mesh;
+    }
+
+    private void OnValidate()
+    {
+        wedgeMesh = CreateWedgeMesh();
+    }
+
+    private void OnDrawGizmos()
+    {
+        if(wedgeMesh)
+        {
+            Gizmos.color = meshColor;
+            Gizmos.DrawMesh(wedgeMesh, transform.position, transform.rotation, transform.localScale);
+        }
     }
 }
