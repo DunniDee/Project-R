@@ -41,7 +41,7 @@ public class AIMoveState : AIState
 
     public void Update(Script_BaseAI agent)
     {
-        FieldOfView(agent);
+       // FieldOfView(agent);
         switch(agent.GetIsInCombat())
         {
             case false:

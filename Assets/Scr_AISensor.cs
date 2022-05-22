@@ -4,26 +4,90 @@ using UnityEngine;
 
 public class Scr_AISensor : MonoBehaviour
 {
+
+    [Header("Sensor Properties")]
     public float distance = 10.0f;
     public float angle = 30.0f;
     public float height = 1;
-
     public Color meshColor = Color.red;
 
+    public int scanFrequency = 30;
+    public LayerMask Layers;
+
+    [Header("Collider Properties")]
+    public List<GameObject> Objects = new List<GameObject>();
+    Collider[] Colliders = new Collider[50];
+    [Header("Internal Components")]
+    [SerializeField] Script_BaseAI agent;
+    public delegate void OnPlayerFoundDelegate(AIStateID _State);
+    public OnPlayerFoundDelegate OnPlayerFoundEvent;
+
     Mesh wedgeMesh;
+    int count;
+    float scanInterval;
+    float scanTimer;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        agent = GetComponent<Script_BaseAI>();
+        scanFrequency = 1 / scanFrequency;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        scanTimer -= Time.deltaTime;
+        if(scanTimer < 0)
+        {
+            scanTimer += scanInterval;
+            Scan();
+        }
     }
 
+    private void Scan()
+    {
+        count = Physics.OverlapSphereNonAlloc(transform.position, distance, Colliders,Layers, QueryTriggerInteraction.Collide);
+        Objects.Clear();
+        for(int i =0; i < count; i++)
+        {
+            GameObject obj = Colliders[i].gameObject;
+            if(IsInSight(obj))
+            {
+                Objects.Add(obj);
+            }
+        }
+        foreach(GameObject gameObject in Objects)
+        {
+            if(gameObject.CompareTag("Player"))
+            {
+                // Play Found Event
+                if(OnPlayerFoundEvent != null && !agent.GetIsInCombat())
+                {
+                    OnPlayerFoundEvent(AIStateID.ShootPlayer);
+                }
+            }
+        }
+    }
+
+    public bool IsInSight(GameObject obj)
+    {
+        Vector3 origin = transform.position;
+        Vector3 dest = obj.transform.position;
+        Vector3 direction = dest - origin;
+        if(direction.y < -1.5 || direction.y > height)
+        {
+            return false;
+        }
+        direction.y = 0;
+        float deltaAngle = Vector3.Angle(direction, transform.forward);
+        if(deltaAngle > angle)
+        {
+            return false;
+        }
+        
+        return true;
+    }
     Mesh CreateWedgeMesh()
     {
         Mesh mesh  = new Mesh();
@@ -110,6 +174,7 @@ public class Scr_AISensor : MonoBehaviour
     private void OnValidate()
     {
         wedgeMesh = CreateWedgeMesh();
+        scanInterval = 1.0f/ scanFrequency;
     }
 
     private void OnDrawGizmos()
@@ -118,6 +183,18 @@ public class Scr_AISensor : MonoBehaviour
         {
             Gizmos.color = meshColor;
             Gizmos.DrawMesh(wedgeMesh, transform.position, transform.rotation, transform.localScale);
+        }
+
+        Gizmos.DrawWireSphere(transform.position, distance);
+        for(int  i = 0; i < count; i++)
+        {
+            Gizmos.DrawSphere(Colliders[i].transform.position, 0.2f);
+        }
+
+        Gizmos.color = Color.green;
+        for(int i = 0; i < Objects.Count; i++)
+        {
+            Gizmos.DrawSphere(Objects[i].transform.position, 0.5f);
         }
     }
 }

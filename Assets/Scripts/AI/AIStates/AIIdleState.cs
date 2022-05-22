@@ -41,7 +41,7 @@ public class AIIdleState : AIState
         if(!agent.enabled){
             return;
         }
-        FieldOfView(agent);
+        //FieldOfView(agent);
         switch(agent.GetIsInCombat())
         {
             case false:
