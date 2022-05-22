@@ -70,6 +70,8 @@ public class Script_PlayerLook : MonoBehaviour
     float m_MinFov = 80;
     float m_MaxFov = 90;
     float m_CurFov = 80;
+    float m_AddFov = 0;
+    float m_LerpToFov = 0;
     float m_FovAccel = 5;
 
     float TiltLerp;
@@ -121,7 +123,6 @@ public class Script_PlayerLook : MonoBehaviour
         else
         {
             AimPoint =  MainCam.transform.position + MainCam.transform.forward * 1000;
-
         }
 
         Debug.DrawLine(MainCam.transform.position, hit.point, Color.red);
@@ -241,7 +242,14 @@ public class Script_PlayerLook : MonoBehaviour
             }
         }
 
-        MainCam.fieldOfView = m_CurFov;
+        m_AddFov = Mathf.Lerp(m_AddFov,m_LerpToFov,m_FovAccel * Time.deltaTime);   
+
+        MainCam.fieldOfView = m_CurFov + m_AddFov;
+    }
+
+    public void SetLerpFov(float FOV)
+    {
+        m_LerpToFov = FOV;
     }
 
     public Vector3 getAimPoint()
