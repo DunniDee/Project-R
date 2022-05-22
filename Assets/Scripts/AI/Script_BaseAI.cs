@@ -19,8 +19,22 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
     public AIStateID InitalState;
     public AIStateConfig Config;
 
+    [SerializeField]
+    bool isInCombat = false;
+
     [SerializeField] private float m_Health;
-    private float m_fDamage = 10f;
+
+    public Transform FiringPoint;
+
+    public void SetIsInCombat(bool _bool)
+    {
+        isInCombat = _bool;
+    }
+
+    public bool GetIsInCombat()
+    {
+        return isInCombat;
+    }
 
     public NavMeshAgent GetNavMeshAgent()
     {
@@ -37,31 +51,12 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
         return m_Animator;
     }
 
-    // public void TakeDamage(float _Damage, CustomCollider.DamageType _DamageType)
-    // {
-    //     if(StateMachine.currentStateID == AIStateID.Idle)
-    //     {
-    //         StateMachine.ChangeState(AIStateID.ChasePlayer);
-    //     }
-    //     switch(_DamageType){
-    //         case CustomCollider.DamageType.Critical:
-    //             m_Health -= _Damage * 2;
-    //             break;
-    //         case CustomCollider.DamageType.Normal:
-    //             m_Health -= _Damage;
-    //             break;
-    //     }
-    //     if (m_Health <= 0)
-    //     {
-    //         StateMachine.ChangeState(AIStateID.Death);
-    //     }
-    // }
-
-        public void Damage(float _Damage, CustomCollider.DamageType _DamageType)
+    public void Damage(float _Damage, CustomCollider.DamageType _DamageType)
     {
-        if(StateMachine.currentStateID == AIStateID.Idle)
+        if(StateMachine.currentStateID == AIStateID.Idle || StateMachine.currentStateID == AIStateID.Moving)
         {
-            StateMachine.ChangeState(AIStateID.ChasePlayer);
+            isInCombat = true;
+            StateMachine.ChangeState(AIStateID.ShootPlayer);
         }
         switch(_DamageType){
             case CustomCollider.DamageType.Critical:
@@ -96,9 +91,11 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
 
         //Set the Inital State of the AI.
         StateMachine = new Script_AIStateMachine(this);
-        StateMachine.RegisterState(new AIChaseState());
+        //StateMachine.RegisterState(new AIChaseState());
         StateMachine.RegisterState(new AIDeathState());
         StateMachine.RegisterState(new AIIdleState());
+        StateMachine.RegisterState(new AIShootState());
+        StateMachine.RegisterState(new AIMoveState());
 
         StateMachine.ChangeState(InitalState);
         

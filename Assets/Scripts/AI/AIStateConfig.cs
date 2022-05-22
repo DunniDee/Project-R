@@ -8,6 +8,8 @@ public class AIStateConfig : ScriptableObject
     [Header("AI Properties")]
     public float m_fMovementSpeed = 4f;
     public float maxHealth = 100f;
+
+    public Vector2 WanderExtents = new Vector2(5.0f, 5.0f);
     
     [Header("Chase Properties")]
     public float ChaseSpeed = 7.0f;
@@ -21,5 +23,8 @@ public class AIStateConfig : ScriptableObject
     
     [Header("Shooting Properties")]
     public GameObject projectile;
+
+    public float projectileDamage = 10f;
+
     
 }
