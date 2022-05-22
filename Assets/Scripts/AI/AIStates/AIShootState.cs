@@ -14,8 +14,9 @@ public class AIShootState : AIState
     void Shoot(Script_BaseAI agent)
     {
         var obj = GameObject.Instantiate(agent.Config.projectile, agent.FiringPoint.position, agent.FiringPoint.rotation);
+        obj.gameObject.transform.LookAt(agent.Player.position + new Vector3(0.0f,1.0f,0.0f));
         obj.GetComponent<Scr_EnemyProjectile>().m_fDamage = agent.Config.projectileDamage;
-        obj.GetComponent<Rigidbody>().velocity = agent.FiringPoint.forward * m_ProjectileForce;
+        obj.GetComponent<Rigidbody>().velocity = obj.transform.forward  * m_ProjectileForce;
         timer = fireRate;
         GameObject.Destroy(obj,5.0f);
         agent.StateMachine.ChangeState(AIStateID.Moving);
