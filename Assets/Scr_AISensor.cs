@@ -11,7 +11,7 @@ public class Scr_AISensor : MonoBehaviour
     public float height = 1;
     public Color meshColor = Color.red;
 
-    public int scanFrequency = 30;
+    public float scanFrequency = 30.0f;
     public LayerMask Layers;
 
     [Header("Collider Properties")]
@@ -31,6 +31,7 @@ public class Scr_AISensor : MonoBehaviour
     void Start()
     {
         agent = GetComponent<Script_BaseAI>();
+        CreateWedgeMesh();
         scanFrequency = 1 / scanFrequency;
     }
 

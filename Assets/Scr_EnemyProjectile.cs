@@ -12,6 +12,10 @@ public class Scr_EnemyProjectile : MonoBehaviour
             collision.GetComponent<Scr_PlayerHealth>().TakeDamage(m_fDamage);
             Destroy(gameObject);
         }
+        else if(collision.tag == "Enemy")
+        {
+            return;
+        }
         else
         {
             Destroy(gameObject);
