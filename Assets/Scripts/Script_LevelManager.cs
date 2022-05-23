@@ -13,7 +13,7 @@ public class Script_LevelManager : MonoBehaviour
 
     [SerializeField] GameObject DummyPrefab;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         GetSpawnPoints();
 
@@ -57,15 +57,18 @@ public class Script_LevelManager : MonoBehaviour
     {
         LevelSections[0].transform.localPosition = Vector3.zero;
         LevelSections[0].transform.localRotation = Quaternion.identity;
+        LevelSections[0].isStatic = true;
 
         for (int i = 1; i < LevelSections.Length; i++)
         {
             LevelSections[i].transform.localPosition = LevelSections[i-1].transform.GetChild(0).transform.position; 
             LevelSections[i].transform.localRotation = LevelSections[i-1].transform.GetChild(0).transform.rotation;
+            LevelSections[i].isStatic = true;
         } 
 
         EndRoom.transform.localPosition = LevelSections[LevelSections.Length - 1].transform.GetChild(0).transform.position; 
         EndRoom.transform.localRotation = LevelSections[LevelSections.Length - 1].transform.GetChild(0).transform.rotation;
+        EndRoom.isStatic = true;
     }
 
     void SetStatic()

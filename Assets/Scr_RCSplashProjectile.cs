@@ -36,7 +36,8 @@ public class Scr_RCSplashProjectile : Script_RCProjectile
             Disable();
         }
     }
-    private void Hit() 
+
+    protected private void Hit() 
     {
         GameObject Expl = ObjectPooler.Instance.GetObject(Explosion);
         Expl.GetComponent<Scr_PAExplosion>().setRadius(ExplosionRadius);
@@ -63,5 +64,10 @@ public class Scr_RCSplashProjectile : Script_RCProjectile
         }
 
         Disable();
+    }
+
+    public void SetRadius(float _Radius)
+    {
+        ExplosionRadius = _Radius;
     }
 }

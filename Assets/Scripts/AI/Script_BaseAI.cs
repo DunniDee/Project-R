@@ -89,6 +89,7 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
         // Update UI 
         UITimer = 5.0f;
         m_UIHealth.gameObject.SetActive(true);
+        m_Animator.SetTrigger("Hit");
     }
 
     void Locomotion()
@@ -139,7 +140,7 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
         }
     }
     void UpdateUIHealth(){
-        m_UIHealth.HealthSlider.value = m_Health;
+        m_UIHealth.HealthSlider.value = m_Health / 100;
     }
 
     // Update is called once per frame
