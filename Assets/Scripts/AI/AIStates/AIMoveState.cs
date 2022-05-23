@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AIMoveState : AIState
 {
+    float moveTimer = 7.0f;
      private void FieldOfView(Script_BaseAI agent)
     {
         Vector3 PlayerDir = (agent.Player.position - agent.transform.position);
@@ -37,10 +38,17 @@ public class AIMoveState : AIState
     public void Enter(Script_BaseAI agent)
     {
          MoveToPosition(agent);
+         moveTimer = 7.0f;
     }
 
     public void Update(Script_BaseAI agent)
     {
+        moveTimer -= Time.deltaTime;
+        if(moveTimer <= 0.0f)
+        {
+            agent.StateMachine.ChangeState(AIStateID.Moving);
+        }
+        
        // FieldOfView(agent);
         switch(agent.GetIsInCombat())
         {
