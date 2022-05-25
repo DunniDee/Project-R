@@ -12,26 +12,62 @@ public abstract class Script_AbilityBase : MonoBehaviour
         Ultimate,
     }
 
+    public enum InputMode
+    {
+        HoldDown,
+        OnPress,
+    }
     [SerializeField] protected string AbilityName;
     [SerializeField] protected Sprite Icon;
     [SerializeField] protected AbilityType CurAbilityType;
+    [SerializeField] protected InputMode CurInputMode;
     [SerializeField] protected float Durration;
     protected float CurrentDurration;
    [SerializeField] protected float Cooldown;
     protected float CurrentCooldown;
     [SerializeField] protected KeyCode AbilityKey;
+    
+
     protected bool AblityEnd;
 
     virtual protected void Update()
     {
-        //Activating Ability
-        if (Input.GetKeyDown(AbilityKey) && CurrentCooldown <= 0)
+                //Activating Ability
+        switch(CurInputMode)
         {
-            OnAbilityStart();
-            CurrentDurration = Durration;
-            CurrentCooldown = Cooldown;
-            AblityEnd = true;
+            case InputMode.HoldDown:
+                if (Input.GetKey(AbilityKey))
+                {
+                    if (CurrentCooldown <= Durration)
+                    {
+                         OnAbilityStart();
+                         if(CurrentCooldown < Durration)
+                         {
+                             CurrentCooldown += Time.deltaTime;
+                         }
+                        
+                    }
+                }
+                else if(Input.GetKeyUp(AbilityKey))
+                {
+                    OnAbilityEnd();
+                }
+                break;
+            case InputMode.OnPress:
+                if (Input.GetKeyDown(AbilityKey))
+                {
+                    if (CurrentCooldown <= 0)
+                    {
+                        OnAbilityStart();
+                        CurrentDurration = Durration;
+                        CurrentCooldown = Cooldown;
+                        AblityEnd = true;
+                    }
+                }
+                break;
         }
+
+
 
         //Reducing Cooldown if is over time
         if (CurrentCooldown > 0)

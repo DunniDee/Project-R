@@ -16,7 +16,7 @@ public class Script_RCProjectile : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    protected void Update()
     {
         Vector3 NextPos = transform.position + transform.forward * Speed * Time.deltaTime;
 
@@ -25,12 +25,8 @@ public class Script_RCProjectile : MonoBehaviour
         RaycastHit hit;
         if(Physics.Raycast(transform.position, transform.forward, out hit, Speed * Time.deltaTime))
         {
-            var hitCollider = hit.collider.gameObject.GetComponent<CustomCollider>();
-            if (hitCollider != null)
-            {
-                hitCollider.TakeDamage(Damage, hitCollider.damageType);
-            }
-            Disable();
+            Hit(hit);
+
             //Bounce
             //transform.LookAt(transform.position + Vector3.Reflect(hit.point - transform.position, hit.normal));
         }
@@ -47,6 +43,16 @@ public class Script_RCProjectile : MonoBehaviour
         {
             Disable();
         }
+    }
+
+    protected private void Hit(RaycastHit _hit) 
+    {
+        var hitCollider = _hit.collider.gameObject.GetComponent<CustomCollider>();
+        if (hitCollider != null)
+        {
+            hitCollider.TakeDamage(Damage, hitCollider.damageType);
+        }
+        Disable();
     }
 
     public void SetlifeTime(float time)

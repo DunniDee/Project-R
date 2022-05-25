@@ -12,6 +12,9 @@ public class Script_AILocomotion : MonoBehaviour
     public bool ShowPath = true;
     public bool ShowDesiredvelocity = true;
     public bool ShowVelocity = true;
+    public bool ShowLineSight = true;
+
+   public 
    
    void OnDrawGizmos(){
        if(ShowPath){

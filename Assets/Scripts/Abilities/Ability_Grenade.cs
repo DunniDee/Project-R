@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class Ability_Grenade : Script_AbilityBase
 {
+    [SerializeField] int BurstCount;
+    [SerializeField] float BurstSpeed;
     [SerializeField] float Force;
+    [SerializeField] float Damage;
+    [SerializeField] float Radius;
     [SerializeField] GameObject Grenade;
     Transform Look;
     private void Start()
@@ -15,7 +19,23 @@ public class Ability_Grenade : Script_AbilityBase
     protected override void OnAbilityStart()
     {
         base.OnAbilityStart();
-        GameObject temp = GameObject.Instantiate(Grenade,Look.position,Look.rotation);
-        temp.GetComponent<Rigidbody>().AddForce(temp.transform.forward * Force, ForceMode.VelocityChange);
+        for (int i = 0; i < BurstCount; i++)
+        {
+            Invoke("Shoot", BurstSpeed * i);
+        }
+    }
+
+    void Shoot()
+    {
+        GameObject Proj = ObjectPooler.Instance.GetObject(Grenade);
+
+        Proj.transform.position = Look.position;
+        Proj.transform.rotation = Look.rotation;
+
+        Scr_RCSplashProjectile SpTemp = Proj.GetComponent<Scr_RCSplashProjectile>();
+        SpTemp.SetDamage(Damage);
+        SpTemp.SetSpeed(Force);
+        SpTemp.SetRadius(Radius);
+        SpTemp.SetlifeTime(5);
     }
 }
