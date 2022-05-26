@@ -33,6 +33,9 @@ public class Scr_RCSplashProjectile : Script_RCProjectile
         }
         else
         {
+            GameObject Expl = ObjectPooler.Instance.GetObject(Explosion);
+            Expl.GetComponent<Scr_PAExplosion>().setRadius(ExplosionRadius);
+            Expl.transform.position = transform.position;
             Disable();
         }
     }

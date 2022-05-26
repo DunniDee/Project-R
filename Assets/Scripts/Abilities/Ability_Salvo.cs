@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ability_Grenade : Script_AbilityBase
+public class Ability_Salvo : Script_AbilityBase
 {
     [SerializeField] int BurstCount;
     [SerializeField] float BurstSpeed;
@@ -19,6 +19,11 @@ public class Ability_Grenade : Script_AbilityBase
     protected override void OnAbilityStart()
     {
         base.OnAbilityStart();
+        Salvo();
+    }
+
+    void Salvo()
+    {
         for (int i = 0; i < BurstCount; i++)
         {
             Invoke("Shoot", BurstSpeed * i);

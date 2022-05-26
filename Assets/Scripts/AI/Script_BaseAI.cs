@@ -10,9 +10,9 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
     public Rigidbody rigidBody;
     public Script_AIStateMachine StateMachine;
 
-    private NavMeshAgent m_navMeshAgent;
-    private Animator m_Animator;
-    private Script_Ragdoll m_Ragdoll;
+    protected private NavMeshAgent m_navMeshAgent;
+    protected private Animator m_Animator;
+    protected private Script_Ragdoll m_Ragdoll;
     [SerializeField] private Script_UIHealth m_UIHealth;
 
     [Header("AI Properties")]
@@ -92,13 +92,13 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
         m_Animator.SetTrigger("Hit");
     }
 
-    void Locomotion()
+    protected void Locomotion()
     {
         m_Animator.SetFloat("Speed", m_navMeshAgent.velocity.magnitude);
     }
 
     // Start is called before the first frame update
-    void Start()
+    protected void Start()
     {
         //Get Components
         m_Animator = GetComponentInChildren<Animator>();
@@ -130,7 +130,7 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
         
     }
 
-    void Awake()
+    protected void Awake()
     {
         if(m_UIHealth)
         {
@@ -139,12 +139,12 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
             m_UIHealth.gameObject.SetActive(false);
         }
     }
-    void UpdateUIHealth(){
+    protected void UpdateUIHealth(){
         m_UIHealth.HealthSlider.value = m_Health / 100;
     }
 
     // Update is called once per frame
-    void Update()
+    protected void Update()
     {
         if(UITimer > 0.0f)
         {
