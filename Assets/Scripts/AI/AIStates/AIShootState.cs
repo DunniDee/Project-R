@@ -7,8 +7,10 @@ public class AIShootState : AIState
 {
     public Transform playerTransform;
 
-    float timer;
-    float fireRate = 2.0f;
+    float RunTimer;
+    float ShootTimer;
+    float WaitTime = 1.0f;
+    float fireRate = 0.5f;
     float m_ProjectileForce = 20.0f;
 
     void Shoot(Script_BaseAI agent)
@@ -17,9 +19,9 @@ public class AIShootState : AIState
         obj.gameObject.transform.LookAt(agent.Player.position + new Vector3(0.0f,1.0f,0.0f));
         obj.GetComponent<Scr_EnemyProjectile>().m_fDamage = agent.Config.projectileDamage;
         obj.GetComponent<Rigidbody>().velocity = obj.transform.forward  * m_ProjectileForce;
-        timer = fireRate;
+        ShootTimer = fireRate;
         GameObject.Destroy(obj,5.0f);
-        agent.StateMachine.ChangeState(AIStateID.Moving);
+        
     }
 
     void RotateTowardsPlayer(Script_BaseAI agent)
@@ -41,6 +43,7 @@ public class AIShootState : AIState
     {
         agent.GetNavMeshAgent().speed = agent.Config.ChaseSpeed;
         playerTransform = agent.Player;
+        WaitTime = Random.Range(1.0f,3.0f);
 
     }
 
@@ -51,16 +54,26 @@ public class AIShootState : AIState
         }
         RotateTowardsPlayer(agent);
 
-        if(timer > 0.0f)
+        if(ShootTimer > 0.0f)
         {
-            timer -= Time.deltaTime;
+            ShootTimer -= Time.deltaTime;
         }
-        else if (timer <= 0.0f)
+        else if (ShootTimer <= 0.0f)
         {
-            timer = fireRate;
+            ShootTimer = fireRate;
             Shoot(agent);
         }
        
+       if(RunTimer > 0.0f)
+       {
+           RunTimer -= Time.deltaTime;
+           
+       }
+       else if(RunTimer <= 0.0f)
+       {
+            RunTimer = WaitTime;
+            agent.StateMachine.ChangeState(AIStateID.Moving);
+       }
     }
 
     public void Exit(Script_BaseAI agent)

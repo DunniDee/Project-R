@@ -126,17 +126,15 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
         GetComponent<Scr_AISensor>().OnPlayerFoundEvent += StateMachine.ChangeState;
 
         
-        
+
+        m_UIHealth.HealthSlider.maxValue = Config.maxHealth;
+        m_UIHealth.HealthSlider.value = Config.maxHealth;
+        m_UIHealth.gameObject.SetActive(false);
     }
 
     void Awake()
     {
-        if(m_UIHealth)
-        {
-            m_UIHealth.HealthSlider.maxValue = Config.maxHealth;
-            m_UIHealth.HealthSlider.value = m_Health;
-            m_UIHealth.gameObject.SetActive(false);
-        }
+
     }
     void UpdateUIHealth(){
         m_UIHealth.HealthSlider.value = m_Health;
