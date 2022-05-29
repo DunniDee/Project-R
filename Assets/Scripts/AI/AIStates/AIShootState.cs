@@ -7,12 +7,34 @@ public class AIShootState : AIState
 {
     public Transform playerTransform;
 
-    float shootTimer = 0.0f;
-    float m_ProjectileForce = 100.0f;
-    
+    float timer;
+    float fireRate = 2.0f;
+    float m_ProjectileForce = 20.0f;
+
+    void Shoot(Script_BaseAI agent)
+    {
+        var obj = GameObject.Instantiate(agent.Config.projectile, agent.FiringPoint.position, agent.FiringPoint.rotation);
+        obj.gameObject.transform.LookAt(agent.Player.position + new Vector3(0.0f,1.0f,0.0f));
+        obj.GetComponent<Scr_EnemyProjectile>().m_fDamage = agent.Config.projectileDamage;
+        obj.GetComponent<Rigidbody>().velocity = obj.transform.forward  * m_ProjectileForce;
+        timer = fireRate;
+        GameObject.Destroy(obj,5.0f);
+        agent.StateMachine.ChangeState(AIStateID.Moving);
+    }
+
+    void RotateTowardsPlayer(Script_BaseAI agent)
+    {
+        Vector3 direction = playerTransform.position - agent.transform.position;
+        direction.y = 0;
+        Quaternion rotation = Quaternion.LookRotation(direction);
+        agent.transform.rotation = Quaternion.Slerp(agent.transform.rotation, rotation, Time.deltaTime * 2.0f);
+    }
+
+    //Move the agent to random point
+   
     public AIStateID getID()
     {
-        return AIStateID.ChasePlayer;
+        return AIStateID.ShootPlayer;
     }
 
     public void Enter(Script_BaseAI agent)
@@ -27,8 +49,17 @@ public class AIShootState : AIState
         if(!agent.enabled){
             return;
         }
-        agent.transform.LookAt(playerTransform, Vector3.up);
+        RotateTowardsPlayer(agent);
 
+        if(timer > 0.0f)
+        {
+            timer -= Time.deltaTime;
+        }
+        else if (timer <= 0.0f)
+        {
+            timer = fireRate;
+            Shoot(agent);
+        }
        
     }
 

@@ -17,11 +17,19 @@ public abstract class Script_WeaponBase : MonoBehaviour
     [SerializeField] protected float FireRate;
     [SerializeField] protected float MinSpreadAngle;
     [SerializeField] protected float MaxSpreadAngle;
+    protected float defMinSpreadAngle;
+    protected float defMaxSpreadAngle;
     [SerializeField] protected float SpreadIncrement;
     [SerializeField] protected float SpreadSlerp;
     [SerializeField] protected float CurrentSpreadAngle;
      protected float ShotTimer;
     [SerializeField] protected int ShotCount;
+
+    [Header("Shot Variables")]
+    [SerializeField] protected float ADSFovZoom;
+    [SerializeField] protected float ADSMinSpreadAngle;
+    [SerializeField] protected float ADSMaxSpreadAngle;
+    protected bool ADS;
 
     [Space]
 
@@ -40,6 +48,9 @@ public abstract class Script_WeaponBase : MonoBehaviour
     [SerializeField] protected float SlerpSpeed; // speed it slerps to the specified recoil angle
     [SerializeField] protected float ShakeTime; // time the screen shakes for
     [SerializeField] protected float ShakeAmplitude; // amplitude of the screen shake
+
+    [SerializeField] protected float ADSShakeMultiplier; // Multipliy the shake when ads
+    [SerializeField] protected float ADSRecoilMultiplier; // Multiply the recoil when ads
 
     [Space]
 
@@ -62,6 +73,7 @@ public abstract class Script_WeaponBase : MonoBehaviour
     protected float m_xVelocity;
     protected int zVelHash;
     protected int xVelHash;
+    protected int ADSHash;
 
     //Hidden Variables
     protected Script_AdvancedMotor Motor;
@@ -114,7 +126,11 @@ public abstract class Script_WeaponBase : MonoBehaviour
         ReloadHash = Animator.StringToHash("Reload");
         zVelHash = Animator.StringToHash("zVelocity");
         xVelHash = Animator.StringToHash("xVelocity");
+        ADSHash = Animator.StringToHash("ADS");
         
+        defMaxSpreadAngle = MaxSpreadAngle;
+        defMinSpreadAngle = MinSpreadAngle;
+        Look.SetCrosshairSize(CurrentSpreadAngle);
     }
 
     protected void Animate() // make sure to call in update
@@ -131,16 +147,47 @@ public abstract class Script_WeaponBase : MonoBehaviour
 
         Anim.SetFloat(zVelHash, m_zVelocity);
         Anim.SetFloat(xVelHash, m_xVelocity);
+
+        if (Input.GetKey(KeyCode.Mouse1) && !IsReloading) // ADS
+        {
+            ADS = true;
+            Look.SetLerpFov(-ADSFovZoom);
+            Motor.SetIsSprinting(false);
+        }else
+        {
+            ADS = false;
+            Look.SetLerpFov(0);
+        }
+        Anim.SetBool(ADSHash,ADS);
     }
 
     protected void SetRecoil()
     {
-        Look.SetShake(ShakeTime, ShakeAmplitude);
-        Look.SetRecoil(SlerpSpeed,RecoilTime,Quaternion.Euler(-Recoil,Random.Range(-Recoil/2,Recoil/2),0));
+        if (ADS)
+        {
+            Look.SetShake(ShakeTime, ShakeAmplitude * ADSShakeMultiplier);
+            Look.SetRecoil(SlerpSpeed,RecoilTime,Quaternion.Euler(-Recoil,Random.Range(-Recoil/2,Recoil/2) * ADSRecoilMultiplier,0));
+        }
+        else
+        {
+            Look.SetShake(ShakeTime, ShakeAmplitude);
+            Look.SetRecoil(SlerpSpeed,RecoilTime,Quaternion.Euler(-Recoil,Random.Range(-Recoil/2,Recoil/2),0));
+        }
     }
 
     protected void UpdateBloom()
     {
+        if (ADS)
+        {
+            MaxSpreadAngle = ADSMaxSpreadAngle;
+            MinSpreadAngle = ADSMinSpreadAngle;
+        }
+        else
+        {
+            MaxSpreadAngle = defMaxSpreadAngle;
+            MinSpreadAngle = defMinSpreadAngle;
+        }
+
         CurrentSpreadAngle -= Time.deltaTime * SpreadSlerp;
         CurrentSpreadAngle = Mathf.Clamp(CurrentSpreadAngle,MinSpreadAngle,MaxSpreadAngle);
         Look.SetCrosshairSize(CurrentSpreadAngle);

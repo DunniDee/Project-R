@@ -1,11 +1,11 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Script_SceneManager : MonoBehaviour
 {
-    [SerializeField] GameObject LoaderCanvas;
-    [SerializeField] GameObject PressKeyToContinue;
     public static Script_SceneManager Instance; // Singleton
     private void Awake()
     {
@@ -20,39 +20,40 @@ public class Script_SceneManager : MonoBehaviour
         }
     }
 
-    public async void LoadScene(string sceneName)
+    public GameObject loadingScreen;
+    public string sceneToLoad;
+    public CanvasGroup canvasGroup;
+    public void Start()
     {
-        var scene = SceneManager.LoadSceneAsync(sceneName);
-        scene.allowSceneActivation = false;
 
-        LoaderCanvas.SetActive(true);
-        PressKeyToContinue.SetActive(false);
-
-        do
-        {
-            
-        } while (scene.progress < 0.9f);
-
-        PressKeyToContinue.SetActive(true);
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            LoaderCanvas.SetActive(false);
-            PressKeyToContinue.SetActive(false);
-            scene.allowSceneActivation = true;
-        }
     }
-
-    private void Update() 
+    public void LoadScene(string SceneName)
     {
-        if (Input.GetKeyDown(KeyCode.Alpha8))
-        {
-            LoadScene("TestLevel");
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha9))
-        {
-            LoadScene("HubWorld");
-        }
+        sceneToLoad = SceneName;
+        StartCoroutine(StartLoad());
     }
-
+    IEnumerator StartLoad()
+    {
+        loadingScreen.SetActive(true);
+        yield return StartCoroutine(FadeLoadingScreen(1, 1));
+        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneToLoad);
+        while (!operation.isDone)
+        {
+            yield return null;
+        }
+        yield return StartCoroutine(FadeLoadingScreen(0, 1));
+        loadingScreen.SetActive(false);
+    }
+    IEnumerator FadeLoadingScreen(float targetValue, float duration)
+    {
+        float startValue = canvasGroup.alpha;
+        float time = 0;
+        while (time < duration)
+        {
+            canvasGroup.alpha = Mathf.Lerp(startValue, targetValue, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        canvasGroup.alpha = targetValue;
+    }
 }

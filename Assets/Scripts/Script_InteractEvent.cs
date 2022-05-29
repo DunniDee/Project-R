@@ -99,10 +99,10 @@ public class Script_InteractEvent : MonoBehaviour
         CheckEventType();
     }
 
-    void OnValidate()
-    {
-        gameObject.layer = LayerMask.NameToLayer("Interactable");      
-    }
+    // void OnValidate()
+    // {
+    //     gameObject.layer = LayerMask.NameToLayer("Interactable");      
+    // }
 
     void OnTriggerEnter()
     {

@@ -6,18 +6,21 @@ using TMPro;
 
 public class Script_HealthUI : MonoBehaviour
 {
-    
     public Slider m_healthSlider;
+    public Slider m_followSlider;
 
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] float m_DecreaseSpeed = 5.0f;
+
+    public void DecreaseValue()
     {
-        
+        if(m_followSlider.value != m_healthSlider.value && m_healthSlider.value < m_followSlider.value)
+        {
+            m_followSlider.value -= m_DecreaseSpeed * Time.deltaTime ;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Update()
     {
-        
+        DecreaseValue();
     }
 }

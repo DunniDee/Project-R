@@ -31,7 +31,10 @@ public class ToggleMapOnOff : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        OnOff = !OnOff;
+        if (other.CompareTag("Player"))
+        {
+            OnOff = !OnOff;
+        }
 
     }
 }

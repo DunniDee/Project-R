@@ -10,17 +10,44 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
     public Rigidbody rigidBody;
     public Script_AIStateMachine StateMachine;
 
-    private NavMeshAgent m_navMeshAgent;
-    private Animator m_Animator;
-    private Script_Ragdoll m_Ragdoll;
-    private Script_UIHealth m_UIHealth;
+    protected private NavMeshAgent m_navMeshAgent;
+    protected private Animator m_Animator;
+    protected private Script_Ragdoll m_Ragdoll;
+    [SerializeField] private Script_UIHealth m_UIHealth;
 
     [Header("AI Properties")]
     public AIStateID InitalState;
     public AIStateConfig Config;
 
+    [SerializeField]
+    bool isInCombat = false;
+
     [SerializeField] private float m_Health;
-    private float m_fDamage = 10f;
+
+    public Transform FiringPoint;
+
+    float UITimer = 0.0f;
+    
+    public void AlertLocalAI(float _radius)
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, _radius);
+        foreach (Collider collider in colliders)
+        {
+            if (collider.GetComponent<Script_BaseAI>() != null)
+            {
+                collider.GetComponent<Script_BaseAI>().StateMachine.ChangeState(AIStateID.ShootPlayer);
+            }
+        }
+    }
+    public void SetIsInCombat(bool _bool)
+    {
+        isInCombat = _bool;
+    }
+
+    public bool GetIsInCombat()
+    {
+        return isInCombat;
+    }
 
     public NavMeshAgent GetNavMeshAgent()
     {
@@ -37,31 +64,13 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
         return m_Animator;
     }
 
-    // public void TakeDamage(float _Damage, CustomCollider.DamageType _DamageType)
-    // {
-    //     if(StateMachine.currentStateID == AIStateID.Idle)
-    //     {
-    //         StateMachine.ChangeState(AIStateID.ChasePlayer);
-    //     }
-    //     switch(_DamageType){
-    //         case CustomCollider.DamageType.Critical:
-    //             m_Health -= _Damage * 2;
-    //             break;
-    //         case CustomCollider.DamageType.Normal:
-    //             m_Health -= _Damage;
-    //             break;
-    //     }
-    //     if (m_Health <= 0)
-    //     {
-    //         StateMachine.ChangeState(AIStateID.Death);
-    //     }
-    // }
-
-        public void Damage(float _Damage, CustomCollider.DamageType _DamageType)
+    public void Damage(float _Damage, CustomCollider.DamageType _DamageType)
     {
-        if(StateMachine.currentStateID == AIStateID.Idle)
+        if(StateMachine.currentStateID == AIStateID.Idle || StateMachine.currentStateID == AIStateID.Moving)
         {
-            StateMachine.ChangeState(AIStateID.ChasePlayer);
+            isInCombat = true;
+            StateMachine.ChangeState(AIStateID.ShootPlayer);
+            
         }
         switch(_DamageType){
             case CustomCollider.DamageType.Critical:
@@ -69,21 +78,27 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
                 break;
             case CustomCollider.DamageType.Normal:
                 m_Health -= _Damage;
+                AlertLocalAI(10.0f);
                 break;
         }
         if (m_Health <= 0)
         {
             StateMachine.ChangeState(AIStateID.Death);
         }
+
+        // Update UI 
+        UITimer = 5.0f;
+        m_UIHealth.gameObject.SetActive(true);
+        m_Animator.SetTrigger("Hit");
     }
 
-    void Locomotion()
+    protected void Locomotion()
     {
         m_Animator.SetFloat("Speed", m_navMeshAgent.velocity.magnitude);
     }
 
     // Start is called before the first frame update
-    void Start()
+    protected void Start()
     {
         //Get Components
         m_Animator = GetComponentInChildren<Animator>();
@@ -96,26 +111,50 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
 
         //Set the Inital State of the AI.
         StateMachine = new Script_AIStateMachine(this);
-        StateMachine.RegisterState(new AIChaseState());
+        //StateMachine.RegisterState(new AIChaseState());
         StateMachine.RegisterState(new AIDeathState());
         StateMachine.RegisterState(new AIIdleState());
+        StateMachine.RegisterState(new AIShootState());
+        StateMachine.RegisterState(new AIMoveState());
 
         StateMachine.ChangeState(InitalState);
         
         //Set the Max Health and the Slider Values
         m_Health = Config.maxHealth;
 
-        m_UIHealth.HealthSlider.maxValue = Config.maxHealth;
-        m_UIHealth.HealthSlider.value = m_Health;
+        
+
+        GetComponent<Scr_AISensor>().OnPlayerFoundEvent += StateMachine.ChangeState;
+
+        
+        
     }
 
-    void UpdateUIHealth(){
-        m_UIHealth.HealthSlider.value = m_Health;
+    protected void Awake()
+    {
+        if(m_UIHealth)
+        {
+            m_UIHealth.HealthSlider.maxValue = Config.maxHealth;
+            m_UIHealth.HealthSlider.value = m_Health;
+            m_UIHealth.gameObject.SetActive(false);
+        }
+    }
+    protected void UpdateUIHealth(){
+        m_UIHealth.HealthSlider.value = m_Health / 100;
     }
 
     // Update is called once per frame
-    void Update()
+    protected void Update()
     {
+        if(UITimer > 0.0f)
+        {
+            UITimer -= Time.deltaTime;
+        }
+        else if(UITimer <= 0.0f)
+        {
+            m_UIHealth.gameObject.SetActive(false);
+        }
+      
         if(m_navMeshAgent.enabled){
             StateMachine.Update();
             Locomotion();
