@@ -27,12 +27,11 @@ public class Weapon_BurstProjectile : Script_ProjectileWeapon
             {
                 Invoke("Shoot", BurstSpeed * i);
             }
-
+            
             Motor.SetIsSprinting(false);
         }
 
         Reload();
-
         Animate();
     }
 }

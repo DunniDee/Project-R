@@ -16,13 +16,13 @@ public class Script_AmmoUI : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Awake()
-    {
-        currentWeapon = GetComponentInParent<Script_PlayerWeapons>();
-        currentWeapon.getCurrentEquip().onAmmoChangeEvent += OnAmmoChange;
-        m_maxAmmo.text = currentWeapon.getCurrentEquip().GetMagCount().ToString();
-        m_currentAmmo.text = m_maxAmmo.text;
-    }
+    // void Awake()
+    // {
+    //     currentWeapon.getCurrentEquip().onAmmoChangeEvent += OnAmmoChange;
+    //     m_maxAmmo.text = currentWeapon.getCurrentEquip().GetMagCount().ToString();        currentWeapon = GetComponentInParent<Script_PlayerWeapons>();
+
+    //     m_currentAmmo.text = m_maxAmmo.text;
+    // }
 
     // Update is called once per frame
     void Update()
