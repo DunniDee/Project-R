@@ -23,10 +23,10 @@ Material:
   m_Name: Mat_Refrection
   m_Shader: {fileID: -6465566751694194690, guid: 4f1fb5f04164fd442ac6d3102c0b11ca,
     type: 3}
-  m_ShaderKeywords: _DOUBLESIDED_ON _ENABLE_FOG_ON_TRANSPARENT _SURFACE_TYPE_TRANSPARENT
+  m_ShaderKeywords: _ENABLE_FOG_ON_TRANSPARENT _SURFACE_TYPE_TRANSPARENT
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 1
+  m_DoubleSidedGI: 0
   m_CustomRenderQueue: 3000
   stringTagMap:
     MotionVector: User
@@ -137,7 +137,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_54494be550be4b0590fbb9bbc5118d37: 0.1
+    - Vector1_54494be550be4b0590fbb9bbc5118d37: 0.03
+    - Vector1_da6c8d5b17f04babae6892b59f166e1e: 1
     - Vector1_f9982eb219bc4a73b2081dc8dc5903a8: 0
     - _AORemapMax: 1
     - _AORemapMin: 0
@@ -156,8 +157,8 @@ Material:
     - _Anisotropy: 0
     - _BlendMode: 4
     - _CoatMask: 0
-    - _CullMode: 0
-    - _CullModeForward: 0
+    - _CullMode: 1
+    - _CullModeForward: 1
     - _Cutoff: 0.5
     - _DepthOffsetEnable: 0
     - _DetailAlbedoScale: 1
@@ -168,7 +169,7 @@ Material:
     - _DisplacementLockObjectScale: 1
     - _DisplacementLockTilingScale: 1
     - _DisplacementMode: 0
-    - _DoubleSidedEnable: 1
+    - _DoubleSidedEnable: 0
     - _DoubleSidedNormalMode: 1
     - _DstBlend: 10
     - _EmissiveColorMode: 1
@@ -235,7 +236,7 @@ Material:
     - _Thickness: 1
     - _TransmissionEnable: 1
     - _TransparentBackfaceEnable: 0
-    - _TransparentCullMode: 2
+    - _TransparentCullMode: 1
     - _TransparentDepthPostpassEnable: 0
     - _TransparentDepthPrepassEnable: 0
     - _TransparentSortPriority: 0
@@ -251,10 +252,9 @@ Material:
     - _ZTestTransparent: 4
     - _ZWrite: 0
     m_Colors:
-    - Color_05edc6248e8b4e82b7409037ebb3b261: {r: 0.01886791, g: 0.01886791, b: 0.01886791,
-        a: 0}
-    - Color_41264ccd8b974d03bc947977a0e735ef: {r: 0.754717, g: 0.754717, b: 0.754717,
-        a: 0}
+    - Color_05edc6248e8b4e82b7409037ebb3b261: {r: 0, g: 0, b: 0, a: 0}
+    - Color_41264ccd8b974d03bc947977a0e735ef: {r: 1, g: 1, b: 1, a: 0}
+    - Vector2_a2136026772647bf88bf3bf49416dca7: {r: -50, g: 1, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
