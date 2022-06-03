@@ -23,13 +23,14 @@ public class Weapon_CaptainsCombi : Script_ProjectileWeapon
 
         if (!IsCombined)
         {
+
             if (Input.GetKey(ShootKey) && CurMagCount > 0 && ShotTimer <= 0 && !IsReloading)
             {
-                Motor.SetIsSprinting(false);
-                Shoot();
-
                 IsLeft = !IsLeft;
                 Anim.SetBool("IsLeft", IsLeft);
+
+                Motor.SetIsSprinting(false);
+                Shoot();
             }   
 
             if (IsLeft)
@@ -58,7 +59,7 @@ public class Weapon_CaptainsCombi : Script_ProjectileWeapon
 
             if (ShotTimer > 0)
             {
-                ShotTimer-= Time.deltaTime * 0.75f;
+                ShotTimer-= Time.deltaTime;
             }
         }
 
