@@ -8,12 +8,9 @@ public class Script_RCProjectile : MonoBehaviour
     [SerializeField] protected float Speed;
     [SerializeField] protected float Damage;
 
-    TrailRenderer Trail;
+    [SerializeField] TrailRenderer Trail;
 
-    private void Start() 
-    {
-        Trail = gameObject.GetComponent<TrailRenderer>();
-    }
+   
 
     // Update is called once per frame
     protected void Update()
