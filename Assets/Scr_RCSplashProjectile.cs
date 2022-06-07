@@ -43,8 +43,8 @@ public class Scr_RCSplashProjectile : Script_RCProjectile
     protected private void Hit() 
     {
         GameObject Expl = ObjectPooler.Instance.GetObject(Explosion);
-        Expl.GetComponent<Scr_PAExplosion>().setRadius(ExplosionRadius);
-        Expl.transform.position = transform.position;
+        //Expl.GetComponent<Scr_PAExplosion>().setRadius(ExplosionRadius);
+        //Expl.transform.position = transform.position;
 
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, ExplosionRadius);
         List<Transform> TransfromList = new List<Transform>();

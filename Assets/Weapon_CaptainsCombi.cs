@@ -9,10 +9,32 @@ public class Weapon_CaptainsCombi : Script_ProjectileWeapon
     Transform LeftFirepoint;
     bool IsCombined = false;
     bool IsLeft = false;
+
+    [SerializeField] float CombiFireateModifier;
+    [SerializeField] float CombiDamage;
+    [SerializeField] float UnComDamage;
+    [SerializeField] float CombiADS;
+    [SerializeField] float UnComADS;
+
+    [SerializeField] float CombiMinSpread;
+    [SerializeField] float CombiMaxSpread;
+    [SerializeField] float CombiADSMinSpread;
+    [SerializeField] float CombiADSMaxSpread;
+
+    [SerializeField] float UnComMinSpread;
+    [SerializeField] float UnComMaxSpread;
+    [SerializeField] float UnComADSMinSpread;
+    [SerializeField] float UnComADSMaxSpread;
+
+    [SerializeField] AudioClip CombiShotSound;
+    [SerializeField] AudioClip UnComShotSound;
+
     private void Start()
     {
         Initialize();
         LeftFirepoint = FiringPoint;
+        ShootSound = UnComShotSound;
+
     }
 
     // Update is called once per frame
@@ -23,7 +45,6 @@ public class Weapon_CaptainsCombi : Script_ProjectileWeapon
 
         if (!IsCombined)
         {
-
             if (Input.GetKey(ShootKey) && CurMagCount > 0 && ShotTimer <= 0 && !IsReloading)
             {
                 IsLeft = !IsLeft;
@@ -59,7 +80,7 @@ public class Weapon_CaptainsCombi : Script_ProjectileWeapon
 
             if (ShotTimer > 0)
             {
-                ShotTimer-= Time.deltaTime;
+                ShotTimer-= Time.deltaTime * CombiFireateModifier;
             }
         }
 
@@ -67,6 +88,15 @@ public class Weapon_CaptainsCombi : Script_ProjectileWeapon
         {
             IsCombined = !IsCombined;
             Anim.SetBool("IsCombined", IsCombined);
+
+            if (IsCombined)
+            {
+                SetCombiStats();
+            }
+            else
+            {
+                SetUnComStats();
+            }
         }
 
         Reload();
@@ -75,4 +105,31 @@ public class Weapon_CaptainsCombi : Script_ProjectileWeapon
 
         UpdateBloom();
     }
+
+    void SetCombiStats()
+    {
+        Damage = CombiDamage;
+        ADSFovZoom = CombiADS;
+
+        defMinSpreadAngle = CombiMinSpread;
+        defMaxSpreadAngle = CombiMaxSpread;
+        ADSMinSpreadAngle = CombiADSMinSpread;
+        ADSMaxSpreadAngle = CombiADSMaxSpread;
+
+        ShootSound = CombiShotSound;
+    }
+    void SetUnComStats()
+    {
+        Damage = UnComDamage;
+        ADSFovZoom = UnComADS;
+
+        defMinSpreadAngle = UnComMinSpread;
+        defMaxSpreadAngle = UnComMaxSpread;
+        ADSMinSpreadAngle = UnComADSMinSpread;
+        ADSMaxSpreadAngle = UnComADSMaxSpread;
+
+        ShootSound = UnComShotSound;
+    }
+
+
 }

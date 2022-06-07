@@ -5,6 +5,7 @@ using UnityEngine;
 public class Scr_SalvoMissile : Scr_RCSplashProjectile
 {
     [SerializeField] float m_Wavyness;
+    [SerializeField] float m_SeekStrength = 0.25f;
     [SerializeField] Transform SeekTransform;
 
     public void SetSeekTransform(Transform _transform)
@@ -29,7 +30,7 @@ public class Scr_SalvoMissile : Scr_RCSplashProjectile
             NextPos = transform.position + transform.forward  * Speed * Time.deltaTime
             + transform.up * Random.Range(-m_Wavyness,m_Wavyness) * Mathf.Sin(Lifetime * 10) * Time.deltaTime  
             + transform.right * Random.Range(-m_Wavyness,m_Wavyness) * Mathf.Cos(Lifetime * 10) * Time.deltaTime
-            + SeekDir * 0.1f * Time.deltaTime;   
+            + SeekDir.normalized * m_SeekStrength * Time.deltaTime;   
         }
         
 
@@ -39,6 +40,9 @@ public class Scr_SalvoMissile : Scr_RCSplashProjectile
         if(Physics.Raycast(transform.position, transform.forward, out hit, Speed * Time.deltaTime))
         {
             Hit();
+            GameObject Expl = ObjectPooler.Instance.GetObject(Explosion);
+            Expl.transform.position = transform.position;
+            Disable();
         }
 
         Debug.DrawLine(transform.position, NextPos, Color.red);
@@ -53,9 +57,10 @@ public class Scr_SalvoMissile : Scr_RCSplashProjectile
         else
         {
             GameObject Expl = ObjectPooler.Instance.GetObject(Explosion);
-            Expl.GetComponent<Scr_PAExplosion>().setRadius(ExplosionRadius);
             Expl.transform.position = transform.position;
             Disable();
         }
     }
+
+
 }
