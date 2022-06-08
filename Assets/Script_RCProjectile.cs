@@ -28,11 +28,9 @@ public class Script_RCProjectile : MonoBehaviour
             var hitCollider = hit.collider.gameObject.GetComponent<CustomCollider>();
             if (hitCollider != null)
             {
-                hitCollider.TakeDamage(Damage, hitCollider.damageType);
+                hitCollider.TakeDamage(Damage, hitCollider.damageType, transform.forward);
             }
             Disable();
-            //Bounce
-            //transform.LookAt(transform.position + Vector3.Reflect(hit.point - transform.position, hit.normal));
         }
 
         Debug.DrawLine(transform.position, NextPos, Color.red);

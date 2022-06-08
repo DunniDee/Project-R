@@ -27,7 +27,7 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
     public Transform FiringPoint;
 
     float UITimer = 0.0f;
-    
+    public float dieForce = 100.0f;
     public void AlertLocalAI(float _radius)
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, _radius);
@@ -64,7 +64,7 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
         return m_Animator;
     }
 
-    public void Damage(float _Damage, CustomCollider.DamageType _DamageType)
+    public void Damage(float _Damage, CustomCollider.DamageType _DamageType, Vector3 _direction)
     {
         if(StateMachine.currentStateID == AIStateID.Idle || StateMachine.currentStateID == AIStateID.Moving)
         {
@@ -84,7 +84,10 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
         if (m_Health <= 0)
         {
             StateMachine.ChangeState(AIStateID.Death);
+            _direction.y = 0.0f;
+            m_Ragdoll.ApplyForce(_direction * dieForce);
         }
+
 
         // Update UI 
         UITimer = 5.0f;
@@ -101,10 +104,11 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
     {
         //Get Components
         m_Animator = GetComponentInChildren<Animator>();
+        m_UIHealth = GetComponentInChildren<Script_UIHealth>();
         m_navMeshAgent = GetComponent<NavMeshAgent>();
         rigidBody = GetComponent<Rigidbody>();
         m_Ragdoll = GetComponent<Script_Ragdoll>();
-        m_UIHealth = GetComponentInChildren<Script_UIHealth>();
+       
         
         Player = GameObject.FindGameObjectWithTag("Player").transform;
 
@@ -121,15 +125,13 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
         //Set the Max Health and the Slider Values
         m_Health = Config.maxHealth;
 
-        
+        m_UIHealth.HealthSlider.maxValue = m_Health;
+        m_UIHealth.HealthSlider.value = m_Health;
+        m_UIHealth.gameObject.SetActive(false);
 
         GetComponent<Scr_AISensor>().OnPlayerFoundEvent += StateMachine.ChangeState;
 
-        
 
-        m_UIHealth.HealthSlider.maxValue = Config.maxHealth;
-        m_UIHealth.HealthSlider.value = Config.maxHealth;
-        m_UIHealth.gameObject.SetActive(false);
     }
 
     void Awake()
@@ -151,7 +153,8 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
         {
             m_UIHealth.gameObject.SetActive(false);
         }
-      
+
+
         if(m_navMeshAgent.enabled){
             StateMachine.Update();
             Locomotion();
