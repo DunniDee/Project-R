@@ -12,7 +12,7 @@ public class Script_RCProjectile : MonoBehaviour
 
     private void Start() 
     {
-        Trail = gameObject.GetComponent<TrailRenderer>();
+        Trail = gameObject.GetComponentInChildren<TrailRenderer>();
     }
 
     // Update is called once per frame
