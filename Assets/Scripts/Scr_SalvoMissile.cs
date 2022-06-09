@@ -39,6 +39,10 @@ public class Scr_SalvoMissile : Scr_RCSplashProjectile
         RaycastHit hit;
         if(Physics.Raycast(transform.position, transform.forward, out hit, Speed * Time.deltaTime))
         {
+            if (hit.transform.CompareTag("Player"))
+            {
+                return;
+            }
             Hit();
             GameObject Expl = ObjectPooler.Instance.GetObject(Explosion);
             Expl.transform.position = transform.position;

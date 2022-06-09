@@ -70,12 +70,28 @@ public class Weapon_CaptainsCombi : Script_ProjectileWeapon
         }
         else
         {
-            if (Input.GetKey(ShootKey) && CurMagCount > 0 && ShotTimer <= 0 && !IsReloading)
+            if (ADS)
             {
-                FiringPoint = CombiFirepoint;
+                if (Input.GetKey(ShootKey) && CurMagCount > 0 && ShotTimer <= 0 && !IsReloading)
+                {
+                    FiringPoint = CombiFirepoint;
+                    for (int i = 0; i < 3; i++)
+                    {
+                        Invoke("Shoot", 0.085f * i);
+                    }
 
-                Shoot();
-                Motor.SetIsSprinting(false);
+                    Motor.SetIsSprinting(false);
+                }
+            }
+            else
+            {
+                if (Input.GetKey(ShootKey) && CurMagCount > 0 && ShotTimer <= 0 && !IsReloading)
+                {
+                    FiringPoint = CombiFirepoint;
+
+                    Shoot();
+                    Motor.SetIsSprinting(false);
+                }
             }
 
             if (ShotTimer > 0)
@@ -130,6 +146,4 @@ public class Weapon_CaptainsCombi : Script_ProjectileWeapon
 
         ShootSound = UnComShotSound;
     }
-
-
 }
