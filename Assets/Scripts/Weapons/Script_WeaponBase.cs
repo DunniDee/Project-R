@@ -56,6 +56,7 @@ public abstract class Script_WeaponBase : MonoBehaviour
 
     [Header("Audio Clips")]
     [SerializeField] protected AudioClip ShootSound; // angle to recoil by
+    [SerializeField] protected AudioClip EmptySound; // angle to recoil by
     [SerializeField] protected AudioClip ReloadSound; // angle to recoil by
 
     [Space]

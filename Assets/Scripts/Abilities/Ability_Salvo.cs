@@ -11,6 +11,8 @@ public class Ability_Salvo : Script_AbilityBase
     [SerializeField] float Radius;
     [SerializeField] GameObject Grenade;
     Transform Look;
+    [SerializeField] Transform ShotPos;
+    [SerializeField] Transform SeekPos;
     private void Start()
     {
         Look = transform.GetChild(0);
@@ -20,6 +22,21 @@ public class Ability_Salvo : Script_AbilityBase
     {
         base.OnAbilityStart();
         Salvo();
+    }
+
+    protected override void CustomUpdate()
+    {
+        base.CustomUpdate();
+        
+        RaycastHit hit;
+        if (Physics.Raycast(Look.position, Look.forward, out hit,500))
+        {
+            SeekPos.position = hit.point;
+        }
+        else
+        {
+            SeekPos.position = transform.position + Look.forward * 500;
+        }
     }
 
     void Salvo()
@@ -34,13 +51,14 @@ public class Ability_Salvo : Script_AbilityBase
     {
         GameObject Proj = ObjectPooler.Instance.GetObject(Grenade);
 
-        Proj.transform.position = Look.position;
-        Proj.transform.rotation = Look.rotation;
+        Proj.transform.position = ShotPos.position;
+        Proj.transform.rotation = ShotPos.rotation;
 
-        Scr_RCSplashProjectile SpTemp = Proj.GetComponent<Scr_RCSplashProjectile>();
+        Scr_SalvoMissile SpTemp = Proj.GetComponent<Scr_SalvoMissile>();
         SpTemp.SetDamage(Damage);
         SpTemp.SetSpeed(Force);
         SpTemp.SetRadius(Radius);
+        SpTemp.SetSeekTransform(SeekPos);
         SpTemp.SetlifeTime(5);
     }
 }

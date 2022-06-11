@@ -119,13 +119,13 @@ public class Script_PlayerLook : MonoBehaviour
         CameraHolder.localRotation = Quaternion.Euler(m_XRotation, m_YRotation, -TiltLerp);
         Orientation.transform.rotation = Quaternion.Euler(0, m_YRotation, 0);
 
-        if (Physics.Raycast(MainCam.transform.position, MainCam.transform.forward, out hit, 1000))
+        if (Physics.Raycast(FPCam.transform.position, MainCam.transform.forward, out hit, 1000))
         {
             AimPoint = hit.point;
         }
         else
         {
-            AimPoint =  MainCam.transform.position + MainCam.transform.forward * 1000;
+            AimPoint =  FPCam.transform.position + FPCam.transform.forward * 1000;
         }
 
         Debug.DrawLine(MainCam.transform.position, hit.point, Color.red);
