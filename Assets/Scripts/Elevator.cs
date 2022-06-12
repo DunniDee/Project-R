@@ -27,20 +27,20 @@ public class Elevator : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if(Played == false )//&& wait == false)
+        if(Played == false)
         {
-            Elevatin.speed = prevSpeed;
+            StartCoroutine(Example1());
             StartCoroutine(Example4());
+
+            Elevatin.speed = prevSpeed;
+            
             Played = true;
             Elevatin.Play(GoUp, 0, 0f);
            
             
         }
 
-        if (Played == false)
-        {
-            StartCoroutine(Example1());
-        }
+    
 
 
 
@@ -48,7 +48,7 @@ public class Elevator : MonoBehaviour
 
     IEnumerator Example4()
     {
-        yield return new WaitForSeconds(6);
+        yield return new WaitForSeconds(10);
         Played = false;
     }
 
@@ -60,7 +60,7 @@ public class Elevator : MonoBehaviour
         var animator = GetComponent<Animator>();
         prevSpeed = animator.speed;
         animator.speed = 0;
-        //wait = wait ? false : true;
+        wait = wait ? false : true;
 
 
 
