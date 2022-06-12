@@ -25,19 +25,16 @@ public class Script_ProjectileWeapon : Script_WeaponBase
                 Proj.transform.position = FiringPoint.position;
                 Proj.transform.rotation = ProjectileSpread;
 
-                Rigidbody RB = Proj.GetComponent<Rigidbody>();
-                if (RB != null)
-                {   
-                    RB.useGravity = ApplyGravity;
-                    RB.AddForce(Proj.transform.forward * ProjectileForce, ForceMode.VelocityChange);
-                }
-                else
+                Script_RCProjectile temp = Proj.GetComponent<Script_RCProjectile>();
+                temp.SetDamage(Damage);
+                temp.SetlifeTime(ProjectileLifetime);
+                temp.SetSpeed(ProjectileForce);
+
+                if (CurMagCount <= 10)
                 {
-                    Script_RCProjectile temp = Proj.GetComponent<Script_RCProjectile>();
-                    temp.SetDamage(Damage);
-                    temp.SetlifeTime(ProjectileLifetime);
-                    temp.SetSpeed(ProjectileForce);
+                    AS.PlayOneShot(EmptySound,1 - CurMagCount * 0.1f);
                 }
+
             }
 
             SetBloom();
