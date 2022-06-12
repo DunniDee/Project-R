@@ -32,7 +32,9 @@ public abstract class Script_AbilityBase : MonoBehaviour
 
     virtual protected void Update()
     {
-                //Activating Ability
+        CustomUpdate();
+
+         //Activating Ability
         switch(CurInputMode)
         {
             case InputMode.HoldDown:
@@ -90,6 +92,7 @@ public abstract class Script_AbilityBase : MonoBehaviour
         }        
     }
 
+    protected virtual void CustomUpdate(){}
     protected virtual void OnAbilityStart(){}
     protected virtual void OnAbilityDurration(){}
     protected virtual void OnAbilityEnd(){}
