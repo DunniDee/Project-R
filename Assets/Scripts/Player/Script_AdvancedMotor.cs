@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Script_AdvancedMotor : MonoBehaviour
+public class Script_AdvancedMotor : MonoBehaviour, IUpgradable
 {
 private float MoveSpeed = 0;
     [SerializeField] private float WalkSpeed = 10;
@@ -57,6 +57,26 @@ private float MoveSpeed = 0;
 
     Rigidbody RB;
     RaycastHit m_SlopeHit;
+
+    public void InitialiseStats()
+    {
+        Script_PlayerStatManager.Instance.DefaultWalkSpeed = WalkSpeed;
+        WalkSpeed = Script_PlayerStatManager.Instance.ModifiedWalkSpeed;
+
+        Script_PlayerStatManager.Instance.DefaultSprintSpeed = SprintSpeed;
+        SprintSpeed = Script_PlayerStatManager.Instance.ModifiedSprintSpeed;
+
+        Script_PlayerStatManager.Instance.DefaultCrouchSpeed = CrouchSpeed;
+        CrouchSpeed = Script_PlayerStatManager.Instance.ModifiedCrouchSpeed; 
+
+        Script_PlayerStatManager.Instance.DefaultCrouchSpeed = CrouchSpeed;
+        CrouchSpeed = Script_PlayerStatManager.Instance.ModifiedCrouchSpeed; 
+
+        Script_PlayerStatManager.Instance.DefaultJumpCount = MaxJumps;
+        MaxJumps = Script_PlayerStatManager.Instance.ModifiedJumpCount;
+
+    }
+
     public Rigidbody getRigidBody()
     {
         return RB;
@@ -94,6 +114,7 @@ private float MoveSpeed = 0;
 
     private void Start()
     {
+        InitialiseStats();
         //initialize local variables
         RB = GetComponent<Rigidbody>();
         RB.freezeRotation = true;

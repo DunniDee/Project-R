@@ -55,7 +55,7 @@ public class Scr_RCSplashProjectile : Script_RCProjectile
             {
                 if (!TransfromList.Contains(CustomCollider.transform.root))
                 {  
-                    CustomCollider.TakeDamage(Damage, CustomCollider.DamageType.Normal);
+                    CustomCollider.TakeDamage(Damage, CustomCollider.DamageType.Normal, -transform.forward);
                     TransfromList.Add(CustomCollider.transform.root);
                 }
 

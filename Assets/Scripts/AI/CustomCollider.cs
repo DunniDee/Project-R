@@ -10,13 +10,13 @@ public class CustomCollider : MonoBehaviour
     }
 
     public DamageType damageType;
-    public delegate void TakeDamageDelegate(float _Damage, DamageType _DamageType);
+    public delegate void TakeDamageDelegate(float _Damage, DamageType _DamageType, Vector3 _direction);
     public TakeDamageDelegate takeDamageEvent;
 
-    public void TakeDamage(float _Damage, DamageType _DamageType){
+    public void TakeDamage(float _Damage, DamageType _DamageType, Vector3 _direction){
         if(takeDamageEvent != null){
             Debug.Log("Taking Damage");
-            takeDamageEvent(_Damage,damageType);
+            takeDamageEvent(_Damage,damageType,_direction);
 
             if (_DamageType == DamageType.Normal)
             {

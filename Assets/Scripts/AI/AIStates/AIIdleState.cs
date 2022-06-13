@@ -8,7 +8,7 @@ public class AIIdleState : AIState
     float waitTime = 2.0f;
     private void FieldOfView(Script_BaseAI agent)
     {
-        Vector3 PlayerDir = (agent.Player.position - agent.transform.position);
+        Vector3 PlayerDir = (agent.GetPlayerTransform().position - agent.transform.position);
        if(PlayerDir.magnitude > agent.Config.maxSightDistance)
        {
             return;
@@ -52,11 +52,11 @@ public class AIIdleState : AIState
                 else if(idleTimer <= 0.0f)
                 {
                     idleTimer = waitTime;
-                    agent.StateMachine.ChangeState(AIStateID.Moving);
+                    agent.GetStateMachine().ChangeState(AIStateID.Moving);
                 }
                 break;
             case true:
-                agent.StateMachine.ChangeState(AIStateID.ShootPlayer);
+                agent.GetStateMachine().ChangeState(AIStateID.ShootPlayer);
                 break;
         }
     }

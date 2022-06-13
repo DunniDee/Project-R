@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Scr_PlayerStatModifier : MonoBehaviour
+public class ScrObj_PlayerConfig : ScriptableObject
 {
     // Start is called before the first frame update
     void Start()
