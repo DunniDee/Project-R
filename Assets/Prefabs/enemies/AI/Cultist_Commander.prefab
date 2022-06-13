@@ -507,12 +507,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7053028352623089246}
-  - component: {fileID: 6670638237628217850}
   - component: {fileID: 5005847454708108802}
   - component: {fileID: 1962578617118140496}
   - component: {fileID: 1902360698400885847}
   - component: {fileID: 2194752742181613621}
   - component: {fileID: 655847378}
+  - component: {fileID: 2914836817509807529}
   m_Layer: 0
   m_Name: Cultist_Commander
   m_TagString: Untagged
@@ -537,24 +537,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6670638237628217850
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 845875920167784636}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12da1420a029e404992a1114512b5c3b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_UIHealth: {fileID: 0}
-  InitalState: 0
-  Config: {fileID: 11400000, guid: bfee5286e387b2149b72480057bf6cee, type: 2}
-  isInCombat: 0
-  m_Health: 0
-  FiringPoint: {fileID: 2143840682352190612}
 --- !u!114 &5005847454708108802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -646,6 +628,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RigidArray: []
   Hipbone: {fileID: 5235261895347163241}
+--- !u!114 &2914836817509807529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 845875920167784636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab966c5379b2e9e4680cd7cf8146bd95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UIHealth: {fileID: 0}
+  InitalState: 0
+  Config: {fileID: 11400000, guid: bfee5286e387b2149b72480057bf6cee, type: 2}
+  AI_Name_Config: 
+  isInCombat: 0
+  m_Health: 0
+  FiringPoint: {fileID: 0}
 --- !u!1 &992010615396489564
 GameObject:
   m_ObjectHideFlags: 0
