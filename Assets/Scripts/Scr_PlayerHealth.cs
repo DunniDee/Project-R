@@ -39,6 +39,9 @@ public class Scr_PlayerHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (currentHealth <= 0)
+        {
+            Script_SceneManager.Instance.LoadScene("HubWorld");
+        }
     }
 }
