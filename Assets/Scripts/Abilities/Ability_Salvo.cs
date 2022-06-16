@@ -13,6 +13,8 @@ public class Ability_Salvo : Script_AbilityBase
     Transform Look;
     [SerializeField] Transform ShotPos;
     [SerializeField] Transform SeekPos;
+
+    [SerializeField] Animator Anim;
     private void Start()
     {
         Look = transform.GetChild(0);
