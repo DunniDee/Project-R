@@ -23,9 +23,6 @@ public class AI_Gun : Script_BaseAI
     void Start()
     {
         base.Start();
-
-
-        
     }
 
     // Update is called once per frame
