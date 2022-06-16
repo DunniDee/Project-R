@@ -4,12 +4,9 @@ using UnityEngine;
 
 public class AI_Commander : Script_BaseAI
 {
-    // Start is called before the first frame update
-    void Start()
+    protected override void AIStateInit()
     {
-        base.Start();
-
-        //Set the Inital State of the AI.
+        base.AIStateInit();
         StateMachine = new Script_AIStateMachine(this);
 
 
@@ -19,6 +16,14 @@ public class AI_Commander : Script_BaseAI
         StateMachine.RegisterState(new Commander_BuffState());
 
         StateMachine.ChangeState(InitalState);
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        base.Start();
+
+
     }
 
     // Update is called once per frame
