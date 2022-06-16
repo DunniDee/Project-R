@@ -11,7 +11,7 @@ public class Script_UIHealth : MonoBehaviour
     public Slider HealthSlider;
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         HealthSlider = GetComponent<Slider>();
     }

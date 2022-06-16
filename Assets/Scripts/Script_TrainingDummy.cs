@@ -9,7 +9,7 @@ public class Script_TrainingDummy : MonoBehaviour, IDamageable
 
     float m_Timer;
     bool IsDead = false;
-    public void Damage(float _Damage, CustomCollider.DamageType _DamageType)
+    public void Damage(float _Damage, CustomCollider.DamageType _DamageType,Vector3 _direction)
     {
         switch(_DamageType)
         {
