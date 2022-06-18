@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class Script_SceneManager : MonoBehaviour
 {
+    bool IsTransitioning = false;
     public static Script_SceneManager Instance; // Singleton
     private void Awake()
     {
@@ -23,26 +24,25 @@ public class Script_SceneManager : MonoBehaviour
     public GameObject loadingScreen;
     public string sceneToLoad;
     public CanvasGroup canvasGroup;
-    public void Start()
-    {
-
-    }
     public void LoadScene(string SceneName)
     {
-        sceneToLoad = SceneName;
-        StartCoroutine(StartLoad());
+        if (!IsTransitioning)
+        {
+            LockTransition();
+            sceneToLoad = SceneName;
+            FadeDark();
+            Invoke("TransitionScene",1);
+            Invoke("FadeLight",2);
+            Invoke("UnlockTransition",2);
+        }
     }
-    IEnumerator StartLoad()
+    IEnumerator LoadScene()
     {
-        loadingScreen.SetActive(true);
-        yield return StartCoroutine(FadeLoadingScreen(1, 1));
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneToLoad);
         while (!operation.isDone)
         {
             yield return null;
         }
-        yield return StartCoroutine(FadeLoadingScreen(0, 1));
-        loadingScreen.SetActive(false);
     }
     IEnumerator FadeLoadingScreen(float targetValue, float duration)
     {
@@ -55,5 +55,31 @@ public class Script_SceneManager : MonoBehaviour
             yield return null;
         }
         canvasGroup.alpha = targetValue;
+    }
+
+    public void FadeDark()
+    {
+        loadingScreen.SetActive(true);
+        StartCoroutine(FadeLoadingScreen(1,0.5f));
+    }
+
+    public void FadeLight()
+    {
+
+        StartCoroutine(FadeLoadingScreen(0,0.5f));
+    }
+
+    public void TransitionScene()
+    {
+        StartCoroutine(LoadScene());
+    }
+
+    public void LockTransition()
+    {
+        IsTransitioning = true;
+    }
+    public void UnlockTransition()
+    {
+        IsTransitioning = false;
     }
 }

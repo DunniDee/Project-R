@@ -5,9 +5,9 @@ using UnityEngine;
 public class AIMoveState : AIState
 {
     float moveTimer = 7.0f;
-     private void FieldOfView(Script_BaseAI agent)
+  /*   private void FieldOfView(Script_BaseAI agent)
     {
-        Vector3 PlayerDir = (agent.Player.position - agent.transform.position);
+        Vector3 PlayerDir = (agent.GetPlayerTransform().position - agent.transform.position);
        if(PlayerDir.magnitude > agent.Config.maxSightDistance)
        {
             return;
@@ -21,7 +21,7 @@ public class AIMoveState : AIState
        {
             agent.SetIsInCombat(true);
        }
-    }
+    }*/
 
     //overrides
     public AIStateID getID()
@@ -46,7 +46,7 @@ public class AIMoveState : AIState
         moveTimer -= Time.deltaTime;
         if(moveTimer <= 0.0f)
         {
-            agent.StateMachine.ChangeState(AIStateID.Moving);
+            agent.GetStateMachine().ChangeState(AIStateID.Moving);
         }
         
        // FieldOfView(agent);
@@ -55,14 +55,25 @@ public class AIMoveState : AIState
             case false:
                 if(agent.transform.position == agent.GetNavMeshAgent().destination)
                 {
-                     agent.StateMachine.ChangeState(AIStateID.Idle);
+                     agent.GetStateMachine().ChangeState(AIStateID.Idle);
                 }
                 break;
             case true:
-                if(agent.transform.position == agent.GetNavMeshAgent().destination)
+                if (agent is AI_Melee)
                 {
-                    agent.StateMachine.ChangeState(AIStateID.ShootPlayer);
+                    if (agent.transform.position == agent.GetNavMeshAgent().destination)
+                    {
+                        agent.GetStateMachine().ChangeState(AIStateID.ChasePlayer);
+                    }
                 }
+                else if (agent is AI_Gun)
+                {
+                    if (agent.transform.position == agent.GetNavMeshAgent().destination)
+                    {
+                        agent.GetStateMachine().ChangeState(AIStateID.ShootPlayer);
+                    }
+                }
+
                 break;
         }
        

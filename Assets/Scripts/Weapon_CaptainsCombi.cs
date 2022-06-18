@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapon_CaptainsCombi : Script_ProjectileWeapon
+public class Weapon_CaptainsCombi : Script_ProjectileWeapon, IUpgradable
 {
     [SerializeField] Transform RightFirepoint;
     [SerializeField] Transform CombiFirepoint;
@@ -29,8 +29,27 @@ public class Weapon_CaptainsCombi : Script_ProjectileWeapon
     [SerializeField] AudioClip CombiShotSound;
     [SerializeField] AudioClip UnComShotSound;
 
+    public void InitialiseStats()
+    {
+        Script_PlayerStatManager.Instance.DefaultPrimaryDamage = UnComDamage;
+        UnComDamage =Script_PlayerStatManager.Instance.ModifiedPrimaryDamage;
+
+        Script_PlayerStatManager.Instance.DefaultSecondaryDamage = CombiDamage;
+        CombiDamage =Script_PlayerStatManager.Instance.ModifiedSecondaryDamage;
+
+        Script_PlayerStatManager.Instance.DefaultPrimaryFireRate = FireRate;
+        FireRate =Script_PlayerStatManager.Instance.ModifiedPrimaryFireRate;
+
+        Script_PlayerStatManager.Instance.DefaultSecondaryFireRate = CombiFireateModifier;
+        CombiFireateModifier =Script_PlayerStatManager.Instance.ModifiedSecondaryFireRate;
+
+        Script_PlayerStatManager.Instance.DefaultPrimaryMagCount = MagCount;
+        MagCount =Script_PlayerStatManager.Instance.ModifiedPrimaryMagCount;
+    }
+
     private void Start()
     {
+        InitialiseStats();
         Initialize();
         LeftFirepoint = FiringPoint;
         ShootSound = UnComShotSound;
@@ -42,6 +61,7 @@ public class Weapon_CaptainsCombi : Script_ProjectileWeapon
     {
         FiringPoint.transform.LookAt(Look.getAimPoint());
 
+        
 
         if (!IsCombined)
         {
@@ -100,6 +120,7 @@ public class Weapon_CaptainsCombi : Script_ProjectileWeapon
             }
         }
 
+
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             IsCombined = !IsCombined;
@@ -145,5 +166,10 @@ public class Weapon_CaptainsCombi : Script_ProjectileWeapon
         ADSMaxSpreadAngle = UnComADSMaxSpread;
 
         ShootSound = UnComShotSound;
+    }
+
+    public int getCurMagCount()
+    {
+        return CurMagCount;
     }
 }

@@ -15,7 +15,7 @@ public class Script_AIStateMachine
 
     public void RegisterState(AIState state)
     {
-        Debug.Log(agent.name + " Changing to State" + state.getID()); 
+/*        Debug.Log(agent.name + " Changing to State" + state.getID()); */
         int index = (int)state.getID();
         States[index] = state;
     }

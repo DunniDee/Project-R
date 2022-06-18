@@ -6,11 +6,13 @@ public class Script_Ragdoll : MonoBehaviour
 {
     [SerializeField]
     Rigidbody[] RigidArray;
-    
+    [SerializeField] GameObject Hipbone;
+
     // Start is called before the first frame update
     void Start()
     {
         RigidArray = GetComponentsInChildren<Rigidbody>();
+    
         foreach(var rigid in RigidArray){
             rigid.gameObject.AddComponent<CustomCollider>();
         }
@@ -28,4 +30,10 @@ public class Script_Ragdoll : MonoBehaviour
         }
     }
    
+   public void ApplyForce(Vector3 _force)
+   {
+       var rigidBody = Hipbone.GetComponent<Rigidbody>();
+       
+       rigidBody.AddForce(_force, ForceMode.Impulse);
+   }
 }

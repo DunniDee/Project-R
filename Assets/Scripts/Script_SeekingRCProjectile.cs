@@ -51,7 +51,7 @@ public class Script_SeekingRCProjectile : Script_RCProjectile
             var hitCollider = hit.collider.gameObject.GetComponent<CustomCollider>();
             if (hitCollider != null)
             {
-                hitCollider.TakeDamage(Damage, hitCollider.damageType);
+                hitCollider.TakeDamage(Damage, hitCollider.damageType,hitCollider.transform.position - transform.position);
             }
             Disable();
             //Bounce
