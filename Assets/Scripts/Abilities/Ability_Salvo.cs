@@ -13,6 +13,8 @@ public class Ability_Salvo : Script_AbilityBase
     Transform Look;
     [SerializeField] Transform ShotPos;
     [SerializeField] Transform SeekPos;
+
+    [SerializeField] Animator Anim;
     private void Start()
     {
         Look = transform.GetChild(0);
@@ -21,7 +23,8 @@ public class Ability_Salvo : Script_AbilityBase
     protected override void OnAbilityStart()
     {
         base.OnAbilityStart();
-        Salvo();
+         Invoke("Salvo", 1);
+        Anim.SetBool("Deployed", true);
     }
 
     protected override void CustomUpdate()
@@ -45,6 +48,7 @@ public class Ability_Salvo : Script_AbilityBase
         {
             Invoke("Shoot", BurstSpeed * i);
         }
+        Anim.SetBool("Deployed", false);
     }
 
     void Shoot()
@@ -60,5 +64,7 @@ public class Ability_Salvo : Script_AbilityBase
         SpTemp.SetRadius(Radius);
         SpTemp.SetSeekTransform(SeekPos);
         SpTemp.SetlifeTime(5);
+
+        Anim.SetTrigger("Shoot");
     }
 }

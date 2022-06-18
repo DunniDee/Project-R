@@ -7,6 +7,9 @@ public enum AIStateID {
     Moving,
     ShootPlayer,
     Death,
+
+    CommanderBuff,
+    MeleeAttack,
 }
 
 public interface AIState 

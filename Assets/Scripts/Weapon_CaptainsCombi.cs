@@ -167,4 +167,9 @@ public class Weapon_CaptainsCombi : Script_ProjectileWeapon, IUpgradable
 
         ShootSound = UnComShotSound;
     }
+
+    public int getCurMagCount()
+    {
+        return CurMagCount;
+    }
 }

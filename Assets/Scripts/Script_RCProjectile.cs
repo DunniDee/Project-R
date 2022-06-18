@@ -8,12 +8,15 @@ public class Script_RCProjectile : MonoBehaviour
     [SerializeField] protected float Speed;
     [SerializeField] protected float Damage;
 
-    [SerializeField] TrailRenderer Trail;
+    TrailRenderer Trail;
 
-   
+    private void Start() 
+    {
+        Trail = gameObject.GetComponentInChildren<TrailRenderer>();
+    }
 
     // Update is called once per frame
-    protected void Update()
+    void Update()
     {
         Vector3 NextPos = transform.position + transform.forward * Speed * Time.deltaTime;
 
@@ -22,10 +25,12 @@ public class Script_RCProjectile : MonoBehaviour
         RaycastHit hit;
         if(Physics.Raycast(transform.position, transform.forward, out hit, Speed * Time.deltaTime))
         {
-            Hit(hit);
-
-            //Bounce
-            //transform.LookAt(transform.position + Vector3.Reflect(hit.point - transform.position, hit.normal));
+            var hitCollider = hit.collider.gameObject.GetComponent<CustomCollider>();
+            if (hitCollider != null)
+            {
+                hitCollider.TakeDamage(Damage, hitCollider.damageType, transform.forward);
+            }
+            Disable();
         }
 
         Debug.DrawLine(transform.position, NextPos, Color.red);
@@ -40,16 +45,6 @@ public class Script_RCProjectile : MonoBehaviour
         {
             Disable();
         }
-    }
-
-    protected private void Hit(RaycastHit _hit) 
-    {
-        var hitCollider = _hit.collider.gameObject.GetComponent<CustomCollider>();
-        if (hitCollider != null)
-        {
-            hitCollider.TakeDamage(Damage, hitCollider.damageType);
-        }
-        Disable();
     }
 
     public void SetlifeTime(float time)

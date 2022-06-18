@@ -23,11 +23,9 @@ public abstract class Script_AbilityBase : MonoBehaviour
     [SerializeField] protected InputMode CurInputMode;
     [SerializeField] protected float Durration;
     protected float CurrentDurration;
-   [SerializeField] protected float Cooldown;
+    [SerializeField] protected float Cooldown;
     protected float CurrentCooldown;
     [SerializeField] protected KeyCode AbilityKey;
-    
-
     protected bool AblityEnd;
 
     virtual protected void Update()
@@ -96,4 +94,16 @@ public abstract class Script_AbilityBase : MonoBehaviour
     protected virtual void OnAbilityStart(){}
     protected virtual void OnAbilityDurration(){}
     protected virtual void OnAbilityEnd(){}
+
+    public float GetCurCooldown()
+    {
+        return CurrentCooldown;
+    }
+    public float GetMaxCooldown()
+    {
+        return Cooldown;
+    }
+
+
+
 }
