@@ -85,6 +85,9 @@ public abstract class Script_WeaponBase : MonoBehaviour
     public delegate void OnAmmoChangeDelegate(int _ammo);
     public OnAmmoChangeDelegate onAmmoChangeEvent;
 
+    [SerializeField] protected ParticleSystem reloadsmoke;
+    [SerializeField] protected ParticleSystem reloadsmoke2;
+
     public int GetMagCount()
     {
         return MagCount;
@@ -111,7 +114,8 @@ public abstract class Script_WeaponBase : MonoBehaviour
             StartCoroutine(IE_Reload());
             AS.PlayOneShot(ReloadSound);
             Anim.SetTrigger(ReloadHash);
-           
+            reloadsmoke.Play();
+            reloadsmoke2.Play();
         }
     }
 
