@@ -62,11 +62,31 @@ public class Scr_AISensor : MonoBehaviour
         {
             if(gameObject.CompareTag("Player"))
             {
+
                 // Play Found Event
-                if(OnPlayerFoundEvent != null && !agent.GetIsInCombat())
+                if (agent is AI_Melee)
                 {
-                    OnPlayerFoundEvent(AIStateID.ShootPlayer);
+                    if (OnPlayerFoundEvent != null && !agent.GetIsInCombat())
+                    {
+                        OnPlayerFoundEvent(AIStateID.ChasePlayer);
+                    }
                 }
+                else if (agent is AI_Gun)
+                {
+                    if (OnPlayerFoundEvent != null && !agent.GetIsInCombat())
+                    {
+                        OnPlayerFoundEvent(AIStateID.ShootPlayer);
+                    }
+                }
+                else if (agent is AI_Commander)
+                {
+                    if (OnPlayerFoundEvent != null && !agent.GetIsInCombat())
+                    {
+                        OnPlayerFoundEvent(AIStateID.CommanderBuff);
+                    }
+                }
+
+
             }
         }
     }

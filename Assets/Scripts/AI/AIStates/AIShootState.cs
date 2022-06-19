@@ -32,7 +32,7 @@ public class AIShootState : AIState
         Quaternion rotation = Quaternion.LookRotation(direction);
         agent.transform.rotation = Quaternion.Slerp(agent.transform.rotation, rotation, Time.deltaTime * 2.0f);
         
-        Debug.Log(rotation);
+/*        Debug.Log(rotation);*/
     }
 
     //Move the agent to random point
@@ -45,6 +45,7 @@ public class AIShootState : AIState
     public void Enter(Script_BaseAI agent)
     {
         agent.GetNavMeshAgent().speed = agent.Config.ChaseSpeed;
+        agent.SetIsInCombat(true);
         playerTransform = agent.GetPlayerTransform();
         WaitTime = Random.Range(1.0f,3.0f);
         agent.GetAnimator().SetTrigger("StartAim");

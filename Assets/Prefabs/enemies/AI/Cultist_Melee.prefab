@@ -75,7 +75,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 1, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.0000000018335415, y: 0.0024979967, z: 0.000000003958122}
+  m_ConnectedAnchor: {x: 0.000000005384209, y: 0.0024979932, z: 0.0000000027939684}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:
@@ -829,6 +829,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1757541810899116825}
   - component: {fileID: 4524080437339642594}
+  - component: {fileID: 4303192946107096537}
   m_Layer: 6
   m_Name: melee grunt enemy 2
   m_TagString: Untagged
@@ -878,6 +879,22 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &4303192946107096537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893051867897366181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f26c52422826990459ea235a1455605b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 0}
+  agent: {fileID: 0}
+  FootStepClipArr: []
+  FireSoundClipArr: []
 --- !u!1 &1099745007382051106
 GameObject:
   m_ObjectHideFlags: 0
@@ -1590,7 +1607,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.000000004423784, y: 0.0051450706, z: -0.0000000025611386}
+  m_ConnectedAnchor: {x: 3.4924608e-10, y: 0.0051450715, z: -0.0000000023283078}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: -1}
   m_TwistLimitSpring:
@@ -1899,7 +1916,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.00007840705, y: 0.004840955, z: 0.0014725742}
+  m_ConnectedAnchor: {x: 0.0000784117, y: 0.0048409547, z: 0.0014725752}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:
@@ -2368,7 +2385,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.000000006868505, y: 0.005145074, z: -0.000000003725291}
+  m_ConnectedAnchor: {x: 0.0000000023283067, y: 0.005145075, z: -0.000000003026799}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: -1}
   m_TwistLimitSpring:
@@ -2975,7 +2992,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.000054454737, y: 0.0024821397, z: -0.00039999344}
+  m_ConnectedAnchor: {x: -0.000054449967, y: 0.0024821397, z: -0.00039999344}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:
@@ -3892,7 +3909,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -3953,6 +3970,7 @@ MonoBehaviour:
   m_UIHealth: {fileID: 0}
   InitalState: 0
   Config: {fileID: 11400000, guid: 3b1e66084a0781f4385bfcbbfd8976b5, type: 2}
+  AI_Name_Config: AI_Config_Melee
   isInCombat: 0
   m_Health: 0
   FiringPoint: {fileID: 0}
@@ -5448,7 +5466,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: -1, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.002189563, y: 0.0029651003, z: -0.0001011466}
+  m_ConnectedAnchor: {x: -0.0021895536, y: 0.0029651, z: -0.00010114474}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:
