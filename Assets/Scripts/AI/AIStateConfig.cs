@@ -25,5 +25,6 @@ public class AIStateConfig : ScriptableObject
 
     public float projectileDamage = 10f;
 
-    
+    [Header("Melee Properties")]
+    public float meleeDamage = 25f;
 }

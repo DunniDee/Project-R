@@ -29,7 +29,7 @@ public class AIChaseState : AIState
             {
                 Debug.Log("hit" + hit.transform.name);
                 agent.GetAnimator().SetTrigger("Attack0");
-                hit.transform.GetComponentInParent<Scr_PlayerHealth>().TakeDamage(10.0f);
+                hit.transform.GetComponentInParent<Scr_PlayerHealth>().TakeDamage(agent.Config.meleeDamage);
                 attackCurCooldown = attackMaxCooldown;
             }
             
@@ -49,6 +49,7 @@ public class AIChaseState : AIState
         if(!playerTransform){
             playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         }
+
     }
 
     public void Update(Script_BaseAI agent)
@@ -56,12 +57,11 @@ public class AIChaseState : AIState
         if(!agent.enabled){
             return;
         }
-        //Debug.Log((agent.transform.position - agent.GetPlayerTransform().position).magnitude);
-        //agent.GetAnimator().SetFloat("Movement", agent.GetNavMeshAgent().velocity.magnitude);
 
         if (attackCurCooldown > 0.0f) { attackCurCooldown -= Time.deltaTime; }
         IsInRange(agent);
-        if(agent.GetNavMeshAgent()){
+        if (agent.GetNavMeshAgent())
+        {
             agent.GetNavMeshAgent().destination = playerTransform.position;
         }
     }
