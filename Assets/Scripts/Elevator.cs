@@ -55,7 +55,7 @@ public class Elevator : MonoBehaviour
     IEnumerator Example1()
     {
 
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(6);
         //Animator("Elevator").speed = -1.0;
         var animator = GetComponent<Animator>();
         prevSpeed = animator.speed;
