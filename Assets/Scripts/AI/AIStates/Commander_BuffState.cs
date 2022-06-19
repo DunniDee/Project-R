@@ -10,7 +10,7 @@ public class Commander_BuffState : AIState
     //Buff Nearby Agents
     void Buff(Script_BaseAI agent)
     {
-        agent.GetComponentInChildren<Scr_CommanderSphere>().gameObject.SetActive(true);
+        agent.GetComponentInChildren<Scr_CommanderSphere>().SetMeshRenderActive(true);
     }
 
     public void Enter(Script_BaseAI agent)
@@ -33,7 +33,7 @@ public class Commander_BuffState : AIState
             }
         }
 
-        agent.GetNavMeshAgent().SetDestination(followTarget.position);
+       // agent.GetNavMeshAgent().SetDestination(followTarget.position);
     }
 
     public void Exit(Script_BaseAI agent)

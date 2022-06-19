@@ -77,7 +77,19 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
         if(StateMachine.currentStateID == AIStateID.Idle || StateMachine.currentStateID == AIStateID.Moving)
         {
             isInCombat = true;
-            StateMachine.ChangeState(AIStateID.ShootPlayer);
+            if (this is AI_Melee)
+            {
+                StateMachine.ChangeState(AIStateID.ChasePlayer);
+            }
+            else if (this is AI_Gun)
+            {
+                StateMachine.ChangeState(AIStateID.ShootPlayer);
+            }
+            else if (this is AI_Commander)
+            {
+                StateMachine.ChangeState(AIStateID.CommanderBuff);
+            }
+          
             
         }
         switch(_DamageType){
@@ -137,8 +149,8 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
         ///Set the Max Health and the Slider Values
         m_Health = Config.maxHealth;
 
-        m_UIHealth.HealthSlider.maxValue = m_Health;
-        m_UIHealth.HealthSlider.value = m_Health;
+        m_UIHealth.HealthSlider.maxValue = Config.maxHealth;
+        m_UIHealth.HealthSlider.value = Config.maxHealth;
         m_UIHealth.gameObject.SetActive(false);
 
 
@@ -150,7 +162,7 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
     }
 
     protected void UpdateUIHealth(){
-        m_UIHealth.HealthSlider.value = m_Health / 100;
+        m_UIHealth.HealthSlider.value = m_Health;
     }
 
     // Update is called once per frame
