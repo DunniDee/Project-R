@@ -10,9 +10,10 @@ public class Scr_EnemyProjectile : MonoBehaviour
         if(collision.tag == "Player")
         {
             collision.GetComponent<Scr_PlayerHealth>().TakeDamage(m_fDamage);
+            Debug.Log("Damage Done " + m_fDamage);
             Destroy(gameObject);
         }
-        else if(collision.tag == "Enemy")
+        else if(collision.tag == "Buff")
         {
             return;
         }

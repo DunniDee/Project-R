@@ -56,7 +56,16 @@ public class AIIdleState : AIState
                 }
                 break;
             case true:
-                agent.GetStateMachine().ChangeState(AIStateID.ShootPlayer);
+                if (agent is AI_Melee)
+                {
+                    agent.GetStateMachine().ChangeState(AIStateID.ChasePlayer);
+
+                }
+                else if (agent is AI_Gun)
+                {
+                     agent.GetStateMachine().ChangeState(AIStateID.ShootPlayer);
+                }
+
                 break;
         }
     }
