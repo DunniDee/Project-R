@@ -5382,12 +5382,12 @@ Rigidbody:
   m_GameObject: {fileID: 4246109745955989686}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
+  m_Drag: 0.25
+  m_AngularDrag: 1
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!65 &1913261948
 BoxCollider:
@@ -5400,8 +5400,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.70056725, z: 0.67344284}
-  m_Center: {x: 0, y: 0.61023235, z: 0.04033661}
+  m_Size: {x: 1, y: 1.0022228, z: 0.67344284}
+  m_Center: {x: 0, y: 0.4594046, z: 0.04033661}
 --- !u!114 &1913261947
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5414,15 +5414,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9736b6713d5a1c747b13f1e6890fb5ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Rb: {fileID: 1913261949}
-  look: 100
-  upon: 100
-  my: 100
-  works: 100
-  and: 100
-  despair: 100
-  angry: 1
-  anger: 10
+  rb: {fileID: 1913261949}
+  repelForce: 700
+  repelForceMin: 600
+  repelForceMax: 1200
+  range: 2
+  time: 3
+  rotateForce: 0
+  rotateForceMin: -300
+  rotateForceMax: 300
+  Divide: 0.1
 --- !u!1 &4961614218046373586
 GameObject:
   m_ObjectHideFlags: 0
