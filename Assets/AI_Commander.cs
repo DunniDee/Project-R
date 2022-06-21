@@ -13,6 +13,7 @@ public class AI_Commander : Script_BaseAI
         StateMachine.RegisterState(new AIDeathState());
         StateMachine.RegisterState(new AIIdleState());
         StateMachine.RegisterState(new AIMoveState());
+       
         StateMachine.RegisterState(new Commander_BuffState());
 
         StateMachine.ChangeState(InitalState);

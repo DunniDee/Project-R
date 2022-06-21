@@ -1038,10 +1038,10 @@ RectTransform:
   m_Father: {fileID: 7041314634304823691}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.4374375, y: 0.5}
-  m_AnchorMax: {x: 0.568, y: 0.5222223}
+  m_AnchorMin: {x: 0.47300002, y: 0.5}
+  m_AnchorMax: {x: 0.52568513, y: 0.510328}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0.0000019073486, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8441935493132386423
 MonoBehaviour:
@@ -1144,7 +1144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f222fa2583a85df41b2a666a98bfcc35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 8464290251640491722}
+  target: {fileID: 8301813480092596486}
   HealthBarFill: {fileID: 3286810449284259276}
   HealthBarBG: {fileID: 6563860254027437656}
   HealthSlider: {fileID: 0}
@@ -1165,7 +1165,7 @@ GameObject:
   - component: {fileID: 2561549963034874117}
   - component: {fileID: 1794019338271559490}
   - component: {fileID: 1024403224}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cultist_Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1179,8 +1179,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1831191681794588644}
-  m_LocalRotation: {x: -0, y: 0.98857045, z: -0, w: -0.15076}
-  m_LocalPosition: {x: -195.12842, y: 49.661507, z: -153.47946}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -54.5, y: 13, z: 31.500002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1086747633144187852}
@@ -1188,7 +1188,7 @@ Transform:
   - {fileID: 7041314634304823691}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!114 &6317639022395515226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1313,6 +1313,7 @@ MonoBehaviour:
   isInCombat: 0
   m_Health: 0
   FiringPoint: {fileID: 1086747633144187852}
+  DamageIndicator: {fileID: 0}
 --- !u!82 &1024403224
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1369,7 +1370,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
