@@ -8,6 +8,7 @@ public class AIAnimatorEvents : MonoBehaviour
     public delegate void OnAttackDelegate(Script_BaseAI agent);
     public OnAttackDelegate OnAttackEvent;
 
+    Script_BaseAI AIagent;
     [SerializeField] AudioSource audioSource;
     [SerializeField] NavMeshAgent agent;
 
@@ -17,11 +18,16 @@ public class AIAnimatorEvents : MonoBehaviour
     [SerializeField]
     AudioClip[] FireSoundClipArr;
 
+    public void ActivateRagdoll()
+    {
+        AIagent.GetRagdoll().ActivateRagdoll();
+        AIagent.GetAnimator().enabled = false;
+    }
     public void Attack(Script_BaseAI agent)
     {
         if (OnAttackEvent != null)
         {
-            OnAttackEvent(GetComponentInParent<Script_BaseAI>());
+            OnAttackEvent(AIagent);
         }
     }
     public void PlayFootStep() { audioSource.PlayOneShot(FootStepClipArr[Random.Range(0, FootStepClipArr.Length)]); }
@@ -36,6 +42,7 @@ public class AIAnimatorEvents : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        AIagent = GetComponentInParent<Script_BaseAI>();
         agent = GetComponentInParent<NavMeshAgent>();
         audioSource = GetComponentInParent<AudioSource>();
     }

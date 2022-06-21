@@ -23,7 +23,6 @@ public class AIChaseState : AIState
     {
         int attackIndex = Random.Range(0, 3);
         agent.GetAnimator().SetTrigger("Attack" + attackIndex);
-       
     }
 
     void AttackFront(Script_BaseAI agent)

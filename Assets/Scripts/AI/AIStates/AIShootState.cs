@@ -71,7 +71,6 @@ public class AIShootState : AIState
                 Shoot(agent);
 
             }
-            Debug.Log(dot);
             
         }
        
@@ -89,6 +88,5 @@ public class AIShootState : AIState
 
     public void Exit(Script_BaseAI agent)
     {
-        agent.GetAnimator().SetBool("IsAiming", false);
     }
 }

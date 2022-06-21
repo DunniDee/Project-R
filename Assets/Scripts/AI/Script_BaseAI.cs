@@ -13,6 +13,7 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
     protected Script_AIStateMachine StateMachine;
     protected AIAnimatorEvents AnimatorEvents;
 
+
     protected private NavMeshAgent m_navMeshAgent;
     protected private Animator m_Animator;
     protected private Script_Ragdoll m_Ragdoll;
@@ -29,6 +30,7 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
     [SerializeField] protected float m_Health;
 
     public Transform FiringPoint;
+    public GameObject DamageIndicator;
 
     protected float UITimer = 0.0f;
     protected float dieForce = 100.0f;
@@ -39,23 +41,17 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
         Collider[] colliders = Physics.OverlapSphere(transform.position, _radius);
         foreach (Collider collider in colliders)
         {
-            Script_BaseAI agent = collider.GetComponentInParent<Script_BaseAI>();
-            if (agent != null)
+            if (collider.gameObject.layer == LayerMask.GetMask("Enemy"))
             {
-                if (agent is AI_Melee)
+                Script_BaseAI agent = collider.GetComponentInParent<Script_BaseAI>();
+                if (agent != null)
                 {
-                    agent.StateMachine.ChangeState(AIStateID.ChasePlayer);
+
+                    Debug.Log(agent + "Alert this AI!!!");
+
                 }
-                else if (agent is AI_Gun)
-                {
-                    agent.StateMachine.ChangeState(AIStateID.ShootPlayer);
-                }
-                else if (agent is AI_Commander)
-                {
-                    agent.StateMachine.ChangeState(AIStateID.CommanderBuff);
-                }
-                    
             }
+           
         }
     }
 
@@ -90,7 +86,8 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
 
     public void Damage(float _Damage, CustomCollider.DamageType _DamageType, Vector3 _direction)
     {
-        if(StateMachine.currentStateID == AIStateID.Idle || StateMachine.currentStateID == AIStateID.Moving)
+        
+        if (StateMachine.currentStateID == AIStateID.Idle || StateMachine.currentStateID == AIStateID.Moving)
         {
             isInCombat = true;
             if (this is AI_Melee)
@@ -111,11 +108,11 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
         switch(_DamageType){
             case CustomCollider.DamageType.Critical:
                 m_Health -= _Damage * 2;
-                AlertLocalAI(10.0f);
+                
                 break;
             case CustomCollider.DamageType.Normal:
                 m_Health -= _Damage;
-                AlertLocalAI(10.0f);
+
                 break;
         }
         if (m_Health <= 0)
@@ -124,15 +121,30 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
             _direction.y = 0.0f;
             m_Ragdoll.ApplyForce(_direction * dieForce);
         }
-
+        /* else
+         {
+             SpawnDamageIndicator((int)_Damage);
+         }
+ */
 
         // Update UI 
+        if (DamageIndicator)
+        {
+            var g = Instantiate(DamageIndicator, transform.position, Quaternion.identity);
+            Scr_DamageIndicator indcator = g.GetComponent<Scr_DamageIndicator>();
+            indcator.SetDamageText((int)_Damage);
+        }
+       
         UITimer = 5.0f;
         m_UIHealth.gameObject.SetActive(true);
         m_Animator.SetTrigger("Hit");
+        AlertLocalAI(10.0f);
     }
 
-
+    void SpawnDamageIndicator(int _Damage)
+    {
+       
+    }
     protected virtual void AIStateInit() { }
     protected void Locomotion()
     {
