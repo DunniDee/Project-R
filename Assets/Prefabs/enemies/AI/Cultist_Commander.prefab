@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 1737467552}
   - component: {fileID: 1737467551}
   - component: {fileID: 1737467554}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CommanderSphere
-  m_TagString: Untagged
+  m_TagString: Buff
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -108,7 +108,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ee67dab26416fa4eb58a2c330388f75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ParticleResourcePath: 
+  ps: {fileID: 0}
+  psList: []
+  ParticleResourcePath: ParticleSystems/PS_CommanderBuff
 --- !u!1 &123164794072288789
 GameObject:
   m_ObjectHideFlags: 0
@@ -622,7 +624,7 @@ GameObject:
   - component: {fileID: 2194752742181613621}
   - component: {fileID: 655847378}
   - component: {fileID: 2914836817509807529}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cultist_Commander
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4031,7 +4033,7 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: -546888088721543769, guid: b06ad777b60f10d47850c79bd23c12b7, type: 3}
-  - {fileID: -8773451126135808899, guid: b06ad777b60f10d47850c79bd23c12b7, type: 3}
+  - {fileID: 2100000, guid: a98a7f1dbc9d42e4984fd1abc4e877de, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

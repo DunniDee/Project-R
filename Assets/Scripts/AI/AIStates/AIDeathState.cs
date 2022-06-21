@@ -15,6 +15,8 @@ public class AIDeathState : AIState
         agent.GetAnimator().enabled = false;
         agent.GetNavMeshAgent().enabled = false;
         agent.GetUIHealthBar().gameObject.SetActive(false);
+        agent.GetAnimator().SetBool("IsDead", true);
+        UnityEngine.MonoBehaviour.Destroy(agent.gameObject,3.5f);
     }
 
     public void Update(Script_BaseAI agent)

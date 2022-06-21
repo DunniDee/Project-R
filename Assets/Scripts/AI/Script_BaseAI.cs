@@ -11,6 +11,7 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
     protected Transform PlayerTransform;
     protected Rigidbody rigidBody;
     protected Script_AIStateMachine StateMachine;
+    protected AIAnimatorEvents AnimatorEvents;
 
     protected private NavMeshAgent m_navMeshAgent;
     protected private Animator m_Animator;
@@ -34,16 +35,31 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
 
     public void AlertLocalAI(float _radius)
     {
+        
         Collider[] colliders = Physics.OverlapSphere(transform.position, _radius);
         foreach (Collider collider in colliders)
         {
-            if (collider.GetComponent<Script_BaseAI>() != null)
+            Script_BaseAI agent = collider.GetComponentInParent<Script_BaseAI>();
+            if (agent != null)
             {
-                collider.GetComponent<Script_BaseAI>().StateMachine.ChangeState(AIStateID.ShootPlayer);
+                if (agent is AI_Melee)
+                {
+                    agent.StateMachine.ChangeState(AIStateID.ChasePlayer);
+                }
+                else if (agent is AI_Gun)
+                {
+                    agent.StateMachine.ChangeState(AIStateID.ShootPlayer);
+                }
+                else if (agent is AI_Commander)
+                {
+                    agent.StateMachine.ChangeState(AIStateID.CommanderBuff);
+                }
+                    
             }
         }
     }
 
+    public AIAnimatorEvents GetAnimatorEvents() { return AnimatorEvents; }
     public Script_AIStateMachine GetStateMachine() { return StateMachine;  }
     public Transform GetPlayerTransform() { return PlayerTransform; }
     public Transform GetFiringPoint()
@@ -95,6 +111,7 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
         switch(_DamageType){
             case CustomCollider.DamageType.Critical:
                 m_Health -= _Damage * 2;
+                AlertLocalAI(10.0f);
                 break;
             case CustomCollider.DamageType.Normal:
                 m_Health -= _Damage;
@@ -115,6 +132,7 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
         m_Animator.SetTrigger("Hit");
     }
 
+
     protected virtual void AIStateInit() { }
     protected void Locomotion()
     {
@@ -125,6 +143,7 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
     protected void Start()
     {
         //Get Components
+        AnimatorEvents = GetComponentInChildren<AIAnimatorEvents>();
         m_Animator = GetComponentInChildren<Animator>();
         m_UIHealth = GetComponentInChildren<Script_UIHealth>();
         m_navMeshAgent = GetComponent<NavMeshAgent>();

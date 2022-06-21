@@ -8,7 +8,7 @@ public class AIChaseState : AIState
     public Transform playerTransform;
 
 
-    public float attackRange = 3.0f;
+    public float attackRange = 4.0f;
     public float attackCurCooldown = 0.0f;
     public float attackMaxCooldown = 2.0f;
     public void IsInRange(Script_BaseAI agent)
@@ -21,18 +21,25 @@ public class AIChaseState : AIState
 
     void Attack(Script_BaseAI agent)
     {
+        int attackIndex = Random.Range(0, 3);
+        agent.GetAnimator().SetTrigger("Attack" + attackIndex);
+       
+    }
+
+    void AttackFront(Script_BaseAI agent)
+    {
         RaycastHit hit;
         if (Physics.SphereCast(agent.transform.position, 1.0f, agent.transform.forward, out hit) && attackCurCooldown <= 0.0f)
         {
-           
+
             if (hit.transform.CompareTag("Player"))
             {
                 Debug.Log("hit" + hit.transform.name);
-                agent.GetAnimator().SetTrigger("Attack0");
+
                 hit.transform.GetComponentInParent<Scr_PlayerHealth>().TakeDamage(agent.Config.meleeDamage);
                 attackCurCooldown = attackMaxCooldown;
             }
-            
+
         }
     }
     public AIStateID getID()
@@ -45,10 +52,10 @@ public class AIChaseState : AIState
         agent.GetNavMeshAgent().speed = agent.Config.ChaseSpeed;
         agent.SetIsInCombat(true);
         agent.GetAnimator().SetBool("isInCombat", true);
-        agent.GetAnimator().SetTrigger("Chase");
-        if(!playerTransform){
-            playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-        }
+
+        agent.AlertLocalAI(20.0f);
+        agent.GetAnimatorEvents().OnAttackEvent += AttackFront;
+        playerTransform = agent.GetPlayerTransform();
 
     }
 
@@ -60,10 +67,8 @@ public class AIChaseState : AIState
 
         if (attackCurCooldown > 0.0f) { attackCurCooldown -= Time.deltaTime; }
         IsInRange(agent);
-        if (agent.GetNavMeshAgent())
-        {
-            agent.GetNavMeshAgent().destination = playerTransform.position;
-        }
+
+        agent.GetNavMeshAgent().destination = playerTransform.position;
     }
 
     public void Exit(Script_BaseAI agent)

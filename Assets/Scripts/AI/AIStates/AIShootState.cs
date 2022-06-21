@@ -64,8 +64,15 @@ public class AIShootState : AIState
         }
         else if (ShootTimer <= 0.0f)
         {
-            ShootTimer = fireRate;
-            Shoot(agent);
+           
+            float dot = Vector3.Dot(agent.transform.forward, (agent.GetPlayerTransform().position - agent.transform.position).normalized);
+            if (dot >= 0.8f)
+            {
+                Shoot(agent);
+
+            }
+            Debug.Log(dot);
+            
         }
        
        if(RunTimer > 0.0f)
