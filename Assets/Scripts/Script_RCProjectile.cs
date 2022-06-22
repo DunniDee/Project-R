@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity​Engine.Rendering.HighDefinition;
+
 
 public class Script_RCProjectile : MonoBehaviour
 {
@@ -31,6 +33,8 @@ public class Script_RCProjectile : MonoBehaviour
             Decal.transform.LookAt (hit.point + hit.normal);
             Decal.transform.localScale = new Vector3(Random.Range(0.5f, 1),1,Random.Range(0.5f, 1));
             Decal.transform.localRotation *= Quaternion.Euler(0,0,Random.Range(0, 360));
+
+            Decal.GetComponent<DecalProjector>().fadeFactor = 1;
 
             var hitCollider = hit.collider.gameObject.GetComponent<CustomCollider>();
             if (hitCollider != null)
