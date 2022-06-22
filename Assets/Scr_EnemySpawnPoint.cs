@@ -17,10 +17,12 @@ public class Scr_EnemySpawnPoint : MonoBehaviour
         //SpawnEnemy();
     }
 
-    void SpawnEnemy()
+    public GameObject SpawnEnemy()
     {
         SpawnedEnemy = ObjectPooler.Instance.GetObject(Enemy);
         SpawnedEnemy.transform.position = transform.position;
         SpawnedEnemy.transform.rotation = transform.rotation;
+
+        return SpawnedEnemy;
     }
 }
