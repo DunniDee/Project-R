@@ -32,5 +32,7 @@ public class scr_RoomManager : MonoBehaviour
     public void EnabeRoom()
     {
         LevelToggle.SetActive(true);
+
+        SpawnEnemies();
     }
 }
