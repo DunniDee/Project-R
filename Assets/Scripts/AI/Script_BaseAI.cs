@@ -31,6 +31,7 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
     [SerializeField]
     protected bool isInCombat = false;
 
+    public float StatDamage = 0.0f;
     [SerializeField] protected float m_Health;
 
     public Transform FiringPoint;
@@ -111,11 +112,11 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
         }
         switch(_DamageType){
             case CustomCollider.DamageType.Critical:
-                m_Health -= _Damage * 2;
+                m_Health -= _Damage + StatDamage * 2;
                 
                 break;
             case CustomCollider.DamageType.Normal:
-                m_Health -= _Damage;
+                m_Health -= _Damage + StatDamage;
 
                 break;
         }
