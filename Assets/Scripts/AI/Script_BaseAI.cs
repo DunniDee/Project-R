@@ -193,6 +193,8 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
 
         // Add On Player Found Event Delegate
         GetComponent<Scr_AISensor>().OnPlayerFoundEvent += StateMachine.ChangeState;
+
+         WakeUp();
     }
 
     protected void UpdateUIHealth(){
@@ -223,5 +225,17 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
             Locomotion();
         }
         UpdateUIHealth();
+    }
+
+    public void WakeUp()
+    {
+        m_navMeshAgent.enabled = false;
+
+        Invoke("EnableNavmesh", 0.25f);
+    }
+
+    public void EnableNavmesh()
+    {
+        m_navMeshAgent.enabled = true;
     }
 }
