@@ -20,7 +20,9 @@ public class scr_RoomManager : MonoBehaviour
     {
         foreach (var SpawnPoint in LocalSpawnPoints)
         {
-            LocalEnemies.Add(SpawnPoint.SpawnEnemy());
+            GameObject Enemy = SpawnPoint.SpawnEnemy();
+            LocalEnemies.Add(Enemy);
+
         }
     }
 
