@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7880995943299782680}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: statue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23,9 +23,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7355852235112039074}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 16.740997, y: 21.477869, z: 1.1601408}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
   m_Children:
   - {fileID: 9193735005215392546}
   m_Father: {fileID: 0}
@@ -42,8 +42,8 @@ GameObject:
   - component: {fileID: 9193735005215392546}
   - component: {fileID: 7994488244556485842}
   - component: {fileID: 3397118766312898547}
-  - component: {fileID: 5295465248214201927}
-  m_Layer: 0
+  - component: {fileID: 8831368856115562729}
+  m_Layer: 9
   m_Name: statue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -113,8 +113,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &5295465248214201927
-BoxCollider:
+--- !u!136 &8831368856115562729
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -123,6 +123,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 5.082362, y: 9.778984, z: 5.545168}
-  m_Center: {x: -1.8477639, y: 4.4089565, z: 0.20761025}
+  m_Radius: 3.32
+  m_Height: 17.48
+  m_Direction: 1
+  m_Center: {x: -1.8477646, y: 3.05, z: 0.20762542}
