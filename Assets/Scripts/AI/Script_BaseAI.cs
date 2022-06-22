@@ -126,15 +126,6 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
             _direction.y = 0.0f;
             m_Ragdoll.ApplyForce(_direction * dieForce);
         }
-
-
-        // Update UI 
-        if (DamageIndicator)
-        {
-            var g = Instantiate(DamageIndicator, transform.position, Quaternion.identity);
-            Scr_DamageIndicator indcator = g.GetComponent<Scr_DamageIndicator>();
-            indcator.SetDamageText((int)_Damage);
-        }
        
         UITimer = 5.0f;
         m_UIHealth.gameObject.SetActive(true);
@@ -142,9 +133,13 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
         AlertLocalAI(10.0f);
     }
 
-    void SpawnDamageIndicator(int _Damage)
+    public void ResetAgent()
     {
-       
+        isInCombat = false;
+        m_Health = Config.maxHealth;
+        m_UIHealth.HealthSlider.maxValue = Config.maxHealth;
+        m_UIHealth.HealthSlider.value = Config.maxHealth;
+        m_UIHealth.gameObject.SetActive(false);
     }
     protected virtual void AIStateInit() { }
     protected void Locomotion()
