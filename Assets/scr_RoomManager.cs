@@ -6,10 +6,14 @@ public class scr_RoomManager : MonoBehaviour
 {
     [SerializeField] Scr_EnemySpawnPoint[] LocalSpawnPoints;
     [SerializeField] List<GameObject> LocalEnemies;
+    [SerializeField] scr_Door Exit;
+
+    [SerializeField] GameObject LevelToggle;
 
     private void Start() 
     {
         LocalSpawnPoints = GetComponentsInChildren<Scr_EnemySpawnPoint>();
+        DisableRoom();
     }
 
     void SpawnEnemies()
@@ -18,5 +22,17 @@ public class scr_RoomManager : MonoBehaviour
         {
             LocalEnemies.Add(SpawnPoint.SpawnEnemy());
         }
+    }
+
+    public void DisableRoom()
+    {
+        LevelToggle.SetActive(false);
+    }
+
+    public void EnabeRoom()
+    {
+        LevelToggle.SetActive(true);
+
+        SpawnEnemies();
     }
 }
