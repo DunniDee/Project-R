@@ -7,7 +7,8 @@ public class Scr_HealthOrb : Scr_Credit
     protected override void OnPlayerCollided(Collider other) 
     {
         base.OnPlayerCollided(other);
-        other.GetComponentInParent<Scr_PlayerHealth>().currentHealth += Value;
+        other.GetComponentInParent<Scr_PlayerHealth>().Heal(Value);
+
         Debug.Log("healing Player " + Value);
     }
 

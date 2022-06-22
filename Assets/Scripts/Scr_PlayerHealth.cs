@@ -33,6 +33,10 @@ public class Scr_PlayerHealth : MonoBehaviour
         currentHealth -= _Damage;
         m_healthUI.m_healthSlider.value = currentHealth;
     }
+    public void Heal(float _HealthAmount) {
+        currentHealth += _HealthAmount;
+        m_healthUI.m_healthSlider.value = currentHealth;
+    }
     void PlayDamageNoise()
     {
         audioSource.PlayOneShot(damageNoise);

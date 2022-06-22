@@ -73,6 +73,13 @@ public class AIMoveState : AIState
                         agent.GetStateMachine().ChangeState(AIStateID.ShootPlayer);
                     }
                 }
+                else if (agent is AI_Brute)
+                {
+                    if (agent.transform.position == agent.GetNavMeshAgent().destination)
+                    {
+                        agent.GetStateMachine().ChangeState(AIStateID.BruteChase);
+                    }
+                }
 
                 break;
         }
