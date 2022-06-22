@@ -34,6 +34,28 @@ public class ObjectPooler : MonoBehaviour
         }
     }
 
+        public GameObject GetObject(GameObject gameObject, Transform Parent)
+    {
+        if (objectPool.TryGetValue(gameObject.name, out Queue<GameObject> objectList))
+        {
+            if (objectList.Count == 0)
+            {
+                return CreateNewGameObject(gameObject);
+            }
+            else
+            {
+                GameObject _object = objectList.Dequeue();
+                _object.transform.SetParent(Parent);
+                _object.SetActive(true);
+                return _object;
+            }
+        }
+        else
+        {
+            return CreateNewGameObject(gameObject);
+        }
+    }
+
     private GameObject CreateNewGameObject(GameObject gameObject)
     {
         GameObject NewGO = Instantiate(gameObject);

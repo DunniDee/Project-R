@@ -36,6 +36,7 @@ public class Script_LevelManager : MonoBehaviour
             ObjectPooler.Instance.GetObject(DummyPrefab);
             DummyPrefab.transform.position = Pos.transform.position;
             DummyPrefab.transform.rotation = Pos.transform.rotation;
+            Pos.GetComponent<Scr_EnemySpawnPoint>().Enemy = DummyPrefab;
         }
     }
 
