@@ -5,6 +5,8 @@ using UnityEngine;
 public class Scr_EnemySpawnPoint : MonoBehaviour
 {
     public GameObject Enemy;
+    public GameObject SpawnedEnemy;
+
 
     /// <summary>
     /// Start is called on the frame when a script is enabled just before
@@ -12,17 +14,13 @@ public class Scr_EnemySpawnPoint : MonoBehaviour
     /// </summary>
     void Start()
     {
-        DisableEnemy();
+        //SpawnEnemy();
     }
 
-    public void EnableEnemy() 
+    void SpawnEnemy()
     {
-        Enemy.SetActive(true);
-    }
-
-    public void DisableEnemy()
-    {
-        Debug.Log("Wah");
-        Enemy.SetActive(false);
+        SpawnedEnemy = ObjectPooler.Instance.GetObject(Enemy);
+        SpawnedEnemy.transform.position = transform.position;
+        SpawnedEnemy.transform.rotation = transform.rotation;
     }
 }
