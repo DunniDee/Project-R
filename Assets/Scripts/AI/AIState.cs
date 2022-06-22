@@ -9,7 +9,7 @@ public enum AIStateID {
     Death,
 
     CommanderBuff,
-    MeleeAttack,
+    BruteChase,
 }
 
 public interface AIState 

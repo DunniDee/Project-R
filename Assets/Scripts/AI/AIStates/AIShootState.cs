@@ -31,8 +31,7 @@ public class AIShootState : AIState
         direction.y = 0;
         Quaternion rotation = Quaternion.LookRotation(direction);
         agent.transform.rotation = Quaternion.Slerp(agent.transform.rotation, rotation, Time.deltaTime * 2.0f);
-        
-/*        Debug.Log(rotation);*/
+
     }
 
     //Move the agent to random point
@@ -69,9 +68,7 @@ public class AIShootState : AIState
             if (dot >= 0.8f)
             {
                 Shoot(agent);
-
-            }
-            
+            }   
         }
        
        if(RunTimer > 0.0f)

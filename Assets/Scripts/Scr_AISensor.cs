@@ -25,7 +25,7 @@ public class Scr_AISensor : MonoBehaviour
     Mesh wedgeMesh;
     int count;
     float scanInterval;
-    float scanTimer;
+    public float scanTimer;
 
     // Start is called before the first frame update
     void Start()
