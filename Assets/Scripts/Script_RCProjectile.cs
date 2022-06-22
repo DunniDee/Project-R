@@ -7,6 +7,7 @@ public class Script_RCProjectile : MonoBehaviour
     [SerializeField] protected float Lifetime;
     [SerializeField] protected float Speed;
     [SerializeField] protected float Damage;
+    [SerializeField] protected GameObject BulletHoleDecal;
 
     TrailRenderer Trail;
 
@@ -25,6 +26,12 @@ public class Script_RCProjectile : MonoBehaviour
         RaycastHit hit;
         if(Physics.Raycast(transform.position, transform.forward, out hit, Speed * Time.deltaTime))
         {
+            GameObject Decal = ObjectPooler.Instance.GetObject(BulletHoleDecal);
+            Decal.transform.position  = hit.point - hit.normal * 0.05f;
+            Decal.transform.LookAt (hit.point + hit.normal);
+            Decal.transform.localScale = new Vector3(Random.Range(0.5f, 1),1,Random.Range(0.5f, 1));
+            Decal.transform.localRotation *= Quaternion.Euler(0,0,Random.Range(0, 360));
+
             var hitCollider = hit.collider.gameObject.GetComponent<CustomCollider>();
             if (hitCollider != null)
             {

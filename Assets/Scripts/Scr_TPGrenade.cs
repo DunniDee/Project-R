@@ -16,6 +16,7 @@ public class Scr_TPGrenade : MonoBehaviour
         Player.transform.position = transform.position;
         GameObject VFX = ObjectPooler.Instance.GetObject(teleportFX);
         VFX.transform.position = transform.position;
+        VFX.transform.parent = null;
         Destroy(gameObject);
         
     }
