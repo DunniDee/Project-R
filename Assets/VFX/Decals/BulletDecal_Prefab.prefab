@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4037632374766994630}
   - component: {fileID: 4037632374766994629}
   - component: {fileID: 548493611174972951}
+  - component: {fileID: 4053151203088185944}
   m_Layer: 0
   m_Name: BulletDecal_Prefab
   m_TagString: Untagged
@@ -47,15 +48,15 @@ MonoBehaviour:
   m_Version: 2
   m_Material: {fileID: 2100000, guid: 0951f444ea2f27a4baea273798c7e96e, type: 2}
   m_DrawDistance: 1000
-  m_FadeScale: 0.9
+  m_FadeScale: 1
   m_StartAngleFade: 180
   m_EndAngleFade: 180
   m_UVScale: {x: 1, y: 1}
   m_UVBias: {x: 0, y: 0}
   m_AffectsTransparency: 0
   m_DecalLayerMask: 1
-  m_Offset: {x: 0, y: 0, z: 0.5}
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Offset: {x: 0, y: 0, z: 0.05}
+  m_Size: {x: 1, y: 1, z: 0.1}
   m_FadeFactor: 1
 --- !u!114 &548493611174972951
 MonoBehaviour:
@@ -70,3 +71,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Lifetime: 5
+--- !u!114 &4053151203088185944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4037632374766994628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 300eec553d4c18e44a39da596989b85a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  decal: {fileID: 4037632374766994629}
+  fade: 0.5
