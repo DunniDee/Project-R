@@ -32,6 +32,8 @@ public class Script_PlayerLook : MonoBehaviour
     [Header("Crosshair")]
 
     [SerializeField] RectTransform Crosshair;
+    
+    [SerializeField] RectTransform UIParent;
     Script_AdvancedMotor Motor;
 
     RaycastHit hit;
@@ -166,7 +168,11 @@ public class Script_PlayerLook : MonoBehaviour
 
             m_CurShakeAmplitude = Mathf.Lerp(0,m_ShakeAmplitude, m_ShakeTime/m_ShakeLerp);
 
+            UIParent.localPosition = new Vector3(Random.Range(0,m_ShakeTime * 10),Random.Range(0,m_ShakeTime * 10),Random.Range(0,m_ShakeTime * 10));
+
             CameraShaker.localRotation = Quaternion.Euler(CameraShaker.localRotation.x,CameraShaker.localRotation.y,(m_CurShakeAmplitude * Mathf.Sin(m_ShakeTime * 60)));
+
+
         }
     }
 
