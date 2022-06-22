@@ -12,6 +12,12 @@ public class Script_LevelManager : MonoBehaviour
     [SerializeField] NavMeshSurface[] surfaces;
 
     [SerializeField] GameObject DummyPrefab;
+
+    Transform PlayerTransform;
+    private void Start()
+    {
+        PlayerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+    }
     // Start is called before the first frame update
     void Awake()
     {
@@ -31,12 +37,14 @@ public class Script_LevelManager : MonoBehaviour
 
     void SpawnEnemies()
     {
-        foreach (var Pos in EnemySpawnPos)
-        {
-            ObjectPooler.Instance.GetObject(DummyPrefab);
-            DummyPrefab.transform.position = Pos.transform.position;
-            DummyPrefab.transform.rotation = Pos.transform.rotation;
-        }
+
+            foreach (var Pos in EnemySpawnPos)
+            {
+                ObjectPooler.Instance.GetObject(DummyPrefab);
+                DummyPrefab.transform.position = Pos.transform.position;
+                DummyPrefab.transform.rotation = Pos.transform.rotation;
+            }
+        
     }
 
     void Shuffle()
