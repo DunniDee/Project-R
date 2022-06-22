@@ -25,7 +25,7 @@ public class Scr_AISensor : MonoBehaviour
     Mesh wedgeMesh;
     int count;
     float scanInterval;
-    float scanTimer;
+    public float scanTimer;
 
     // Start is called before the first frame update
     void Start()
@@ -58,9 +58,15 @@ public class Scr_AISensor : MonoBehaviour
                 Objects.Add(obj);
             }
         }
-        foreach(GameObject gameObject in Objects)
+        if (agent is AI_Commander && agent.GetIsInCombat())
         {
-            if(gameObject.CompareTag("Player"))
+            agent.GetNavMeshAgent().destination = Objects[0].transform.position;
+        }
+        foreach (GameObject gameObject in Objects)
+        {
+            
+           
+            if (gameObject.CompareTag("Player"))
             {
 
                 // Play Found Event

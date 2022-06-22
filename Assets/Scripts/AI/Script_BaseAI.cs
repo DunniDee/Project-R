@@ -24,9 +24,14 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
     public AIStateConfig Config;
     public string AI_Name_Config;
 
+    public string LootPrefabPath;
+    public GameObject LootPrefab;
+    public GameObject HealthPrefab;
+
     [SerializeField]
     protected bool isInCombat = false;
 
+    public float StatDamage = 0.0f;
     [SerializeField] protected float m_Health;
 
     public Transform FiringPoint;
@@ -107,25 +112,21 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
         }
         switch(_DamageType){
             case CustomCollider.DamageType.Critical:
-                m_Health -= _Damage * 2;
+                m_Health -= _Damage + StatDamage * 2;
                 
                 break;
             case CustomCollider.DamageType.Normal:
-                m_Health -= _Damage;
+                m_Health -= _Damage + StatDamage;
 
                 break;
         }
-        if (m_Health <= 0)
+        if (m_Health <= 0 && StateMachine.currentStateID != AIStateID.Death)
         {
             StateMachine.ChangeState(AIStateID.Death);
             _direction.y = 0.0f;
             m_Ragdoll.ApplyForce(_direction * dieForce);
         }
-        /* else
-         {
-             SpawnDamageIndicator((int)_Damage);
-         }
- */
+
 
         // Update UI 
         if (DamageIndicator)
@@ -174,6 +175,8 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
             Debug.LogWarning("Failed to Load AI Config: " + gameObject.name);
         }
 
+        LootPrefab = Resources.Load(LootPrefabPath) as GameObject;
+        HealthPrefab = Resources.Load("GameObjects/Loot/HealthCredit") as GameObject;
         //Find Player Transform Reference
         PlayerTransform = GameObject.FindGameObjectWithTag("Player").transform;
 
@@ -199,6 +202,12 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
     // Update is called once per frame
     protected void Update()
     {
+        Debug.Log(Vector3.Distance(transform.position, PlayerTransform.position));
+        if (Vector3.Distance(transform.position,PlayerTransform.position) > 30.0f)
+        {
+            Debug.Log("Skipped Update");
+            return;
+        }
         if(UITimer > 0.0f)
         {
             UITimer -= Time.deltaTime;

@@ -53,7 +53,7 @@ public class AIChaseState : AIState
         agent.GetAnimator().SetBool("isInCombat", true);
 
         agent.AlertLocalAI(20.0f);
-        agent.GetAnimatorEvents().OnAttackEvent += AttackFront;
+        agent.GetAnimatorEvents().OnAttackEvent += AttackFront;                                 
         playerTransform = agent.GetPlayerTransform();
 
     }

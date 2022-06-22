@@ -1179,8 +1179,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1831191681794588644}
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -54.5, y: 13, z: 31.500002}
+  m_LocalRotation: {x: 0, y: -0.98857033, z: 0, w: 0.15076053}
+  m_LocalPosition: {x: -58.44117, y: 49.661507, z: -43.158813}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1086747633144187852}
@@ -1188,7 +1188,7 @@ Transform:
   - {fileID: 7041314634304823691}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -162.658, z: 0}
 --- !u!114 &6317639022395515226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1270,8 +1270,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4cc185638c4f52449de0bb2821287ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 8
-  angle: 120
+  distance: 47.45
+  angle: 102.36
   height: 4
   meshColor: {r: 1, g: 0, b: 0, a: 0.3254902}
   scanFrequency: 30
@@ -1280,6 +1280,7 @@ MonoBehaviour:
     m_Bits: 8
   Objects: []
   agent: {fileID: 0}
+  scanTimer: 0
 --- !u!114 &2561549963034874117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1307,10 +1308,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_UIHealth: {fileID: 0}
-  InitalState: 0
+  InitalState: 2
   Config: {fileID: 11400000, guid: 5badbb2993464a34faa0a15fa0d438cb, type: 2}
   AI_Name_Config: AI_GunCultistConfig
+  LootPrefabPath: GameObjects/Loot/Credit
+  LootPrefab: {fileID: 0}
+  HealthPrefab: {fileID: 0}
   isInCombat: 0
+  StatDamage: 0
   m_Health: 0
   FiringPoint: {fileID: 1086747633144187852}
   DamageIndicator: {fileID: 0}
@@ -1335,7 +1340,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 20
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0

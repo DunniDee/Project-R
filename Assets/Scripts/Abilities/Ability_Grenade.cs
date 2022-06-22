@@ -12,7 +12,7 @@ public class Ability_Grenade : Script_AbilityBase
     [SerializeField] Transform ShotPos;
     [SerializeField] Transform SeekPos;
     [SerializeField] Animator Anim;
-
+    public ParticleSystem teleportFX;
 
     protected override void OnAbilityStart()
     {
