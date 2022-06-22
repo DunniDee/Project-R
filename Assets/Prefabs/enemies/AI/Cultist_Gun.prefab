@@ -1038,10 +1038,10 @@ RectTransform:
   m_Father: {fileID: 7041314634304823691}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.4374375, y: 0.5}
-  m_AnchorMax: {x: 0.568, y: 0.5222223}
+  m_AnchorMin: {x: 0.47300002, y: 0.5}
+  m_AnchorMax: {x: 0.52568513, y: 0.510328}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0.0000019073486, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8441935493132386423
 MonoBehaviour:
@@ -1144,7 +1144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f222fa2583a85df41b2a666a98bfcc35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 8464290251640491722}
+  target: {fileID: 8301813480092596486}
   HealthBarFill: {fileID: 3286810449284259276}
   HealthBarBG: {fileID: 6563860254027437656}
   HealthSlider: {fileID: 0}
@@ -1165,7 +1165,7 @@ GameObject:
   - component: {fileID: 2561549963034874117}
   - component: {fileID: 1794019338271559490}
   - component: {fileID: 1024403224}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cultist_Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1179,8 +1179,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1831191681794588644}
-  m_LocalRotation: {x: -0, y: -0.70710975, z: -0, w: 0.70710385}
-  m_LocalPosition: {x: -117.95918, y: 50.18553, z: -37.65682}
+  m_LocalRotation: {x: 0, y: -0.98857033, z: 0, w: 0.15076053}
+  m_LocalPosition: {x: -28.144495, y: 49.661507, z: 65.89805}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1086747633144187852}
@@ -1188,7 +1188,7 @@ Transform:
   - {fileID: 7041314634304823691}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -162.658, z: 0}
 --- !u!114 &6317639022395515226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1270,8 +1270,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4cc185638c4f52449de0bb2821287ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 8
-  angle: 120
+  distance: 47.45
+  angle: 102.36
   height: 4
   meshColor: {r: 1, g: 0, b: 0, a: 0.3254902}
   scanFrequency: 30
@@ -1280,6 +1280,7 @@ MonoBehaviour:
     m_Bits: 8
   Objects: []
   agent: {fileID: 0}
+  scanTimer: 0
 --- !u!114 &2561549963034874117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1307,12 +1308,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_UIHealth: {fileID: 0}
-  InitalState: 0
+  InitalState: 2
   Config: {fileID: 11400000, guid: 5badbb2993464a34faa0a15fa0d438cb, type: 2}
   AI_Name_Config: AI_GunCultistConfig
+  LootPrefabPath: GameObjects/Loot/Credit
+  LootPrefab: {fileID: 0}
+  HealthPrefab: {fileID: 0}
   isInCombat: 0
   m_Health: 0
   FiringPoint: {fileID: 1086747633144187852}
+  DamageIndicator: {fileID: 0}
 --- !u!82 &1024403224
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1334,7 +1339,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 20
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -1369,7 +1374,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0

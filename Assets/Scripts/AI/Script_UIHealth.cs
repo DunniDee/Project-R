@@ -25,7 +25,7 @@ public class Script_UIHealth : MonoBehaviour
         HealthBarBG.enabled = !isBehind;
         HealthBarFill.enabled = !isBehind;
 
-        transform.position = Camera.main.WorldToScreenPoint(new Vector3(target.position.x, target.position.y + .5f, target.position.z));
+        transform.position = Camera.main.WorldToScreenPoint(new Vector3(target.position.x, target.position.y + 2, target.position.z));
     }
 
     void Update(){

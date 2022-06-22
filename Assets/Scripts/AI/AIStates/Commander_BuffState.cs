@@ -23,7 +23,7 @@ public class Commander_BuffState : AIState
         if (!followTarget)
         {
             RaycastHit hit;
-            if (Physics.SphereCast(agent.transform.position, 100.0f, agent.transform.forward, out hit))
+            if (Physics.SphereCast(agent.transform.position, 100.0f, agent.transform.up, out hit))
             {
                 if (hit.transform.CompareTag("Enemy"))
                 {
@@ -33,7 +33,6 @@ public class Commander_BuffState : AIState
             }
         }
 
-       // agent.GetNavMeshAgent().SetDestination(followTarget.position);
     }
 
     public void Exit(Script_BaseAI agent)

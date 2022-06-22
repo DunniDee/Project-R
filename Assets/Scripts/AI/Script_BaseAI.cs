@@ -11,6 +11,8 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
     protected Transform PlayerTransform;
     protected Rigidbody rigidBody;
     protected Script_AIStateMachine StateMachine;
+    protected AIAnimatorEvents AnimatorEvents;
+
 
     protected private NavMeshAgent m_navMeshAgent;
     protected private Animator m_Animator;
@@ -22,28 +24,42 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
     public AIStateConfig Config;
     public string AI_Name_Config;
 
+    public string LootPrefabPath;
+    public GameObject LootPrefab;
+    public GameObject HealthPrefab;
+
     [SerializeField]
     protected bool isInCombat = false;
 
     [SerializeField] protected float m_Health;
 
     public Transform FiringPoint;
+    public GameObject DamageIndicator;
 
     protected float UITimer = 0.0f;
     protected float dieForce = 100.0f;
 
     public void AlertLocalAI(float _radius)
     {
+        
         Collider[] colliders = Physics.OverlapSphere(transform.position, _radius);
         foreach (Collider collider in colliders)
         {
-            if (collider.GetComponent<Script_BaseAI>() != null)
+            if (collider.gameObject.layer == LayerMask.GetMask("Enemy"))
             {
-                collider.GetComponent<Script_BaseAI>().StateMachine.ChangeState(AIStateID.ShootPlayer);
+                Script_BaseAI agent = collider.GetComponentInParent<Script_BaseAI>();
+                if (agent != null)
+                {
+
+                    Debug.Log(agent + "Alert this AI!!!");
+
+                }
             }
+           
         }
     }
 
+    public AIAnimatorEvents GetAnimatorEvents() { return AnimatorEvents; }
     public Script_AIStateMachine GetStateMachine() { return StateMachine;  }
     public Transform GetPlayerTransform() { return PlayerTransform; }
     public Transform GetFiringPoint()
@@ -74,7 +90,8 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
 
     public void Damage(float _Damage, CustomCollider.DamageType _DamageType, Vector3 _direction)
     {
-        if(StateMachine.currentStateID == AIStateID.Idle || StateMachine.currentStateID == AIStateID.Moving)
+        
+        if (StateMachine.currentStateID == AIStateID.Idle || StateMachine.currentStateID == AIStateID.Moving)
         {
             isInCombat = true;
             if (this is AI_Melee)
@@ -95,13 +112,14 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
         switch(_DamageType){
             case CustomCollider.DamageType.Critical:
                 m_Health -= _Damage * 2;
+                
                 break;
             case CustomCollider.DamageType.Normal:
                 m_Health -= _Damage;
-                AlertLocalAI(10.0f);
+
                 break;
         }
-        if (m_Health <= 0)
+        if (m_Health <= 0 && StateMachine.currentStateID != AIStateID.Death)
         {
             StateMachine.ChangeState(AIStateID.Death);
             _direction.y = 0.0f;
@@ -110,11 +128,23 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
 
 
         // Update UI 
+        if (DamageIndicator)
+        {
+            var g = Instantiate(DamageIndicator, transform.position, Quaternion.identity);
+            Scr_DamageIndicator indcator = g.GetComponent<Scr_DamageIndicator>();
+            indcator.SetDamageText((int)_Damage);
+        }
+       
         UITimer = 5.0f;
         m_UIHealth.gameObject.SetActive(true);
         m_Animator.SetTrigger("Hit");
+        AlertLocalAI(10.0f);
     }
 
+    void SpawnDamageIndicator(int _Damage)
+    {
+       
+    }
     protected virtual void AIStateInit() { }
     protected void Locomotion()
     {
@@ -125,6 +155,7 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
     protected void Start()
     {
         //Get Components
+        AnimatorEvents = GetComponentInChildren<AIAnimatorEvents>();
         m_Animator = GetComponentInChildren<Animator>();
         m_UIHealth = GetComponentInChildren<Script_UIHealth>();
         m_navMeshAgent = GetComponent<NavMeshAgent>();
@@ -143,6 +174,8 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
             Debug.LogWarning("Failed to Load AI Config: " + gameObject.name);
         }
 
+        LootPrefab = Resources.Load(LootPrefabPath) as GameObject;
+        HealthPrefab = Resources.Load("GameObjects/Loot/HealthCredit") as GameObject;
         //Find Player Transform Reference
         PlayerTransform = GameObject.FindGameObjectWithTag("Player").transform;
 
@@ -168,6 +201,12 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
     // Update is called once per frame
     protected void Update()
     {
+        Debug.Log(Vector3.Distance(transform.position, PlayerTransform.position));
+        if (Vector3.Distance(transform.position,PlayerTransform.position) > 30.0f)
+        {
+            Debug.Log("Skipped Update");
+            return;
+        }
         if(UITimer > 0.0f)
         {
             UITimer -= Time.deltaTime;
