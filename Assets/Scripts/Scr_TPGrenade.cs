@@ -5,6 +5,7 @@ using UnityEngine;
 public class Scr_TPGrenade : MonoBehaviour
 {
     [SerializeField] GameObject Player;
+    public ParticleSystem teleportFX;
 
     public void SetPlayer(GameObject player)
     {
@@ -13,6 +14,8 @@ public class Scr_TPGrenade : MonoBehaviour
     private void OnCollisionEnter(Collision other) 
     {
         Player.transform.position = transform.position;
+        teleportFX.Play();
         Destroy(gameObject);
+        
     }
 }
