@@ -4,24 +4,71 @@ using UnityEngine;
 
 public class Scr_Credit : MonoBehaviour
 {
-    float RotationSpeed = 2.5f;
-    float Ampltiude = 1.0f;
+    [Header("Internal Components")]
+    public AudioSource audioSource;
+    public AudioClip pickupAudio;
 
-    bool isCollected = false;
+    [Header("Internal Properties")]
+    public Transform Parent;
+    public Transform Target;
+    public float minSpeed;
+    public float maxSpeed;
 
-    // Start is called before the first frame update
-    void Start()
+    public Vector2 ValueMinMax;
+
+    private Vector3 Velocity;
+
+    bool isFollowing = false;
+
+    public float Value = 0;
+
+
+    private void OnTriggerEnter(Collider other)
     {
-        
+        if (other.tag == "Player")
+        {
+            //Add Money
+            OnPlayerCollided(other);
+            PlayPickUpNoise();
+            Destroy(Parent.gameObject, 0.25f);
+        }
+    }
+    protected virtual void OnPlayerCollided(Collider other) {
+        Debug.Log("Collided With Player");
+    }
+
+    protected void PlayPickUpNoise()
+    {
+        audioSource.PlayOneShot(pickupAudio);
+    }
+    public void StartFollowing()
+    {
+        isFollowing = true;
+    }
+
+    private void FollowTarget()
+    {
+        if (isFollowing)
+        {
+            Parent.position = Vector3.SmoothDamp(Parent.position, new Vector3(Target.position.x, Target.position.y + 1, Target.position.z), ref Velocity, Time.deltaTime * Random.Range(minSpeed, maxSpeed));
+
+        }
+    }
+    // Start is called before the first frame update
+    public void Start()
+    {
+        audioSource = GetComponentInParent<AudioSource>();
+    
+        Target = GameObject.FindGameObjectWithTag("Player").transform;
+
+        Value = Random.Range(ValueMinMax.x, ValueMinMax.y);
     }
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
-        if(!isCollected)
-        {
-            /*transform.position.y = new vector3*/
-        }
-        
+
+        FollowTarget();
+
     }
 }

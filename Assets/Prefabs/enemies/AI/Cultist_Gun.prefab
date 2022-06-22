@@ -1179,8 +1179,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1831191681794588644}
-  m_LocalRotation: {x: -0, y: 0.9885704, z: -0, w: -0.15076005}
-  m_LocalPosition: {x: -2.5949383, y: 49.661507, z: -185.85822}
+  m_LocalRotation: {x: 0, y: -0.98857033, z: 0, w: 0.15076053}
+  m_LocalPosition: {x: -28.144495, y: 49.661507, z: 65.89805}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1086747633144187852}
@@ -1280,6 +1280,7 @@ MonoBehaviour:
     m_Bits: 8
   Objects: []
   agent: {fileID: 0}
+  scanTimer: 0
 --- !u!114 &2561549963034874117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1307,9 +1308,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_UIHealth: {fileID: 0}
-  InitalState: 0
+  InitalState: 2
   Config: {fileID: 11400000, guid: 5badbb2993464a34faa0a15fa0d438cb, type: 2}
   AI_Name_Config: AI_GunCultistConfig
+  LootPrefabPath: GameObjects/Loot/Credit
+  LootPrefab: {fileID: 0}
+  HealthPrefab: {fileID: 0}
   isInCombat: 0
   m_Health: 0
   FiringPoint: {fileID: 1086747633144187852}

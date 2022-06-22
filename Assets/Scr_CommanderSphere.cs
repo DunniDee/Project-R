@@ -43,6 +43,10 @@ public class Scr_CommanderSphere : MonoBehaviour
             agent.Config.projectileDamage -= agent.Config.projectileDamage * 0.5f;
             foreach (GameObject ps in psList)
             {
+                if (psList.Count == 0)
+                {
+                    break;
+                }
                 if (ps == agent.GetComponentInChildren<ParticleSystem>().gameObject)
                 {
                     psList.Remove(ps);

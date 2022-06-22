@@ -4556,8 +4556,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4cc185638c4f52449de0bb2821287ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 8
-  angle: 120
+  distance: 47.45
+  angle: 102.36
   height: 4
   meshColor: {r: 1, g: 0, b: 0, a: 0.3254902}
   scanFrequency: 30
@@ -4566,6 +4566,7 @@ MonoBehaviour:
     m_Bits: 8
   Objects: []
   agent: {fileID: 0}
+  scanTimer: 0
 --- !u!114 &353257924
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4579,9 +4580,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_UIHealth: {fileID: 0}
-  InitalState: 0
+  InitalState: 2
   Config: {fileID: 11400000, guid: 3b1e66084a0781f4385bfcbbfd8976b5, type: 2}
   AI_Name_Config: AI_Config_Melee
+  LootPrefabPath: GameObjects/Loot/Credit
+  LootPrefab: {fileID: 0}
+  HealthPrefab: {fileID: 0}
   isInCombat: 0
   m_Health: 0
   FiringPoint: {fileID: 0}
