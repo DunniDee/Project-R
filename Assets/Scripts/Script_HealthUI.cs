@@ -8,8 +8,8 @@ public class Script_HealthUI : MonoBehaviour
 {
     public Slider m_healthSlider;
     public Slider m_followSlider;
-
-    [SerializeField] float m_DecreaseSpeed = 5.0f;
+    public Image m_HurtImage;
+    [SerializeField] float m_DecreaseSpeed = 15.0f;
 
     public void DecreaseValue()
     {
