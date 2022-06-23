@@ -7,6 +7,7 @@ public class AIAnimatorEvents : MonoBehaviour
 {
     public delegate void OnAttackDelegate(Script_BaseAI agent);
     public OnAttackDelegate OnAttackEvent;
+    public OnAttackDelegate OnFarAttackEvent;
 
     Script_BaseAI AIagent;
     [SerializeField] AudioSource audioSource;
@@ -28,6 +29,14 @@ public class AIAnimatorEvents : MonoBehaviour
         if (OnAttackEvent != null)
         {
             OnAttackEvent(AIagent);
+        }
+    }
+
+    public void FarAttack(Script_BaseAI agent)
+    {
+        if (OnFarAttackEvent != null)
+        {
+            OnFarAttackEvent(AIagent);
         }
     }
     public void PlayFootStep() { audioSource.PlayOneShot(FootStepClipArr[Random.Range(0, FootStepClipArr.Length)]); }

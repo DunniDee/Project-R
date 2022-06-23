@@ -7,7 +7,7 @@ public class Brute_ChaseState : AIState
 {
     public float attackRange = 2.0f;
     public float attackCurCooldown = 0.0f;
-    public float attackMaxCooldown = 2.0f;
+    public float attackMaxCooldown = 1.5f;
 
     public void IsInRange(Script_BaseAI agent)
     {
@@ -46,6 +46,23 @@ public class Brute_ChaseState : AIState
         }
     }
 
+    void FarAttack(Script_BaseAI agent)
+    {
+        RaycastHit hit;
+        if (Physics.SphereCast(agent.transform.position, 2.0f, agent.transform.forward, out hit, 2.0f))
+        {
+
+            if (hit.transform.CompareTag("Player"))
+            {
+                Debug.Log("hit" + hit.transform.name);
+
+                hit.transform.GetComponentInParent<Scr_PlayerHealth>().TakeDamage(agent.Config.meleeDamage);
+
+            }
+
+        }
+    }
+
     public void Enter(Script_BaseAI agent)
     {
         agent.GetNavMeshAgent().speed = agent.Config.ChaseSpeed;
@@ -54,6 +71,7 @@ public class Brute_ChaseState : AIState
         agent.GetNavMeshAgent().stoppingDistance = 3.5f;
         agent.AlertLocalAI(20.0f);
         agent.GetAnimatorEvents().OnAttackEvent += AttackFront;
+        agent.GetAnimatorEvents().OnFarAttackEvent += FarAttack;
     }
 
     public void Exit(Script_BaseAI agent)

@@ -30,6 +30,7 @@ public class Scr_Credit : MonoBehaviour
             //Add Money
             OnPlayerCollided(other);
             PlayPickUpNoise();
+            Script_PlayerStatManager.Instance.Credits += Value;
             Destroy(Parent.gameObject, 0.25f);
         }
     }
