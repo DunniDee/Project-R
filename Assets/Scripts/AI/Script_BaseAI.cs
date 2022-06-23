@@ -229,6 +229,11 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
         Invoke("EnableNavmesh", 0.25f);
     }
 
+        public void WakeUpDisabled()
+    {
+        Invoke("EnableNavmesh", 0.25f);
+    }
+
     public void EnableNavmesh()
     {
         m_navMeshAgent.enabled = true;

@@ -46,7 +46,7 @@ public class AIDeathState : AIState
     {
         agent.GetRagdoll().DeactivateRagdoll();
         agent.GetAnimator().enabled = true;
-        agent.GetNavMeshAgent().enabled = true;
+        agent.GetNavMeshAgent().enabled = false;
         agent.GetUIHealthBar().gameObject.SetActive(true);
         agent.GetStateMachine().ChangeState(AIStateID.Idle);
         agent.ResetAgent();

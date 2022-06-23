@@ -11,7 +11,11 @@ public class Script_LevelManager : MonoBehaviour
     [SerializeField] GameObject[] EnemyList;
     [SerializeField] NavMeshSurface[] surfaces;
 
-    [SerializeField] GameObject DummyPrefab;
+    [SerializeField] GameObject EnemyA;
+    [SerializeField] GameObject EnemyB;
+    [SerializeField] GameObject EnemyC;
+    [SerializeField] GameObject EnemyD;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -36,7 +40,7 @@ public class Script_LevelManager : MonoBehaviour
             // ObjectPooler.Instance.GetObject(DummyPrefab);
             // DummyPrefab.transform.position = Pos.transform.position;
             // DummyPrefab.transform.rotation = Pos.transform.rotation;
-            Pos.GetComponent<Scr_EnemySpawnPoint>().Enemy = DummyPrefab;
+            Pos.GetComponent<Scr_EnemySpawnPoint>().Enemy = EnemyA;
         }
     }
 
