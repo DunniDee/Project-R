@@ -38,15 +38,17 @@ public class scr_RoomManager : MonoBehaviour
         SpawnEnemies();
     }
 
-    // bool CheckRoomClear()
-    // {
-    //     bool IsClear = false;
-    //     foreach (var Enemy in LocalEnemies)
-    //     {
-    //         if (Enemy.activeInHierarchy)
-    //         {
-                
-    //         }
-    //     }
-    // }
+    public bool CheckRoomClear()
+    {
+        bool IsClear = true;
+        foreach (var Enemy in LocalEnemies)
+        {
+            if (Enemy.activeInHierarchy)
+            {
+                IsClear = false;
+            }
+        }
+
+        return IsClear;
+    }
 }
