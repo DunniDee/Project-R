@@ -29,6 +29,9 @@ public class Weapon_CaptainsCombi : Script_ProjectileWeapon, IUpgradable
     [SerializeField] AudioClip CombiShotSound;
     [SerializeField] AudioClip UnComShotSound;
 
+    [SerializeField] float CombiTime;
+    float CombiTimer;
+
     public void InitialiseStats()
     {
         Script_PlayerStatManager.Instance.DefaultPrimaryDamage = UnComDamage;
@@ -61,11 +64,15 @@ public class Weapon_CaptainsCombi : Script_ProjectileWeapon, IUpgradable
     {
         FiringPoint.transform.LookAt(Look.getAimPoint());
 
-        
+        if (CombiTimer >= 0)
+        {
+            CombiTimer-= Time.deltaTime;
+        }
+
 
         if (!IsCombined)
         {
-            if (Input.GetKey(ShootKey) && CurMagCount > 0 && ShotTimer <= 0 && !IsReloading)
+            if (Input.GetKey(ShootKey) && CurMagCount > 0 && ShotTimer <= 0 && !IsReloading && CombiTimer < 0)
             {
                 IsLeft = !IsLeft;
                 Anim.SetBool("IsLeft", IsLeft);
@@ -92,7 +99,7 @@ public class Weapon_CaptainsCombi : Script_ProjectileWeapon, IUpgradable
         {
             if (ADS)
             {
-                if (Input.GetKey(ShootKey) && CurMagCount > 0 && ShotTimer <= 0 && !IsReloading)
+                if (Input.GetKey(ShootKey) && CurMagCount > 0 && ShotTimer <= 0 && !IsReloading && CombiTimer < 0)
                 {
                     FiringPoint = CombiFirepoint;
                     for (int i = 0; i < 3; i++)
@@ -105,7 +112,7 @@ public class Weapon_CaptainsCombi : Script_ProjectileWeapon, IUpgradable
             }
             else
             {
-                if (Input.GetKey(ShootKey) && CurMagCount > 0 && ShotTimer <= 0 && !IsReloading)
+                if (Input.GetKey(ShootKey) && CurMagCount > 0 && ShotTimer <= 0 && !IsReloading && CombiTimer < 0)
                 {
                     FiringPoint = CombiFirepoint;
 
@@ -124,6 +131,8 @@ public class Weapon_CaptainsCombi : Script_ProjectileWeapon, IUpgradable
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             IsCombined = !IsCombined;
+            
+            CombiTimer = CombiTime;
             Anim.SetBool("IsCombined", IsCombined);
 
             if (IsCombined)
