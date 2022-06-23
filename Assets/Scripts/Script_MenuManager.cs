@@ -11,7 +11,8 @@ public class Script_MenuManager : MonoBehaviour
 
     private bool isMenuActive = false;
     public GameObject menuObject;
-    
+    public GameObject PlayerUI;
+
     public GameObject GetPlayerGUI()
     {
         return GameObject.FindGameObjectWithTag("PlayerGUI");
@@ -19,10 +20,11 @@ public class Script_MenuManager : MonoBehaviour
 
     private void ProcessInput(){
         if(Input.GetKeyDown(menuKey) && isMenuActive){
-            ToggePlayerGUI(true);
+            ToggleMenu(false);
         }
         else if(Input.GetKeyDown(menuKey) && !isMenuActive)
         {
+            ToggleMenu(true);
             PauseGame();
         }
     }
@@ -32,17 +34,20 @@ public class Script_MenuManager : MonoBehaviour
     }
 
     public void ToggleMenu(bool _activeState){
-        isMenuActive = !isMenuActive;
-        
-        menuObject.SetActive(isMenuActive);
-        GetPlayerGUI().SetActive(!isMenuActive);
+        menuObject.SetActive(_activeState);
+        PlayerUI.SetActive(!_activeState);
+        FindObjectOfType<Script_PlayerLook>().enabled = !_activeState;
+
+        if (_activeState)
+        {
+            Time.timeScale = 0.0f;
+        }
+        else {
+            Time.timeScale = 1.0f;
+        }
 
         ToggleCursor();
         PauseGame();
-    }
-
-    public void ToggePlayerGUI(bool _activeState){
-
     }
 
     public void ToggleOptions(){
@@ -63,6 +68,7 @@ public class Script_MenuManager : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(this);
+        PlayerUI = GetPlayerGUI();
         if (Instance == null)
         {
             Instance = this;
