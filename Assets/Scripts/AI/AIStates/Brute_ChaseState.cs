@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class Brute_ChaseState : AIState
 {
-    public float attackRange = 4.0f;
+    public float attackRange = 2.0f;
     public float attackCurCooldown = 0.0f;
     public float attackMaxCooldown = 2.0f;
 
@@ -24,6 +24,7 @@ public class Brute_ChaseState : AIState
         if (attackCurCooldown <= 0.0f)
         {
             agent.GetAnimator().SetTrigger("Attack" + attackIndex);
+            attackCurCooldown = attackMaxCooldown;
         }
         
     }
@@ -31,7 +32,7 @@ public class Brute_ChaseState : AIState
     void AttackFront(Script_BaseAI agent)
     {
         RaycastHit hit;
-        if (Physics.SphereCast(agent.transform.position, 1.0f, agent.transform.forward, out hit) )
+        if (Physics.SphereCast(agent.transform.position, 1.0f, agent.transform.forward, out hit, attackRange))
         {
 
             if (hit.transform.CompareTag("Player"))
@@ -39,7 +40,7 @@ public class Brute_ChaseState : AIState
                 Debug.Log("hit" + hit.transform.name);
 
                 hit.transform.GetComponentInParent<Scr_PlayerHealth>().TakeDamage(agent.Config.meleeDamage);
-                attackCurCooldown = attackMaxCooldown;
+
             }
 
         }
@@ -50,7 +51,7 @@ public class Brute_ChaseState : AIState
         agent.GetNavMeshAgent().speed = agent.Config.ChaseSpeed;
         agent.SetIsInCombat(true);
         agent.GetAnimator().SetBool("isInCombat", true);
-
+        agent.GetNavMeshAgent().stoppingDistance = 3.5f;
         agent.AlertLocalAI(20.0f);
         agent.GetAnimatorEvents().OnAttackEvent += AttackFront;
     }
