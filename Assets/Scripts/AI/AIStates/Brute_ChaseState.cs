@@ -72,6 +72,7 @@ public class Brute_ChaseState : AIState
         agent.AlertLocalAI(20.0f);
         agent.GetAnimatorEvents().OnAttackEvent += AttackFront;
         agent.GetAnimatorEvents().OnFarAttackEvent += FarAttack;
+        agent.PlayCombatNoise();
     }
 
     public void Exit(Script_BaseAI agent)

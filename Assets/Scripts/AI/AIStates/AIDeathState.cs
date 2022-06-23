@@ -15,6 +15,7 @@ public class AIDeathState : AIState
         agent.GetAnimator().enabled = false;
         agent.GetNavMeshAgent().enabled = false;
         agent.GetUIHealthBar().gameObject.SetActive(false);
+        agent.PlayDeathNoise();
         Script_PlayerStatManager.Instance.Bounty += agent.Config.Bounty;
 
         for (int i = 0; i < agent.GetUIHealthBar().HealthSlider.maxValue / 100; i++)
@@ -28,7 +29,7 @@ public class AIDeathState : AIState
             var go = GameObject.Instantiate(agent.HealthPrefab, agent.transform.position + new Vector3(Random.Range(0f, 2f), Random.Range(0, 1), Random.Range(0f, 2f)), Quaternion.identity);
         }
 
-        ReturnToPool(agent);
+       // ReturnToPool(agent);
     }
 
     public void Update(Script_BaseAI agent)

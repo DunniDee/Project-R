@@ -12,7 +12,7 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
     protected Rigidbody rigidBody;
     protected Script_AIStateMachine StateMachine;
     protected AIAnimatorEvents AnimatorEvents;
-
+    public AudioSource audioSource;
 
     protected private NavMeshAgent m_navMeshAgent;
     protected private Animator m_Animator;
@@ -28,6 +28,9 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
     public GameObject LootPrefab;
     public GameObject HealthPrefab;
 
+    public List<AudioClip> CombatNoise;
+    public List<AudioClip> DeathNoise;
+
     [SerializeField]
     protected bool isInCombat = false;
 
@@ -40,6 +43,15 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
     protected float UITimer = 0.0f;
     protected float dieForce = 100.0f;
 
+    public void PlayCombatNoise()
+    {
+        audioSource.PlayOneShot(CombatNoise[Random.Range(0, CombatNoise.Count)]);
+    }
+
+    public void PlayDeathNoise()
+    {
+        audioSource.PlayOneShot(DeathNoise[Random.Range(0, DeathNoise.Count)]);
+    }
     public void AlertLocalAI(float _radius)
     {
         
@@ -161,6 +173,7 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
         m_navMeshAgent = GetComponent<NavMeshAgent>();
         rigidBody = GetComponent<Rigidbody>();
         m_Ragdoll = GetComponent<Script_Ragdoll>();
+        audioSource = GetComponent<AudioSource>();
 
         m_UIHealth.Start();
 
