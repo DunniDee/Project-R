@@ -29,7 +29,7 @@ public class AIDeathState : AIState
             var go = GameObject.Instantiate(agent.HealthPrefab, agent.transform.position + new Vector3(Random.Range(0f, 2f), Random.Range(0, 1), Random.Range(0f, 2f)), Quaternion.identity);
         }
 
-       // ReturnToPool(agent);
+       ReturnToPool(agent);
     }
 
     public void Update(Script_BaseAI agent)
@@ -50,8 +50,6 @@ public class AIDeathState : AIState
         agent.GetUIHealthBar().gameObject.SetActive(true);
         agent.GetStateMachine().ChangeState(AIStateID.Idle);
         agent.ResetAgent();
-
-
 
         ObjectPooler.Instance.ReturnObject(agent.gameObject);
     }
