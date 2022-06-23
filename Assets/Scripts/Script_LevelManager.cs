@@ -16,6 +16,15 @@ public class Script_LevelManager : MonoBehaviour
     [SerializeField] GameObject EnemyC;
     [SerializeField] GameObject EnemyD;
 
+    public float CurentBounty;
+
+    [SerializeField] int EnemyASpawnRate;
+    [SerializeField] int EnemyBSpawnRate;
+    [SerializeField] int EnemyCSpawnRate;
+    [SerializeField] int EnemyDSpawnRate;
+
+    public 
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -35,12 +44,68 @@ public class Script_LevelManager : MonoBehaviour
 
     void SpawnEnemies()
     {
+
+        CurentBounty = Script_PlayerStatManager.Instance.Bounty;
+
+        if (CurentBounty >= 0 && CurentBounty < 10)
+        {
+            EnemyASpawnRate = 10;
+            EnemyBSpawnRate = 5;
+            EnemyCSpawnRate = 0;
+            EnemyDSpawnRate = 0;
+        }
+
+        if (CurentBounty >= 10 && CurentBounty < 20)
+        {
+            EnemyASpawnRate = 10;
+            EnemyBSpawnRate = 10;
+            EnemyCSpawnRate = 2;
+            EnemyDSpawnRate = 0;
+        }
+
+        if (CurentBounty >= 20 && CurentBounty < 30)
+        {
+            EnemyASpawnRate = 5;
+            EnemyBSpawnRate = 10;
+            EnemyCSpawnRate = 5;
+            EnemyDSpawnRate = 2;
+        }
+
+        if (CurentBounty >= 30 && CurentBounty < 40)
+        {
+            EnemyASpawnRate = 5;
+            EnemyBSpawnRate = 10;
+            EnemyCSpawnRate = 2;
+            EnemyDSpawnRate = 10;
+        }
+
+
+        int SumSpawnRates = EnemyASpawnRate + EnemyBSpawnRate + EnemyCSpawnRate + EnemyDSpawnRate;
+
+        Debug.Log(SumSpawnRates);
+
         foreach (var Pos in EnemySpawnPos)
         {
-            // ObjectPooler.Instance.GetObject(DummyPrefab);
-            // DummyPrefab.transform.position = Pos.transform.position;
-            // DummyPrefab.transform.rotation = Pos.transform.rotation;
-            Pos.GetComponent<Scr_EnemySpawnPoint>().Enemy = EnemyA;
+            int EnemyToSpawn = (int)Random.Range(0,SumSpawnRates);
+
+             Debug.Log(EnemyToSpawn);
+
+            if (EnemyToSpawn >= 0  && EnemyToSpawn < EnemyASpawnRate)
+            {
+                Pos.GetComponent<Scr_EnemySpawnPoint>().Enemy = EnemyA;
+            }
+            else if (EnemyToSpawn >= EnemyASpawnRate  && EnemyToSpawn <EnemyASpawnRate + EnemyBSpawnRate)
+            {
+                Pos.GetComponent<Scr_EnemySpawnPoint>().Enemy = EnemyB;
+            }
+            else if (EnemyToSpawn >= EnemyASpawnRate +  EnemyBSpawnRate  && EnemyToSpawn < EnemyASpawnRate + EnemyBSpawnRate + EnemyCSpawnRate)
+            {
+                Pos.GetComponent<Scr_EnemySpawnPoint>().Enemy = EnemyC;
+            }
+            else if (EnemyToSpawn >= EnemyASpawnRate + EnemyBSpawnRate + EnemyCSpawnRate  && EnemyToSpawn < EnemyASpawnRate + EnemyBSpawnRate + EnemyCSpawnRate + EnemyDSpawnRate)
+            {
+                Pos.GetComponent<Scr_EnemySpawnPoint>().Enemy = EnemyD;
+            }
         }
     }
 

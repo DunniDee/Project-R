@@ -28,6 +28,9 @@ public class Script_PlayerStatManager : MonoBehaviour
 
     //A bunch of Stats
 
+    [Header("Bounty variables")]
+    public float Bounty;
+
     //Movement Variables
     [Header("Movement variables")]
     public float DefaultWalkSpeed;
