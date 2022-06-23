@@ -39,7 +39,7 @@ public class Scr_SalvoMissile : Scr_RCSplashProjectile
         RaycastHit hit;
         if(Physics.Raycast(transform.position, transform.forward, out hit, Speed * Time.deltaTime))
         {
-            if (hit.transform.CompareTag("Player"))
+            if (hit.transform.CompareTag("Player") ||hit.transform.CompareTag("Projectile"))
             {
                 return;
             }

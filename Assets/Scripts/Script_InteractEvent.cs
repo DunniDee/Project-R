@@ -59,6 +59,17 @@ public class Script_InteractEvent : MonoBehaviour
        
     }
 
+    public void ShowCursor()
+    {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
+    }
+
+    public void HideCursor()
+    {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
     public void SetEventActive(bool _bool)
     {
         IsActive = _bool;
@@ -104,19 +115,27 @@ public class Script_InteractEvent : MonoBehaviour
     //     gameObject.layer = LayerMask.NameToLayer("Interactable");      
     // }
 
-    void OnTriggerEnter()
+    void OnTriggerEnter(Collider collider)
     {
         if(EventType == InteractEventType.ColliderEnter)
         {
-            Interact();
+
+            if (collider.CompareTag("Player"))
+            {
+                Interact();
+            }
         }
     }
 
-    void OnTriggerExit()
+    void OnTriggerExit(Collider collider)
     {
         if(EventType == InteractEventType.ColliderExit)
         {
-            Interact();
+            if (collider.CompareTag("Player"))
+            {
+                Interact();
+            }
+           
         }
     }
 

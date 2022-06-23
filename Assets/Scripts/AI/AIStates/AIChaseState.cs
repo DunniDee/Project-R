@@ -8,13 +8,14 @@ public class AIChaseState : AIState
     public Transform playerTransform;
 
 
-    public float attackRange = 4.0f;
+    public float attackRange = 2.0f;
     public float attackCurCooldown = 0.0f;
     public float attackMaxCooldown = 2.0f;
     public void IsInRange(Script_BaseAI agent)
     {
         if ((agent.transform.position - agent.GetPlayerTransform().position).magnitude < attackRange)
         {
+            
             Attack(agent);
         }
     }
@@ -22,13 +23,15 @@ public class AIChaseState : AIState
     void Attack(Script_BaseAI agent)
     {
         int attackIndex = Random.Range(0, 3);
+        agent.transform.LookAt(agent.GetPlayerTransform());
         agent.GetAnimator().SetTrigger("Attack" + attackIndex);
+        attackCurCooldown = attackMaxCooldown;
     }
 
     void AttackFront(Script_BaseAI agent)
     {
         RaycastHit hit;
-        if (Physics.SphereCast(agent.transform.position, 1.0f, agent.transform.forward, out hit) && attackCurCooldown <= 0.0f)
+        if (Physics.SphereCast(agent.transform.position, 1.0f, agent.transform.forward, out hit, 1.0f) )
         {
 
             if (hit.transform.CompareTag("Player"))
@@ -36,7 +39,7 @@ public class AIChaseState : AIState
                 Debug.Log("hit" + hit.transform.name);
 
                 hit.transform.GetComponentInParent<Scr_PlayerHealth>().TakeDamage(agent.Config.meleeDamage);
-                attackCurCooldown = attackMaxCooldown;
+                
             }
 
         }
@@ -51,11 +54,11 @@ public class AIChaseState : AIState
         agent.GetNavMeshAgent().speed = agent.Config.ChaseSpeed;
         agent.SetIsInCombat(true);
         agent.GetAnimator().SetBool("isInCombat", true);
-
+        agent.GetNavMeshAgent().stoppingDistance = 2.5f;
         agent.AlertLocalAI(20.0f);
         agent.GetAnimatorEvents().OnAttackEvent += AttackFront;                                 
         playerTransform = agent.GetPlayerTransform();
-
+        agent.PlayCombatNoise();
     }
 
     public void Update(Script_BaseAI agent)

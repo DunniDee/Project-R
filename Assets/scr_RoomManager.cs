@@ -22,7 +22,7 @@ public class scr_RoomManager : MonoBehaviour
         {
             GameObject Enemy = SpawnPoint.SpawnEnemy();
             LocalEnemies.Add(Enemy);
-
+            Enemy.GetComponent<Script_BaseAI>().WakeUpDisabled();
         }
     }
 
@@ -36,5 +36,19 @@ public class scr_RoomManager : MonoBehaviour
         LevelToggle.SetActive(true);
 
         SpawnEnemies();
+    }
+
+    public bool CheckRoomClear()
+    {
+        bool IsClear = true;
+        foreach (var Enemy in LocalEnemies)
+        {
+            if (Enemy.activeInHierarchy)
+            {
+                IsClear = false;
+            }
+        }
+
+        return IsClear;
     }
 }

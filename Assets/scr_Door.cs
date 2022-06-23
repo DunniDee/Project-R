@@ -8,7 +8,16 @@ public class scr_Door : MonoBehaviour
 [SerializeField] GameObject doorR;
 
 [SerializeField] bool isInRange;
+
+[SerializeField] bool IsExit;
 [SerializeField] bool CanBeOpened = true;
+
+[SerializeField] scr_RoomManager RoomManager;
+
+private void Start() 
+{
+    RoomManager = GetComponentInParent<scr_RoomManager>();
+}
 
 
 
@@ -32,15 +41,33 @@ public class scr_Door : MonoBehaviour
 
     private void Update()
     {
+        if (IsExit && isInRange)
+        {
+            if (RoomManager.CheckRoomClear())
+            {
+                CanBeOpened = true;
+            }
+        }
+
         if (isInRange && CanBeOpened)
         {
-            doorL.transform.localPosition = Vector3.Lerp(doorL.transform.localPosition, Vector3.forward,Time.deltaTime * 3);
-            doorR.transform.localPosition = Vector3.Lerp(doorR.transform.localPosition, Vector3.back,Time.deltaTime * 3);
+            Open();
         }
         else
         {
+            Close();
+        }
+    }
+
+    void Open()
+    {
+            doorL.transform.localPosition = Vector3.Lerp(doorL.transform.localPosition, Vector3.forward,Time.deltaTime * 3);
+            doorR.transform.localPosition = Vector3.Lerp(doorR.transform.localPosition, Vector3.back,Time.deltaTime * 3);
+    }
+
+    void Close()
+    {
             doorL.transform.localPosition = Vector3.Lerp(doorL.transform.localPosition, Vector3.zero,Time.deltaTime * 3);
             doorR.transform.localPosition = Vector3.Lerp(doorR.transform.localPosition, Vector3.zero,Time.deltaTime * 3);
-        }
     }
 }

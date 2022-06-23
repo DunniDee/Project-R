@@ -14,11 +14,17 @@ public class Ability_Grenade : Script_AbilityBase
     [SerializeField] Animator Anim;
     public ParticleSystem teleportFX;
 
+    [SerializeField] AudioSource AS;
+    [SerializeField] AudioClip[] Clips;
+
+    [SerializeField] AudioClip UseAbility;
+
     protected override void OnAbilityStart()
     {
         base.OnAbilityStart();
          Invoke("Shoot", 1);
         Anim.SetBool("Deployed", true);
+        PlaySound();
     }
 
     void Shoot()
@@ -33,5 +39,11 @@ public class Ability_Grenade : Script_AbilityBase
 
         Anim.SetTrigger("Shoot");
         Anim.SetBool("Deployed", false);
+        AS.PlayOneShot(UseAbility);
+    }
+
+    void PlaySound()
+    {
+        AS.PlayOneShot(Clips[Random.Range(0,Clips.Length)]);
     }
 }
