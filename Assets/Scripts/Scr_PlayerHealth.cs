@@ -6,7 +6,7 @@ public class Scr_PlayerHealth : MonoBehaviour
 {
     [Header("Internal Components")]
     public AudioSource audioSource;
-    public AudioClip damageNoise;
+    public AudioClip[] damageNoise;
     public Script_HealthUI m_healthUI;
     public float maxHealth = 100.0f;
     public float currentHealth = 0.0f;
@@ -39,7 +39,7 @@ public class Scr_PlayerHealth : MonoBehaviour
     }
     void PlayDamageNoise()
     {
-        audioSource.PlayOneShot(damageNoise);
+        audioSource.PlayOneShot(damageNoise[Random.Range(0,damageNoise.Length)]);
     }
     // Start is called before the first frame update
     void Start()
