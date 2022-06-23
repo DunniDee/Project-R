@@ -238,4 +238,10 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
     {
         m_navMeshAgent.enabled = true;
     }
+
+    public void OnDrawGizmos()
+    {
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawWireSphere(transform.position + new Vector3(0.0f, 1.0f, 0.0f) + 2.0f * transform.forward , 2.0f);
+    }
 }

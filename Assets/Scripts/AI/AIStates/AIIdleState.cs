@@ -6,24 +6,6 @@ public class AIIdleState : AIState
 {
     float idleTimer = 0.0f;
     float waitTime = 2.0f;
-   /* private void FieldOfView(Script_BaseAI agent)
-    {
-        Vector3 PlayerDir = (agent.GetPlayerTransform().position - agent.transform.position);
-       if(PlayerDir.magnitude > agent.Config.maxSightDistance)
-       {
-            return;
-       }
-
-       Vector3 agentDir = agent.transform.forward;
-       PlayerDir.Normalize();
-
-       float dotProduct = Vector3.Dot(PlayerDir,agentDir);
-       if(dotProduct > 0.0f)
-       {
-            agent.SetIsInCombat(true);
-       }
-    }*/
-
   
     public AIStateID getID()
     {
@@ -64,6 +46,10 @@ public class AIIdleState : AIState
                 else if (agent is AI_Gun)
                 {
                      agent.GetStateMachine().ChangeState(AIStateID.ShootPlayer);
+                }
+                else if (agent is AI_Brute)
+                {
+                    agent.GetStateMachine().ChangeState(AIStateID.BruteChase);
                 }
 
                 break;
