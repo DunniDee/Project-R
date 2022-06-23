@@ -107,8 +107,12 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
             {
                 StateMachine.ChangeState(AIStateID.CommanderBuff);
             }
-          
-            
+            else if (this is AI_Brute)
+            {
+                StateMachine.ChangeState(AIStateID.BruteChase);
+            }
+
+
         }
         switch(_DamageType){
             case CustomCollider.DamageType.Critical:

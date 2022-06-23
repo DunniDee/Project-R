@@ -5,13 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class Scr_MainMenu : MonoBehaviour
 {
-    AudioSource audioSource;
-    public AudioClip clickNoise;
-
-    public void PlayClickNoise() {
-        audioSource.PlayOneShot(clickNoise);
-    }
-
     public void Play()
     {
         SceneManager.LoadScene("HubWorld");
@@ -25,7 +18,6 @@ public class Scr_MainMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame

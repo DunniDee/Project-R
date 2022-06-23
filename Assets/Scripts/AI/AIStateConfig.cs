@@ -27,4 +27,7 @@ public class AIStateConfig : ScriptableObject
 
     [Header("Melee Properties")]
     public float meleeDamage = 25f;
+
+    [Header("Bounty")]
+    public float Bounty = 0.2f;
 }

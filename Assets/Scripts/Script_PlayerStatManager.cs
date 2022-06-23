@@ -10,6 +10,7 @@ public class Script_PlayerStatManager : MonoBehaviour
     private void Awake() 
     {
         Instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     // public struct Stat
@@ -30,6 +31,7 @@ public class Script_PlayerStatManager : MonoBehaviour
 
     [Header("Bounty variables")]
     public float Bounty;
+    public float Credits;
 
     //Movement Variables
     [Header("Movement variables")]

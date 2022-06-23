@@ -568,7 +568,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -2030,6 +2030,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2363587849599177872}
   - component: {fileID: 2830406664387768401}
+  - component: {fileID: 1884193770}
   m_Layer: 0
   m_Name: commander enemy
   m_TagString: Untagged
@@ -2083,6 +2084,22 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1884193770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3136464725139361322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f26c52422826990459ea235a1455605b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 0}
+  agent: {fileID: 0}
+  FootStepClipArr: []
+  FireSoundClipArr: []
 --- !u!1 &3175889651851802248
 GameObject:
   m_ObjectHideFlags: 0
@@ -2519,7 +2536,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f222fa2583a85df41b2a666a98bfcc35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  target: {fileID: 2363587849599177872}
   HealthBarFill: {fileID: 3483284142957175096}
   HealthBarBG: {fileID: 9213025663788869894}
   HealthSlider: {fileID: 0}
