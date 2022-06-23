@@ -15,6 +15,12 @@ public class Ability_Salvo : Script_AbilityBase
     [SerializeField] Transform SeekPos;
 
     [SerializeField] Animator Anim;
+
+    [SerializeField] AudioSource AS;
+
+    [SerializeField] AudioClip UseAbility;
+
+    [SerializeField] AudioClip[] Clips;
     private void Start()
     {
         Look = transform.GetChild(0);
@@ -25,6 +31,7 @@ public class Ability_Salvo : Script_AbilityBase
         base.OnAbilityStart();
          Invoke("Salvo", 1);
         Anim.SetBool("Deployed", true);
+        PlaySound();
     }
 
     protected override void CustomUpdate()
@@ -66,5 +73,13 @@ public class Ability_Salvo : Script_AbilityBase
         SpTemp.SetlifeTime(5);
 
         Anim.SetTrigger("Shoot");
+
+        AS.PlayOneShot(UseAbility);
+    }
+
+    void PlaySound()
+    {
+        AS.PlayOneShot(Clips[Random.Range(0,Clips.Length)]);
+        
     }
 }
