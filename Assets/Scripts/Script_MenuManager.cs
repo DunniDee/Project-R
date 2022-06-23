@@ -29,7 +29,6 @@ public class Script_MenuManager : MonoBehaviour
         else if(Input.GetKeyDown(menuKey) && !isMenuActive)
         {
             ToggleMenu(true);
-            PauseGame();
         }
     }
      private void ToggleCursor(){
@@ -42,7 +41,7 @@ public class Script_MenuManager : MonoBehaviour
         isMenuActive = menuObject.active;
         PlayerUI.SetActive(!_activeState);
 
-        FindObjectOfType<Script_PlayerLook>().enabled = !isMenuActive;
+        FindObjectOfType<Script_PlayerLook>().enabled = !_activeState;
 
         if (_activeState)
         {
@@ -64,11 +63,6 @@ public class Script_MenuManager : MonoBehaviour
         Application.Quit();
     }
 
-    void PauseGame()
-    {
-        FindObjectOfType<Script_PlayerLook>().SetPlayerLookState(!isMenuActive);
-
-    }
     // Start is called before the first frame update
     void Start()
     {

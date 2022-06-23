@@ -18,7 +18,7 @@ public class Commander_BuffState : AIState
         agent.GetAnimator().SetTrigger("Buff");
         agent.SetIsInCombat(true);
         Buff(agent);
-
+        agent.PlayCombatNoise();
 
         if (!followTarget)
         {

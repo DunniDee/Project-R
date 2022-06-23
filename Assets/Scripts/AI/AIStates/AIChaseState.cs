@@ -58,7 +58,7 @@ public class AIChaseState : AIState
         agent.AlertLocalAI(20.0f);
         agent.GetAnimatorEvents().OnAttackEvent += AttackFront;                                 
         playerTransform = agent.GetPlayerTransform();
-
+        agent.PlayCombatNoise();
     }
 
     public void Update(Script_BaseAI agent)
