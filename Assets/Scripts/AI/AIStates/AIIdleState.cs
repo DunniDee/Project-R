@@ -15,6 +15,7 @@ public class AIIdleState : AIState
     public void Enter(Script_BaseAI agent)
     {
         idleTimer = waitTime;
+        agent.GetNavMeshAgent().enabled = true;
         agent.GetNavMeshAgent().speed = agent.Config.WanderSpeed;
     }
 

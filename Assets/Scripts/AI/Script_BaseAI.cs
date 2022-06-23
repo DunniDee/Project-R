@@ -156,6 +156,8 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
         m_UIHealth.HealthSlider.maxValue = Config.maxHealth;
         m_UIHealth.HealthSlider.value = Config.maxHealth;
         m_UIHealth.gameObject.SetActive(false);
+
+        m_navMeshAgent.enabled= false;
     }
     protected virtual void AIStateInit() { }
     protected void Locomotion()
@@ -206,7 +208,7 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
         // Add On Player Found Event Delegate
         GetComponent<Scr_AISensor>().OnPlayerFoundEvent += StateMachine.ChangeState;
 
-         WakeUp();
+        WakeUp();
     }
 
     protected void UpdateUIHealth(){
@@ -216,7 +218,7 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
     // Update is called once per frame
     protected void Update()
     {
-        Debug.Log(Vector3.Distance(transform.position, PlayerTransform.position));
+        //Debug.Log(Vector3.Distance(transform.position, PlayerTransform.position));
         if (Vector3.Distance(transform.position,PlayerTransform.position) > 30.0f)
         {
             Debug.Log("Skipped Update");
@@ -246,7 +248,7 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
         Invoke("EnableNavmesh", 0.25f);
     }
 
-        public void WakeUpDisabled()
+    public void WakeUpDisabled()
     {
         Invoke("EnableNavmesh", 0.25f);
     }
