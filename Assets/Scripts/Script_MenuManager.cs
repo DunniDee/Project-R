@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Script_MenuManager : MonoBehaviour
 {
@@ -47,7 +48,6 @@ public class Script_MenuManager : MonoBehaviour
         }
 
         ToggleCursor();
-        PauseGame();
     }
 
     public void ToggleOptions(){
@@ -78,7 +78,15 @@ public class Script_MenuManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        PlayerUI = GetPlayerGUI();
+    }
 
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
     // Update is called once per frame
     void Update()
     {
