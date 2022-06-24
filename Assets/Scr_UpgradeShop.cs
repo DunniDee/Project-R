@@ -40,7 +40,7 @@ public class Scr_UpgradeShop : MonoBehaviour
 
     public void IncreaseFireRate()
     {
-        Script_PlayerStatManager.Instance.ModifiedPrimaryFireRate -= 0.05f;
+        Script_PlayerStatManager.Instance.ModifiedPrimaryFireRate *= 0.9f;
     }
 
     public void IncreaseMagCount()
@@ -53,12 +53,14 @@ public class Scr_UpgradeShop : MonoBehaviour
     {
         PlayerCanvas = GameObject.FindGameObjectWithTag("PlayerUI");
 
-        SpeedCost.text = "Cost: " + SpeedUpgradeCost.ToString("0");
-        JumpCost.text = "Cost: " + JumpUpgradeCost.ToString("0");
+        SpeedCost.text = "Cost: " + SpeedUpgradeCost.ToString("F0");
+        JumpCost.text = "Cost: " + JumpUpgradeCost.ToString("F0");
 
-        DamageCost.text = "Cost: " + DamageUpgradeCost.ToString("0");
-        FirerateCost.text = "Cost: " + FireRateUpgradeCost.ToString("0");
-        MagCost.text = "Cost: " + MagCountUpgradeCost.ToString("0");
+        DamageCost.text = "Cost: " + DamageUpgradeCost.ToString("F0");
+        FirerateCost.text = "Cost: " + FireRateUpgradeCost.ToString("F0");
+        MagCost.text = "Cost: " + MagCountUpgradeCost.ToString("F0");
+
+        
     }
 
     private void Awake()
