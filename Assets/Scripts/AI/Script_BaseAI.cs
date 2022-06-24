@@ -218,7 +218,6 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
     // Update is called once per frame
     protected void Update()
     {
-        //Debug.Log(Vector3.Distance(transform.position, PlayerTransform.position));
         if (Vector3.Distance(transform.position,PlayerTransform.position) > 30.0f)
         {
             Debug.Log("Skipped Update");

@@ -52,6 +52,13 @@ public class Scr_UpgradeShop : MonoBehaviour
     private void Start()
     {
         PlayerCanvas = GameObject.FindGameObjectWithTag("PlayerUI");
+
+        SpeedCost.text = "Cost: " + SpeedUpgradeCost.ToString("0");
+        JumpCost.text = "Cost: " + JumpUpgradeCost.ToString("0");
+
+        DamageCost.text = "Cost: " + DamageUpgradeCost.ToString("0");
+        FirerateCost.text = "Cost: " + FireRateUpgradeCost.ToString("0");
+        MagCost.text = "Cost: " + MagCountUpgradeCost.ToString("0");
     }
 
     private void Awake()
