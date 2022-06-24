@@ -41,7 +41,7 @@ public class AIAnimatorEvents : MonoBehaviour
     }
     public void PlayFootStep() { audioSource.PlayOneShot(FootStepClipArr[Random.Range(0, FootStepClipArr.Length)]); }
 
-    public void PlayGunShot() { audioSource.PlayOneShot(FireSoundClipArr[Random.Range(0, FireSoundClipArr.Length)]); }
+    public void PlayGunShot() { audioSource.PlayOneShot(FireSoundClipArr[Random.Range(0, FireSoundClipArr.Length)], 0.7f); }
 
     public void StopAgent() {
         agent.velocity = Vector3.zero;

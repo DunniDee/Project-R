@@ -8,6 +8,7 @@ public class Scr_PlayerHealth : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip[] damageNoise;
     public Script_HealthUI m_healthUI;
+
     public float maxHealth = 100.0f;
     public float currentHealth = 0.0f;
 
@@ -30,6 +31,8 @@ public class Scr_PlayerHealth : MonoBehaviour
             timer = waitTime;
         }
         PlayDamageNoise();
+        m_healthUI.m_HurtImage.CrossFadeAlpha(1, 0.1f, false);
+        m_healthUI.m_HurtImage.CrossFadeAlpha(0, 1.0f, false);
         currentHealth -= _Damage;
         m_healthUI.m_healthSlider.value = currentHealth;
     }
@@ -45,6 +48,8 @@ public class Scr_PlayerHealth : MonoBehaviour
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        m_healthUI = GetComponent<Script_HealthUI>();
+        m_healthUI.m_HurtImage.CrossFadeAlpha(0, 1.0f, false);
         currentHealth = maxHealth;
 
         m_healthUI = GetComponent<Script_HealthUI>();
@@ -56,6 +61,7 @@ public class Scr_PlayerHealth : MonoBehaviour
         
     }
 
+   
     // Update is called once per frame
     void Update()
     {
