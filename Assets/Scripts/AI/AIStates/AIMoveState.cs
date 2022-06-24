@@ -48,8 +48,7 @@ public class AIMoveState : AIState
         {
             agent.GetStateMachine().ChangeState(AIStateID.Moving);
         }
-        
-       // FieldOfView(agent);
+
         switch(agent.GetIsInCombat())
         {
             case false:
