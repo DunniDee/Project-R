@@ -20,13 +20,16 @@ public class Scr_PlayerMotor : MonoBehaviour
     [Space]
 
     [Header("Jump Stats")]
+    [SerializeField] int m_MaxJumps;
+     int m_JumpCount;
     [SerializeField] float m_Gravity;
     [SerializeField] float m_JumpMomentum;
     [SerializeField] float m_JumpHeight;
     [Space]
 
-    [Header("Jump Stats")]
+    [Header("Dash Stats")]
     [SerializeField] float m_DashMomentum;
+    float m_DashMomentumTimer;
 
     //Motor Status Bools
     public bool m_IsGrounded;
@@ -40,9 +43,16 @@ public class Scr_PlayerMotor : MonoBehaviour
     float m_ForwardMovement;
     float m_SidewardMovement;
 
+    [Header("Wall Running")]
+    [SerializeField] Transform FrontPos;
+
+    
+
+
     [Header("GameFeel")]
     [SerializeField] Scr_CameraEffects CamEffects;
     bool m_WasGrounded;
+    float m_GroundedTimer = 0;
     float LastYVelocity;
 
     // Update is called once per frame
@@ -69,13 +79,18 @@ public class Scr_PlayerMotor : MonoBehaviour
 
     void CheckGround()
     {
-        if (Physics.CheckSphere(transform.position + (Vector3.up * 0.2f),0.3f,GroundMask))
+        if (Physics.CheckSphere(transform.position + (Vector3.up * 0.2f),0.3f,GroundMask) && m_GroundedTimer < 0)
         {
            m_IsGrounded = true; 
         }
         else
         {
             m_IsGrounded = false; 
+        }
+
+        if (m_GroundedTimer >= 0)
+        {
+            m_GroundedTimer -= Time.deltaTime;
         }
     }
 
@@ -101,9 +116,9 @@ public class Scr_PlayerMotor : MonoBehaviour
 
     void SmoothMomentum()
     {
-        if (m_IsGrounded && !m_IsCrouching)
+        if (m_IsGrounded && !m_IsCrouching && m_DashMomentumTimer <= 0)
         {
-            m_MomentumDirection = Vector3.Lerp(m_MomentumDirection,Vector3.zero, Time.deltaTime * 10);
+            m_MomentumDirection = Vector3.Lerp(m_MomentumDirection,Vector3.zero, Time.deltaTime * 5);
         }
         else
         {
@@ -139,6 +154,7 @@ public class Scr_PlayerMotor : MonoBehaviour
             {
                 CamEffects.RotateTo.x += Mathf.Abs(LastYVelocity);
             }
+            m_JumpCount = m_MaxJumps;
         }
         else
         {
@@ -150,10 +166,12 @@ public class Scr_PlayerMotor : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && m_JumpCount > 0)
         {
+            m_JumpCount--;
             m_VerticalVelocity.y = Mathf.Sqrt(2 * m_JumpHeight * m_Gravity);
             CamEffects.RotateTo.x += 5;
+            m_GroundedTimer = 0.25f;
             m_MomentumDirection += m_SmoothMoveDirection * m_JumpMomentum;
         }
 
@@ -166,8 +184,15 @@ public class Scr_PlayerMotor : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            m_MomentumDirection += m_SmoothMoveDirection * m_DashMomentum;
+            m_MomentumDirection += m_SmoothMoveDirection.normalized * m_DashMomentum ;
             CamEffects.RotateTo += new Vector3(m_ForwardMovement,0,-m_SidewardMovement).normalized * m_DashMomentum;
+            m_DashMomentumTimer = 0.25f;
+            CamEffects.FovTo += 10;
+        }
+
+        if (m_DashMomentumTimer > 0)
+        {
+            m_DashMomentumTimer-=Time.deltaTime;
         }
     }
 
@@ -191,11 +216,22 @@ public class Scr_PlayerMotor : MonoBehaviour
             }
             CamEffects.LerpPos = new Vector3(0,-1,0);
             CamEffects.RotateTo.z += 100 * Time.deltaTime;
+
+            Movment.height = 1;
+            Movment.center = new Vector3(0,0.5f,0);
         }
         else
         {
             CamEffects.LerpPos = new Vector3(0,0,0);
+
+            Movment.height = 2;
+            Movment.center = new Vector3(0,1,0);
         }
+    }
+
+    void ChekWall()
+    {
+
     }
 
     
