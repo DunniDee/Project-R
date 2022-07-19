@@ -88,7 +88,7 @@ public class Script_LevelManager : MonoBehaviour
         {
             int EnemyToSpawn = (int)Random.Range(0,SumSpawnRates);
 
-             Debug.Log(EnemyToSpawn);
+             //Debug.Log(EnemyToSpawn);
 
             if (EnemyToSpawn >= 0  && EnemyToSpawn < EnemyASpawnRate)
             {

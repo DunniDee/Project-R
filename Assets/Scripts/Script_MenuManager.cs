@@ -33,7 +33,7 @@ public class Script_MenuManager : MonoBehaviour
     }
      private void ToggleCursor(){
         Cursor.visible = !Cursor.visible;
-        Cursor.lockState = Cursor.visible ? CursorLockMode.Locked  : CursorLockMode.None;
+        Cursor.lockState = Cursor.visible ? CursorLockMode.Confined  : CursorLockMode.Locked;
     }
 
     public void ToggleMenu(bool _activeState){

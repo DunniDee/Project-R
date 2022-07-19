@@ -7,10 +7,15 @@ public class Script_PlayerStatManager : MonoBehaviour
 
     //Singleton Pattern
     public static Script_PlayerStatManager Instance;
-    private void Awake() 
+    private void Awake()
     {
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this.gameObject);
+        } else {
+            Instance = this;
+          	DontDestroyOnLoad(gameObject);
+        }
     }
 
     // public struct Stat
