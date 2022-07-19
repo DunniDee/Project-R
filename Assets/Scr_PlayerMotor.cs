@@ -16,6 +16,7 @@ public class Scr_PlayerMotor : MonoBehaviour
     [SerializeField] float Acceleration;
     [SerializeField] float m_MomentumAcceleration;
     [SerializeField] float m_MomentumDecay;
+    public Vector3 LastPos;
     float m_MovementSpeed;
     [Space]
 
@@ -29,6 +30,10 @@ public class Scr_PlayerMotor : MonoBehaviour
 
     [Header("Dash Stats")]
     [SerializeField] float m_DashMomentum;
+    [SerializeField] int m_MaxDashes;
+    [SerializeField] float m_DashCooldown;
+    float m_DashCooldownTimer;
+    int m_DashCount;
     float m_DashMomentumTimer;
 
     //Motor Status Bools
@@ -75,11 +80,12 @@ public class Scr_PlayerMotor : MonoBehaviour
         m_WasGrounded = m_IsGrounded;
         LastYVelocity = m_VerticalVelocity.y;
         m_WasCrouching = m_IsCrouching;
+        LastPos = transform.position;
     }
 
     void CheckGround()
     {
-        if (Physics.CheckSphere(transform.position + (Vector3.up * 0.2f),0.3f,GroundMask) && m_GroundedTimer < 0)
+        if (Physics.CheckSphere(transform.position + (Vector3.up * 0.40f),0.5f,GroundMask) && m_GroundedTimer < 0)
         {
            m_IsGrounded = true; 
         }
@@ -171,8 +177,12 @@ public class Scr_PlayerMotor : MonoBehaviour
             m_JumpCount--;
             m_VerticalVelocity.y = Mathf.Sqrt(2 * m_JumpHeight * m_Gravity);
             CamEffects.RotateTo.x += 5;
-            m_GroundedTimer = 0.25f;
-            m_MomentumDirection += m_SmoothMoveDirection * m_JumpMomentum;
+            //m_MomentumDirection += m_SmoothMoveDirection * m_JumpMomentum;
+
+            m_MomentumDirection += m_SmoothMoveDirection.normalized * m_DashMomentum ;
+            CamEffects.RotateTo += new Vector3(m_ForwardMovement,0,-m_SidewardMovement).normalized * m_DashMomentum;
+            m_DashMomentumTimer = 0.25f;
+            CamEffects.FovTo += 10;
         }
 
         float VerticalTilt = m_VerticalVelocity.y;
@@ -182,17 +192,30 @@ public class Scr_PlayerMotor : MonoBehaviour
 
     void Dash()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.LeftShift) && m_DashCooldownTimer <= 0 && m_DashCount > 0)
         {
             m_MomentumDirection += m_SmoothMoveDirection.normalized * m_DashMomentum ;
-            CamEffects.RotateTo += new Vector3(m_ForwardMovement,0,-m_SidewardMovement).normalized * m_DashMomentum;
+            CamEffects.RotateTo += new Vector3(m_ForwardMovement,0,-m_SidewardMovement).normalized * 10;
             m_DashMomentumTimer = 0.25f;
             CamEffects.FovTo += 10;
+            m_VerticalVelocity.y = 0;
+            m_DashCount--;
+            m_DashCooldownTimer = m_DashCooldown;
         }
 
         if (m_DashMomentumTimer > 0)
         {
             m_DashMomentumTimer-=Time.deltaTime;
+        }
+
+        if (m_DashCooldownTimer > 0)
+        {
+            m_DashCooldownTimer-=Time.deltaTime;
+        }
+
+        if (m_IsGrounded)
+        {
+            m_DashCount = m_MaxDashes;
         }
     }
 
