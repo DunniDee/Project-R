@@ -30,6 +30,8 @@ public class Scr_PlayerMotor : MonoBehaviour
 
     //Motor Status Bools
     public bool m_IsGrounded;
+    private bool m_WasCrouching;
+    public bool m_IsCrouching;
 
     private Vector3 m_MoveDirection;
     private Vector3 m_SmoothMoveDirection;
@@ -53,6 +55,7 @@ public class Scr_PlayerMotor : MonoBehaviour
         Movment.Move(m_VerticalVelocity * Time.deltaTime);
 
         Dash();
+        Crouch();
 
         SmoothMomentum();
         SmoothMovment();
@@ -61,6 +64,7 @@ public class Scr_PlayerMotor : MonoBehaviour
 
         m_WasGrounded = m_IsGrounded;
         LastYVelocity = m_VerticalVelocity.y;
+        m_WasCrouching = m_IsCrouching;
     }
 
     void CheckGround()
@@ -77,7 +81,7 @@ public class Scr_PlayerMotor : MonoBehaviour
 
     void SmoothMovment()
     {
-        if (!m_IsGrounded)
+        if (!m_IsGrounded || m_IsCrouching)
         {
             m_MovementSpeed = Mathf.Lerp(m_MovementSpeed, AirSpeed, Time.deltaTime * Acceleration);
         }
@@ -97,7 +101,7 @@ public class Scr_PlayerMotor : MonoBehaviour
 
     void SmoothMomentum()
     {
-        if (m_IsGrounded)
+        if (m_IsGrounded && !m_IsCrouching)
         {
             m_MomentumDirection = Vector3.Lerp(m_MomentumDirection,Vector3.zero, Time.deltaTime * 10);
         }
@@ -106,6 +110,8 @@ public class Scr_PlayerMotor : MonoBehaviour
             m_MomentumDirection = Vector3.Lerp(m_MomentumDirection, m_SmoothMoveDirection.normalized * m_MomentumDirection.magnitude, Time.deltaTime * 1);
             m_MomentumDirection = Vector3.Lerp(m_MomentumDirection, Vector3.zero, Time.deltaTime * m_MomentumDecay);
         }
+
+        CamEffects.FovTo += m_MomentumDirection.magnitude * 5 * Time.deltaTime;
     }
 
 
@@ -162,6 +168,33 @@ public class Scr_PlayerMotor : MonoBehaviour
         {
             m_MomentumDirection += m_SmoothMoveDirection * m_DashMomentum;
             CamEffects.RotateTo += new Vector3(m_ForwardMovement,0,-m_SidewardMovement).normalized * m_DashMomentum;
+        }
+    }
+
+    void Crouch()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            m_IsCrouching = true;
+        }
+
+        if (Input.GetKeyUp(KeyCode.LeftControl))
+        {
+            m_IsCrouching = false;
+        }
+
+        if (m_IsCrouching && m_IsGrounded)
+        {
+            if (m_IsGrounded && !m_WasCrouching)
+            {
+                m_MomentumDirection = m_SmoothMoveDirection * m_MovementSpeed;
+            }
+            CamEffects.LerpPos = new Vector3(0,-1,0);
+            CamEffects.RotateTo.z += 100 * Time.deltaTime;
+        }
+        else
+        {
+            CamEffects.LerpPos = new Vector3(0,0,0);
         }
     }
 
