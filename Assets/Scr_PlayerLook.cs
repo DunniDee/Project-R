@@ -13,6 +13,8 @@ public class Scr_PlayerLook : MonoBehaviour
     [SerializeField] Transform CameraTransform;
     [SerializeField] Transform OrientationTransform;
 
+    [SerializeField] Scr_HandAnimator HandEffects;
+
     float m_MouseX;
     float m_MouseY;
     float m_Multiplier = 0.01f;
@@ -45,5 +47,6 @@ public class Scr_PlayerLook : MonoBehaviour
         CameraTransform.localRotation = Quaternion.Euler(m_XRotation, 0,0);
         OrientationTransform.rotation = Quaternion.Euler(0, m_YRotation, 0);
 
+        HandEffects.RotateTo += new Vector3(-m_MouseY, m_MouseX, 0) * 2 * Time.deltaTime;
     }
 }

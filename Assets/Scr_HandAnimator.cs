@@ -5,11 +5,12 @@ using UnityEngine;
 public class Scr_HandAnimator : MonoBehaviour
 {
     [SerializeField] Scr_CameraEffects CameraEffects;
+    public Vector3 RotateTo;
 
     // Update is called once per frame
     void Update()
     {
-
-        transform.localRotation = Quaternion.Lerp(transform.localRotation,Quaternion.Euler(CameraEffects.RotateTo), Time.deltaTime * 5);
+        RotateTo = Vector3.Lerp(RotateTo,CameraEffects.RotateTo, Time.deltaTime * 5);
+        transform.localRotation = Quaternion.Euler(RotateTo);
     }
 }
