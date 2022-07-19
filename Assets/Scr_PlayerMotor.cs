@@ -23,6 +23,10 @@ public class Scr_PlayerMotor : MonoBehaviour
     [SerializeField] float m_Gravity;
     [SerializeField] float m_JumpMomentum;
     [SerializeField] float m_JumpHeight;
+    [Space]
+
+    [Header("Jump Stats")]
+    [SerializeField] float m_DashMomentum;
 
     //Motor Status Bools
     public bool m_IsGrounded;
@@ -47,6 +51,8 @@ public class Scr_PlayerMotor : MonoBehaviour
 
         Jump();
         Movment.Move(m_VerticalVelocity * Time.deltaTime);
+
+        Dash();
 
         SmoothMomentum();
         SmoothMovment();
@@ -148,6 +154,15 @@ public class Scr_PlayerMotor : MonoBehaviour
         float VerticalTilt = m_VerticalVelocity.y;
         VerticalTilt = Mathf.Clamp(VerticalTilt, -45,10);
         CamEffects.RotateTo.x += VerticalTilt * Time.deltaTime;
+    }
+
+    void Dash()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            m_MomentumDirection += m_SmoothMoveDirection * m_DashMomentum;
+            CamEffects.RotateTo += new Vector3(m_ForwardMovement,0,-m_SidewardMovement).normalized * m_DashMomentum;
+        }
     }
 
     
