@@ -12,7 +12,7 @@ public class Weapon_FullAutoProjectileWeapon : Script_ProjectileWeapon
     // Update is called once per frame
     void Update()
     {
-        FiringPoint.transform.LookAt(Look.getAimPoint());
+        FiringPoint.transform.LookAt(Look.LookPoint);
 
         if (ShotTimer > 0)
         {
@@ -22,7 +22,6 @@ public class Weapon_FullAutoProjectileWeapon : Script_ProjectileWeapon
         if (Input.GetKey(ShootKey) && CurMagCount > 0 && ShotTimer <= 0 && !IsReloading)
         {
             Shoot();
-            Motor.SetIsSprinting(false);
         }
 
         Reload();

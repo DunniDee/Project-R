@@ -195,9 +195,13 @@ public class Scr_PlayerMotor : MonoBehaviour
             CamEffects.RotateTo += new Vector3(m_ForwardMovement,0,-m_SidewardMovement).normalized * 10;
             m_DashMomentumTimer = 0.25f;
             CamEffects.FovTo += 10;
-            m_VerticalVelocity.y = 0;
             m_DashCount--;
             m_DashCooldownTimer = m_DashCooldown;
+
+            if (m_VerticalVelocity.y <0 )
+            {
+                m_VerticalVelocity.y = 0;
+            }
         }
 
         if (m_DashMomentumTimer > 0)
@@ -235,7 +239,7 @@ public class Scr_PlayerMotor : MonoBehaviour
                 m_MomentumDirection = m_SmoothMoveDirection * m_MovementSpeed;
             }
             CamEffects.LerpPos = new Vector3(0,-1,0);
-            CamEffects.RotateTo.z += 100 * Time.deltaTime;
+            CamEffects.RotateTo.z += 25 * Time.deltaTime;
 
             Movment.height = 1;
             Movment.center = new Vector3(0,0.5f,0);

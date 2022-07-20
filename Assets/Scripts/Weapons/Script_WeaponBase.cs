@@ -9,31 +9,20 @@ public abstract class Script_WeaponBase : MonoBehaviour
     [SerializeField] protected Sprite Icon;
     [SerializeField] protected KeyCode ShootKey = KeyCode.Mouse0;
     [SerializeField] protected KeyCode ReloadKey = KeyCode.R;
-
     [Space]
 
     [Header("Shot Variables")]
     [SerializeField] protected float Damage;
     [SerializeField] protected float FireRate;
-    [SerializeField] protected float MinSpreadAngle;
-    [SerializeField] protected float MaxSpreadAngle;
-    protected float defMinSpreadAngle;
-    protected float defMaxSpreadAngle;
-    [SerializeField] protected float SpreadIncrement;
-    [SerializeField] protected float SpreadSlerp;
-    [SerializeField] protected float CurrentSpreadAngle;
      protected float ShotTimer;
     [SerializeField] protected int ShotCount;
-
-    [Header("Shot Variables")]
-    [SerializeField] protected float ADSFovZoom;
-    [SerializeField] protected float ADSMinSpreadAngle;
-    [SerializeField] protected float ADSMaxSpreadAngle;
-    protected bool ADS;
-
+    [SerializeField] protected float SpreadAngle;
+    [SerializeField] protected Vector2 RecoilVec;
     [Space]
 
     [Header("Reload Variables")]
+    [SerializeField] protected int MaxReserveCount;
+    [SerializeField] protected int CurReserveCount;
     [SerializeField] protected int MagCount;
     protected int CurMagCount;
     [SerializeField] protected float ReloadTime;
@@ -43,14 +32,6 @@ public abstract class Script_WeaponBase : MonoBehaviour
     [Space]
 
     [Header("Recoil Variables")]
-    [SerializeField] protected float Recoil; // angle to recoil by
-    [SerializeField] protected float RecoilTime; // time it takes to return to forward looking
-    [SerializeField] protected float SlerpSpeed; // speed it slerps to the specified recoil angle
-    [SerializeField] protected float ShakeTime; // time the screen shakes for
-    [SerializeField] protected float ShakeAmplitude; // amplitude of the screen shake
-
-    [SerializeField] protected float ADSShakeMultiplier; // Multipliy the shake when ads
-    [SerializeField] protected float ADSRecoilMultiplier; // Multiply the recoil when ads
 
     [Space]
 
@@ -74,11 +55,10 @@ public abstract class Script_WeaponBase : MonoBehaviour
     protected float m_xVelocity;
     protected int zVelHash;
     protected int xVelHash;
-    protected int ADSHash;
 
     //Hidden Variables
-    protected Script_AdvancedMotor Motor;
-    protected Script_PlayerLook Look;
+    protected Scr_PlayerMotor Motor;
+    protected Scr_PlayerLook Look;
     protected AudioSource AS;
 
     //Delegate for Ammo UI    
@@ -121,8 +101,8 @@ public abstract class Script_WeaponBase : MonoBehaviour
 
     protected virtual void Initialize() // make sure to call initialise in the start of other sublcasses
     {
-        Motor = gameObject.GetComponent<Script_AdvancedMotor>();
-        Look = gameObject.GetComponent<Script_PlayerLook>();
+        Motor = gameObject.GetComponentInParent<Scr_PlayerMotor>();
+        Look = gameObject.GetComponentInParent<Scr_PlayerLook>();
         AS = gameObject.GetComponent<AudioSource>();
 
         CurMagCount = MagCount;
@@ -131,76 +111,11 @@ public abstract class Script_WeaponBase : MonoBehaviour
         ReloadHash = Animator.StringToHash("Reload");
         zVelHash = Animator.StringToHash("zVelocity");
         xVelHash = Animator.StringToHash("xVelocity");
-        ADSHash = Animator.StringToHash("ADS");
-        
-        defMaxSpreadAngle = MaxSpreadAngle;
-        defMinSpreadAngle = MinSpreadAngle;
-        Look.SetCrosshairSize(CurrentSpreadAngle);
     }
 
     protected void Animate() // make sure to call in update
     {
-        if (Motor.GetIsSprinting())
-        {
-            m_zVelocity = Mathf.Lerp(m_zVelocity,Motor.getRawDirection().y * 2, Time.deltaTime * 5);
-        }
-        else
-        {
-            m_zVelocity = Mathf.Lerp(m_zVelocity,Motor.getRawDirection().y, Time.deltaTime * 5);
-        }
-        m_xVelocity = Mathf.Lerp(m_xVelocity,Motor.getRawDirection().x, Time.deltaTime * 5);
-
         Anim.SetFloat(zVelHash, m_zVelocity);
         Anim.SetFloat(xVelHash, m_xVelocity);
-
-        if (Input.GetKey(KeyCode.Mouse1) && !IsReloading) // ADS
-        {
-            ADS = true;
-            Look.SetLerpFov(-ADSFovZoom);
-            Motor.SetIsSprinting(false);
-        }else
-        {
-            ADS = false;
-            Look.SetLerpFov(0);
-        }
-        Anim.SetBool(ADSHash,ADS);
-    }
-
-    protected void SetRecoil()
-    {
-        if (ADS)
-        {
-            Look.SetShake(ShakeTime, ShakeAmplitude * ADSShakeMultiplier);
-            Look.SetRecoil(SlerpSpeed,RecoilTime,Quaternion.Euler(-Recoil,Random.Range(-Recoil/2,Recoil/2) * ADSRecoilMultiplier,0));
-        }
-        else
-        {
-            Look.SetShake(ShakeTime, ShakeAmplitude);
-            Look.SetRecoil(SlerpSpeed,RecoilTime,Quaternion.Euler(-Recoil,Random.Range(-Recoil/2,Recoil/2),0));
-        }
-    }
-
-    protected void UpdateBloom()
-    {
-        if (ADS)
-        {
-            MaxSpreadAngle = ADSMaxSpreadAngle;
-            MinSpreadAngle = ADSMinSpreadAngle;
-        }
-        else
-        {
-            MaxSpreadAngle = defMaxSpreadAngle;
-            MinSpreadAngle = defMinSpreadAngle;
-        }
-
-        CurrentSpreadAngle -= Time.deltaTime * SpreadSlerp;
-        CurrentSpreadAngle = Mathf.Clamp(CurrentSpreadAngle,MinSpreadAngle,MaxSpreadAngle);
-        Look.SetCrosshairSize(CurrentSpreadAngle);
-    }
-
-    protected void SetBloom()
-    {
-        CurrentSpreadAngle += SpreadIncrement;
-        CurrentSpreadAngle = Mathf.Clamp(CurrentSpreadAngle,MinSpreadAngle,MaxSpreadAngle);
     }
 }

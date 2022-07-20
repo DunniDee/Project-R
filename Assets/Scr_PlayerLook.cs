@@ -23,6 +23,8 @@ public class Scr_PlayerLook : MonoBehaviour
     float m_XRotation;
     float m_YRotation;
 
+    public Vector3 LookPoint;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -48,5 +50,15 @@ public class Scr_PlayerLook : MonoBehaviour
         OrientationTransform.rotation = Quaternion.Euler(0, m_YRotation, 0);
 
         HandEffects.RotateTo += new Vector3(-m_MouseY, m_MouseX, 0) * 2 * Time.deltaTime;
+
+        RaycastHit Hit;
+        if (Physics.Raycast(CameraTransform.position, CameraTransform.forward,out Hit, 1000))
+        {
+            LookPoint = Hit.point;
+        }
+        else
+        {
+            LookPoint = CameraTransform.position + CameraTransform.forward * 1000;
+        }
     }
 }
