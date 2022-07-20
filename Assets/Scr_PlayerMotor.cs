@@ -34,7 +34,7 @@ public class Scr_PlayerMotor : MonoBehaviour
     [SerializeField] float m_DashCooldown;
     float m_DashCooldownTimer;
     int m_DashCount;
-    float m_DashMomentumTimer;
+    public float m_DashMomentumTimer;
 
     //Motor Status Bools
     public bool m_IsGrounded;
@@ -166,7 +166,7 @@ public class Scr_PlayerMotor : MonoBehaviour
         {
             m_VerticalVelocity.y -= m_Gravity * Time.deltaTime;
 
-            if (m_WasGrounded)
+            if (m_WasGrounded && !m_IsCrouching)
             {
                 m_MomentumDirection = m_SmoothMoveDirection * m_MovementSpeed;
             }
@@ -174,14 +174,11 @@ public class Scr_PlayerMotor : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && m_JumpCount > 0)
         {
+            m_DashMomentumTimer = 0.25f;
             m_JumpCount--;
             m_VerticalVelocity.y = Mathf.Sqrt(2 * m_JumpHeight * m_Gravity);
             CamEffects.RotateTo.x += 5;
-            //m_MomentumDirection += m_SmoothMoveDirection * m_JumpMomentum;
-
-            m_MomentumDirection += m_SmoothMoveDirection.normalized * m_DashMomentum ;
             CamEffects.RotateTo += new Vector3(m_ForwardMovement,0,-m_SidewardMovement).normalized * m_DashMomentum;
-            m_DashMomentumTimer = 0.25f;
             CamEffects.FovTo += 10;
         }
 
@@ -192,7 +189,7 @@ public class Scr_PlayerMotor : MonoBehaviour
 
     void Dash()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift) && m_DashCooldownTimer <= 0 && m_DashCount > 0)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && m_DashCooldownTimer <= 0 && m_DashCount > 0 && !m_IsCrouching)
         {
             m_MomentumDirection += m_SmoothMoveDirection.normalized * m_DashMomentum ;
             CamEffects.RotateTo += new Vector3(m_ForwardMovement,0,-m_SidewardMovement).normalized * 10;
@@ -246,16 +243,9 @@ public class Scr_PlayerMotor : MonoBehaviour
         else
         {
             CamEffects.LerpPos = new Vector3(0,0,0);
-
+            
             Movment.height = 2;
             Movment.center = new Vector3(0,1,0);
         }
     }
-
-    void ChekWall()
-    {
-
-    }
-
-    
 }
