@@ -13,7 +13,7 @@ public class Weapon_SemiAutioProjectile : Script_ProjectileWeapon
     // Update is called once per frame
     void Update()
     {
-        FiringPoint.transform.LookAt(Look.getAimPoint());
+        FiringPoint.transform.LookAt(Look.LookPoint);
 
         if (ShotTimer > 0)
         {
@@ -23,13 +23,11 @@ public class Weapon_SemiAutioProjectile : Script_ProjectileWeapon
         if (Input.GetKeyDown(ShootKey) && CurMagCount > 0 && ShotTimer <= 0 && !IsReloading)
         {
             Shoot();
-            Motor.SetIsSprinting(false);
         }
 
         Reload();
 
         Animate(); 
 
-        UpdateBloom();
     }
 }

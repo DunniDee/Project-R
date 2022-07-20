@@ -10,8 +10,6 @@ public class Script_ProjectileWeapon : Script_WeaponBase
     [SerializeField] protected GameObject Projectile;
     [SerializeField] protected float ProjectileLifetime;
     [SerializeField] protected float ProjectileForce;
-    [SerializeField] protected bool ApplyGravity;
-
     
     protected override void Shoot()
     {
@@ -19,7 +17,7 @@ public class Script_ProjectileWeapon : Script_WeaponBase
         {
             for (int i = 0; i < ShotCount; i++)
             {
-                Quaternion ProjectileSpread = FiringPoint.rotation * Quaternion.Euler(0, 0, Random.Range(0.0f, 360.0f)) * Quaternion.Euler(Random.Range(0.0f, CurrentSpreadAngle / 2), 0, 0);
+                Quaternion ProjectileSpread = FiringPoint.rotation * Quaternion.Euler(0, 0, Random.Range(0.0f, 360.0f)) * Quaternion.Euler(Random.Range(0.0f, SpreadAngle / 2), 0, 0);
                 GameObject Proj = ObjectPooler.Instance.GetObject(Projectile);
 
                 Proj.transform.position = FiringPoint.position;
@@ -36,9 +34,6 @@ public class Script_ProjectileWeapon : Script_WeaponBase
                 }
 
             }
-
-            SetBloom();
-            SetRecoil();
             
             AS.PlayOneShot(ShootSound);
             Anim.SetTrigger(ShootHash);
