@@ -4,24 +4,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class scr_InventoryItem : MonoBehaviour
+public class InventoryItem : MonoBehaviour
 {
     public ItemData itemData;
 
     public int ongridPositionX;
     public int ongridPositionY;
-    // Start is called before the first frame update
-    void Start()
+
+    public bool isItemEquppied = false;
+
+    public void Equip()
     {
-        
+        if (isItemEquppied == false)
+        {
+            isItemEquppied = true;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Dequip()
     {
-        
+        if (isItemEquppied == true)
+        {
+            isItemEquppied = false;
+        }
     }
-
     internal void Set(ItemData itemData)
     {
         this.itemData = itemData;
@@ -29,8 +35,8 @@ public class scr_InventoryItem : MonoBehaviour
         GetComponent<Image>().sprite = itemData.itemIcon;
 
         Vector2 size = new Vector2();
-        size.x = itemData.width * scr_AbilityGrid.tileSizeWidth;
-        size.y = itemData.height * scr_AbilityGrid.tileSizeHeight;
+        size.x = itemData.width * Grid.tileSizeWidth;
+        size.y = itemData.height * Grid.tileSizeHeight;
 
         GetComponent<RectTransform>().sizeDelta = size;
     }

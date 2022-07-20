@@ -3,12 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class scr_AbilityGrid : MonoBehaviour
+public class Grid : MonoBehaviour
 {
+    public enum GridType
+    {
+        EQUIPPED,
+        INVENTORY,
+        STATIC
+    }
+    public GridType gridType = GridType.STATIC;
+
     public const float tileSizeWidth = 32;
     public const float tileSizeHeight = 32;
 
-    scr_InventoryItem[,] inventoryItemSlot;
+    InventoryItem[,] inventoryItemSlot;
 
     RectTransform rectTransform;
 
@@ -32,9 +40,9 @@ public class scr_AbilityGrid : MonoBehaviour
 
     }
 
-    public scr_InventoryItem PickUpItem(int x, int y)
+    public InventoryItem PickUpItem(int x, int y)
     {
-        scr_InventoryItem r = inventoryItemSlot[x, y];
+        InventoryItem r = inventoryItemSlot[x, y];
         if (r == null) { return null; }
 
         CleanupItemSlots(r);
@@ -42,7 +50,7 @@ public class scr_AbilityGrid : MonoBehaviour
         return r;
     }
 
-    private void CleanupItemSlots(scr_InventoryItem item)
+    private void CleanupItemSlots(InventoryItem item)
     {
         for (int i = 0; i < item.itemData.width; i++)
         {
@@ -57,12 +65,12 @@ public class scr_AbilityGrid : MonoBehaviour
 
     private void Init(int _width, int _height)
     {
-        inventoryItemSlot = new scr_InventoryItem[_width, _height];
+        inventoryItemSlot = new InventoryItem[_width, _height];
         Vector2 size = new Vector2(_width * tileSizeWidth, _height * tileSizeHeight);
         rectTransform.sizeDelta = size;
     }
 
-    internal scr_InventoryItem GetItem(int x, int y)
+    internal InventoryItem GetItem(int x, int y)
     {
         return inventoryItemSlot[x, y];
     }
@@ -81,7 +89,7 @@ public class scr_AbilityGrid : MonoBehaviour
         return tileGridPosition;
     }
 
-    public bool PlaceItem(scr_InventoryItem _inventoryItem, int _posX,int _posY, ref scr_InventoryItem overlapItem)
+    public bool PlaceItem(InventoryItem _inventoryItem, int _posX,int _posY, ref InventoryItem overlapItem)
     {
         if (BoundryCheck(_posX, _posY, _inventoryItem.itemData.width, _inventoryItem.itemData.height) == false)
         {
@@ -116,7 +124,7 @@ public class scr_AbilityGrid : MonoBehaviour
         return true;
     }
 
-    public Vector2 CalculatePositionOnGrid(scr_InventoryItem _inventoryItem, int _posX, int _posY)
+    public Vector2 CalculatePositionOnGrid(InventoryItem _inventoryItem, int _posX, int _posY)
     {
         Vector2 Position = new Vector2();
         Position.x = _posX * tileSizeWidth + tileSizeWidth * _inventoryItem.itemData.width / 2;
@@ -124,7 +132,7 @@ public class scr_AbilityGrid : MonoBehaviour
         return Position;
     }
 
-    private bool OverlapCheck(int posX, int posY, int width, int height, ref scr_InventoryItem overlapItem)
+    private bool OverlapCheck(int posX, int posY, int width, int height, ref InventoryItem overlapItem)
     {
         for (int i = 0; i < width; i++)
         {
@@ -150,6 +158,35 @@ public class scr_AbilityGrid : MonoBehaviour
         return true;
     }
 
+    public void ActivateItems(bool _b)
+    {
+        for (int i = 0; i < gridSizeWidth; i++)
+        {
+            for (int j = 0; j < gridSizeWidth; j++)
+            {
+                if (inventoryItemSlot[i, j] != null)
+                {
+                    inventoryItemSlot[i, j].isItemEquppied = _b;
+                }
+                
+            }
+        }
+    }
+
+    public void CheckGridType()
+    {
+        switch (gridType)
+        {
+            case GridType.INVENTORY:
+                ActivateItems(false);
+                break;
+            case GridType.EQUIPPED:
+                ActivateItems(true);
+                break;
+            case GridType.STATIC:
+                break;
+        }
+    }
     bool PositionCheck(int _x, int _y)
     {
         if (_x < 0 || _y < 0)
