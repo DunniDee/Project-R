@@ -3,15 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AbilityController : MonoBehaviour
+public class GridController : MonoBehaviour
 {
     [HideInInspector]
-    private scr_AbilityGrid selectedItemGrid;
-    public scr_AbilityGrid SelectedItemGrid { 
-        get => selectedItemGrid;
+    private Grid selectedGrid;
+    public Grid SelectedItemGrid { 
+        get => selectedGrid;
         set {
-            selectedItemGrid = value;
-            inventoryHighlight.SetParent(value);
+            selectedGrid = value;
+            gridHighlight.SetParent(value);
         }
     }
 
@@ -21,15 +21,15 @@ public class AbilityController : MonoBehaviour
         EffectEnabled,
     }
 
-    scr_InventoryItem selectedItem;
-    scr_InventoryItem overlapItem;
+    InventoryItem selectedItem;
+    InventoryItem overlapItem;
     RectTransform rectTransform;
 
     [SerializeField] List<ItemData> items;
-    [SerializeField] GameObject Prefab;
+    [SerializeField] GameObject itemPrefab;
     [SerializeField] Transform canvasTransform;
 
-    InventoryHighlight inventoryHighlight;
+    GridHighlight gridHighlight;
 
     public AudioSource audioSource;
     public AudioClip pickupNoise;
@@ -37,22 +37,20 @@ public class AbilityController : MonoBehaviour
 
     public void Awake()
     {
-        inventoryHighlight = GetComponent<InventoryHighlight>();
+        gridHighlight = GetComponent<GridHighlight>();
     }
 
-
-
-    // Update is called once per frame
     void Update()
     {
         ItemIconDrag();
+        
         if (Input.GetKeyDown(KeyCode.Q))
         {
             CreateRandomItem();
         }
         if (SelectedItemGrid == null)
         {
-            inventoryHighlight.Show(false);
+            gridHighlight.Show(false);
             return;
         }
 
@@ -63,9 +61,9 @@ public class AbilityController : MonoBehaviour
 
     }
 
-    //Handle TileHighlight
+    
     Vector2Int oldPositionOnGrid;
-    scr_InventoryItem itemToHighlight;
+    InventoryItem itemToHighlight;
     private void HandleHighlight()
     {
         Vector2Int positionOnGrid = GetTileGridPosition();
@@ -80,25 +78,25 @@ public class AbilityController : MonoBehaviour
 
             if (itemToHighlight != null)
             {
-                inventoryHighlight.Show(true);
-                inventoryHighlight.SetSize(itemToHighlight);
-                inventoryHighlight.SetPosition(SelectedItemGrid, itemToHighlight);
+                gridHighlight.Show(true);
+                gridHighlight.SetSize(itemToHighlight);
+                gridHighlight.SetPosition(SelectedItemGrid, itemToHighlight);
             }
             else {
-                inventoryHighlight.Show(false);
+                gridHighlight.Show(false);
             }
            
         }
         else {
-            inventoryHighlight.Show(SelectedItemGrid.BoundryCheck(positionOnGrid.x,positionOnGrid.y,selectedItem.itemData.width,selectedItem.itemData.height));
-            inventoryHighlight.SetSize(selectedItem);
-            inventoryHighlight.SetPosition(SelectedItemGrid, selectedItem, positionOnGrid.x, positionOnGrid.y);
+            gridHighlight.Show(SelectedItemGrid.BoundryCheck(positionOnGrid.x,positionOnGrid.y,selectedItem.itemData.width,selectedItem.itemData.height));
+            gridHighlight.SetSize(selectedItem);
+            gridHighlight.SetPosition(SelectedItemGrid, selectedItem, positionOnGrid.x, positionOnGrid.y);
         }
     }
 
     private void CreateRandomItem()
     {
-        scr_InventoryItem inventoryItem = Instantiate(Prefab).GetComponent<scr_InventoryItem>();
+        InventoryItem inventoryItem = Instantiate(itemPrefab).GetComponent<InventoryItem>();
 
         selectedItem = inventoryItem;
 
@@ -117,7 +115,7 @@ public class AbilityController : MonoBehaviour
             
             if (selectedItem == null)
             {
-                Pickupitem(tileGridPosition);
+                PickUpitem(tileGridPosition);
             }
             else
             {
@@ -130,8 +128,8 @@ public class AbilityController : MonoBehaviour
         Vector2 Position = Input.mousePosition;
         if (selectedItem != null)
         {
-            Position.x -= (selectedItem.itemData.width - 1) * scr_AbilityGrid.tileSizeWidth / 2;
-            Position.y += (selectedItem.itemData.height - 1) * scr_AbilityGrid.tileSizeHeight / 2;
+            Position.x -= (selectedItem.itemData.width - 1) * Grid.tileSizeWidth / 2;
+            Position.y += (selectedItem.itemData.height - 1) * Grid.tileSizeHeight / 2;
             
         }
         return SelectedItemGrid.GetGridPosition(Position);
@@ -153,7 +151,7 @@ public class AbilityController : MonoBehaviour
         
     }
 
-    private void Pickupitem(Vector2Int posOnGrid)
+    private void PickUpitem(Vector2Int posOnGrid)
     {
         selectedItem = SelectedItemGrid.PickUpItem(posOnGrid.x, posOnGrid.y);
         
