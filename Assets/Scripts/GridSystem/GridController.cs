@@ -15,11 +15,7 @@ public class GridController : MonoBehaviour
         }
     }
 
-    public enum GridType { 
-        Static,
-        StaticDragAble,
-        EffectEnabled,
-    }
+
 
     InventoryItem selectedItem;
     InventoryItem overlapItem;
@@ -147,6 +143,7 @@ public class GridController : MonoBehaviour
                 overlapItem = null;
                 rectTransform = selectedItem.GetComponent<RectTransform>();
             }
+            SelectedItemGrid.CheckGridType();
         }
         
     }
@@ -168,5 +165,10 @@ public class GridController : MonoBehaviour
         {
             rectTransform.position = Input.mousePosition;
         }
+    }
+
+    public ItemData GetSelectedItemData()
+    {
+        return selectedItem.itemData;
     }
 }

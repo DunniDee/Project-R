@@ -11,6 +11,23 @@ public class InventoryItem : MonoBehaviour
     public int ongridPositionX;
     public int ongridPositionY;
 
+    public bool isItemEquppied = false;
+
+    public void Equip()
+    {
+        if (isItemEquppied == false)
+        {
+            isItemEquppied = true;
+        }
+    }
+
+    public void Dequip()
+    {
+        if (isItemEquppied == true)
+        {
+            isItemEquppied = false;
+        }
+    }
     internal void Set(ItemData itemData)
     {
         this.itemData = itemData;

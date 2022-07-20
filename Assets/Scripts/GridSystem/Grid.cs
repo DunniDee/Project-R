@@ -5,6 +5,14 @@ using UnityEngine;
 
 public class Grid : MonoBehaviour
 {
+    public enum GridType
+    {
+        EQUIPPED,
+        INVENTORY,
+        STATIC
+    }
+    public GridType gridType = GridType.STATIC;
+
     public const float tileSizeWidth = 32;
     public const float tileSizeHeight = 32;
 
@@ -150,6 +158,35 @@ public class Grid : MonoBehaviour
         return true;
     }
 
+    public void ActivateItems(bool _b)
+    {
+        for (int i = 0; i < gridSizeWidth; i++)
+        {
+            for (int j = 0; j < gridSizeWidth; j++)
+            {
+                if (inventoryItemSlot[i, j] != null)
+                {
+                    inventoryItemSlot[i, j].isItemEquppied = _b;
+                }
+                
+            }
+        }
+    }
+
+    public void CheckGridType()
+    {
+        switch (gridType)
+        {
+            case GridType.INVENTORY:
+                ActivateItems(false);
+                break;
+            case GridType.EQUIPPED:
+                ActivateItems(true);
+                break;
+            case GridType.STATIC:
+                break;
+        }
+    }
     bool PositionCheck(int _x, int _y)
     {
         if (_x < 0 || _y < 0)
