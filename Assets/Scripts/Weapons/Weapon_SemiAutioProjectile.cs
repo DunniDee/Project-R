@@ -16,7 +16,7 @@ public class Weapon_SemiAutioProjectile : Script_ProjectileWeapon
         FiringPoint.transform.LookAt(Look.LookPoint);
 
         if (ShotTimer > 0)
-        {
+        { 
             ShotTimer-= Time.deltaTime;
         }
 
@@ -24,6 +24,12 @@ public class Weapon_SemiAutioProjectile : Script_ProjectileWeapon
         {
             Shoot();
         }
+
+        HUD.AmmoReserve = CurReserveCount;
+        HUD.AmmoCount = CurMagCount;
+        HUD.MagSize = MagCount;
+
+        HUD.SetGunName(GunName);
 
         Reload();
 

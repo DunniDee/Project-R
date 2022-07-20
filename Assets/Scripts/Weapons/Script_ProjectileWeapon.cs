@@ -28,11 +28,12 @@ public class Script_ProjectileWeapon : Script_WeaponBase
                 temp.SetlifeTime(ProjectileLifetime);
                 temp.SetSpeed(ProjectileForce);
 
-                if (CurMagCount <= 10)
-                {
-                    AS.PlayOneShot(EmptySound,1 - CurMagCount * 0.1f);
-                }
 
+            }
+
+            if (CurMagCount <= 10)
+            {
+                AS.PlayOneShot(EmptySound,1 - CurMagCount * 0.1f);
             }
             
             AS.PlayOneShot(ShootSound);
@@ -45,6 +46,13 @@ public class Script_ProjectileWeapon : Script_WeaponBase
                 onAmmoChangeEvent(CurMagCount);
             }
             ShotTimer = FireRate;   
+
+            Vector3 Rotation = new Vector3(RecoilVec.y,Random.Range(-RecoilVec.x/2,RecoilVec.x/2),0);
+
+            HandEffects.RotateTo += Rotation * 0.5f;
+            CamEffects.RotateTo += Rotation;
+            CamEffects.ShakeAmplitude += ShotShake;
+            CamEffects.FovTo += ShotFov;
         }
     }
 }

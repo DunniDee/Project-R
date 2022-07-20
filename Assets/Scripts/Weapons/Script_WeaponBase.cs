@@ -6,7 +6,6 @@ public abstract class Script_WeaponBase : MonoBehaviour
 {
     [Header("Gun Variables")]
     [SerializeField] protected string GunName;
-    [SerializeField] protected Sprite Icon;
     [SerializeField] protected KeyCode ShootKey = KeyCode.Mouse0;
     [SerializeField] protected KeyCode ReloadKey = KeyCode.R;
     [Space]
@@ -14,7 +13,7 @@ public abstract class Script_WeaponBase : MonoBehaviour
     [Header("Shot Variables")]
     [SerializeField] protected float Damage;
     [SerializeField] protected float FireRate;
-     protected float ShotTimer;
+    protected float ShotTimer;
     [SerializeField] protected int ShotCount;
     [SerializeField] protected float SpreadAngle;
     [SerializeField] protected Vector2 RecoilVec;
@@ -61,12 +60,19 @@ public abstract class Script_WeaponBase : MonoBehaviour
     protected Scr_PlayerLook Look;
     protected AudioSource AS;
 
+
     //Delegate for Ammo UI    
     public delegate void OnAmmoChangeDelegate(int _ammo);
     public OnAmmoChangeDelegate onAmmoChangeEvent;
 
-    [SerializeField] protected ParticleSystem reloadsmoke;
-    [SerializeField] protected ParticleSystem reloadsmoke2;
+    [Space]
+
+    [Header("Juice")]
+    [SerializeField] protected Scr_DiegeticHUD HUD;
+    [SerializeField] protected Scr_HandAnimator HandEffects;
+    [SerializeField] protected Scr_CameraEffects CamEffects;
+    [SerializeField] protected float ShotShake;
+    [SerializeField] protected float ShotFov;
 
     public int GetMagCount()
     {
@@ -94,8 +100,6 @@ public abstract class Script_WeaponBase : MonoBehaviour
             StartCoroutine(IE_Reload());
             AS.PlayOneShot(ReloadSound);
             Anim.SetTrigger(ReloadHash);
-            reloadsmoke.Play();
-            reloadsmoke2.Play();
         }
     }
 
