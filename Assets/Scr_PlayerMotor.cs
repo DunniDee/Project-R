@@ -44,7 +44,7 @@ public class Scr_PlayerMotor : MonoBehaviour
     private Vector3 m_MoveDirection;
     private Vector3 m_SmoothMoveDirection;
     public Vector3 m_MomentumDirection;
-    private Vector3 m_VerticalVelocity;
+    public Vector3 m_VerticalVelocity;
     float m_ForwardMovement;
     float m_SidewardMovement;
 

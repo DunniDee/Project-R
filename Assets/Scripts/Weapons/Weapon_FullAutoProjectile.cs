@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class Weapon_FullAutoProjectile : Script_ProjectileWeapon
 {
-    [SerializeField] Scr_DiegeticHUD HUD;
-    [SerializeField] Scr_HandAnimator HandEffects;
-    [SerializeField] Scr_CameraEffects CamEffects;
     private void Start()
     {
         Initialize();

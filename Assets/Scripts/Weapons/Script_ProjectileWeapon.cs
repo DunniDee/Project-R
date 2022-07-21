@@ -11,7 +11,7 @@ public class Script_ProjectileWeapon : Script_WeaponBase
     [SerializeField] protected float ProjectileLifetime;
     [SerializeField] protected float ProjectileForce;
     
-    protected override void Shoot()
+    public override void Shoot()
     {
         if (CurMagCount > 0)
         {

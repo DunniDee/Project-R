@@ -22,6 +22,8 @@ public class Scr_DiegeticHUD : MonoBehaviour
     [SerializeField] MeshRenderer AmmoArcMesh;
     [SerializeField] MeshRenderer HealthArcMesh;
 
+    [SerializeField] TextMeshPro AltFireText;
+
     float AmmoCountAngleLerp;
     float AmmoCountAngle;
 
@@ -124,5 +126,10 @@ public class Scr_DiegeticHUD : MonoBehaviour
     public void SetGunName(string _GunName)
     {
         WeaponText.text = _GunName;
+    }
+
+    public void SetAltFireName(string _AltFire)
+    {
+        AltFireText.text = _AltFire;
     }
 }
