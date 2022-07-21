@@ -14,11 +14,7 @@ public abstract class Script_WeaponBase : MonoBehaviour
     [Header("Shot Variables")]
     [SerializeField] protected float Damage;
     [SerializeField] protected float FireRate;
-<<<<<<< Updated upstream
      protected float ShotTimer;
-=======
-    public float ShotTimer;
->>>>>>> Stashed changes
     [SerializeField] protected int ShotCount;
     [SerializeField] protected float SpreadAngle;
     [SerializeField] protected Vector2 RecoilVec;
@@ -100,8 +96,6 @@ public abstract class Script_WeaponBase : MonoBehaviour
         {
             onAmmoChangeEvent(CurMagCount);
         }
-
-        HUD.AmmoReserve = CurReserveCount;
     }
 
     public virtual void Shoot(){}

@@ -4,13 +4,6 @@ using UnityEngine;
 
 public class Weapon_SemiAutioProjectile : Script_ProjectileWeapon
 {
-    private void OnEnable() 
-    {
-        HUD.AmmoCount = CurMagCount;
-        HUD.MagSize = MagCount;
-        HUD.SetGunName(GunName);
-    }
-
     // Start is called before the first frame update
     private void Start()
     {
@@ -32,12 +25,6 @@ public class Weapon_SemiAutioProjectile : Script_ProjectileWeapon
             Shoot();
         }
 
-<<<<<<< Updated upstream
-=======
-        HUD.AmmoReserve = CurReserveCount;
-        HUD.AmmoCount = CurMagCount;
-
->>>>>>> Stashed changes
         Reload();
 
         Animate(); 

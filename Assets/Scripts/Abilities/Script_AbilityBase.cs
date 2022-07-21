@@ -103,4 +103,7 @@ public abstract class Script_AbilityBase : MonoBehaviour
     {
         return Cooldown;
     }
+
+
+
 }
