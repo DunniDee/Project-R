@@ -43,9 +43,6 @@ public class Weapon_FullAutoProjectile : Script_ProjectileWeapon
 
         HUD.AmmoReserve = CurReserveCount;
         HUD.AmmoCount = CurMagCount;
-        HUD.MagSize = MagCount;
-
-        HUD.SetGunName(GunName);
 
         Reload();
 
