@@ -2,8 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapon_SemiAutioProjectile : Script_ProjectileWeapon
+public class Weapon_RampUpProjectile : Script_ProjectileWeapon
 {
+    [SerializeField] float FireRateMultiplier;
+    [SerializeField] float RampUpAcceleration;
+    public float m_Multiplier;
     private void OnEnable() 
     {
         HUD.AmmoCount = CurMagCount;
@@ -11,7 +14,6 @@ public class Weapon_SemiAutioProjectile : Script_ProjectileWeapon
         HUD.SetGunName(GunName);
     }
 
-    // Start is called before the first frame update
     private void Start()
     {
         Initialize();
@@ -24,23 +26,24 @@ public class Weapon_SemiAutioProjectile : Script_ProjectileWeapon
 
         if (ShotTimer > 0)
         {
-            ShotTimer-= Time.deltaTime;
+            ShotTimer-= Time.deltaTime * m_Multiplier;
         }
 
-        if (Input.GetKeyDown(ShootKey) && CurMagCount > 0 && ShotTimer <= 0 && !IsReloading)
+        if (Input.GetKey(ShootKey) && CurMagCount > 0 && ShotTimer <= 0 && !IsReloading)
         {
             Shoot();
+            m_Multiplier = Mathf.Lerp(m_Multiplier, FireRateMultiplier, Time.deltaTime * RampUpAcceleration);
+        }
+        else
+        {
+            m_Multiplier = Mathf.Lerp(m_Multiplier, 1, Time.deltaTime * RampUpAcceleration);
         }
 
-<<<<<<< Updated upstream
-=======
         HUD.AmmoReserve = CurReserveCount;
         HUD.AmmoCount = CurMagCount;
 
->>>>>>> Stashed changes
         Reload();
 
-        Animate(); 
-
+        Animate();
     }
 }

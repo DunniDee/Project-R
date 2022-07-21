@@ -14,7 +14,11 @@ public abstract class Script_WeaponBase : MonoBehaviour
     [Header("Shot Variables")]
     [SerializeField] protected float Damage;
     [SerializeField] protected float FireRate;
+<<<<<<< Updated upstream
      protected float ShotTimer;
+=======
+    public float ShotTimer;
+>>>>>>> Stashed changes
     [SerializeField] protected int ShotCount;
     [SerializeField] protected float SpreadAngle;
     [SerializeField] protected Vector2 RecoilVec;
@@ -25,9 +29,11 @@ public abstract class Script_WeaponBase : MonoBehaviour
     [SerializeField] protected int CurReserveCount;
     [SerializeField] protected int MagCount;
     protected int CurMagCount;
+    public int CurMagCount;
     [SerializeField] protected float ReloadTime;
     protected float CurReloadTime;
     protected bool IsReloading = false;
+    public bool IsReloading = false;
 
     [Space]
 
@@ -79,17 +85,36 @@ public abstract class Script_WeaponBase : MonoBehaviour
         yield return new WaitForSeconds(ReloadTime);
         IsReloading = false;
         CurMagCount = MagCount;
+        
+        CurReserveCount-= MagCount - CurMagCount;
+
+        if (CurReserveCount < 0)
+        {
+            int LeftOver = Mathf.Abs(CurReserveCount);
+            CurReserveCount += LeftOver;
+            CurMagCount = MagCount - LeftOver;
+        }
+        else
+        {
+            CurMagCount = MagCount;
+        }
+        
         if(onAmmoChangeEvent != null)
         {
             onAmmoChangeEvent(CurMagCount);
         }
+
+        HUD.AmmoReserve = CurReserveCount;
     }
 
     protected virtual void Shoot(){}
+    public virtual void Shoot(){}
     protected virtual void Reload()
     {
         if ((CurMagCount < 1 && ShotTimer < 1 && !IsReloading) ||
             (CurMagCount < MagCount && ShotTimer < 1 && !IsReloading && Input.GetKey(ReloadKey)))
+        if ((CurMagCount < 1 && ShotTimer < 1 && !IsReloading && CurReserveCount > 0) ||
+            (CurMagCount < MagCount && ShotTimer < 1 && !IsReloading && Input.GetKey(ReloadKey) && CurReserveCount > 0))
         {
             StartCoroutine(IE_Reload());
             AS.PlayOneShot(ReloadSound);

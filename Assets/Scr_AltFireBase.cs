@@ -2,31 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Script_AbilityBase : MonoBehaviour
+public class Scr_AltFireBase : MonoBehaviour
 {
-    public enum AbilityType
-    {
-        Damage,
-        Utility,
-        Mobility,
-        Ultimate,
-    }
-
     public enum InputMode
     {
         HoldDown,
         OnPress,
     }
-    [SerializeField] protected string AbilityName;
-    [SerializeField] protected Sprite Icon;
-    [SerializeField] protected AbilityType CurAbilityType;
+    [SerializeField] protected string AltFireName;
     [SerializeField] protected InputMode CurInputMode;
     [SerializeField] protected float Durration;
     protected float CurrentDurration;
     [SerializeField] protected float Cooldown;
     protected float CurrentCooldown;
-    [SerializeField] protected KeyCode AbilityKey;
+    [SerializeField] protected KeyCode AltFireKey = KeyCode.Mouse1;
     protected bool AblityEnd;
+
+    [SerializeField] protected Scr_DiegeticHUD HUD;
+
+    [SerializeField] protected Script_WeaponBase Weapon;
 
     virtual protected void Update()
     {
@@ -36,7 +30,7 @@ public abstract class Script_AbilityBase : MonoBehaviour
         switch(CurInputMode)
         {
             case InputMode.HoldDown:
-                if (Input.GetKey(AbilityKey))
+                if (Input.GetKey(AltFireKey))
                 {
                     if (CurrentCooldown <= Durration)
                     {
@@ -48,13 +42,13 @@ public abstract class Script_AbilityBase : MonoBehaviour
                         
                     }
                 }
-                else if(Input.GetKeyUp(AbilityKey))
+                else if(Input.GetKeyUp(AltFireKey))
                 {
                     OnAbilityEnd();
                 }
                 break;
             case InputMode.OnPress:
-                if (Input.GetKeyDown(AbilityKey))
+                if (Input.GetKeyDown(AltFireKey))
                 {
                     if (CurrentCooldown <= 0)
                     {

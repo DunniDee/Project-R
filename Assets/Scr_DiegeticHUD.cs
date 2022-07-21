@@ -11,6 +11,7 @@ public class Scr_DiegeticHUD : MonoBehaviour
     [SerializeField] Transform AmmoCountTransform;
     [SerializeField] Transform HealthCountTransform;
     public int AmmoReserve;
+    int AmmoReserveLerp;
     public int MagSize;
     public int AmmoCount;
 
@@ -21,6 +22,8 @@ public class Scr_DiegeticHUD : MonoBehaviour
     [SerializeField] TextMeshPro HealthText;
     [SerializeField] MeshRenderer AmmoArcMesh;
     [SerializeField] MeshRenderer HealthArcMesh;
+
+    [SerializeField] TextMeshPro AltFireText;
 
     float AmmoCountAngleLerp;
     float AmmoCountAngle;
@@ -73,8 +76,10 @@ public class Scr_DiegeticHUD : MonoBehaviour
             InnerTransform.localScale = Vector3.Lerp(InnerTransform.localScale, Vector3.zero, Time.deltaTime * 6);
         }
 
+        AmmoReserveLerp = (int)Mathf.Lerp(AmmoReserveLerp, AmmoReserve, Time.deltaTime * 20);
+
         AmmoText.text = AmmoCount.ToString();
-        AmmoReserveText.text = AmmoReserve.ToString();
+        AmmoReserveText.text = AmmoReserveLerp.ToString();
         HealthText.text = Health.ToString();
 
         AmmoAngleLerp = (float)AmmoCount/(float)MagSize;
@@ -89,7 +94,7 @@ public class Scr_DiegeticHUD : MonoBehaviour
         }
         else
         {
-            AmmoColorLerp = Color.Lerp(LowColor,MidColor,AmmoAngleLerp * 2);  
+            AmmoColorLerp = Color.Lerp(LowColor,MidColor,(AmmoAngleLerp * 2) - 0.2f);  
         }
         AmmoText.color = AmmoColorLerp;  
         AmmoArcMesh.material.SetColor("_Color", AmmoColorLerp);
@@ -100,13 +105,13 @@ public class Scr_DiegeticHUD : MonoBehaviour
         }
         else
         {
-            HealthColorLerp = Color.Lerp(LowColor,MidColor,HealthAngleLerp * 2);  
+            HealthColorLerp = Color.Lerp(LowColor,MidColor, (HealthAngleLerp * 2) - 0.2f);  
         }
 
         HealthText.color = HealthColorLerp;  
         HealthArcMesh.material.SetColor("_Color", HealthColorLerp);
 
-        AmmoCountAngleLerp = Mathf.Lerp(-10,-77.5f, AmmoAngleLerp);
+        AmmoCountAngleLerp = Mathf.Lerp(-45,-77.5f, AmmoAngleLerp);
         AmmoCountAngle = Mathf.Lerp(AmmoCountAngle,AmmoCountAngleLerp, Time.deltaTime * 5);
 
         HealthCountAngleLerp = Mathf.Lerp(103,135 , HealthAngleLerp);
@@ -124,5 +129,10 @@ public class Scr_DiegeticHUD : MonoBehaviour
     public void SetGunName(string _GunName)
     {
         WeaponText.text = _GunName;
+    }
+
+    public void SetAltFireName(string _AltFire)
+    {
+        AltFireText.text = _AltFire;
     }
 }

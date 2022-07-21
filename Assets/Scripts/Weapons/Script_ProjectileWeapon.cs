@@ -11,7 +11,7 @@ public class Script_ProjectileWeapon : Script_WeaponBase
     [SerializeField] protected float ProjectileLifetime;
     [SerializeField] protected float ProjectileForce;
     
-    protected override void Shoot()
+    public override void Shoot()
     {
         if (CurMagCount > 0)
         {
@@ -24,6 +24,7 @@ public class Script_ProjectileWeapon : Script_WeaponBase
                 Proj.transform.rotation = ProjectileSpread;
 
                 Script_RCProjectile temp = Proj.GetComponent<Script_RCProjectile>();
+                
                 temp.SetDamage(Damage);
                 temp.SetlifeTime(ProjectileLifetime);
                 temp.SetSpeed(ProjectileForce);

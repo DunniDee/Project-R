@@ -40,11 +40,13 @@ public class Scr_PlayerMotor : MonoBehaviour
     public bool m_IsGrounded;
     private bool m_WasCrouching;
     public bool m_IsCrouching;
+    private bool m_IsCrouchObstructed;
+    private float m_UncrouchTimer;
 
     private Vector3 m_MoveDirection;
     private Vector3 m_SmoothMoveDirection;
     public Vector3 m_MomentumDirection;
-    private Vector3 m_VerticalVelocity;
+    public Vector3 m_VerticalVelocity;
     float m_ForwardMovement;
     float m_SidewardMovement;
 
@@ -172,7 +174,7 @@ public class Scr_PlayerMotor : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && m_JumpCount > 0)
+        if (Input.GetKeyDown(KeyCode.Space) && m_JumpCount > 0  && !m_IsCrouchObstructed)
         {
             m_DashMomentumTimer = 0.25f;
             m_JumpCount--;
@@ -222,14 +224,41 @@ public class Scr_PlayerMotor : MonoBehaviour
 
     void Crouch()
     {
-        if (Input.GetKeyDown(KeyCode.LeftControl))
+        if (Input.GetKeyDown(KeyCode.LeftControl) || m_IsCrouchObstructed)
         {
             m_IsCrouching = true;
+            m_UncrouchTimer = 0.1f;
         }
 
-        if (Input.GetKeyUp(KeyCode.LeftControl))
+        if (Input.GetKeyUp(KeyCode.LeftControl) && !m_IsCrouchObstructed || m_UncrouchTimer < 0 &&!m_IsCrouchObstructed)
         {
             m_IsCrouching = false;
+        }
+
+        if (Input.GetKey(KeyCode.LeftControl))
+        {
+            m_UncrouchTimer = 0.1f;
+        }
+        else
+        {
+            m_UncrouchTimer -= Time.deltaTime;
+        }
+
+        if (m_UncrouchTimer >= 0)
+        {
+            m_UncrouchTimer -= Time.deltaTime;
+        }
+
+        if (m_IsCrouching)
+        {
+            if (Physics.CheckSphere(transform.position + (Vector3.up * 1.5f),0.5f,GroundMask))
+            {
+                m_IsCrouchObstructed = true; 
+            }
+            else
+            {
+                m_IsCrouchObstructed = false;
+            }
         }
 
         if (m_IsCrouching && m_IsGrounded)
