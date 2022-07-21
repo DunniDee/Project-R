@@ -21,7 +21,7 @@ public class Scr_PlayerLook : MonoBehaviour
 
     //Tilt Variables
     float m_XRotation;
-    float m_YRotation;
+    public float m_YRotation;
 
     public Vector3 LookPoint;
 

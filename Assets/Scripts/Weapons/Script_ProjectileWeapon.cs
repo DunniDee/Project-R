@@ -55,7 +55,6 @@ public class Script_ProjectileWeapon : Script_WeaponBase
             CamEffects.FovTo += ShotFov;
 
             HUD.AmmoCount = CurMagCount;
-            HUD.MagSize = MagCount;
         }
     }
 }

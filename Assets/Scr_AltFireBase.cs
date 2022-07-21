@@ -22,6 +22,11 @@ public class Scr_AltFireBase : MonoBehaviour
 
     [SerializeField] protected Script_WeaponBase Weapon;
 
+    private void OnEnable()
+    {
+        HUD.SetAltFireName(AltFireName);
+    }
+
     virtual protected void Update()
     {
         CustomUpdate();

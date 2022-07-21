@@ -10,11 +10,6 @@ public class AltFire_KnockBack : Scr_AltFireBase
     [SerializeField] Transform Look;
     [SerializeField] float KnockBackForce;
 
-    private void OnEnable()
-    {
-        HUD.SetAltFireName(AltFireName);
-    }
-
     protected override void OnAbilityStart()
     {
         base.OnAbilityStart();
