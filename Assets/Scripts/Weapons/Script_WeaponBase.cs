@@ -14,11 +14,9 @@ public abstract class Script_WeaponBase : MonoBehaviour
     [Header("Shot Variables")]
     [SerializeField] protected float Damage;
     [SerializeField] protected float FireRate;
-<<<<<<< Updated upstream
-     protected float ShotTimer;
-=======
+
     public float ShotTimer;
->>>>>>> Stashed changes
+
     [SerializeField] protected int ShotCount;
     [SerializeField] protected float SpreadAngle;
     [SerializeField] protected Vector2 RecoilVec;
@@ -69,8 +67,9 @@ public abstract class Script_WeaponBase : MonoBehaviour
     public delegate void OnAmmoChangeDelegate(int _ammo);
     public OnAmmoChangeDelegate onAmmoChangeEvent;
 
-    [SerializeField] protected ParticleSystem reloadsmoke;
-    [SerializeField] protected ParticleSystem reloadsmoke2;
+    [SerializeField] protected Scr_DiegeticHUD HUD;
+    [SerializeField] protected Scr_HandAnimator HandEffects;
+    [SerializeField] protected Scr_CameraEffects CamEffects;
 
     public int GetMagCount()
     {
@@ -113,8 +112,6 @@ public abstract class Script_WeaponBase : MonoBehaviour
             StartCoroutine(IE_Reload());
             AS.PlayOneShot(ReloadSound);
             Anim.SetTrigger(ReloadHash);
-            reloadsmoke.Play();
-            reloadsmoke2.Play();
         }
     }
 
