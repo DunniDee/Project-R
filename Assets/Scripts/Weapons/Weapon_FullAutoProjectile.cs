@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class Weapon_FullAutoProjectile : Script_ProjectileWeapon
 {
-
+<<<<<<< Updated upstream
+    [SerializeField] Scr_DiegeticHUD HUD;
+    [SerializeField] Scr_HandAnimator HandEffects;
+    [SerializeField] Scr_CameraEffects CamEffects;
+=======
     private void OnEnable() 
     {
         HUD.AmmoCount = CurMagCount;
         HUD.MagSize = MagCount;
         HUD.SetGunName(GunName);
     }
+
+>>>>>>> Stashed changes
     private void Start()
     {
         Initialize();

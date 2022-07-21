@@ -32,10 +32,12 @@ public class Weapon_SemiAutioProjectile : Script_ProjectileWeapon
             Shoot();
         }
 
-
+<<<<<<< Updated upstream
+=======
         HUD.AmmoReserve = CurReserveCount;
         HUD.AmmoCount = CurMagCount;
 
+>>>>>>> Stashed changes
         Reload();
 
         Animate(); 
