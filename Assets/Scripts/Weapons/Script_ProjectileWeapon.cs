@@ -53,6 +53,9 @@ public class Script_ProjectileWeapon : Script_WeaponBase
             CamEffects.RotateTo += Rotation;
             CamEffects.ShakeAmplitude += ShotShake;
             CamEffects.FovTo += ShotFov;
+
+            HUD.AmmoCount = CurMagCount;
+            HUD.MagSize = MagCount;
         }
     }
 }

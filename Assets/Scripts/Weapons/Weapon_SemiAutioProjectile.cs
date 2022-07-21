@@ -13,6 +13,7 @@ public class Weapon_SemiAutioProjectile : Script_ProjectileWeapon
     // Update is called once per frame
     void Update()
     {
+        HUD.AmmoCount = CurMagCount;
         FiringPoint.transform.LookAt(Look.LookPoint);
 
         if (ShotTimer > 0)
@@ -24,12 +25,6 @@ public class Weapon_SemiAutioProjectile : Script_ProjectileWeapon
         {
             Shoot();
         }
-
-        HUD.AmmoReserve = CurReserveCount;
-        HUD.AmmoCount = CurMagCount;
-        HUD.MagSize = MagCount;
-
-        HUD.SetGunName(GunName);
 
         Reload();
 

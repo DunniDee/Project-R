@@ -7,12 +7,6 @@ public class Weapon_RampUpProjectile : Script_ProjectileWeapon
     [SerializeField] float FireRateMultiplier;
     [SerializeField] float RampUpAcceleration;
     public float m_Multiplier;
-    private void OnEnable() 
-    {
-        HUD.AmmoCount = CurMagCount;
-        HUD.MagSize = MagCount;
-        HUD.SetGunName(GunName);
-    }
 
     private void Start()
     {
@@ -22,6 +16,7 @@ public class Weapon_RampUpProjectile : Script_ProjectileWeapon
     // Update is called once per frame
     void Update()
     {
+        HUD.AmmoCount = CurMagCount;
         FiringPoint.transform.LookAt(Look.LookPoint);
 
         if (ShotTimer > 0)
@@ -38,9 +33,6 @@ public class Weapon_RampUpProjectile : Script_ProjectileWeapon
         {
             m_Multiplier = Mathf.Lerp(m_Multiplier, 1, Time.deltaTime * RampUpAcceleration);
         }
-
-        HUD.AmmoReserve = CurReserveCount;
-        HUD.AmmoCount = CurMagCount;
 
         Reload();
 

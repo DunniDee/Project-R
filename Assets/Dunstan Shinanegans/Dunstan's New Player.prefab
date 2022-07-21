@@ -1363,9 +1363,10 @@ MonoBehaviour:
   HealthText: {fileID: 3922924818690660206}
   AmmoArcMesh: {fileID: 3922924818685505479}
   HealthArcMesh: {fileID: 3922924820165605076}
+  AltFireText: {fileID: 1029279130}
   BaseColor: {r: 1, g: 1, b: 1, a: 1}
   MidColor: {r: 1, g: 0.46219248, b: 0, a: 1}
-  LowColor: {r: 0.6415094, g: 0, b: 0, a: 1}
+  LowColor: {r: 1, g: 0, b: 0, a: 1}
   Toggle: 0
 --- !u!1 &3922924818907918460
 GameObject:
@@ -1779,6 +1780,7 @@ MonoBehaviour:
   m_IsGrounded: 0
   m_IsCrouching: 0
   m_MomentumDirection: {x: 0, y: 0, z: 0}
+  m_VerticalVelocity: {x: 0, y: 0, z: 0}
   FrontPos: {fileID: 0}
   CamEffects: {fileID: 3922924819642379059}
 --- !u!114 &3922924819332040537
@@ -1956,7 +1958,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3922924819950815510}
-  m_LocalRotation: {x: 0, y: 0, z: -0.13052624, w: 0.9914449}
+  m_LocalRotation: {x: 0, y: 0, z: -0.38268343, w: 0.92387956}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.94, y: 0.94, z: 0.94}
   m_Children:
@@ -1964,7 +1966,7 @@ Transform:
   - {fileID: 3922924818512621465}
   m_Father: {fileID: 352225866255130700}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -15}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -45}
 --- !u!1 &3922924820165605078
 GameObject:
   m_ObjectHideFlags: 0
@@ -2401,14 +2403,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3922924820322301032}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: -0.38268343, w: 0.92387956}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3922924820648809885}
   m_Father: {fileID: 6011926604599099914}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -45}
 --- !u!1 &3922924820376949230
 GameObject:
   m_ObjectHideFlags: 0
@@ -2690,7 +2692,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 250074d120a303e489d84f49fc830262, type: 2}
+  - {fileID: 2100000, guid: f52b29537b25954428d393a20807015c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2844,13 +2846,18 @@ MonoBehaviour:
   ReloadKey: 114
   Damage: 10
   FireRate: 0.05
+  ShotTimer: 0
   ShotCount: 1
   SpreadAngle: 5
   RecoilVec: {x: 3, y: -1}
   MaxReserveCount: 320
   CurReserveCount: 320
   MagCount: 32
+  CurMagCount: 0
   ReloadTime: 2
+  IsReloading: 0
+  ShotShake: 0.1
+  ShotFov: 1
   ShootSound: {fileID: 8300000, guid: 7736ebd0e468eb843a27e996b7c014a1, type: 3}
   EmptySound: {fileID: 8300000, guid: c6018814faedc784782629d937032ad4, type: 3}
   ReloadSound: {fileID: 8300000, guid: 6fb1fbb6fb59d3847840212344ba692b, type: 3}
@@ -2859,8 +2866,6 @@ MonoBehaviour:
   HUD: {fileID: 1954339298}
   HandEffects: {fileID: 3922924820309997299}
   CamEffects: {fileID: 3922924819642379059}
-  ShotShake: 0.1
-  ShotFov: 1
   Projectile: {fileID: 5964571975337414563, guid: b61557a25f3cdec4fab0698c18242718,
     type: 3}
   ProjectileLifetime: 2
@@ -2997,13 +3002,18 @@ MonoBehaviour:
   ReloadKey: 114
   Damage: 35
   FireRate: 0.05
+  ShotTimer: 0
   ShotCount: 1
   SpreadAngle: 1
   RecoilVec: {x: 2.5, y: -2.5}
   MaxReserveCount: 320
   CurReserveCount: 320
   MagCount: 16
+  CurMagCount: 0
   ReloadTime: 2
+  IsReloading: 0
+  ShotShake: 0.15
+  ShotFov: 0.15
   ShootSound: {fileID: 8300000, guid: 3f6f784aecee8f841aabc6ceccf5536e, type: 3}
   EmptySound: {fileID: 8300000, guid: b3aa9ca5313c259459edc46c9ae7fd76, type: 3}
   ReloadSound: {fileID: 8300000, guid: a129efb13cfb0de43a3dffc92a55ba2a, type: 3}
@@ -3012,8 +3022,6 @@ MonoBehaviour:
   HUD: {fileID: 1954339298}
   HandEffects: {fileID: 3922924820309997299}
   CamEffects: {fileID: 3922924819642379059}
-  ShotShake: 0.15
-  ShotFov: 0.15
   Projectile: {fileID: 5964571975337414563, guid: b61557a25f3cdec4fab0698c18242718,
     type: 3}
   ProjectileLifetime: 3
@@ -3150,13 +3158,18 @@ MonoBehaviour:
   ReloadKey: 114
   Damage: 10
   FireRate: 0.06
+  ShotTimer: 0
   ShotCount: 1
   SpreadAngle: 5
   RecoilVec: {x: 1, y: -1}
   MaxReserveCount: 250
   CurReserveCount: 250
   MagCount: 50
+  CurMagCount: 0
   ReloadTime: 3
+  IsReloading: 0
+  ShotShake: 0.06
+  ShotFov: 1
   ShootSound: {fileID: 8300000, guid: 0d8f14ec0100b00469779caffcb81d24, type: 3}
   EmptySound: {fileID: 8300000, guid: c2ed3749f32721c41bdb5f7daeb41e98, type: 3}
   ReloadSound: {fileID: 8300000, guid: df0b8e227d57b3c41b695b642366b62a, type: 3}
@@ -3165,8 +3178,6 @@ MonoBehaviour:
   HUD: {fileID: 1954339298}
   HandEffects: {fileID: 3922924820309997299}
   CamEffects: {fileID: 3922924819642379059}
-  ShotShake: 0.06
-  ShotFov: 1
   Projectile: {fileID: 5964571975337414563, guid: b61557a25f3cdec4fab0698c18242718,
     type: 3}
   ProjectileLifetime: 5
@@ -3303,13 +3314,18 @@ MonoBehaviour:
   ReloadKey: 114
   Damage: 100
   FireRate: 0.5
+  ShotTimer: 0
   ShotCount: 1
   SpreadAngle: 0
   RecoilVec: {x: 5, y: -10}
   MaxReserveCount: 32
   CurReserveCount: 32
   MagCount: 6
+  CurMagCount: 0
   ReloadTime: 3
+  IsReloading: 0
+  ShotShake: 0.5
+  ShotFov: 10
   ShootSound: {fileID: 8300000, guid: 0d8f14ec0100b00469779caffcb81d24, type: 3}
   EmptySound: {fileID: 8300000, guid: c2ed3749f32721c41bdb5f7daeb41e98, type: 3}
   ReloadSound: {fileID: 8300000, guid: df0b8e227d57b3c41b695b642366b62a, type: 3}
@@ -3318,12 +3334,30 @@ MonoBehaviour:
   HUD: {fileID: 1954339298}
   HandEffects: {fileID: 3922924820309997299}
   CamEffects: {fileID: 3922924819642379059}
-  ShotShake: 0.5
-  ShotFov: 10
   Projectile: {fileID: 5964571975337414563, guid: b61557a25f3cdec4fab0698c18242718,
     type: 3}
   ProjectileLifetime: 5
   ProjectileForce: 1000
+--- !u!114 &956741569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4229001576760754319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 591e653127c77a54884c09b5f1566940, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AltFireName: Fan The Hammer
+  CurInputMode: 0
+  Durration: 0
+  Cooldown: 0
+  AltFireKey: 324
+  HUD: {fileID: 1954339298}
+  Weapon: {fileID: 57271213}
+  ShotInterval: 0.125
 --- !u!82 &1204061916
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3456,13 +3490,18 @@ MonoBehaviour:
   ReloadKey: 114
   Damage: 10
   FireRate: 0.05
+  ShotTimer: 0
   ShotCount: 1
   SpreadAngle: 5
   RecoilVec: {x: 2.5, y: 0.1}
   MaxReserveCount: 200
   CurReserveCount: 200
   MagCount: 100
+  CurMagCount: 0
   ReloadTime: 5
+  IsReloading: 0
+  ShotShake: 0.1
+  ShotFov: 1
   ShootSound: {fileID: 8300000, guid: b3aa9ca5313c259459edc46c9ae7fd76, type: 3}
   EmptySound: {fileID: 8300000, guid: 1110e42e9dd7d984fafb146826140249, type: 3}
   ReloadSound: {fileID: 8300000, guid: 769382b26686c524d8635526ba4ab985, type: 3}
@@ -3471,8 +3510,6 @@ MonoBehaviour:
   HUD: {fileID: 1954339298}
   HandEffects: {fileID: 3922924820309997299}
   CamEffects: {fileID: 3922924819642379059}
-  ShotShake: 0.1
-  ShotFov: 1
   Projectile: {fileID: 5964571975337414563, guid: b61557a25f3cdec4fab0698c18242718,
     type: 3}
   ProjectileLifetime: 5
@@ -3609,13 +3646,18 @@ MonoBehaviour:
   ReloadKey: 114
   Damage: 100
   FireRate: 1
+  ShotTimer: 0
   ShotCount: 1
   SpreadAngle: 0
   RecoilVec: {x: 5, y: -5}
   MaxReserveCount: 12
   CurReserveCount: 12
   MagCount: 4
+  CurMagCount: 0
   ReloadTime: 2
+  IsReloading: 0
+  ShotShake: 1
+  ShotFov: 15
   ShootSound: {fileID: 8300000, guid: 7776ef02e4dc8df4e89c31724eb0243d, type: 3}
   EmptySound: {fileID: 8300000, guid: 41172fa7dad8b6c49bc42be45170e5f1, type: 3}
   ReloadSound: {fileID: 8300000, guid: fa058034e4ca16c43a3ef6e17e43d667, type: 3}
@@ -3624,8 +3666,6 @@ MonoBehaviour:
   HUD: {fileID: 1954339298}
   HandEffects: {fileID: 3922924820309997299}
   CamEffects: {fileID: 3922924819642379059}
-  ShotShake: 1
-  ShotFov: 15
   Projectile: {fileID: 3029453220441524780, guid: 2330a9c73a13c8f4ba70a61f954e1796,
     type: 3}
   ProjectileLifetime: 10
@@ -3762,13 +3802,18 @@ MonoBehaviour:
   ReloadKey: 114
   Damage: 0
   FireRate: 0.1
+  ShotTimer: 0
   ShotCount: 1
   SpreadAngle: 3
   RecoilVec: {x: 3, y: -1}
   MaxReserveCount: 300
   CurReserveCount: 300
   MagCount: 30
+  CurMagCount: 0
   ReloadTime: 3
+  IsReloading: 0
+  ShotShake: 0.2
+  ShotFov: 1
   ShootSound: {fileID: 8300000, guid: 01e6423687138354b935caa849129f80, type: 3}
   EmptySound: {fileID: 8300000, guid: c6018814faedc784782629d937032ad4, type: 3}
   ReloadSound: {fileID: 8300000, guid: 83bad16f478bf2c4e9a91011fee9893c, type: 3}
@@ -3777,8 +3822,6 @@ MonoBehaviour:
   HUD: {fileID: 1954339298}
   HandEffects: {fileID: 3922924820309997299}
   CamEffects: {fileID: 3922924819642379059}
-  ShotShake: 0.2
-  ShotFov: 1
   Projectile: {fileID: 5964571975337414563, guid: b61557a25f3cdec4fab0698c18242718,
     type: 3}
   ProjectileLifetime: 3
@@ -3915,13 +3958,18 @@ MonoBehaviour:
   ReloadKey: 114
   Damage: 100
   FireRate: 1.5
+  ShotTimer: 0
   ShotCount: 1
   SpreadAngle: 0
   RecoilVec: {x: 5, y: -2.5}
   MaxReserveCount: 24
   CurReserveCount: 24
   MagCount: 4
+  CurMagCount: 0
   ReloadTime: 3
+  IsReloading: 0
+  ShotShake: 1
+  ShotFov: 20
   ShootSound: {fileID: 8300000, guid: 5693fed405509e848b0b55568ab65ece, type: 3}
   EmptySound: {fileID: 8300000, guid: c6018814faedc784782629d937032ad4, type: 3}
   ReloadSound: {fileID: 8300000, guid: 84ee03fa2ae841844ae23e1c6a10205e, type: 3}
@@ -3930,8 +3978,6 @@ MonoBehaviour:
   HUD: {fileID: 1954339298}
   HandEffects: {fileID: 3922924820309997299}
   CamEffects: {fileID: 3922924819642379059}
-  ShotShake: 1
-  ShotFov: 20
   Projectile: {fileID: 5964571975337414563, guid: b61557a25f3cdec4fab0698c18242718,
     type: 3}
   ProjectileLifetime: 5
@@ -4068,13 +4114,18 @@ MonoBehaviour:
   ReloadKey: 114
   Damage: 10
   FireRate: 1
+  ShotTimer: 0
   ShotCount: 15
   SpreadAngle: 10
   RecoilVec: {x: 10, y: -15}
   MaxReserveCount: 40
   CurReserveCount: 40
   MagCount: 8
+  CurMagCount: 0
   ReloadTime: 4
+  IsReloading: 0
+  ShotShake: 1
+  ShotFov: 15
   ShootSound: {fileID: 8300000, guid: 91a5e612c16fffc4a890c03753f68e2f, type: 3}
   EmptySound: {fileID: 8300000, guid: 41172fa7dad8b6c49bc42be45170e5f1, type: 3}
   ReloadSound: {fileID: 8300000, guid: 868e4d4cfcbdf434f8bd574e2368944f, type: 3}
@@ -4083,12 +4134,32 @@ MonoBehaviour:
   HUD: {fileID: 1954339298}
   HandEffects: {fileID: 3922924820309997299}
   CamEffects: {fileID: 3922924819642379059}
-  ShotShake: 1
-  ShotFov: 15
   Projectile: {fileID: 5964571975337414563, guid: b61557a25f3cdec4fab0698c18242718,
     type: 3}
   ProjectileLifetime: 1
   ProjectileForce: 1000
+--- !u!114 &2089279602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4229001578333262805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9ee1437f48e7da45a364bbc61dc2323, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AltFireName: KnockBack
+  CurInputMode: 1
+  Durration: 0
+  Cooldown: 0
+  AltFireKey: 324
+  HUD: {fileID: 1954339298}
+  Weapon: {fileID: 1641334673}
+  Motor: {fileID: 3922924819332040538}
+  Look: {fileID: 7903285166441421429}
+  KnockBackForce: 10
 --- !u!1 &4695102488988472258
 GameObject:
   m_ObjectHideFlags: 0
@@ -4513,15 +4584,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 00edff5922a389943970bb550b06c448, type: 3}
---- !u!4 &3601681422985280471 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 00edff5922a389943970bb550b06c448,
-    type: 3}
-  m_PrefabInstance: {fileID: 3922924818740304956}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4229001577972195693 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 00edff5922a389943970bb550b06c448,
+    type: 3}
+  m_PrefabInstance: {fileID: 3922924818740304956}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &3601681422985280471 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 00edff5922a389943970bb550b06c448,
     type: 3}
   m_PrefabInstance: {fileID: 3922924818740304956}
   m_PrefabAsset: {fileID: 0}
@@ -4619,15 +4690,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0d260cb8a5365a84f8fa5ffab6ed6925, type: 3}
---- !u!4 &3601681422759135599 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0d260cb8a5365a84f8fa5ffab6ed6925,
-    type: 3}
-  m_PrefabInstance: {fileID: 3922924818966769284}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4229001578333262805 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 0d260cb8a5365a84f8fa5ffab6ed6925,
+    type: 3}
+  m_PrefabInstance: {fileID: 3922924818966769284}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &3601681422759135599 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0d260cb8a5365a84f8fa5ffab6ed6925,
     type: 3}
   m_PrefabInstance: {fileID: 3922924818966769284}
   m_PrefabAsset: {fileID: 0}
@@ -5530,15 +5601,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b6c2184cca99b5a4bb4fdc27c2a417a7, type: 3}
---- !u!4 &3601681421207990758 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b6c2184cca99b5a4bb4fdc27c2a417a7,
-    type: 3}
-  m_PrefabInstance: {fileID: 3922924820517656077}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4229001576528325468 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: b6c2184cca99b5a4bb4fdc27c2a417a7,
+    type: 3}
+  m_PrefabInstance: {fileID: 3922924820517656077}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &3601681421207990758 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b6c2184cca99b5a4bb4fdc27c2a417a7,
     type: 3}
   m_PrefabInstance: {fileID: 3922924820517656077}
   m_PrefabAsset: {fileID: 0}

@@ -108,7 +108,7 @@ public class Scr_DiegeticHUD : MonoBehaviour
         HealthText.color = HealthColorLerp;  
         HealthArcMesh.material.SetColor("_Color", HealthColorLerp);
 
-        AmmoCountAngleLerp = Mathf.Lerp(-10,-77.5f, AmmoAngleLerp);
+        AmmoCountAngleLerp = Mathf.Lerp(-45,-77.5f, AmmoAngleLerp);
         AmmoCountAngle = Mathf.Lerp(AmmoCountAngle,AmmoCountAngleLerp, Time.deltaTime * 5);
 
         HealthCountAngleLerp = Mathf.Lerp(103,135 , HealthAngleLerp);

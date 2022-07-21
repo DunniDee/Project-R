@@ -31,6 +31,8 @@ public abstract class Script_WeaponBase : MonoBehaviour
     [Space]
 
     [Header("Recoil Variables")]
+    [SerializeField] protected float ShotShake;
+    [SerializeField] protected float ShotFov;
 
     [Space]
 
@@ -67,6 +69,14 @@ public abstract class Script_WeaponBase : MonoBehaviour
     [SerializeField] protected Scr_DiegeticHUD HUD;
     [SerializeField] protected Scr_HandAnimator HandEffects;
     [SerializeField] protected Scr_CameraEffects CamEffects;
+
+    protected private void OnEnable() 
+    {
+       HUD.MagSize = MagCount;
+       HUD.AmmoCount = CurMagCount;
+       HUD.SetGunName(GunName); 
+    }
+    
     public int GetMagCount()
     {
         return MagCount;
@@ -95,6 +105,8 @@ public abstract class Script_WeaponBase : MonoBehaviour
         {
             onAmmoChangeEvent(CurMagCount);
         }
+
+        HUD.AmmoReserve = CurReserveCount;
     }
 
     public virtual void Shoot(){}
