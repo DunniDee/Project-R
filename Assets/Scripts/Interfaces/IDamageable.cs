@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IDamageable
 {
-    void Damage(float _Damage, CustomCollider.DamageType _DamageType, Vector3 _direction);
+    bool Damage(float _Damage, CustomCollider.DamageType _DamageType, Vector3 _direction);
 }
