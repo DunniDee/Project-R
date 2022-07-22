@@ -21,9 +21,9 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Mat_SmokeNormal
-  m_Shader: {fileID: -6465566751694194690, guid: ddf0c0e603eae9b429928da8cc3b814f,
+  m_Shader: {fileID: -6465566751694194690, guid: 4c6361cb5d4144944a9f857229576f4c,
     type: 3}
-  m_ShaderKeywords: _SURFACE_TYPE_TRANSPARENT
+  m_ShaderKeywords: _DISABLE_SSR_TRANSPARENT _SURFACE_TYPE_TRANSPARENT
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
@@ -306,11 +306,27 @@ Material:
         m_Texture: {fileID: 2800000, guid: 243f0ff4dd1c9a647bc296b8107ec16e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_329f49f92d5c4995ae3bd4cfd6bb0a5e_Texture_1:
+        m_Texture: {fileID: 2800000, guid: dbf349bece4941b4ebe718582e893f97, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_58bed839005f498f8a651b5c7e926659_Texture_1:
+        m_Texture: {fileID: 2800000, guid: dbf349bece4941b4ebe718582e893f97, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_608b1cbeb5ac4658af3c9a20a71fd4c6_Texture_1:
         m_Texture: {fileID: 2800000, guid: dbf349bece4941b4ebe718582e893f97, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_7676eef894634c2b8202b146e1f5ec12_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 94f37e361147d8a4b9e9f82099282bc4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_87da8cbf55644a3588aafa00e063d3b3_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 243f0ff4dd1c9a647bc296b8107ec16e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_972bada7592b4e99852f9696827e1ec0_Texture_1:
         m_Texture: {fileID: 2800000, guid: 243f0ff4dd1c9a647bc296b8107ec16e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -431,18 +447,22 @@ Material:
     - DiffusionProfile_261f48f1fbc94ccbafc421414859c159: 0
     - DiffusionProfile_bfbe0deb8ec4428a9cfcdb968651903c: 0
     - PixelSnap: 0
+    - Vector1_0f5d5e13db4b4b2bb4939b472ec08f60: 100000
     - Vector1_2D21A623: 0.05
-    - Vector1_2aadd7952236471da4cff07c29f4226b: -10
+    - Vector1_2aadd7952236471da4cff07c29f4226b: 6
     - Vector1_49C490F5: 0.8
     - Vector1_65de45eaf302442391839165d0cab684: 1
     - Vector1_6C2C412D: 0
     - Vector1_6aac9af9dddc4a4ca997b1efddd91cf5: 1
     - Vector1_70564D59: 0
     - Vector1_76BF2124: 0
+    - Vector1_76f78d10fac44ff9adb56fe8cff976de: 1
     - Vector1_7eb481e5823b43e7b3e4fb93455ec1f2: 100
+    - Vector1_80f7c93087b446febd9650bb4c9e8972: 3
     - Vector1_8468686c20bc4f78b515da825d635ca7: 1000000
     - Vector1_8F0D1174: 0
     - Vector1_94E1614A: 0.01
+    - Vector1_999659b940b941d58596c2a15637db98: 1
     - Vector1_A6DA845F: 0
     - Vector1_C4ED1456: 0.01
     - Vector1_DFF948F3: 0
@@ -788,11 +808,15 @@ Material:
     - Color_268ef4700d0e412e8638d8af43fcd299: {r: 1, g: 1, b: 1, a: 0}
     - Color_83777D09: {r: 0.51886785, g: 0.51886785, b: 0.51886785, a: 0}
     - Color_bd14cd7d8ed843d39a9956804d9671dc: {r: 1, g: 1, b: 1, a: 0}
+    - Color_c016c12345ce498bb52a0caaccc56d5d: {r: 1, g: 1, b: 1, a: 0}
     - DiffusionProfile_261f48f1fbc94ccbafc421414859c159_Asset: {r: 0, g: 0, b: 0,
         a: 0}
     - DiffusionProfile_bfbe0deb8ec4428a9cfcdb968651903c_Asset: {r: 0, g: 0, b: 0,
         a: 0}
     - Vector2_0e871360cff04d1ab6543741bfd2fd90: {r: -2, g: 1, b: 0, a: 0}
+    - Vector2_206d498a30fa43d5aa426a6cd7b3666a: {r: 1, g: 5, b: 0, a: 0}
+    - Vector2_3782A8B8: {r: 0, g: 1, b: 0, a: 0}
+    - Vector2_39b31e0cac4e47bfbaafad9cb414002e: {r: -2, g: 1, b: 0, a: 0}
     - Vector2_39b716fbf414468baa66d2c784d0b3b2: {r: -2, g: 1, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColor0: {r: 1, g: 1, b: 1, a: 1}
@@ -815,6 +839,7 @@ Material:
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
     - _InvPrimScale: {r: 1, g: 1, b: 0, a: 0}
     - _IridescenceThicknessRemap: {r: 0, g: 1, b: 0, a: 0}
+    - _ParticleFade: {r: 1, g: 5, b: 0, a: 0}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
