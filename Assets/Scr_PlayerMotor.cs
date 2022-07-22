@@ -191,10 +191,12 @@ public class Scr_PlayerMotor : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.LeftShift) && m_DashCooldownTimer <= 0 && m_DashCount > 0 && !m_IsCrouching)
         {
+            Movment.Move(m_SmoothMoveDirection.normalized * 1);
             m_MomentumDirection += m_SmoothMoveDirection.normalized * m_DashMomentum ;
             CamEffects.RotateTo += new Vector3(m_ForwardMovement,0,-m_SidewardMovement).normalized * 10;
             m_DashMomentumTimer = 0.25f;
-            CamEffects.FovTo += 10;
+            CamEffects.FovTo += 5;
+            CamEffects.Fov += 5;
             m_DashCount--;
             m_DashCooldownTimer = m_DashCooldown;
 
