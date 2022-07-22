@@ -5,10 +5,6 @@ using UnityEngine;
 public class AltFire_FanHammer : Scr_AltFireBase
 {
     [SerializeField] float ShotInterval;
-    private void OnEnable()
-    {
-        HUD.SetAltFireName(AltFireName);
-    }
 
     protected override void OnAbilityStart()
     {

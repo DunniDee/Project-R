@@ -15,7 +15,7 @@ public class Scr_PlayerMotor : MonoBehaviour
     [SerializeField] float MoveSpeed;
     [SerializeField] float AirSpeed;
     [SerializeField] float Acceleration;
-    [SerializeField] float m_MomentumAcceleration;
+    [SerializeField] float m_MomentumMax;
     [SerializeField] float m_MomentumDecay;
     public float m_MomentumMagnuitude;
     public Vector3 LastPos;
@@ -46,7 +46,7 @@ public class Scr_PlayerMotor : MonoBehaviour
     public bool m_IsCrouching;
 
     private Vector3 m_MoveDirection;
-    private Vector3 m_SmoothMoveDirection;
+    public Vector3 m_SmoothMoveDirection;
     public Vector3 m_MomentumDirection;
     public Vector3 m_VerticalVelocity;
     float m_ForwardMovement;
@@ -189,6 +189,12 @@ public class Scr_PlayerMotor : MonoBehaviour
         {
             m_MomentumDirection = Vector3.Lerp(m_MomentumDirection, m_SmoothMoveDirection.normalized * m_MomentumMagnuitude, Time.deltaTime * 1);
             m_MomentumDirection = Vector3.Lerp(m_MomentumDirection, Vector3.zero, Time.deltaTime * m_MomentumDecay);
+            
+        }
+
+        if (m_MomentumMagnuitude > m_MomentumMax)
+        {
+            m_MomentumDirection = m_MomentumDirection.normalized * m_MomentumMax;
         }
 
         CamEffects.FovTo += m_MomentumMagnuitude * 5 * Time.deltaTime;

@@ -18,6 +18,8 @@ public class Scr_CameraEffects : MonoBehaviour
     public float Fov;
     public Vector3 RotateTo;
     public Vector3 LerpPos;
+    public Vector3 LerpTo;
+
 
 
 
@@ -33,7 +35,8 @@ public class Scr_CameraEffects : MonoBehaviour
         ShakeRotation = ShakeAmplitude * Mathf.Sin(ShakeTimer * 100);
         ShakeTransform.localRotation = Quaternion.Euler(0,0,ShakeRotation);
 
-        transform.localPosition = Vector3.Lerp(transform.localPosition, LerpPos, Time.deltaTime * 5);
+        LerpTo =  Vector3.Lerp(LerpTo, LerpPos, Time.deltaTime * 5);
+        transform.localPosition = Vector3.Lerp(transform.localPosition, LerpTo, Time.deltaTime * 5);
         
         FovTo = Mathf.Lerp(FovTo, 70, Time.deltaTime * FOVLerpDecay);
         Fov = Mathf.Lerp(Fov, FovTo, Time.deltaTime * FOVLerpDecay);

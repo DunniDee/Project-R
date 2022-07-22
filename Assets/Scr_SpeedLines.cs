@@ -8,6 +8,11 @@ public class Scr_SpeedLines : MonoBehaviour
     public Vector3 RotateTo;
     [SerializeField] Scr_PlayerMotor Motor;
     [SerializeField] ParticleSystem SpeedLines;
+    [SerializeField] AudioSource AS;
+    private void Start() 
+    {     
+        AS = gameObject.GetComponent<AudioSource>();
+    }
     // Update is called once per frame
     void Update()
     {
@@ -19,10 +24,12 @@ public class Scr_SpeedLines : MonoBehaviour
         if (Motor.m_MomentumMagnuitude < 10)
         {
             SpeedLines.startSpeed = 0;
+            AS.volume = Mathf.Lerp(AS.volume,0,Time.deltaTime);
         }
         else
         {
             SpeedLines.startSpeed = Motor.m_MomentumMagnuitude * 5;
+            AS.volume = Mathf.Lerp(AS.volume,0.02f,Time.deltaTime);
         }
     
     }
