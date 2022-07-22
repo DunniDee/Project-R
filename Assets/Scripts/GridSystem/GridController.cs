@@ -31,6 +31,11 @@ public class GridController : MonoBehaviour
     public AudioClip pickupNoise;
     public AudioClip dropNoise;
 
+    bool isGridActive = false;
+
+    public bool GetIsGridActive() { return isGridActive; }
+    public void SetIsGridActive(bool _b) { isGridActive = _b; }
+
     public void Awake()
     {
         gridHighlight = GetComponent<GridHighlight>();
@@ -38,26 +43,47 @@ public class GridController : MonoBehaviour
 
     void Update()
     {
-        ItemIconDrag();
-        
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Tab))
         {
-            CreateRandomItem();
+            if (!isGridActive)
+            {
+                ActivateGrid(true);
+            }
+            else {
+                ActivateGrid(false);
+            }
         }
-        if (SelectedItemGrid == null)
+        if (isGridActive)
         {
-            gridHighlight.Show(false);
-            return;
+            ItemIconDrag();
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                CreateRandomItem();
+            }
+            if (SelectedItemGrid == null)
+            {
+                gridHighlight.Show(false);
+                return;
+            }
+
+            HandleHighlight();
+
+            //Interaction Update for inventory
+            PickUpUpdate();
         }
-
-        HandleHighlight();
-
-        //Interaction Update for inventory
-        PickUpUpdate();
+       
 
     }
 
-    
+    private void ActivateGrid(bool _b)
+    {
+        SetIsGridActive(_b);
+        canvasTransform.gameObject.SetActive(_b);
+        Cursor.visible = _b;
+        Cursor.lockState = Cursor.visible ? CursorLockMode.Confined : CursorLockMode.Locked;
+        
+    }
+
     Vector2Int oldPositionOnGrid;
     InventoryItem itemToHighlight;
     private void HandleHighlight()
@@ -118,6 +144,14 @@ public class GridController : MonoBehaviour
                 DropItem(tileGridPosition);
             }
         }
+    }
+
+    public Vector3 GetMouseWorldPosition(Camera camera, float worldDepth)
+    {
+        Vector2 screenPosition = Input.mousePosition;
+        Vector3 screenPositionWithDepth = new Vector3(screenPosition.x, screenPosition.y, worldDepth);
+        Debug.Log(camera.ScreenToWorldPoint(screenPositionWithDepth));
+        return camera.ScreenToWorldPoint(screenPositionWithDepth);
     }
     public Vector2Int GetTileGridPosition()
     {
