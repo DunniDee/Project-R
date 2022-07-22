@@ -17,6 +17,7 @@ public class Scr_PlayerMotor : MonoBehaviour
     [SerializeField] float Acceleration;
     [SerializeField] float m_MomentumAcceleration;
     [SerializeField] float m_MomentumDecay;
+    public float m_MomentumMagnuitude;
     public Vector3 LastPos;
     float m_MovementSpeed;
     [Space]
@@ -99,7 +100,7 @@ public class Scr_PlayerMotor : MonoBehaviour
 
     void CheckGround()
     {
-        if (Physics.CheckSphere(transform.position + (Vector3.up * 0.40f), 0.5f, GroundMask) && m_GroundedTimer < 0)
+        if (Physics.CheckSphere(transform.position + (Vector3.up * 0.35f), 0.5f, GroundMask) && m_GroundedTimer < 0)
         {
            m_IsGrounded = true; 
         }
@@ -178,17 +179,19 @@ public class Scr_PlayerMotor : MonoBehaviour
 
     void SmoothMomentum()
     {
+        m_MomentumMagnuitude = m_MomentumDirection.magnitude;
+
         if (m_IsGrounded && !m_IsCrouching && m_DashMomentumTimer <= 0)
         {
-            m_MomentumDirection = Vector3.Lerp(m_MomentumDirection,m_MomentumDirection.normalized * 0.1f, Time.deltaTime * 5);
+            m_MomentumDirection = Vector3.Lerp(m_MomentumDirection,Vector3.zero, Time.deltaTime * 5);
         }
         else
         {
-            m_MomentumDirection = Vector3.Lerp(m_MomentumDirection, m_SmoothMoveDirection.normalized * m_MomentumDirection.magnitude, Time.deltaTime * 1);
+            m_MomentumDirection = Vector3.Lerp(m_MomentumDirection, m_SmoothMoveDirection.normalized * m_MomentumMagnuitude, Time.deltaTime * 1);
             m_MomentumDirection = Vector3.Lerp(m_MomentumDirection, Vector3.zero, Time.deltaTime * m_MomentumDecay);
         }
 
-        CamEffects.FovTo += m_MomentumDirection.magnitude * 5 * Time.deltaTime;
+        CamEffects.FovTo += m_MomentumMagnuitude * 5 * Time.deltaTime;
     }
 
 
@@ -229,7 +232,7 @@ public class Scr_PlayerMotor : MonoBehaviour
 
             if (m_WasGrounded && !m_IsCrouching )
             {
-                m_MomentumDirection = m_SmoothMoveDirection * m_MovementSpeed;
+                m_MomentumDirection += m_SmoothMoveDirection * m_MovementSpeed;
             }
         }
 
@@ -312,10 +315,10 @@ public class Scr_PlayerMotor : MonoBehaviour
 
         if (m_IsCrouching && m_IsGrounded)
         {
-            if (m_IsGrounded && !m_WasCrouching)
-            {
-                m_MomentumDirection = m_SmoothMoveDirection * m_MovementSpeed;
-            }
+            // if (m_IsGrounded && !m_WasCrouching)
+            // {
+            //     m_MomentumDirection += m_SmoothMoveDirection * m_MovementSpeed;
+            // }
             CamEffects.LerpPos = new Vector3(0,-1,0);
             CamEffects.RotateTo.z += 25 * Time.deltaTime;
 
