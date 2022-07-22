@@ -15,6 +15,7 @@ public class Scr_CameraEffects : MonoBehaviour
     public float ShakeAmplitude;
     public float ShakeTime;
     public float FovTo;
+    public float Fov;
     public Vector3 RotateTo;
     public Vector3 LerpPos;
 
@@ -35,6 +36,7 @@ public class Scr_CameraEffects : MonoBehaviour
         transform.localPosition = Vector3.Lerp(transform.localPosition, LerpPos, Time.deltaTime * 5);
         
         FovTo = Mathf.Lerp(FovTo, 70, Time.deltaTime * FOVLerpDecay);
-        Cam.fieldOfView = Mathf.Lerp(Cam.fieldOfView, FovTo, Time.deltaTime * FOVLerpDecay);
+        Fov = Mathf.Lerp(Fov, FovTo, Time.deltaTime * FOVLerpDecay);
+        Cam.fieldOfView = Fov;
     }
 }

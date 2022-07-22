@@ -22,6 +22,8 @@ public class Scr_DiegeticHUD : MonoBehaviour
     [SerializeField] MeshRenderer AmmoArcMesh;
     [SerializeField] MeshRenderer HealthArcMesh;
 
+    [SerializeField] TextMeshPro AltFireText;
+
     float AmmoCountAngleLerp;
     float AmmoCountAngle;
 
@@ -106,7 +108,7 @@ public class Scr_DiegeticHUD : MonoBehaviour
         HealthText.color = HealthColorLerp;  
         HealthArcMesh.material.SetColor("_Color", HealthColorLerp);
 
-        AmmoCountAngleLerp = Mathf.Lerp(-10,-77.5f, AmmoAngleLerp);
+        AmmoCountAngleLerp = Mathf.Lerp(-45,-77.5f, AmmoAngleLerp);
         AmmoCountAngle = Mathf.Lerp(AmmoCountAngle,AmmoCountAngleLerp, Time.deltaTime * 5);
 
         HealthCountAngleLerp = Mathf.Lerp(103,135 , HealthAngleLerp);
@@ -124,5 +126,10 @@ public class Scr_DiegeticHUD : MonoBehaviour
     public void SetGunName(string _GunName)
     {
         WeaponText.text = _GunName;
+    }
+
+    public void SetAltFireName(string _AltFire)
+    {
+        AltFireText.text = _AltFire;
     }
 }
