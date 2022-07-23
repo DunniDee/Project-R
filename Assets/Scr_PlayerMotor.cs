@@ -64,6 +64,8 @@ public class Scr_PlayerMotor : MonoBehaviour
     Vector3 WallNormal;
 
     float SlideBoostTimer;
+
+    [SerializeField] bool IsLaunched = false;
     
 
 
@@ -104,6 +106,7 @@ public class Scr_PlayerMotor : MonoBehaviour
         if (Physics.CheckSphere(transform.position + (Vector3.up * 0.35f), 0.5f, GroundMask) && m_GroundedTimer < 0)
         {
            m_IsGrounded = true; 
+           IsLaunched = false;
         }
         else
         {
@@ -188,17 +191,23 @@ public class Scr_PlayerMotor : MonoBehaviour
         }
         else
         {
-            m_MomentumDirection = Vector3.Lerp(m_MomentumDirection, m_SmoothMoveDirection.normalized * m_MomentumMagnuitude, Time.deltaTime * 1);
-            m_MomentumDirection = Vector3.Lerp(m_MomentumDirection, Vector3.zero, Time.deltaTime * m_MomentumDecay);
-            
+            if (!IsLaunched)
+            {
+                m_MomentumDirection = Vector3.Lerp(m_MomentumDirection, m_SmoothMoveDirection.normalized * m_MomentumMagnuitude, Time.deltaTime);
+                m_MomentumDirection = Vector3.Lerp(m_MomentumDirection, Vector3.zero, Time.deltaTime * m_MomentumDecay);
+            }
         }
 
-        if (m_MomentumMagnuitude > m_MomentumMax)
+        if (!IsLaunched)
         {
-            m_MomentumDirection = m_MomentumDirection.normalized * m_MomentumMax;
+            if (m_MomentumMagnuitude > m_MomentumMax)
+            {
+                m_MomentumDirection = m_MomentumDirection.normalized * m_MomentumMax;
+            }
+
+            CamEffects.FovTo += m_MomentumMagnuitude * 5 * Time.deltaTime;
         }
 
-        CamEffects.FovTo += m_MomentumMagnuitude * 5 * Time.deltaTime;
     }
 
 
@@ -230,7 +239,9 @@ public class Scr_PlayerMotor : MonoBehaviour
         }
         else
         {
-            m_VerticalVelocity.y -= m_Gravity * Time.deltaTime;
+
+            m_VerticalVelocity.y -= m_Gravity * Time.deltaTime;   
+
 
             if (m_IsTouchingWall)
             {
@@ -259,8 +270,10 @@ public class Scr_PlayerMotor : MonoBehaviour
             {
                 m_MomentumDirection += m_SmoothMoveDirection.normalized * m_DashMomentum * 0.25f;
                 m_MomentumDirection += WallNormal * 10;
+                Movment.Move(new Vector3(0,0.1f,0));
             }
-
+            
+            IsLaunched = false;
             m_DashMomentumTimer = 0.25f;
             m_JumpCount--;
             m_VerticalVelocity.y = Mathf.Sqrt(2 * m_JumpHeight * m_Gravity);
@@ -285,6 +298,7 @@ public class Scr_PlayerMotor : MonoBehaviour
             CamEffects.FovTo += 10;
             m_DashCount--;
             m_DashCooldownTimer = m_DashCooldown;
+            IsLaunched = false;
 
             if (m_VerticalVelocity.y <0 )
             {
@@ -347,5 +361,15 @@ public class Scr_PlayerMotor : MonoBehaviour
             Movment.height = 2;
             Movment.center = new Vector3(0,1,0);
         }
+    }
+
+    public void Launch(Vector3 _direction, float _Height)
+    {
+        IsLaunched = true;
+        Movment.Move(new Vector3(0,0.5f,0));
+        m_MomentumDirection += _direction;
+        m_VerticalVelocity.y = Mathf.Sqrt(2 * _Height * m_Gravity);
+        CamEffects.FovTo += 45;
+        CamEffects.RotateTo += new Vector3(15,0,0);
     }
 }
