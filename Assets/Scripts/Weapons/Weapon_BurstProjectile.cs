@@ -14,7 +14,9 @@ public class Weapon_BurstProjectile : Script_ProjectileWeapon
     // Update is called once per frame
     void Update()
     {
-        FiringPoint.transform.LookAt(Look.getAimPoint());
+        HUD.AmmoCount = CurMagCount;
+        HUD.AmmoReserve = CurReserveCount;
+        FiringPoint.transform.LookAt(Look.LookPoint);
 
         if (ShotTimer > 0)
         {
@@ -27,8 +29,6 @@ public class Weapon_BurstProjectile : Script_ProjectileWeapon
             {
                 Invoke("Shoot", BurstSpeed * i);
             }
-
-            Motor.SetIsSprinting(false);
         }
 
         Reload();

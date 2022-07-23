@@ -13,13 +13,17 @@ public class Scr_PlayerLook : MonoBehaviour
     [SerializeField] Transform CameraTransform;
     [SerializeField] Transform OrientationTransform;
 
+    [SerializeField] Scr_HandAnimator HandEffects;
+
     float m_MouseX;
     float m_MouseY;
     float m_Multiplier = 0.01f;
 
     //Tilt Variables
     float m_XRotation;
-    float m_YRotation;
+    public float m_YRotation;
+
+    public Vector3 LookPoint;
 
     // Start is called before the first frame update
     void Start()
@@ -45,5 +49,16 @@ public class Scr_PlayerLook : MonoBehaviour
         CameraTransform.localRotation = Quaternion.Euler(m_XRotation, 0,0);
         OrientationTransform.rotation = Quaternion.Euler(0, m_YRotation, 0);
 
+        HandEffects.RotateTo += new Vector3(-m_MouseY, m_MouseX, 0) * 2 * Time.deltaTime;
+
+        RaycastHit Hit;
+        if (Physics.Raycast(CameraTransform.position, CameraTransform.forward,out Hit, 1000))
+        {
+            LookPoint = Hit.point;
+        }
+        else
+        {
+            LookPoint = CameraTransform.position + CameraTransform.forward * 1000;
+        }
     }
 }

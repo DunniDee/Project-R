@@ -8,39 +8,68 @@ public class Scr_PlayerMotor : MonoBehaviour
     [SerializeField] CharacterController Movment;
     [SerializeField] Transform Orientation;
     [SerializeField] LayerMask GroundMask;
+    [SerializeField] LayerMask WallRunMask;
     [Space]
 
     [Header("Movement Stats")]
     [SerializeField] float MoveSpeed;
     [SerializeField] float AirSpeed;
     [SerializeField] float Acceleration;
-    [SerializeField] float m_MomentumAcceleration;
+    [SerializeField] float m_MomentumMax;
     [SerializeField] float m_MomentumDecay;
+    public float m_MomentumMagnuitude;
+    public Vector3 LastPos;
     float m_MovementSpeed;
     [Space]
 
     [Header("Jump Stats")]
+    [SerializeField] int m_MaxJumps;
+     int m_JumpCount;
     [SerializeField] float m_Gravity;
     [SerializeField] float m_JumpMomentum;
     [SerializeField] float m_JumpHeight;
     [Space]
 
-    [Header("Jump Stats")]
+    [Header("Dash Stats")]
     [SerializeField] float m_DashMomentum;
+    [SerializeField] int m_MaxDashes;
+    [SerializeField] float m_DashCooldown;
+    float m_DashCooldownTimer;
+    int m_DashCount;
+    public float m_DashMomentumTimer;
 
     //Motor Status Bools
     public bool m_IsGrounded;
+    public bool m_IsTouchingWall;
+    public bool m_WasTouchingWall;
+    private bool m_WasCrouching;
+    public bool m_IsCrouching;
 
     private Vector3 m_MoveDirection;
-    private Vector3 m_SmoothMoveDirection;
+    public Vector3 m_SmoothMoveDirection;
     public Vector3 m_MomentumDirection;
-    private Vector3 m_VerticalVelocity;
+    public Vector3 m_VerticalVelocity;
     float m_ForwardMovement;
     float m_SidewardMovement;
+
+    [Header("Wall Running")]
+    [SerializeField] Transform FrontPos;
+
+    RaycastHit LeftHit;
+    RaycastHit RightHit;
+    RaycastHit FrontHit;
+    RaycastHit BackHit;
+    RaycastHit WallHit;
+
+    Vector3 WallNormal;
+
+    
+
 
     [Header("GameFeel")]
     [SerializeField] Scr_CameraEffects CamEffects;
     bool m_WasGrounded;
+    float m_GroundedTimer = 0;
     float LastYVelocity;
 
     // Update is called once per frame
@@ -49,10 +78,13 @@ public class Scr_PlayerMotor : MonoBehaviour
         GetMovementInput();
         CheckGround();
 
+        WallRun();
+
         Jump();
         Movment.Move(m_VerticalVelocity * Time.deltaTime);
 
         Dash();
+        Crouch();
 
         SmoothMomentum();
         SmoothMovment();
@@ -60,12 +92,15 @@ public class Scr_PlayerMotor : MonoBehaviour
         MoveMotor();
 
         m_WasGrounded = m_IsGrounded;
+        m_WasTouchingWall = m_IsTouchingWall;
         LastYVelocity = m_VerticalVelocity.y;
+        m_WasCrouching = m_IsCrouching;
+        LastPos = transform.position;
     }
 
     void CheckGround()
     {
-        if (Physics.CheckSphere(transform.position + (Vector3.up * 0.2f),0.3f,GroundMask))
+        if (Physics.CheckSphere(transform.position + (Vector3.up * 0.35f), 0.5f, GroundMask) && m_GroundedTimer < 0)
         {
            m_IsGrounded = true; 
         }
@@ -73,11 +108,58 @@ public class Scr_PlayerMotor : MonoBehaviour
         {
             m_IsGrounded = false; 
         }
+
+
+        if (m_GroundedTimer >= 0)
+        {
+            m_GroundedTimer -= Time.deltaTime;
+        }
+    }
+
+    void WallRun()
+    {
+        if (Physics.CheckSphere(transform.position + Vector3.up,0.6f,WallRunMask))
+        {
+           m_IsTouchingWall = true; 
+        }
+        else
+        {
+            m_IsTouchingWall = false; 
+        }
+
+        if (m_IsTouchingWall)
+        {
+            if (Physics.Raycast(transform.position + (Vector3.up * 0.40f), Orientation.right,out RightHit, 1.5f, WallRunMask))
+            {
+                CamEffects.RotateTo += new Vector3(0,0,45) * Time.deltaTime;
+                WallNormal = RightHit.normal;
+            }
+
+            if (Physics.Raycast(transform.position + (Vector3.up * 0.40f), -Orientation.right,out LeftHit, 1.5f, WallRunMask))
+            {
+                CamEffects.RotateTo += new Vector3(0,0,-45) * Time.deltaTime;
+                WallNormal = LeftHit.normal;
+            }
+
+            if (Physics.Raycast(transform.position + (Vector3.up * 0.40f), Orientation.forward,out FrontHit, 1.5f, WallRunMask))
+            {
+                CamEffects.RotateTo += new Vector3(-45,0,0) * Time.deltaTime;
+                WallNormal = FrontHit.normal;
+            }
+
+            if (Physics.Raycast(transform.position + (Vector3.up * 0.40f), -Orientation.forward,out BackHit, 1.5f, WallRunMask))
+            {
+                CamEffects.RotateTo += new Vector3(45,0,0) * Time.deltaTime;
+                WallNormal = BackHit.normal;
+            }
+        }
+
+
     }
 
     void SmoothMovment()
     {
-        if (!m_IsGrounded)
+        if (!m_IsGrounded || m_IsCrouching)
         {
             m_MovementSpeed = Mathf.Lerp(m_MovementSpeed, AirSpeed, Time.deltaTime * Acceleration);
         }
@@ -97,15 +179,25 @@ public class Scr_PlayerMotor : MonoBehaviour
 
     void SmoothMomentum()
     {
-        if (m_IsGrounded)
+        m_MomentumMagnuitude = m_MomentumDirection.magnitude;
+
+        if (m_IsGrounded && !m_IsCrouching && m_DashMomentumTimer <= 0)
         {
-            m_MomentumDirection = Vector3.Lerp(m_MomentumDirection,Vector3.zero, Time.deltaTime * 10);
+            m_MomentumDirection = Vector3.Lerp(m_MomentumDirection,Vector3.zero, Time.deltaTime * 5);
         }
         else
         {
-            m_MomentumDirection = Vector3.Lerp(m_MomentumDirection, m_SmoothMoveDirection.normalized * m_MomentumDirection.magnitude, Time.deltaTime * 1);
+            m_MomentumDirection = Vector3.Lerp(m_MomentumDirection, m_SmoothMoveDirection.normalized * m_MomentumMagnuitude, Time.deltaTime * 1);
             m_MomentumDirection = Vector3.Lerp(m_MomentumDirection, Vector3.zero, Time.deltaTime * m_MomentumDecay);
+            
         }
+
+        if (m_MomentumMagnuitude > m_MomentumMax)
+        {
+            m_MomentumDirection = m_MomentumDirection.normalized * m_MomentumMax;
+        }
+
+        CamEffects.FovTo += m_MomentumMagnuitude * 5 * Time.deltaTime;
     }
 
 
@@ -133,22 +225,47 @@ public class Scr_PlayerMotor : MonoBehaviour
             {
                 CamEffects.RotateTo.x += Mathf.Abs(LastYVelocity);
             }
+            m_JumpCount = m_MaxJumps;
         }
         else
         {
             m_VerticalVelocity.y -= m_Gravity * Time.deltaTime;
 
-            if (m_WasGrounded)
+            if (m_IsTouchingWall)
             {
-                m_MomentumDirection = m_SmoothMoveDirection * m_MovementSpeed;
+                m_VerticalVelocity.y = Mathf.Clamp(m_VerticalVelocity.y, -1, 1000000);
+            }
+
+            if (m_WasGrounded && !m_IsCrouching )
+            {
+                m_MomentumDirection += m_SmoothMoveDirection * m_MovementSpeed;
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (m_IsTouchingWall)
         {
+            if (!m_WasTouchingWall)
+            {
+                CamEffects.RotateTo.x += 15;
+            }
+            m_JumpCount = m_MaxJumps;
+            m_DashCount = m_MaxDashes;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space) && m_JumpCount > 0)
+        {
+            if (m_IsTouchingWall  && !m_IsGrounded)
+            {
+                m_MomentumDirection += m_SmoothMoveDirection.normalized * m_DashMomentum * 0.25f;
+                m_MomentumDirection += WallNormal * 10;
+            }
+
+            m_DashMomentumTimer = 0.25f;
+            m_JumpCount--;
             m_VerticalVelocity.y = Mathf.Sqrt(2 * m_JumpHeight * m_Gravity);
             CamEffects.RotateTo.x += 5;
-            m_MomentumDirection += m_SmoothMoveDirection * m_JumpMomentum;
+            CamEffects.RotateTo += new Vector3(m_ForwardMovement,0,-m_SidewardMovement).normalized * m_DashMomentum;
+            CamEffects.FovTo += 10;
         }
 
         float VerticalTilt = m_VerticalVelocity.y;
@@ -158,12 +275,68 @@ public class Scr_PlayerMotor : MonoBehaviour
 
     void Dash()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.LeftShift) && m_DashCooldownTimer <= 0 && m_DashCount > 0 && !m_IsCrouching)
         {
-            m_MomentumDirection += m_SmoothMoveDirection * m_DashMomentum;
-            CamEffects.RotateTo += new Vector3(m_ForwardMovement,0,-m_SidewardMovement).normalized * m_DashMomentum;
+            //Movment.Move(m_SmoothMoveDirection.normalized * 1);
+            m_MomentumDirection += m_SmoothMoveDirection.normalized * m_DashMomentum ;
+            CamEffects.RotateTo += new Vector3(m_ForwardMovement,0,-m_SidewardMovement).normalized * 10;
+            m_DashMomentumTimer = 0.25f;
+            CamEffects.FovTo += 10;
+            m_DashCount--;
+            m_DashCooldownTimer = m_DashCooldown;
+
+            if (m_VerticalVelocity.y <0 )
+            {
+                m_VerticalVelocity.y = 0;
+            }
+        }
+
+        if (m_DashMomentumTimer > 0)
+        {
+            m_DashMomentumTimer-=Time.deltaTime;
+        }
+
+        if (m_DashCooldownTimer > 0)
+        {
+            m_DashCooldownTimer-=Time.deltaTime;
+        }
+
+        if (m_IsGrounded)
+        {
+            m_DashCount = m_MaxDashes;
         }
     }
 
-    
+    void Crouch()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            m_IsCrouching = true;
+        }
+
+        if (Input.GetKeyUp(KeyCode.LeftControl))
+        {
+            m_IsCrouching = false;
+        }
+
+        if (m_IsCrouching && m_IsGrounded)
+        {
+            // if (m_IsGrounded && !m_WasCrouching)
+            // {
+            //     m_MomentumDirection += m_SmoothMoveDirection * m_MovementSpeed;
+            // }
+            CamEffects.LerpPos = new Vector3(0,-1,0);
+            CamEffects.RotateTo.z += 25 * Time.deltaTime;
+
+            Movment.height = 1;
+            Movment.center = new Vector3(0,0.5f,0);
+        }
+        else
+        {
+            CamEffects.LerpPos = new Vector3(0,0,0);
+            
+            Movment.height = 2;
+            Movment.center = new Vector3(0,1,0);
+        }
+    }
 }
