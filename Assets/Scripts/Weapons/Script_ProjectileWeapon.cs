@@ -31,9 +31,10 @@ public class Script_ProjectileWeapon : Script_WeaponBase
 
             }
 
-            if (CurMagCount <= 10)
+            if (CurMagCount <= MagCount/2)
             {
-                AS.PlayOneShot(EmptySound,1 - CurMagCount * 0.1f);
+                AS.PlayOneShot(EmptySound, 1 - ((float)CurMagCount/(float)MagCount) * 2);
+                Debug.Log(((float)CurMagCount/(float)MagCount) * 2);
             }
             
             AS.PlayOneShot(ShootSound);

@@ -63,6 +63,7 @@ public class Scr_PlayerMotor : MonoBehaviour
 
     Vector3 WallNormal;
 
+    float SlideBoostTimer;
     
 
 
@@ -314,17 +315,25 @@ public class Scr_PlayerMotor : MonoBehaviour
             m_IsCrouching = true;
         }
 
-        if (Input.GetKeyUp(KeyCode.LeftControl))
+        if (!Input.GetKey(KeyCode.LeftControl) && !Physics.CheckSphere(transform.position + (Vector3.up * 1.5f),0.45f, GroundMask))
         {
             m_IsCrouching = false;
         }
 
+        if (SlideBoostTimer >= 0)
+        {
+            SlideBoostTimer-= Time.deltaTime;
+        }
+
         if (m_IsCrouching && m_IsGrounded)
         {
-            // if (m_IsGrounded && !m_WasCrouching)
-            // {
-            //     m_MomentumDirection += m_SmoothMoveDirection * m_MovementSpeed;
-            // }
+            if (m_IsGrounded && !m_WasCrouching && SlideBoostTimer <0)
+            {
+                m_MomentumDirection += m_SmoothMoveDirection * m_MovementSpeed;
+                SlideBoostTimer = 1;
+            }
+
+
             CamEffects.LerpPos = new Vector3(0,-1,0);
             CamEffects.RotateTo.z += 25 * Time.deltaTime;
 
