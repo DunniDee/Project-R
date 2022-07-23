@@ -12,14 +12,16 @@ public class Script_HitMarker : MonoBehaviour
     [SerializeField] AudioClip KillSound;
  public static Script_HitMarker current;
  bool IsCritical;
- RectTransform rect;
+ [SerializeField] RectTransform rect;
+ [SerializeField] Image KillImage;
  private void Start() 
  {
-    rect = gameObject.GetComponent<RectTransform>();
-//  AS = gameObject.GetComponent<AudioSource>();
+    //rect = gameObject.GetComponent<RectTransform>();
+    //  AS = gameObject.GetComponent<AudioSource>();
     current = this;
  }
     float Timer = 1;
+    float KillTimer = 1;
     [SerializeField] Image[] Cross;
     // Update is called once per frame
     void Update()
@@ -40,8 +42,22 @@ public class Script_HitMarker : MonoBehaviour
                 }
             }
 
-            float Size = Timer * 30;
+            float Size = Timer * 20;
             rect.sizeDelta = new Vector2(Size,Size);
+        }
+
+        if (KillTimer > 0)
+        {
+            KillTimer -= Time.deltaTime;
+            // if (IsCritical)
+            // {
+            //     KillImage.color = new Color(1,0,0,KillTimer);
+            // }
+            // else
+            // {
+            //     KillImage.color = new Color(1,1,1,KillTimer);
+            // }
+            KillImage.color = new Color(1,0,0,KillTimer);
         }
     }
 
@@ -82,6 +98,7 @@ public class Script_HitMarker : MonoBehaviour
         AS.PlayOneShot(KillSound);
         IsCritical = true;
         Timer = 1;
+        KillTimer = 0.5f;
     }
 
 }
