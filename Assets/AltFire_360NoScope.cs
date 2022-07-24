@@ -9,10 +9,18 @@ public class AltFire_360NoScope : Scr_AltFireBase
     float OriginalRotation;
     [SerializeField] AnimationCurve RotationCurve;
 
+    [SerializeField] float JumpForce;
+
+    [SerializeField] bool IsHorizontal;
+
 
     protected override void OnAbilityStart()
     {
+
         OriginalRotation = Look.m_YRotation;
+
+        Motor.m_VerticalVelocity.y = JumpForce;
+        Motor.MovePlayer(new Vector3(0, 0.25f,0));
     }
     
     protected override void OnAbilityDurration()
