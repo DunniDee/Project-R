@@ -46,6 +46,7 @@ public class Scr_PlayerMotor : MonoBehaviour
     public bool m_WasTouchingWall;
     private bool m_WasCrouching;
     public bool m_IsCrouching;
+    public bool m_IsVaulting;
 
     private Vector3 m_MoveDirection;
     public Vector3 m_SmoothMoveDirection;
@@ -54,23 +55,24 @@ public class Scr_PlayerMotor : MonoBehaviour
     float m_ForwardMovement;
     float m_SidewardMovement;
 
-    [Header("Wall Running")]
-    [SerializeField] Transform FrontPos;
-
     RaycastHit LeftHit;
     RaycastHit RightHit;
     RaycastHit FrontHit;
     RaycastHit BackHit;
     RaycastHit WallHit;
 
+    RaycastHit VaultHit;
+
     Vector3 WallNormal;
 
     float SlideBoostTimer;
 
+    [SerializeField] Transform VaultCheckPos;
+    Vector3 vaultPos;
+    [SerializeField] float m_VaultTime;
+    float m_VaultTimer;
+
     [SerializeField] bool IsLaunched = false;
-    
-
-
     [Header("GameFeel")]
     [SerializeField] Scr_CameraEffects CamEffects;
     bool m_WasGrounded;
@@ -92,6 +94,8 @@ public class Scr_PlayerMotor : MonoBehaviour
 
         Jump();
         Movment.Move(m_VerticalVelocity * Time.deltaTime);
+
+        Vault();
 
         Dash();
         Crouch();
@@ -383,6 +387,33 @@ public class Scr_PlayerMotor : MonoBehaviour
             
             Movment.height = 2;
             Movment.center = new Vector3(0,1,0);
+        }
+    }
+
+    void Vault()
+    {
+        if (Physics.Raycast(VaultCheckPos.position, VaultCheckPos.forward,out VaultHit, 1, GroundMask) && Input.GetKey(KeyCode.Space) && !m_IsVaulting)
+        {
+            m_IsVaulting = true;
+            vaultPos = VaultHit.point;
+            m_VaultTimer = m_VaultTime;
+        }
+
+        if (m_IsVaulting)
+        {
+            m_VaultTimer -= Time.deltaTime;
+            Movment.enabled = false;
+            transform.position = Vector3.Lerp(transform.position, vaultPos, Time.deltaTime / m_VaultTimer);
+            Debug.Log(vaultPos);
+
+            if (m_VaultTimer < 0 )
+            {
+                m_IsVaulting = false;
+            }
+        }
+        else
+        {
+            Movment.enabled = true;
         }
     }
 
