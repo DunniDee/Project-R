@@ -21,6 +21,7 @@ public class InventoryItem : MonoBehaviour
         if (isItemEquppied == false)
         {
             isItemEquppied = true;
+
         }
     }
 

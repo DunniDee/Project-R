@@ -60,7 +60,7 @@ private float MoveSpeed = 0;
 
     public void InitialiseStats()
     {
-        Script_PlayerStatManager.Instance.DefaultWalkSpeed = WalkSpeed;
+/*        Script_PlayerStatManager.Instance.DefaultMoveSpeed = WalkSpeed;
         WalkSpeed = Script_PlayerStatManager.Instance.ModifiedWalkSpeed;
 
         Script_PlayerStatManager.Instance.DefaultSprintSpeed = SprintSpeed;
@@ -73,7 +73,7 @@ private float MoveSpeed = 0;
         CrouchSpeed = Script_PlayerStatManager.Instance.ModifiedCrouchSpeed; 
 
         Script_PlayerStatManager.Instance.DefaultJumpCount = MaxJumps;
-        MaxJumps = Script_PlayerStatManager.Instance.ModifiedJumpCount;
+        MaxJumps = Script_PlayerStatManager.Instance.ModifiedJumpCount;*/
 
     }
 

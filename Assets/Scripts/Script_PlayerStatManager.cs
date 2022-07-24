@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Script_PlayerStatManager : MonoBehaviour
 {
-
     //Singleton Pattern
     public static Script_PlayerStatManager Instance;
     private void Awake()
@@ -17,59 +16,48 @@ public class Script_PlayerStatManager : MonoBehaviour
           	DontDestroyOnLoad(gameObject);
         }
     }
+    public struct WeaponStats {
+        public float Default_Damage { get; set; }
+        public float Modified_Damage { get; set; }
+        public int Default_MaxAmmo { get; set; }
+        public float Modified_MaxAmmo { get; set; }
 
-    // public struct Stat
-    // {
-    //     public Stat(float _stat)
-    //     {
-    //         s_default = _stat;
-    //         s_Modified = _stat;
-    //     }
-    //     public float s_default { get; set; }
-    //     public float s_Modified { get; set; }
-    // }
-    // Start is called before the first frame update
+        public float Default_Firerate { get; set; }
+        public float Modified_Firerate { get; set; }
+    }
 
-    // [SerializeField] Stat Firerate;
+    // Weapon Stats
+    public WeaponStats RevolverStats;
+    public WeaponStats SMGStats;
+    public WeaponStats PistolStats;
+    public WeaponStats MinigunStats;
+    public WeaponStats RailGunStats;
+    public WeaponStats LauncherStats;
 
-    //A bunch of Stats
+    public void SetWeaponStats(WeaponStats weaponStats, Script_WeaponBase _weaponBase)
+    {
+        if (_weaponBase as Weapon_SemiAutioProjectile)
+        {
 
+        }
+        else if (_weaponBase as Weapon_RampUpProjectile)
+        { 
+            
+        }
+        else if (_weaponBase as Weapon_FullAutoProjectile)
+        {
+
+        }
+    }
+
+    public void Start()
+    {
+        
+    }
     [Header("Bounty variables")]
     public float Bounty;
     public float Credits;
 
-    //Movement Variables
-    [Header("Movement variables")]
-    public float DefaultWalkSpeed;
-    public float ModifiedWalkSpeed;
-    [Space]
-    public float DefaultSprintSpeed;
-    public float ModifiedSprintSpeed;
-    [Space]
-    public float DefaultCrouchSpeed;
-    public float ModifiedCrouchSpeed;
-    [Space]
-    public int DefaultJumpCount;
-    public int ModifiedJumpCount;
 
-    [Header("Primary Weapon variables")]
-    public float DefaultPrimaryDamage;
-    public float ModifiedPrimaryDamage;
-    [Space]
-    public float DefaultPrimaryFireRate;
-    public float ModifiedPrimaryFireRate;
-    [Space]
-    public int DefaultPrimaryMagCount;
-    public int ModifiedPrimaryMagCount;
-
-    [Header("Secondary Weapon variables")]
-    public float DefaultSecondaryDamage;    
-    public float ModifiedSecondaryDamage;
-    [Space]
-    public float DefaultSecondaryFireRate;
-    public float ModifiedSecondaryFireRate;
-    [Space]
-    public int DefaultSecondaryMagCount;
-    public int ModifiedSecondaryMagCount;
 }
 
