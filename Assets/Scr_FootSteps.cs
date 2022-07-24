@@ -51,16 +51,14 @@ public class Scr_FootSteps : MonoBehaviour
         IsLeft = !IsLeft;
         if (IsLeft)
         {
-           CamEffects.RotateTo.y += 2;
-           CamEffects.LerpTo.x += 0.15f;
+           CamEffects.RotateTo.y += 1.5f;
         }
         else
         {
-            CamEffects.RotateTo.y -= 2; 
-            CamEffects.LerpTo.x -= 0.15f;
+            CamEffects.RotateTo.y -= 1.5f; 
         }
-        CamEffects.RotateTo.x += 2;
-        CamEffects.LerpTo.y -= 0.15f;
+        CamEffects.RotateTo.x += 1.5f;
+        //CamEffects.LerpTo.y -= 0.075f;
         AS.PlayOneShot(FootSteps[Random.Range(0,FootSteps.Length-1)]);
     }
 
