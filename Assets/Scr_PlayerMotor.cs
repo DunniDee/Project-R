@@ -71,6 +71,7 @@ public class Scr_PlayerMotor : MonoBehaviour
     Vector3 vaultPos;
     [SerializeField] float m_VaultTime;
     float m_VaultTimer;
+    [SerializeField] AnimationCurve VaultCurve;
 
     [SerializeField] bool IsLaunched = false;
     [Header("GameFeel")]
@@ -392,24 +393,27 @@ public class Scr_PlayerMotor : MonoBehaviour
 
     void Vault()
     {
-        if (Physics.Raycast(VaultCheckPos.position, VaultCheckPos.forward,out VaultHit, 1, GroundMask) && Input.GetKey(KeyCode.Space) && !m_IsVaulting)
+        if (Physics.Raycast(VaultCheckPos.position, VaultCheckPos.forward,out VaultHit, 0.5f, GroundMask) && Input.GetKey(KeyCode.Space) && !m_IsVaulting)
         {
             m_IsVaulting = true;
-            vaultPos = VaultHit.point;
+            vaultPos = VaultHit.point + Vector3.up;
             m_VaultTimer = m_VaultTime;
+            CamEffects.RotateTo.x -= 50;
         }
 
         if (m_IsVaulting)
         {
-            m_VaultTimer -= Time.deltaTime;
-            Movment.enabled = false;
-            transform.position = Vector3.Lerp(transform.position, vaultPos, Time.deltaTime / m_VaultTimer);
-            Debug.Log(vaultPos);
-
-            if (m_VaultTimer < 0 )
+            if (m_VaultTimer <= 0.5f )
             {
                 m_IsVaulting = false;
+                m_VerticalVelocity.y = 5;
             }
+            m_VaultTimer -= Time.deltaTime;
+            Movment.enabled = false;
+            transform.position = Vector3.Lerp( vaultPos, transform.position, VaultCurve.Evaluate(m_VaultTimer));
+            Debug.Log(vaultPos);
+            CamEffects.RotateTo.x += 150 * Time.deltaTime;
+
         }
         else
         {
