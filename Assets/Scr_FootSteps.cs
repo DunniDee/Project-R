@@ -10,14 +10,14 @@ public class Scr_FootSteps : MonoBehaviour
     [SerializeField] AudioClip[] FootSteps;
     bool IsLeft = true;
     float StepTimer;
-    AudioSource AS;
+    [SerializeField] AudioSource AS;
     float Acceleration;
 
     // Start is called before the first frame update
     void Start()
     {
         Motor = gameObject.GetComponent<Scr_PlayerMotor>();
-        AS = gameObject.GetComponent<AudioSource>();
+        //AS = gameObject.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -43,6 +43,10 @@ public class Scr_FootSteps : MonoBehaviour
                 StepTimer = StepSpeed;
                 Step();
             }
+        }
+        else
+        {
+            StepTimer = StepSpeed * 1.5f;
         }
     }
 
