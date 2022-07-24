@@ -34,8 +34,10 @@ public class Scr_PlayerMotor : MonoBehaviour
     [SerializeField] float m_DashMomentum;
     [SerializeField] int m_MaxDashes;
     [SerializeField] float m_DashCooldown;
+    [SerializeField] float m_DashRechargeTime;
+    float m_DashRechargeTimer;
     float m_DashCooldownTimer;
-    int m_DashCount;
+    public int m_DashCount;
     public float m_DashMomentumTimer;
 
     //Motor Status Bools
@@ -241,6 +243,7 @@ public class Scr_PlayerMotor : MonoBehaviour
         {
 
             m_VerticalVelocity.y -= m_Gravity * Time.deltaTime;   
+            m_VerticalVelocity.y = Mathf.Clamp(m_VerticalVelocity.y, -25,100000000);
 
 
             if (m_IsTouchingWall)
@@ -261,7 +264,6 @@ public class Scr_PlayerMotor : MonoBehaviour
                 CamEffects.RotateTo.x += 15;
             }
             m_JumpCount = m_MaxJumps;
-            m_DashCount = m_MaxDashes;
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && m_JumpCount > 0)
@@ -289,15 +291,15 @@ public class Scr_PlayerMotor : MonoBehaviour
 
     void Dash()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift) && m_DashCooldownTimer <= 0 && m_DashCount > 0 && !m_IsCrouching)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && m_DashCooldownTimer <= 0 && m_DashCount > 0 && !m_IsCrouching )
         {
-            //Movment.Move(m_SmoothMoveDirection.normalized * 1);
             m_MomentumDirection += m_SmoothMoveDirection.normalized * m_DashMomentum ;
             CamEffects.RotateTo += new Vector3(m_ForwardMovement,0,-m_SidewardMovement).normalized * 10;
             m_DashMomentumTimer = 0.25f;
-            CamEffects.FovTo += 10;
+            CamEffects.FovTo += 15;
             m_DashCount--;
             m_DashCooldownTimer = m_DashCooldown;
+            m_DashRechargeTimer = m_DashRechargeTime;
             IsLaunched = false;
 
             if (m_VerticalVelocity.y <0 )
@@ -316,9 +318,17 @@ public class Scr_PlayerMotor : MonoBehaviour
             m_DashCooldownTimer-=Time.deltaTime;
         }
 
-        if (m_IsGrounded)
+        if (m_DashRechargeTimer >= 0)
         {
-            m_DashCount = m_MaxDashes;
+            m_DashRechargeTimer -= Time.deltaTime;
+        }
+        else
+        {
+            if (m_DashCount < m_MaxDashes)
+            {
+                m_DashRechargeTimer = m_DashRechargeTime;
+                m_DashCount++;   
+            }
         }
     }
 
@@ -367,7 +377,7 @@ public class Scr_PlayerMotor : MonoBehaviour
     {
         IsLaunched = true;
         Movment.Move(new Vector3(0,0.5f,0));
-        m_MomentumDirection += _direction;
+        m_MomentumDirection = _direction;
         m_VerticalVelocity.y = Mathf.Sqrt(2 * _Height * m_Gravity);
         CamEffects.FovTo += 45;
         CamEffects.RotateTo += new Vector3(15,0,0);

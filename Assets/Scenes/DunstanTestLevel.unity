@@ -2767,7 +2767,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d94dd829c95b3e43aa007e3e1046b56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnOff: 0
+  OnOnly: 0
+  OffOnly: 0
+  Model: 0
   MapModel: {fileID: 587942811}
 --- !u!65 &34509096
 BoxCollider:
@@ -3843,11 +3845,27 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 716089475, guid: 602d8489eb7d7e9438c8878c10062222, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 716089475, guid: 602d8489eb7d7e9438c8878c10062222, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 971247580, guid: 602d8489eb7d7e9438c8878c10062222, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 971247580, guid: 602d8489eb7d7e9438c8878c10062222, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1882997121, guid: 602d8489eb7d7e9438c8878c10062222, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1882997121, guid: 602d8489eb7d7e9438c8878c10062222, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
@@ -7711,7 +7729,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d94dd829c95b3e43aa007e3e1046b56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnOff: 0
+  OnOnly: 0
+  OffOnly: 0
+  Model: 0
   MapModel: {fileID: 2106192045}
 --- !u!65 &224966950
 BoxCollider:
@@ -37565,8 +37585,15 @@ MonoBehaviour:
   EnemyList: []
   surfaces:
   - {fileID: 855145333}
-  DummyPrefab: {fileID: 6179826949199189935, guid: bed87c3638ebf5c47aedb7e665728ee7,
-    type: 3}
+  EnemyA: {fileID: 0}
+  EnemyB: {fileID: 0}
+  EnemyC: {fileID: 0}
+  EnemyD: {fileID: 0}
+  CurentBounty: 0
+  EnemyASpawnRate: 0
+  EnemyBSpawnRate: 0
+  EnemyCSpawnRate: 0
+  EnemyDSpawnRate: 0
 --- !u!4 &855145335
 Transform:
   m_ObjectHideFlags: 0
