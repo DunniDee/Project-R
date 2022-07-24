@@ -9,21 +9,76 @@ public class Scr_ScreenSpaceHud : MonoBehaviour
 
     [SerializeField] Image[] DashImages;
 
+    bool Dash1;
+    bool Dash2;
+    bool Dash3;
+
+
     // Update is called once per frame
     void Update()
     {
         if (Motor.m_DashCount != WasCount)
         {
-            for (int i = 0; i < 3; i++)
+            switch (Motor.m_DashCount)
             {
-                DashImages[i].enabled = false;
-            }
+                case 0:
+                    Dash1 = false;
+                    Dash2 = false;
+                    Dash3 = false;
+                break;
+                
+                case 1:
+                    Dash1 = true;
+                    Dash2 = false;
+                    Dash3 = false;
+                break;
 
-            for (int i = 0; i < Motor.m_DashCount; i++)
-            {
-                DashImages[i].enabled = true;
+                case 2:
+                    Dash1 = true;
+                    Dash2 = true;
+                    Dash3 = false;
+                break;
+
+                case 3:
+                    Dash1 = true;
+                    Dash2 = true;
+                    Dash3 = true;
+                break;  
+
+                default:
+                break;
             }
         }
+
+        if (Dash1)
+        {
+            DashImages[0].color = Color.Lerp(DashImages[0].color, new Color(1,1,1,1), Time.deltaTime * 10);
+        }
+        else
+        {
+            DashImages[0].color = Color.Lerp(DashImages[0].color, new Color(0,0,0,0), Time.deltaTime * 10);
+        }
+
+        if (Dash2)
+        {
+            DashImages[1].color = Color.Lerp(DashImages[1].color, new Color(1,1,1,1), Time.deltaTime * 10);
+        }
+        else
+        {
+            DashImages[1].color = Color.Lerp(DashImages[1].color, new Color(0,0,0,0), Time.deltaTime * 10);
+        }
+
+        if (Dash3)
+        {
+            DashImages[2].color = Color.Lerp(DashImages[2].color, new Color(1,1,1,1), Time.deltaTime * 10);
+        }
+        else
+        {
+            DashImages[2].color = Color.Lerp(DashImages[2].color, new Color(0,0,0,0), Time.deltaTime * 10);
+        }
+
         WasCount = Motor.m_DashCount;
     }
+
+    
 }

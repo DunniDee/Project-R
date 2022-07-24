@@ -77,6 +77,10 @@ public class Scr_PlayerMotor : MonoBehaviour
     float m_GroundedTimer = 0;
     float LastYVelocity;
 
+    [SerializeField] AudioSource StepAS;
+    [SerializeField] AudioClip[] LandSounds;
+
+
     // Update is called once per frame
     void Update()
     {
@@ -160,6 +164,11 @@ public class Scr_PlayerMotor : MonoBehaviour
             }
         }
 
+        if (m_IsTouchingWall && !m_WasTouchingWall)
+        {
+            StepAS.PlayOneShot(LandSounds[Random.Range(0,LandSounds.Length-1)]);
+        }
+
 
     }
 
@@ -236,6 +245,7 @@ public class Scr_PlayerMotor : MonoBehaviour
             if (!m_WasGrounded)
             {
                 CamEffects.RotateTo.x += Mathf.Abs(LastYVelocity);
+                StepAS.PlayOneShot(LandSounds[Random.Range(0,LandSounds.Length-1)]);
             }
             m_JumpCount = m_MaxJumps;
         }
@@ -272,7 +282,6 @@ public class Scr_PlayerMotor : MonoBehaviour
             {
                 m_MomentumDirection += m_SmoothMoveDirection.normalized * m_DashMomentum * 0.25f;
                 m_MomentumDirection += WallNormal * 10;
-                Movment.Move(new Vector3(0,0.1f,0));
             }
             
             IsLaunched = false;
@@ -282,6 +291,7 @@ public class Scr_PlayerMotor : MonoBehaviour
             CamEffects.RotateTo.x += 5;
             CamEffects.RotateTo += new Vector3(m_ForwardMovement,0,-m_SidewardMovement).normalized * m_DashMomentum;
             CamEffects.FovTo += 10;
+            Movment.Move(new Vector3(0,0.15f,0));
         }
 
         float VerticalTilt = m_VerticalVelocity.y;
@@ -381,5 +391,10 @@ public class Scr_PlayerMotor : MonoBehaviour
         m_VerticalVelocity.y = Mathf.Sqrt(2 * _Height * m_Gravity);
         CamEffects.FovTo += 45;
         CamEffects.RotateTo += new Vector3(15,0,0);
+    }
+
+    public void MovePlayer(Vector3 _Move)
+    {
+        Movment.Move(_Move);
     }
 }
