@@ -167,6 +167,10 @@ public class GridController : MonoBehaviour
     private void DropItem(Vector2Int posOnGrid)
     {
         bool complete = SelectedItemGrid.PlaceItem(selectedItem, posOnGrid.x, posOnGrid.y, ref overlapItem);
+        if (SelectedItemGrid.CheckGridType() == Grid.GridType.EQUIPPED)
+        {
+            selectedItem.Equip();
+        }
         if (complete)
         {
             audioSource.PlayOneShot(dropNoise);
@@ -177,7 +181,7 @@ public class GridController : MonoBehaviour
                 overlapItem = null;
                 rectTransform = selectedItem.GetComponent<RectTransform>();
             }
-            SelectedItemGrid.CheckGridType();
+            
         }
         
     }
@@ -190,7 +194,12 @@ public class GridController : MonoBehaviour
         {
             audioSource.PlayOneShot(pickupNoise);
             rectTransform = selectedItem.GetComponent<RectTransform>();
+            if (SelectedItemGrid.CheckGridType() == Grid.GridType.EQUIPPED)
+            {
+                selectedItem.Dequip();
+            }
         }
+
     }
 
     private void ItemIconDrag()

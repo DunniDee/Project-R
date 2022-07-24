@@ -173,18 +173,16 @@ public class Grid : MonoBehaviour
         }
     }
 
-    public void CheckGridType()
+    public GridType CheckGridType()
     {
         switch (gridType)
         {
             case GridType.INVENTORY:
-                ActivateItems(false);
-                break;
+                return GridType.INVENTORY;
             case GridType.EQUIPPED:
-                ActivateItems(true);
-                break;
-            case GridType.STATIC:
-                break;
+                return GridType.EQUIPPED;
+            default:
+                return GridType.STATIC;
         }
     }
     bool PositionCheck(int _x, int _y)

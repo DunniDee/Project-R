@@ -15,13 +15,28 @@ public class InventoryItem : MonoBehaviour
     public int ongridPositionY;
 
     public bool isItemEquppied = false;
+    public delegate void UpdateGunStatsDelegate();
+    public event UpdateGunStatsDelegate UpdateGunStatsEvent;
 
     public void Equip()
     {
         if (isItemEquppied == false)
         {
             isItemEquppied = true;
+            Script_PlayerStatManager.Instance.SetModifiedDamage(0, itemData.DamageIncrease, true);
+            UpdateGunStats();
+        }
+    }
 
+    private void UpdateGunStats()
+    {
+        if (UpdateGunStatsEvent != null)
+        {
+            UpdateGunStatsEvent();
+        }
+        else
+        {
+            Debug.LogWarning("Failed to update GunStats... Event Is null");
         }
     }
 
@@ -30,6 +45,8 @@ public class InventoryItem : MonoBehaviour
         if (isItemEquppied == true)
         {
             isItemEquppied = false;
+            Script_PlayerStatManager.Instance.SetModifiedDamage(0, itemData.DamageIncrease, false);
+            UpdateGunStats();
         }
     }
     internal void Set(ItemData itemData)

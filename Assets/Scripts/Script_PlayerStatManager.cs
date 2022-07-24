@@ -35,6 +35,16 @@ public class Script_PlayerStatManager : MonoBehaviour
     // Weapon Stats
     public List<WeaponStats> WeaponStatList;
 
+    [Header("Base Variables")]
+    public float Default_MaxHealth;
+    public float Modified_MaxHealth;
+
+
+    [Header("Bounty variables")]
+    public float Bounty;
+    public float Credits;
+
+
     public void SetWeaponStats(int weaponIndex, Script_WeaponBase _weaponBase)
     {
         WeaponStats weapon = WeaponStatList.ToArray()[weaponIndex];
@@ -49,15 +59,52 @@ public class Script_PlayerStatManager : MonoBehaviour
         WeaponStatList[weaponIndex] = weapon;
     }
 
+    public void SetModifiedDamage(int weaponIndex, float _damageIncrease, bool _isAdditive)
+    {
+        WeaponStats weapon = WeaponStatList.ToArray()[weaponIndex];
+        if (_isAdditive)
+        {
+            weapon.Modified_Damage += _damageIncrease;
+        }
+        else {
+            weapon.Modified_Damage -= _damageIncrease;
+        }
+        WeaponStatList[weaponIndex] = weapon;
+    }
+
+    public void SetModifiedFireRate(int weaponIndex, float _firerateIncrease, bool _isAdditive)
+    {
+        WeaponStats weapon = WeaponStatList.ToArray()[weaponIndex];
+        if (_isAdditive)
+        {
+            weapon.Default_Firerate += _firerateIncrease;
+        }
+        else
+        {
+            weapon.Default_Firerate -= _firerateIncrease;
+        }
+        WeaponStatList[weaponIndex] = weapon;
+    }
+
+    public void SetModifiedMaxAmmo(int weaponIndex, float _ammoIncrease, bool _isAdditive)
+    {
+        WeaponStats weapon = WeaponStatList.ToArray()[weaponIndex];
+        if (_isAdditive)
+        {
+            weapon.Modified_MaxAmmo += _ammoIncrease;
+        }
+        else
+        {
+            weapon.Modified_MaxAmmo -= _ammoIncrease;
+        }
+        WeaponStatList[weaponIndex] = weapon;
+    }
     public void Start()
     {
         
     }
 
-  
-    [Header("Bounty variables")]
-    public float Bounty;
-    public float Credits;
+
 
 
 }
