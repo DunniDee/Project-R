@@ -19,6 +19,8 @@ public abstract class Script_WeaponBase : MonoBehaviour
     [SerializeField] protected Vector2 RecoilVec;
     [Space]
 
+   
+
     [Header("Reload Variables")]
     [SerializeField] protected int MaxReserveCount;
     [SerializeField] protected int CurReserveCount;
@@ -76,12 +78,38 @@ public abstract class Script_WeaponBase : MonoBehaviour
        HUD.AmmoCount = CurMagCount;
        HUD.SetGunName(GunName); 
     }
-    
+
+    #region Getters And Setters
+
+    public string GetGunName()
+    {
+        return GunName;
+    }
     public int GetMagCount()
     {
         return MagCount;
     }
-    
+
+    public float GetDamage()
+    {
+        return Damage;
+    }
+    public void SetDamage(float _Damage)
+    {
+        Damage = _Damage;
+    }
+
+    public float GetFireRate()
+    {
+        return FireRate;
+    }
+    public void SetFireRate(float _FireRate)
+    {
+        FireRate = _FireRate;
+    }
+
+    #endregion
+
     protected virtual IEnumerator IE_Reload()
     {
         IsReloading = true;

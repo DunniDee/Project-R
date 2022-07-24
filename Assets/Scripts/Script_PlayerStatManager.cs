@@ -16,44 +16,45 @@ public class Script_PlayerStatManager : MonoBehaviour
           	DontDestroyOnLoad(gameObject);
         }
     }
+    [System.Serializable]
     public struct WeaponStats {
-        public float Default_Damage { get; set; }
-        public float Modified_Damage { get; set; }
-        public int Default_MaxAmmo { get; set; }
-        public float Modified_MaxAmmo { get; set; }
-
-        public float Default_Firerate { get; set; }
-        public float Modified_Firerate { get; set; }
+        [SerializeField]
+        public float Default_Damage;
+        [SerializeField]
+        public float Modified_Damage;
+        [SerializeField]
+        public int Default_MaxAmmo;
+        [SerializeField]
+        public float Modified_MaxAmmo;
+        [SerializeField]
+        public float Default_Firerate;
+        [SerializeField]
+        public float Modified_Firerate;
     }
 
     // Weapon Stats
-    public WeaponStats RevolverStats;
-    public WeaponStats SMGStats;
-    public WeaponStats PistolStats;
-    public WeaponStats MinigunStats;
-    public WeaponStats RailGunStats;
-    public WeaponStats LauncherStats;
+    public List<WeaponStats> WeaponStatList;
 
-    public void SetWeaponStats(WeaponStats weaponStats, Script_WeaponBase _weaponBase)
+    public void SetWeaponStats(int weaponIndex, Script_WeaponBase _weaponBase)
     {
-        if (_weaponBase as Weapon_SemiAutioProjectile)
-        {
+        WeaponStats weapon = WeaponStatList.ToArray()[weaponIndex];
+        weapon.Default_Damage = _weaponBase.GetDamage();
+        weapon.Default_Firerate = _weaponBase.GetFireRate();
+        weapon.Default_MaxAmmo = _weaponBase.GetMagCount();
 
-        }
-        else if (_weaponBase as Weapon_RampUpProjectile)
-        { 
-            
-        }
-        else if (_weaponBase as Weapon_FullAutoProjectile)
-        {
+        weapon.Modified_Damage = _weaponBase.GetDamage();
+        weapon.Modified_Firerate = _weaponBase.GetFireRate();
+        weapon.Modified_MaxAmmo = _weaponBase.GetMagCount();
 
-        }
+        WeaponStatList[weaponIndex] = weapon;
     }
 
     public void Start()
     {
         
     }
+
+  
     [Header("Bounty variables")]
     public float Bounty;
     public float Credits;

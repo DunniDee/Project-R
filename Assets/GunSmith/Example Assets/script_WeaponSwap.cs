@@ -16,10 +16,15 @@ public class script_WeaponSwap : MonoBehaviour
     private void Start() 
     {
         m_LastIndex = Index;
+        // Load Weapon Stats to Player Stat Manager
 
+        int i = 0;
         foreach (var Weapon in Weapons)
         {
+            Script_PlayerStatManager.Instance.WeaponStatList.Add(new Script_PlayerStatManager.WeaponStats());
+            Script_PlayerStatManager.Instance.SetWeaponStats(i, Weapon.GetComponent<Script_WeaponBase>());
             Weapon.SetActive(false);
+            i++;
         }
 
         Weapons[Index].SetActive(true);
