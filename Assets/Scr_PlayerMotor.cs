@@ -79,6 +79,7 @@ public class Scr_PlayerMotor : MonoBehaviour
 
     [SerializeField] AudioSource StepAS;
     [SerializeField] AudioClip[] LandSounds;
+    [SerializeField] AudioClip[] DashSounds;
 
 
     // Update is called once per frame
@@ -316,6 +317,8 @@ public class Scr_PlayerMotor : MonoBehaviour
             {
                 m_VerticalVelocity.y = 0;
             }
+
+            StepAS.PlayOneShot(DashSounds[Random.Range(0,DashSounds.Length-1)],1);
         }
 
         if (m_DashMomentumTimer > 0)
