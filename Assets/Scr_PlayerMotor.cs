@@ -15,8 +15,9 @@ public class Scr_PlayerMotor : MonoBehaviour
     [SerializeField] float MoveSpeed;
     [SerializeField] float AirSpeed;
     [SerializeField] float Acceleration;
-    [SerializeField] float m_MomentumAcceleration;
+    [SerializeField] float m_MomentumMax;
     [SerializeField] float m_MomentumDecay;
+    public float m_MomentumMagnuitude;
     public Vector3 LastPos;
     float m_MovementSpeed;
     [Space]
@@ -33,8 +34,10 @@ public class Scr_PlayerMotor : MonoBehaviour
     [SerializeField] float m_DashMomentum;
     [SerializeField] int m_MaxDashes;
     [SerializeField] float m_DashCooldown;
+    [SerializeField] float m_DashRechargeTime;
+    float m_DashRechargeTimer;
     float m_DashCooldownTimer;
-    int m_DashCount;
+    public int m_DashCount;
     public float m_DashMomentumTimer;
 
     //Motor Status Bools
@@ -45,7 +48,7 @@ public class Scr_PlayerMotor : MonoBehaviour
     public bool m_IsCrouching;
 
     private Vector3 m_MoveDirection;
-    private Vector3 m_SmoothMoveDirection;
+    public Vector3 m_SmoothMoveDirection;
     public Vector3 m_MomentumDirection;
     public Vector3 m_VerticalVelocity;
     float m_ForwardMovement;
@@ -62,6 +65,9 @@ public class Scr_PlayerMotor : MonoBehaviour
 
     Vector3 WallNormal;
 
+    float SlideBoostTimer;
+
+    [SerializeField] bool IsLaunched = false;
     
 
 
@@ -70,6 +76,10 @@ public class Scr_PlayerMotor : MonoBehaviour
     bool m_WasGrounded;
     float m_GroundedTimer = 0;
     float LastYVelocity;
+
+    [SerializeField] AudioSource StepAS;
+    [SerializeField] AudioClip[] LandSounds;
+
 
     // Update is called once per frame
     void Update()
@@ -99,9 +109,10 @@ public class Scr_PlayerMotor : MonoBehaviour
 
     void CheckGround()
     {
-        if (Physics.CheckSphere(transform.position + (Vector3.up * 0.40f), 0.5f, GroundMask) && m_GroundedTimer < 0)
+        if (Physics.CheckSphere(transform.position + (Vector3.up * 0.35f), 0.5f, GroundMask) && m_GroundedTimer < 0)
         {
            m_IsGrounded = true; 
+           IsLaunched = false;
         }
         else
         {
@@ -153,6 +164,11 @@ public class Scr_PlayerMotor : MonoBehaviour
             }
         }
 
+        if (m_IsTouchingWall && !m_WasTouchingWall)
+        {
+            StepAS.PlayOneShot(LandSounds[Random.Range(0,LandSounds.Length-1)]);
+        }
+
 
     }
 
@@ -178,17 +194,31 @@ public class Scr_PlayerMotor : MonoBehaviour
 
     void SmoothMomentum()
     {
+        m_MomentumMagnuitude = m_MomentumDirection.magnitude;
+
         if (m_IsGrounded && !m_IsCrouching && m_DashMomentumTimer <= 0)
         {
-            m_MomentumDirection = Vector3.Lerp(m_MomentumDirection,m_MomentumDirection.normalized * 0.1f, Time.deltaTime * 5);
+            m_MomentumDirection = Vector3.Lerp(m_MomentumDirection,Vector3.zero, Time.deltaTime * 5);
         }
         else
         {
-            m_MomentumDirection = Vector3.Lerp(m_MomentumDirection, m_SmoothMoveDirection.normalized * m_MomentumDirection.magnitude, Time.deltaTime * 1);
-            m_MomentumDirection = Vector3.Lerp(m_MomentumDirection, Vector3.zero, Time.deltaTime * m_MomentumDecay);
+            if (!IsLaunched)
+            {
+                m_MomentumDirection = Vector3.Lerp(m_MomentumDirection, m_SmoothMoveDirection.normalized * m_MomentumMagnuitude, Time.deltaTime);
+                m_MomentumDirection = Vector3.Lerp(m_MomentumDirection, Vector3.zero, Time.deltaTime * m_MomentumDecay);
+            }
         }
 
-        CamEffects.FovTo += m_MomentumDirection.magnitude * 5 * Time.deltaTime;
+        if (!IsLaunched)
+        {
+            if (m_MomentumMagnuitude > m_MomentumMax)
+            {
+                m_MomentumDirection = m_MomentumDirection.normalized * m_MomentumMax;
+            }
+
+            CamEffects.FovTo += m_MomentumMagnuitude * 5 * Time.deltaTime;
+        }
+
     }
 
 
@@ -215,12 +245,16 @@ public class Scr_PlayerMotor : MonoBehaviour
             if (!m_WasGrounded)
             {
                 CamEffects.RotateTo.x += Mathf.Abs(LastYVelocity);
+                StepAS.PlayOneShot(LandSounds[Random.Range(0,LandSounds.Length-1)]);
             }
             m_JumpCount = m_MaxJumps;
         }
         else
         {
-            m_VerticalVelocity.y -= m_Gravity * Time.deltaTime;
+
+            m_VerticalVelocity.y -= m_Gravity * Time.deltaTime;   
+            m_VerticalVelocity.y = Mathf.Clamp(m_VerticalVelocity.y, -25,100000000);
+
 
             if (m_IsTouchingWall)
             {
@@ -229,7 +263,7 @@ public class Scr_PlayerMotor : MonoBehaviour
 
             if (m_WasGrounded && !m_IsCrouching )
             {
-                m_MomentumDirection = m_SmoothMoveDirection * m_MovementSpeed;
+                m_MomentumDirection += m_SmoothMoveDirection * m_MovementSpeed;
             }
         }
 
@@ -240,7 +274,6 @@ public class Scr_PlayerMotor : MonoBehaviour
                 CamEffects.RotateTo.x += 15;
             }
             m_JumpCount = m_MaxJumps;
-            m_DashCount = m_MaxDashes;
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && m_JumpCount > 0)
@@ -250,13 +283,15 @@ public class Scr_PlayerMotor : MonoBehaviour
                 m_MomentumDirection += m_SmoothMoveDirection.normalized * m_DashMomentum * 0.25f;
                 m_MomentumDirection += WallNormal * 10;
             }
-
+            
+            IsLaunched = false;
             m_DashMomentumTimer = 0.25f;
             m_JumpCount--;
             m_VerticalVelocity.y = Mathf.Sqrt(2 * m_JumpHeight * m_Gravity);
             CamEffects.RotateTo.x += 5;
             CamEffects.RotateTo += new Vector3(m_ForwardMovement,0,-m_SidewardMovement).normalized * m_DashMomentum;
             CamEffects.FovTo += 10;
+            Movment.Move(new Vector3(0,0.15f,0));
         }
 
         float VerticalTilt = m_VerticalVelocity.y;
@@ -266,15 +301,16 @@ public class Scr_PlayerMotor : MonoBehaviour
 
     void Dash()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift) && m_DashCooldownTimer <= 0 && m_DashCount > 0 && !m_IsCrouching)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && m_DashCooldownTimer <= 0 && m_DashCount > 0 && !m_IsCrouching )
         {
-            //Movment.Move(m_SmoothMoveDirection.normalized * 1);
             m_MomentumDirection += m_SmoothMoveDirection.normalized * m_DashMomentum ;
             CamEffects.RotateTo += new Vector3(m_ForwardMovement,0,-m_SidewardMovement).normalized * 10;
             m_DashMomentumTimer = 0.25f;
-            CamEffects.FovTo += 10;
+            CamEffects.FovTo += 15;
             m_DashCount--;
             m_DashCooldownTimer = m_DashCooldown;
+            m_DashRechargeTimer = m_DashRechargeTime;
+            IsLaunched = false;
 
             if (m_VerticalVelocity.y <0 )
             {
@@ -292,9 +328,17 @@ public class Scr_PlayerMotor : MonoBehaviour
             m_DashCooldownTimer-=Time.deltaTime;
         }
 
-        if (m_IsGrounded)
+        if (m_DashRechargeTimer >= 0)
         {
-            m_DashCount = m_MaxDashes;
+            m_DashRechargeTimer -= Time.deltaTime;
+        }
+        else
+        {
+            if (m_DashCount < m_MaxDashes)
+            {
+                m_DashRechargeTimer = m_DashRechargeTime;
+                m_DashCount++;   
+            }
         }
     }
 
@@ -305,17 +349,25 @@ public class Scr_PlayerMotor : MonoBehaviour
             m_IsCrouching = true;
         }
 
-        if (Input.GetKeyUp(KeyCode.LeftControl))
+        if (!Input.GetKey(KeyCode.LeftControl) && !Physics.CheckSphere(transform.position + (Vector3.up * 1.5f),0.45f, GroundMask))
         {
             m_IsCrouching = false;
         }
 
+        if (SlideBoostTimer >= 0)
+        {
+            SlideBoostTimer-= Time.deltaTime;
+        }
+
         if (m_IsCrouching && m_IsGrounded)
         {
-            if (m_IsGrounded && !m_WasCrouching)
+            if (m_IsGrounded && !m_WasCrouching && SlideBoostTimer <0)
             {
-                m_MomentumDirection = m_SmoothMoveDirection * m_MovementSpeed;
+                m_MomentumDirection += m_SmoothMoveDirection * m_MovementSpeed;
+                SlideBoostTimer = 1;
             }
+
+
             CamEffects.LerpPos = new Vector3(0,-1,0);
             CamEffects.RotateTo.z += 25 * Time.deltaTime;
 
@@ -329,5 +381,20 @@ public class Scr_PlayerMotor : MonoBehaviour
             Movment.height = 2;
             Movment.center = new Vector3(0,1,0);
         }
+    }
+
+    public void Launch(Vector3 _direction, float _Height)
+    {
+        IsLaunched = true;
+        Movment.Move(new Vector3(0,0.5f,0));
+        m_MomentumDirection = _direction;
+        m_VerticalVelocity.y = Mathf.Sqrt(2 * _Height * m_Gravity);
+        CamEffects.FovTo += 45;
+        CamEffects.RotateTo += new Vector3(15,0,0);
+    }
+
+    public void MovePlayer(Vector3 _Move)
+    {
+        Movment.Move(_Move);
     }
 }

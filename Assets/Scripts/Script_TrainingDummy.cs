@@ -9,21 +9,26 @@ public class Script_TrainingDummy : MonoBehaviour, IDamageable
 
     float m_Timer;
     bool IsDead = false;
-    public void Damage(float _Damage, CustomCollider.DamageType _DamageType,Vector3 _direction)
+    public bool Damage(float _Damage, CustomCollider.DamageType _DamageType,Vector3 _direction)
     {
         switch(_DamageType)
         {
             case CustomCollider.DamageType.Critical:
                 m_Health -= _Damage * 2;
-                break;
+            break;
             case CustomCollider.DamageType.Normal:
                 m_Health -= _Damage;
-                break;
+            break;
         }
 
         if (m_Health <= 0)
         {
             IsDead = true;
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 

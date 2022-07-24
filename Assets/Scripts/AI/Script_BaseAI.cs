@@ -101,7 +101,7 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
         return m_Animator;
     }
 
-    public void Damage(float _Damage, CustomCollider.DamageType _DamageType, Vector3 _direction)
+    public bool Damage(float _Damage, CustomCollider.DamageType _DamageType, Vector3 _direction)
     {
         
         if (StateMachine.currentStateID == AIStateID.Idle || StateMachine.currentStateID == AIStateID.Moving)
@@ -141,6 +141,11 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
             StateMachine.ChangeState(AIStateID.Death);
             _direction.y = 0.0f;
             m_Ragdoll.ApplyForce(_direction * dieForce);
+            return true;
+        }
+        else
+        {
+            return false;
         }
        
         UITimer = 5.0f;

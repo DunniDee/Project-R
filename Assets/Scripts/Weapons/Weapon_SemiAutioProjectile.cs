@@ -14,6 +14,7 @@ public class Weapon_SemiAutioProjectile : Script_ProjectileWeapon
     void Update()
     {
         HUD.AmmoCount = CurMagCount;
+        HUD.AmmoReserve = CurReserveCount;
         FiringPoint.transform.LookAt(Look.LookPoint);
 
         if (ShotTimer > 0)
