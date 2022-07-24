@@ -71,6 +71,7 @@ public class Scr_PlayerMotor : MonoBehaviour
     Vector3 vaultPos;
     [SerializeField] float m_VaultTime;
     float m_VaultTimer;
+    [SerializeField] AnimationCurve VaultCurve;
 
     [SerializeField] bool IsLaunched = false;
     [Header("GameFeel")]
@@ -78,6 +79,7 @@ public class Scr_PlayerMotor : MonoBehaviour
     bool m_WasGrounded;
     float m_GroundedTimer = 0;
     float LastYVelocity;
+    float m_LauncherTimer;
 
     [SerializeField] AudioSource StepAS;
     [SerializeField] AudioClip[] LandSounds;
@@ -110,6 +112,11 @@ public class Scr_PlayerMotor : MonoBehaviour
         LastYVelocity = m_VerticalVelocity.y;
         m_WasCrouching = m_IsCrouching;
         LastPos = transform.position;
+
+        if (m_LauncherTimer > 0)
+        {
+            m_LauncherTimer -= Time.deltaTime;
+        }
     }
 
     void CheckGround()
@@ -323,6 +330,8 @@ public class Scr_PlayerMotor : MonoBehaviour
             }
 
             StepAS.PlayOneShot(DashSounds[Random.Range(0,DashSounds.Length-1)],1);
+            CamEffects.ShakeTime += 0.25f;
+            CamEffects.ShakeAmplitude += 0.5f;
         }
 
         if (m_DashMomentumTimer > 0)
@@ -392,24 +401,31 @@ public class Scr_PlayerMotor : MonoBehaviour
 
     void Vault()
     {
-        if (Physics.Raycast(VaultCheckPos.position, VaultCheckPos.forward,out VaultHit, 1, GroundMask) && Input.GetKey(KeyCode.Space) && !m_IsVaulting)
+        if (Physics.Raycast(VaultCheckPos.position, VaultCheckPos.forward,out VaultHit, 0.5f, GroundMask) && Input.GetKey(KeyCode.Space) && !m_IsVaulting)
         {
             m_IsVaulting = true;
-            vaultPos = VaultHit.point;
+            vaultPos = VaultHit.point + Vector3.up;
             m_VaultTimer = m_VaultTime;
+            CamEffects.RotateTo.x -= 50;
+            CamEffects.ShakeTime += 2;
+            CamEffects.ShakeAmplitude += 1;
         }
 
         if (m_IsVaulting)
         {
-            m_VaultTimer -= Time.deltaTime;
-            Movment.enabled = false;
-            transform.position = Vector3.Lerp(transform.position, vaultPos, Time.deltaTime / m_VaultTimer);
-            Debug.Log(vaultPos);
-
-            if (m_VaultTimer < 0 )
+            if (m_VaultTimer <= 0.5f )
             {
                 m_IsVaulting = false;
+                m_VerticalVelocity.y = 5;
+                CamEffects.ShakeTime += 1;
+                CamEffects.ShakeAmplitude += 0.25f;
             }
+            m_VaultTimer -= Time.deltaTime;
+            Movment.enabled = false;
+            transform.position = Vector3.Lerp( vaultPos, transform.position, VaultCurve.Evaluate(m_VaultTimer));
+            Debug.Log(vaultPos);
+            CamEffects.RotateTo.x += 150 * Time.deltaTime;
+
         }
         else
         {
@@ -419,12 +435,19 @@ public class Scr_PlayerMotor : MonoBehaviour
 
     public void Launch(Vector3 _direction, float _Height)
     {
-        IsLaunched = true;
-        Movment.Move(new Vector3(0,0.5f,0));
-        m_MomentumDirection = _direction;
-        m_VerticalVelocity.y = Mathf.Sqrt(2 * _Height * m_Gravity);
-        CamEffects.FovTo += 45;
-        CamEffects.RotateTo += new Vector3(15,0,0);
+        if (m_LauncherTimer <= 0)
+        {
+            m_LauncherTimer = 1;
+            IsLaunched = true;
+            Movment.Move(new Vector3(0,0.5f,0));
+            m_MomentumDirection = _direction;
+            m_VerticalVelocity.y = Mathf.Sqrt(2 * _Height * m_Gravity);
+            CamEffects.FovTo += 45;
+            CamEffects.RotateTo += new Vector3(15,0,0);
+            StepAS.PlayOneShot(DashSounds[Random.Range(0,DashSounds.Length-1)],1);
+            CamEffects.ShakeTime += 1f;
+            CamEffects.ShakeAmplitude += 1f;
+        }
     }
 
     public void MovePlayer(Vector3 _Move)
