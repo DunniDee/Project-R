@@ -75,6 +75,7 @@ public class Scr_PlayerMotor : MonoBehaviour
 
     [SerializeField] bool IsLaunched = false;
     [Header("GameFeel")]
+    [SerializeField] GameObject VaultArms;
     [SerializeField] Scr_CameraEffects CamEffects;
     bool m_WasGrounded;
     float m_GroundedTimer = 0;
@@ -401,7 +402,7 @@ public class Scr_PlayerMotor : MonoBehaviour
 
     void Vault()
     {
-        if (Physics.Raycast(VaultCheckPos.position, VaultCheckPos.forward,out VaultHit, 0.5f, GroundMask) && Input.GetKey(KeyCode.Space) && !m_IsVaulting)
+        if (Physics.Raycast(VaultCheckPos.position, VaultCheckPos.forward,out VaultHit, 0.5f, GroundMask) && !m_IsVaulting)
         {
             m_IsVaulting = true;
             vaultPos = VaultHit.point + Vector3.up;
@@ -409,6 +410,8 @@ public class Scr_PlayerMotor : MonoBehaviour
             CamEffects.RotateTo.x -= 50;
             CamEffects.ShakeTime += 2;
             CamEffects.ShakeAmplitude += 1;
+            VaultArms.SetActive(true);
+            VaultArms.transform.rotation = Orientation.transform.rotation;
         }
 
         if (m_IsVaulting)
@@ -419,7 +422,9 @@ public class Scr_PlayerMotor : MonoBehaviour
                 m_VerticalVelocity.y = 5;
                 CamEffects.ShakeTime += 1;
                 CamEffects.ShakeAmplitude += 0.25f;
+                VaultArms.SetActive(false);
             }
+            VaultArms.transform.position = vaultPos - Vector3.up;
             m_VaultTimer -= Time.deltaTime;
             Movment.enabled = false;
             transform.position = Vector3.Lerp( vaultPos, transform.position, VaultCurve.Evaluate(m_VaultTimer));
