@@ -18,12 +18,13 @@ public class InventoryItem : MonoBehaviour
     public delegate void UpdateGunStatsDelegate();
     public event UpdateGunStatsDelegate UpdateGunStatsEvent;
 
-    public void Equip()
+    public void Equip(Grid _selectedGrid)
     {
         if (isItemEquppied == false)
         {
             isItemEquppied = true;
-            Script_PlayerStatManager.Instance.SetModifiedDamage(0, itemData.DamageIncrease, true);
+            Script_PlayerStatManager.Instance.SetModifiedDamage(_selectedGrid, itemData.DamageIncrease, true);
+            Script_PlayerStatManager.Instance.SetModifiedFireRate(_selectedGrid, itemData.FireRateIncrease, false);
             UpdateGunStats();
         }
     }
@@ -40,12 +41,13 @@ public class InventoryItem : MonoBehaviour
         }
     }
 
-    public void Dequip()
+    public void Dequip(Grid _selectedGrid)
     {
         if (isItemEquppied == true)
         {
             isItemEquppied = false;
-            Script_PlayerStatManager.Instance.SetModifiedDamage(0, itemData.DamageIncrease, false);
+            Script_PlayerStatManager.Instance.SetModifiedFireRate(_selectedGrid, itemData.FireRateIncrease, true);
+            Script_PlayerStatManager.Instance.SetModifiedDamage(_selectedGrid, itemData.DamageIncrease, false);
             UpdateGunStats();
         }
     }
@@ -60,5 +62,9 @@ public class InventoryItem : MonoBehaviour
         size.y = itemData.height * Grid.tileSizeHeight;
 
         GetComponent<RectTransform>().sizeDelta = size;
+    }
+    public void Start()
+    {
+        UpdateGunStatsEvent += script_WeaponSwap.Instance.UpdateWeaponStats;
     }
 }

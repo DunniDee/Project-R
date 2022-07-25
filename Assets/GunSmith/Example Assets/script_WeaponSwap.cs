@@ -4,16 +4,32 @@ using UnityEngine;
 
 public class script_WeaponSwap : MonoBehaviour
 {
+    //Singleton Pattern
+    public static script_WeaponSwap Instance;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+    }
+
     // Start is called before the first frame update
     [SerializeField] GameObject[] Weapons;
     [SerializeField] KeyCode ScrollLeft = KeyCode.Q;
     [SerializeField] KeyCode ScrollRight = KeyCode.E;
 
-    [SerializeField] int Index = 0;
+    [SerializeField] public int Index = 0;
     int m_LastIndex = 0;
     // Update is called once per frame
 
-    private void Start() 
+    public void Start() 
     {
         m_LastIndex = Index;
         // Load Weapon Stats to Player Stat Manager
@@ -21,13 +37,28 @@ public class script_WeaponSwap : MonoBehaviour
         int i = 0;
         foreach (var Weapon in Weapons)
         {
+            Script_WeaponBase weaponBase = Weapon.GetComponent<Script_WeaponBase>();
             Script_PlayerStatManager.Instance.WeaponStatList.Add(new Script_PlayerStatManager.WeaponStats());
-            Script_PlayerStatManager.Instance.SetWeaponStats(i, Weapon.GetComponent<Script_WeaponBase>());
+            Script_PlayerStatManager.Instance.SetWeaponStats(i, weaponBase);
+
             Weapon.SetActive(false);
+           
             i++;
         }
 
         Weapons[Index].SetActive(true);
+    }
+
+    public void UpdateWeaponStats()
+    {
+        int i = 0;
+        foreach (var Weapon in Weapons)
+        {
+            Script_WeaponBase weaponBase = Weapon.GetComponent<Script_WeaponBase>();
+            weaponBase.SetDamage(Script_PlayerStatManager.Instance.WeaponStatList[i].Modified_Damage);
+            weaponBase.SetFireRate(Script_PlayerStatManager.Instance.WeaponStatList[i].Modified_Firerate);
+            i++;
+        }
     }
     void Update()
     {

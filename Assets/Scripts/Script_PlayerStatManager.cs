@@ -19,13 +19,15 @@ public class Script_PlayerStatManager : MonoBehaviour
     [System.Serializable]
     public struct WeaponStats {
         [SerializeField]
+        public string WeaponName;
+        [SerializeField]
         public float Default_Damage;
         [SerializeField]
         public float Modified_Damage;
         [SerializeField]
         public int Default_MaxAmmo;
         [SerializeField]
-        public float Modified_MaxAmmo;
+        public int Modified_MaxAmmo;
         [SerializeField]
         public float Default_Firerate;
         [SerializeField]
@@ -44,10 +46,14 @@ public class Script_PlayerStatManager : MonoBehaviour
     public float Bounty;
     public float Credits;
 
+    [Header("Stat Caps")]
+    public float FirerateCap = 0.25f;
+    public float DamageCap = 100f;
 
     public void SetWeaponStats(int weaponIndex, Script_WeaponBase _weaponBase)
     {
         WeaponStats weapon = WeaponStatList.ToArray()[weaponIndex];
+        weapon.WeaponName = _weaponBase.GetGunName();
         weapon.Default_Damage = _weaponBase.GetDamage();
         weapon.Default_Firerate = _weaponBase.GetFireRate();
         weapon.Default_MaxAmmo = _weaponBase.GetMagCount();
@@ -59,9 +65,10 @@ public class Script_PlayerStatManager : MonoBehaviour
         WeaponStatList[weaponIndex] = weapon;
     }
 
-    public void SetModifiedDamage(int weaponIndex, float _damageIncrease, bool _isAdditive)
+    public void SetModifiedDamage(Grid SelectGrid, float _damageIncrease, bool _isAdditive)
     {
-        WeaponStats weapon = WeaponStatList.ToArray()[weaponIndex];
+        if (SelectGrid.WeaponIndex > 3) return;
+        WeaponStats weapon = WeaponStatList.ToArray()[SelectGrid.WeaponIndex];
         if (_isAdditive)
         {
             weapon.Modified_Damage += _damageIncrease;
@@ -69,24 +76,27 @@ public class Script_PlayerStatManager : MonoBehaviour
         else {
             weapon.Modified_Damage -= _damageIncrease;
         }
-        WeaponStatList[weaponIndex] = weapon;
+        WeaponStatList[SelectGrid.WeaponIndex] = weapon;
     }
 
-    public void SetModifiedFireRate(int weaponIndex, float _firerateIncrease, bool _isAdditive)
+    public void SetModifiedFireRate(Grid SelectGrid, float _firerateIncrease, bool _isAdditive)
     {
-        WeaponStats weapon = WeaponStatList.ToArray()[weaponIndex];
+        if (SelectGrid.WeaponIndex > 3) return;
+        WeaponStats weapons = WeaponStatList.ToArray()[SelectGrid.WeaponIndex];
+
         if (_isAdditive)
         {
-            weapon.Default_Firerate += _firerateIncrease;
+            weapons.Modified_Firerate += _firerateIncrease;
+            
         }
         else
         {
-            weapon.Default_Firerate -= _firerateIncrease;
+            weapons.Modified_Firerate -= _firerateIncrease;
         }
-        WeaponStatList[weaponIndex] = weapon;
-    }
 
-    public void SetModifiedMaxAmmo(int weaponIndex, float _ammoIncrease, bool _isAdditive)
+        WeaponStatList[SelectGrid.WeaponIndex] = weapons;  
+    }
+    public void SetModifiedMaxAmmo(int weaponIndex, int _ammoIncrease, bool _isAdditive)
     {
         WeaponStats weapon = WeaponStatList.ToArray()[weaponIndex];
         if (_isAdditive)
@@ -99,10 +109,7 @@ public class Script_PlayerStatManager : MonoBehaviour
         }
         WeaponStatList[weaponIndex] = weapon;
     }
-    public void Start()
-    {
-        
-    }
+
 
 
 

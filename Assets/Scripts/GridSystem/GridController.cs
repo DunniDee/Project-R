@@ -26,6 +26,7 @@ public class GridController : MonoBehaviour
     [SerializeField] Transform canvasTransform;
 
     GridHighlight gridHighlight;
+    Scr_UpgradeUI UpgradeUI;
 
     public AudioSource audioSource;
     public AudioClip pickupNoise;
@@ -39,6 +40,10 @@ public class GridController : MonoBehaviour
     public void Awake()
     {
         gridHighlight = GetComponent<GridHighlight>();
+        UpgradeUI = FindObjectOfType<Scr_UpgradeUI>();
+        FindObjectOfType<script_WeaponSwap>().Start();
+        UpgradeUI.SetWeaponUIElements();
+        UpgradeUI.gameObject.SetActive(false);
     }
 
     void Update()
@@ -79,6 +84,7 @@ public class GridController : MonoBehaviour
     {
         SetIsGridActive(_b);
         canvasTransform.gameObject.SetActive(_b);
+        UpgradeUI.enabled = _b;
         Cursor.visible = _b;
         Cursor.lockState = Cursor.visible ? CursorLockMode.Confined : CursorLockMode.Locked;
         
@@ -103,9 +109,11 @@ public class GridController : MonoBehaviour
                 gridHighlight.Show(true);
                 gridHighlight.SetSize(itemToHighlight);
                 gridHighlight.SetPosition(SelectedItemGrid, itemToHighlight);
+                UpgradeUI.Description.text = itemToHighlight.itemData.itemDescription;
             }
             else {
                 gridHighlight.Show(false);
+                UpgradeUI.Description.text = "";
             }
            
         }
@@ -169,12 +177,14 @@ public class GridController : MonoBehaviour
         bool complete = SelectedItemGrid.PlaceItem(selectedItem, posOnGrid.x, posOnGrid.y, ref overlapItem);
         if (SelectedItemGrid.CheckGridType() == Grid.GridType.EQUIPPED)
         {
-            selectedItem.Equip();
+            selectedItem.Equip(SelectedItemGrid);
+            UpgradeUI.SetWeaponUIElements();
         }
         if (complete)
         {
             audioSource.PlayOneShot(dropNoise);
             selectedItem = null;
+            UpgradeUI.Description.text = "";
             if (overlapItem != null)
             {
                 selectedItem = overlapItem;
@@ -194,9 +204,14 @@ public class GridController : MonoBehaviour
         {
             audioSource.PlayOneShot(pickupNoise);
             rectTransform = selectedItem.GetComponent<RectTransform>();
+            
+            UpgradeUI.Description.text = selectedItem.itemData.itemDescription;
+
             if (SelectedItemGrid.CheckGridType() == Grid.GridType.EQUIPPED)
             {
-                selectedItem.Dequip();
+                selectedItem.Dequip(SelectedItemGrid);
+                UpgradeUI.SetWeaponUIElements();
+
             }
         }
 

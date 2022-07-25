@@ -72,11 +72,14 @@ public abstract class Script_WeaponBase : MonoBehaviour
     [SerializeField] protected Scr_HandAnimator HandEffects;
     [SerializeField] protected Scr_CameraEffects CamEffects;
 
+    //Need reference to the weapon swap script to know what index the weapon is.
+    [SerializeField] protected script_WeaponSwap WeaponSwap;
     protected private void OnEnable() 
     {
        HUD.MagSize = MagCount;
        HUD.AmmoCount = CurMagCount;
-       HUD.SetGunName(GunName); 
+       HUD.SetGunName(GunName);
+
     }
 
     #region Getters And Setters
@@ -154,6 +157,7 @@ public abstract class Script_WeaponBase : MonoBehaviour
         Motor = gameObject.GetComponentInParent<Scr_PlayerMotor>();
         Look = gameObject.GetComponentInParent<Scr_PlayerLook>();
         AS = gameObject.GetComponent<AudioSource>();
+        WeaponSwap = gameObject.GetComponentInChildren<script_WeaponSwap>();
 
         CurMagCount = MagCount;
 

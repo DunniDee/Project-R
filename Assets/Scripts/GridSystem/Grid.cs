@@ -11,7 +11,10 @@ public class Grid : MonoBehaviour
         INVENTORY,
         STATIC
     }
+    
     public GridType gridType = GridType.STATIC;
+    [Range(0, 3)]
+    public int WeaponIndex = 0;
 
     public const float tileSizeWidth = 32;
     public const float tileSizeHeight = 32;
