@@ -26,7 +26,7 @@ public class GridController : MonoBehaviour
     [SerializeField] Transform canvasTransform;
 
     GridHighlight gridHighlight;
-    Scr_UpgradeUI UpgradeUI;
+    [SerializeField]Scr_UpgradeUI UpgradeUI;
 
     public AudioSource audioSource;
     public AudioClip pickupNoise;
@@ -37,6 +37,7 @@ public class GridController : MonoBehaviour
     public bool GetIsGridActive() { return isGridActive; }
     public void SetIsGridActive(bool _b) { isGridActive = _b; }
 
+   
     public void Awake()
     {
         gridHighlight = GetComponent<GridHighlight>();

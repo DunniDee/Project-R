@@ -27,10 +27,11 @@ public class script_WeaponSwap : MonoBehaviour
 
     [SerializeField] public int Index = 0;
     int m_LastIndex = 0;
-    // Update is called once per frame
 
+    // Update is called once per frame
     public void Start() 
     {
+        FindObjectOfType<GridController>().enabled = true;
         m_LastIndex = Index;
         // Load Weapon Stats to Player Stat Manager
 
