@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Script_PlayerStatManager : MonoBehaviour
 {
-
     //Singleton Pattern
     public static Script_PlayerStatManager Instance;
     private void Awake()
@@ -17,59 +16,103 @@ public class Script_PlayerStatManager : MonoBehaviour
           	DontDestroyOnLoad(gameObject);
         }
     }
+    [System.Serializable]
+    public struct WeaponStats {
+        [SerializeField]
+        public string WeaponName;
+        [SerializeField]
+        public float Default_Damage;
+        [SerializeField]
+        public float Modified_Damage;
+        [SerializeField]
+        public int Default_MaxAmmo;
+        [SerializeField]
+        public int Modified_MaxAmmo;
+        [SerializeField]
+        public float Default_Firerate;
+        [SerializeField]
+        public float Modified_Firerate;
+    }
 
-    // public struct Stat
-    // {
-    //     public Stat(float _stat)
-    //     {
-    //         s_default = _stat;
-    //         s_Modified = _stat;
-    //     }
-    //     public float s_default { get; set; }
-    //     public float s_Modified { get; set; }
-    // }
-    // Start is called before the first frame update
+    // Weapon Stats
+    public List<WeaponStats> WeaponStatList;
 
-    // [SerializeField] Stat Firerate;
+    [Header("Base Variables")]
+    public float Default_MaxHealth;
+    public float Modified_MaxHealth;
 
-    //A bunch of Stats
 
     [Header("Bounty variables")]
     public float Bounty;
     public float Credits;
 
-    //Movement Variables
-    [Header("Movement variables")]
-    public float DefaultWalkSpeed;
-    public float ModifiedWalkSpeed;
-    [Space]
-    public float DefaultSprintSpeed;
-    public float ModifiedSprintSpeed;
-    [Space]
-    public float DefaultCrouchSpeed;
-    public float ModifiedCrouchSpeed;
-    [Space]
-    public int DefaultJumpCount;
-    public int ModifiedJumpCount;
+    [Header("Stat Caps")]
+    public float FirerateCap = 0.25f;
+    public float DamageCap = 100f;
 
-    [Header("Primary Weapon variables")]
-    public float DefaultPrimaryDamage;
-    public float ModifiedPrimaryDamage;
-    [Space]
-    public float DefaultPrimaryFireRate;
-    public float ModifiedPrimaryFireRate;
-    [Space]
-    public int DefaultPrimaryMagCount;
-    public int ModifiedPrimaryMagCount;
+    public void SetWeaponStats(int weaponIndex, Script_WeaponBase _weaponBase)
+    {
+        WeaponStats weapon = WeaponStatList.ToArray()[weaponIndex];
+        weapon.WeaponName = _weaponBase.GetGunName();
+        weapon.Default_Damage = _weaponBase.GetDamage();
+        weapon.Default_Firerate = _weaponBase.GetFireRate();
+        weapon.Default_MaxAmmo = _weaponBase.GetMagCount();
 
-    [Header("Secondary Weapon variables")]
-    public float DefaultSecondaryDamage;    
-    public float ModifiedSecondaryDamage;
-    [Space]
-    public float DefaultSecondaryFireRate;
-    public float ModifiedSecondaryFireRate;
-    [Space]
-    public int DefaultSecondaryMagCount;
-    public int ModifiedSecondaryMagCount;
+        weapon.Modified_Damage = _weaponBase.GetDamage();
+        weapon.Modified_Firerate = _weaponBase.GetFireRate();
+        weapon.Modified_MaxAmmo = _weaponBase.GetMagCount();
+
+        WeaponStatList[weaponIndex] = weapon;
+    }
+
+    public void SetModifiedDamage(Grid SelectGrid, float _damageIncrease, bool _isAdditive)
+    {
+        if (SelectGrid.WeaponIndex > 3) return;
+        WeaponStats weapon = WeaponStatList.ToArray()[SelectGrid.WeaponIndex];
+        if (_isAdditive)
+        {
+            weapon.Modified_Damage += _damageIncrease;
+        }
+        else {
+            weapon.Modified_Damage -= _damageIncrease;
+        }
+        WeaponStatList[SelectGrid.WeaponIndex] = weapon;
+    }
+
+    public void SetModifiedFireRate(Grid SelectGrid, float _firerateIncrease, bool _isAdditive)
+    {
+        if (SelectGrid.WeaponIndex > 3) return;
+        WeaponStats weapons = WeaponStatList.ToArray()[SelectGrid.WeaponIndex];
+
+        if (_isAdditive)
+        {
+            weapons.Modified_Firerate += _firerateIncrease;
+            
+        }
+        else
+        {
+            weapons.Modified_Firerate -= _firerateIncrease;
+        }
+
+        WeaponStatList[SelectGrid.WeaponIndex] = weapons;  
+    }
+    public void SetModifiedMaxAmmo(int weaponIndex, int _ammoIncrease, bool _isAdditive)
+    {
+        WeaponStats weapon = WeaponStatList.ToArray()[weaponIndex];
+        if (_isAdditive)
+        {
+            weapon.Modified_MaxAmmo += _ammoIncrease;
+        }
+        else
+        {
+            weapon.Modified_MaxAmmo -= _ammoIncrease;
+        }
+        WeaponStatList[weaponIndex] = weapon;
+    }
+
+
+
+
+
 }
 

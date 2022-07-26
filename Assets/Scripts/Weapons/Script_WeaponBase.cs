@@ -19,6 +19,8 @@ public abstract class Script_WeaponBase : MonoBehaviour
     [SerializeField] protected Vector2 RecoilVec;
     [Space]
 
+   
+
     [Header("Reload Variables")]
     [SerializeField] protected int MaxReserveCount;
     [SerializeField] protected int CurReserveCount;
@@ -70,18 +72,47 @@ public abstract class Script_WeaponBase : MonoBehaviour
     [SerializeField] protected Scr_HandAnimator HandEffects;
     [SerializeField] protected Scr_CameraEffects CamEffects;
 
+    //Need reference to the weapon swap script to know what index the weapon is.
+    [SerializeField] protected script_WeaponSwap WeaponSwap;
     protected private void OnEnable() 
     {
        HUD.MagSize = MagCount;
        HUD.AmmoCount = CurMagCount;
-       HUD.SetGunName(GunName); 
+       HUD.SetGunName(GunName);
+
     }
-    
+
+    #region Getters And Setters
+
+    public string GetGunName()
+    {
+        return GunName;
+    }
     public int GetMagCount()
     {
         return MagCount;
     }
-    
+
+    public float GetDamage()
+    {
+        return Damage;
+    }
+    public void SetDamage(float _Damage)
+    {
+        Damage = _Damage;
+    }
+
+    public float GetFireRate()
+    {
+        return FireRate;
+    }
+    public void SetFireRate(float _FireRate)
+    {
+        FireRate = _FireRate;
+    }
+
+    #endregion
+
     protected virtual IEnumerator IE_Reload()
     {
         IsReloading = true;
@@ -126,6 +157,7 @@ public abstract class Script_WeaponBase : MonoBehaviour
         Motor = gameObject.GetComponentInParent<Scr_PlayerMotor>();
         Look = gameObject.GetComponentInParent<Scr_PlayerLook>();
         AS = gameObject.GetComponent<AudioSource>();
+        WeaponSwap = gameObject.GetComponentInChildren<script_WeaponSwap>();
 
         CurMagCount = MagCount;
 
