@@ -14,5 +14,7 @@ public class ItemData : ScriptableObject
 
     public int DamageIncrease = 2;
     public float FireRateIncrease = 0.1f;
+
+    public float HealthIncrease = 0.0f;
     public int SellValue;
 }
