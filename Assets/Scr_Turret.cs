@@ -42,12 +42,6 @@ public class Scr_Turret : MonoBehaviour
         IsArmed = LineOfSight() && InRange;
         if (IsArmed)
         {
-            if (!WasArmed)
-            {
-                AS.PlayOneShot(AlarmSound);
-            }
-
-            IsArmed = true;
             Vector3 velocity = PlayerTransform.position - LastPos;
             Look.LookAt(PlayerTransform.position + velocity * 10);
             TurretHead.rotation = Quaternion.Lerp(TurretHead.rotation, Look.rotation, Time.deltaTime * TrackSpeed);
@@ -100,7 +94,7 @@ public class Scr_Turret : MonoBehaviour
     private bool LineOfSight()
     {
         RaycastHit Hit;
-        if (Physics.Raycast(TurretHead.position, PlayerTransform.position - TurretHead.position, out Hit, 100,Mask,QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(TurretHead.position, PlayerTransform.position - TurretHead.position, out Hit, 100, Mask,QueryTriggerInteraction.Ignore))
         {
             if (Hit.transform.CompareTag("Player"))
             {
