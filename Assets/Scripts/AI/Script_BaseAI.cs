@@ -185,14 +185,14 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
         m_UIHealth.Start();
 
         // Load AI Config
-        if (Config = Resources.Load("AI/AIConfig/" + AI_Name_Config) as AIStateConfig)
+       /* if (Config = Resources.Load("AI/AIConfig/" + AI_Name_Config) as AIStateConfig)
         {
             Debug.Log("Loaded Config: " + Config.name);
         }
         else
         {
             Debug.LogWarning("Failed to Load AI Config: " + gameObject.name);
-        }
+        }*/
 
         LootPrefab = Resources.Load(LootPrefabPath) as GameObject;
         HealthPrefab = Resources.Load("GameObjects/Loot/HealthCredit") as GameObject;
@@ -225,7 +225,7 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
     {
         if (Vector3.Distance(transform.position,PlayerTransform.position) > 30.0f)
         {
-            Debug.Log("Skipped Update");
+           // Debug.Log("Skipped Update");
             return;
         }
         if(UITimer > 0.0f)
