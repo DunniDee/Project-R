@@ -5,33 +5,30 @@ using UnityEngine;
 public class Scr_EnemyProjectile : MonoBehaviour
 {
     public float m_fDamage = 0.0f;
-    void OnTriggerEnter(Collider collision)
+    public float m_Lifetime = 0.0f;
+    private void OnCollisionEnter(Collision collision)
     {
-        if(collision.tag == "Player")
+        if(collision.rigidbody.tag == "Player")
         {
-            collision.GetComponent<Scr_PlayerHealth>().TakeDamage(m_fDamage);
+            collision.rigidbody.GetComponent<Scr_PlayerHealth>().TakeDamage(m_fDamage);
             Debug.Log("Damage Done " + m_fDamage);
-            Destroy(gameObject);
-        }
-        else if(collision.tag == "Buff")
-        {
-            return;
-        }
-        else
-        {
-            Destroy(gameObject);
+            Disable();
         }
         
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
     // Update is called once per frame
     void Update()
     {
-        
+        m_Lifetime-= Time.deltaTime;
+        if (m_Lifetime < 0)
+        {
+            Disable();
+        }
+    }
+
+    public void Disable()
+    {
+        m_Lifetime = 3;
+        ObjectPooler.Instance.ReturnObject(this.gameObject);
     }
 }
