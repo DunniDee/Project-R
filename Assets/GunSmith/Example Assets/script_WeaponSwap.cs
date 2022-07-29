@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,6 +22,7 @@ public class script_WeaponSwap : MonoBehaviour
 
     // Start is called before the first frame update
     [SerializeField] GameObject[] Weapons;
+    [SerializeField] Animator[] WeaponAnimations;
     [SerializeField] KeyCode ScrollLeft = KeyCode.Q;
     [SerializeField] KeyCode ScrollRight = KeyCode.E;
 
@@ -93,4 +94,33 @@ public class script_WeaponSwap : MonoBehaviour
             }
         }
     }
+
+    public void JumpAnim()
+    {
+        WeaponAnimations[Index].SetTrigger("jump");
+    }
+
+    public void SlideAnim(bool _isSliding)
+    {
+        WeaponAnimations[Index].SetBool("sliding", _isSliding);
+        if (_isSliding ) 
+        {
+            WeaponAnimations[Index].SetTrigger("startslide");
+        }
+        else
+        {
+            WeaponAnimations[Index].SetTrigger("endslide");
+        }
+    }
+
+    public void DashAnim()
+    {
+        WeaponAnimations[Index].SetTrigger("dash");
+    }
+
+    public void SetActiveAnim(bool _isActive)
+    {
+        WeaponAnimations[Index].SetBool("hide", _isActive);
+    }
 }
+

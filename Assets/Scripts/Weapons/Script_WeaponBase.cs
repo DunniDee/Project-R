@@ -161,8 +161,8 @@ public abstract class Script_WeaponBase : MonoBehaviour
 
         CurMagCount = MagCount;
 
-        ShootHash = Animator.StringToHash("Shoot");
-        ReloadHash = Animator.StringToHash("Reload");
+        ShootHash = Animator.StringToHash("shoot");
+        ReloadHash = Animator.StringToHash("reload");
         zVelHash = Animator.StringToHash("zVelocity");
         xVelHash = Animator.StringToHash("xVelocity");
     }

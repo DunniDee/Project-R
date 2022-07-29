@@ -50,6 +50,9 @@ public class Script_ProjectileWeapon : Script_WeaponBase
 
             Vector3 Rotation = new Vector3(RecoilVec.y,Random.Range(-RecoilVec.x/2,RecoilVec.x/2),0);
 
+            //Animations
+            Anim.SetTrigger(ShootHash);
+
             HandEffects.RotateTo += Rotation * 0.5f;
             CamEffects.RotateTo += Rotation;
             CamEffects.ShakeAmplitude += ShotShake;
