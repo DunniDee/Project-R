@@ -86,6 +86,8 @@ public class Scr_PlayerMotor : MonoBehaviour
     [SerializeField] AudioClip[] LandSounds;
     [SerializeField] AudioClip[] DashSounds;
 
+    [SerializeField] script_WeaponSwap Weapons;
+
 
     // Update is called once per frame
     void Update()
@@ -305,6 +307,8 @@ public class Scr_PlayerMotor : MonoBehaviour
             CamEffects.RotateTo += new Vector3(m_ForwardMovement,0,-m_SidewardMovement).normalized * m_DashMomentum;
             CamEffects.FovTo += 10;
             Movment.Move(new Vector3(0,0.15f,0));
+
+            Weapons.JumpAnim();
         }
 
         float VerticalTilt = m_VerticalVelocity.y;
@@ -333,6 +337,8 @@ public class Scr_PlayerMotor : MonoBehaviour
             StepAS.PlayOneShot(DashSounds[Random.Range(0,DashSounds.Length-1)],1);
             CamEffects.ShakeTime += 0.25f;
             CamEffects.ShakeAmplitude += 0.5f;
+
+            Weapons.DashAnim();
         }
 
         if (m_DashMomentumTimer > 0)
@@ -387,6 +393,8 @@ public class Scr_PlayerMotor : MonoBehaviour
 
             CamEffects.LerpPos = new Vector3(0,-1,0);
             CamEffects.RotateTo.z += 25 * Time.deltaTime;
+            
+            Weapons.SlideAnim(true);
 
             Movment.height = 1;
             Movment.center = new Vector3(0,0.5f,0);
@@ -394,6 +402,8 @@ public class Scr_PlayerMotor : MonoBehaviour
         else
         {
             CamEffects.LerpPos = new Vector3(0,0,0);
+            Weapons.SlideAnim(false);
+
             
             Movment.height = 2;
             Movment.center = new Vector3(0,1,0);
@@ -411,6 +421,7 @@ public class Scr_PlayerMotor : MonoBehaviour
             CamEffects.ShakeTime += 2;
             CamEffects.ShakeAmplitude += 1;
             VaultArms.SetActive(true);
+            Weapons.SetActiveAnim(false);
             VaultArms.transform.rotation = Orientation.transform.rotation;
         }
 
@@ -423,6 +434,7 @@ public class Scr_PlayerMotor : MonoBehaviour
                 CamEffects.ShakeTime += 1;
                 CamEffects.ShakeAmplitude += 0.25f;
                 VaultArms.SetActive(false);
+                Weapons.SetActiveAnim(true);
             }
             VaultArms.transform.position = vaultPos - Vector3.up;
             m_VaultTimer -= Time.deltaTime;
