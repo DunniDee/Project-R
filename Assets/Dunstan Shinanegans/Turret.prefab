@@ -122,6 +122,7 @@ GameObject:
   - component: {fileID: 1413065743511443057}
   - component: {fileID: 1413065743511443056}
   - component: {fileID: 1413065743511443059}
+  - component: {fileID: 1784673976}
   m_Layer: 0
   m_Name: Turret
   m_TagString: Untagged
@@ -167,7 +168,14 @@ MonoBehaviour:
   m_ShootTime: 2
   m_ShootTimer: 0
   TrackSpeed: 8
-  ShootSound: {fileID: 8300000, guid: e47e6a3fc7e2a81459f76244208a1cd5, type: 3}
+  InRange: 0
+  InSight: 0
+  IsArmed: 0
+  Mask:
+    serializedVersion: 2
+    m_Bits: 8
+  ShootSound: {fileID: 8300000, guid: 01e6423687138354b935caa849129f80, type: 3}
+  AlarmSound: {fileID: 8300000, guid: cafb687e57dbf184b83b566aea189937, type: 3}
 --- !u!82 &1413065743511443059
 AudioSource:
   m_ObjectHideFlags: 0
@@ -264,6 +272,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!135 &1784673976
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1413065743511443062}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 50
+  m_Center: {x: 0, y: 1.5, z: 0}
 --- !u!1 &1413065743841276210
 GameObject:
   m_ObjectHideFlags: 0
