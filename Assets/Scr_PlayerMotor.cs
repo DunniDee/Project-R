@@ -421,7 +421,7 @@ public class Scr_PlayerMotor : MonoBehaviour
             CamEffects.ShakeTime += 2;
             CamEffects.ShakeAmplitude += 1;
             VaultArms.SetActive(true);
-            Weapons.SetActiveAnim(false);
+            Weapons.SetActiveAnim(true);
             VaultArms.transform.rotation = Orientation.transform.rotation;
         }
 
@@ -434,7 +434,6 @@ public class Scr_PlayerMotor : MonoBehaviour
                 CamEffects.ShakeTime += 1;
                 CamEffects.ShakeAmplitude += 0.25f;
                 VaultArms.SetActive(false);
-                Weapons.SetActiveAnim(true);
             }
             VaultArms.transform.position = vaultPos - Vector3.up;
             m_VaultTimer -= Time.deltaTime;
@@ -446,6 +445,7 @@ public class Scr_PlayerMotor : MonoBehaviour
         }
         else
         {
+            Weapons.SetActiveAnim(false);
             Movment.enabled = true;
         }
     }
