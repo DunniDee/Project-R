@@ -18,6 +18,7 @@ public class script_WeaponSwap : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
+
     }
 
     // Start is called before the first frame update
@@ -36,11 +37,15 @@ public class script_WeaponSwap : MonoBehaviour
         // Load Weapon Stats to Player Stat Manager
 
         int i = 0;
+      
         foreach (var Weapon in Weapons)
         {
             Script_WeaponBase weaponBase = Weapon.GetComponent<Script_WeaponBase>();
+
             Script_PlayerStatManager.Instance.WeaponStatList.Add(new Script_PlayerStatManager.WeaponStats());
             Script_PlayerStatManager.Instance.SetWeaponStats(i, weaponBase);
+
+          
 
             Weapon.SetActive(false);
            
