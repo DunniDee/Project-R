@@ -8,9 +8,9 @@ public class Scr_EnemyProjectile : MonoBehaviour
     public float m_Lifetime = 0.0f;
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.rigidbody.tag == "Player")
+        if(collision.collider.tag == "Player")
         {
-           // collision.rigidbody.GetComponent<Scr_PlayerHealth>().TakeDamage(m_fDamage);
+            //collision.rigidbody.GetComponent<Scr_PlayerHealth>().TakeDamage(m_fDamage);
             Debug.Log("Damage Done " + m_fDamage);
             Disable();
         }
