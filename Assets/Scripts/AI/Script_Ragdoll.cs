@@ -34,6 +34,7 @@ public class Script_Ragdoll : MonoBehaviour
    {
        var rigidBody = Hipbone.GetComponent<Rigidbody>();
        
-       rigidBody.AddForce(_force, ForceMode.Impulse);
+       rigidBody.AddForce(_force, ForceMode.VelocityChange);
+       rigidBody.AddTorque(new Vector3(Random.Range(-180,180),Random.Range(-180,180),Random.Range(-180,180) * 10), ForceMode.VelocityChange);
    }
 }
