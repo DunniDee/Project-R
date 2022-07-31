@@ -75,7 +75,10 @@ public class Script_RCProjectile : MonoBehaviour
 
     public void Disable()
     {
-        Trail.Clear();
+        if (Trail != null)
+        {
+            Trail.Clear();
+        }
         ObjectPooler.Instance.ReturnObject(this.gameObject);
     }
 }

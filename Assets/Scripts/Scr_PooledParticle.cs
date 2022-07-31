@@ -5,9 +5,14 @@ using UnityEngine;
 public class Scr_PooledParticle : MonoBehaviour
 {
     [SerializeField] float Lifetime;
+    [SerializeField] bool IsWorldSpace;
     // Update is called once per frame
     private void Start()
     {
+        if (IsWorldSpace)
+        {
+            transform.parent = null;
+        }
         Invoke("Disable", Lifetime);
     }
 
