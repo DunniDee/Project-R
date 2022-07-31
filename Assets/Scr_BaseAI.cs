@@ -233,4 +233,12 @@ public class Scr_BaseAI : MonoBehaviour, IDamageable
     {
         
     }
+
+    protected void FacePlayer()
+    {
+        Vector3 LookPos = PlayerTransform.position;
+        LookPos.y = AgentRotator.position.y;
+
+        AgentRotator.LookAt(LookPos);
+    }
 }
