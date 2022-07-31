@@ -35,12 +35,15 @@ public class Scr_BaseAI : MonoBehaviour, IDamageable
     [SerializeField]
     protected Script_Ragdoll m_Ragdoll;
 
-    [SerializeField]
-    protected Animator Anim;
+
+    [SerializeField] protected Animator Anim;
 
     
     [SerializeField] protected Transform AlertPos;
     [SerializeField] protected TextMeshPro AlertText;
+
+
+    [SerializeField] protected AudioSource AS;
 
     protected void StartAttackUI()
     {

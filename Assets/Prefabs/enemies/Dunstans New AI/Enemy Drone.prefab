@@ -341,7 +341,6 @@ Transform:
   - {fileID: 7078985773635291568}
   - {fileID: 3248397171008535252}
   - {fileID: 8734254712492478069}
-  - {fileID: 8734254713509089188}
   m_Father: {fileID: 8734254712940621941}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -522,7 +521,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5699887941724693836}
-  m_LocalRotation: {x: -0.49999997, y: 0.50000006, z: -0.49999988, w: -0.5000002}
+  m_LocalRotation: {x: -0.5, y: 0.5, z: -0.49999988, w: -0.5000001}
   m_LocalPosition: {x: 0, y: 0.00228, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -5706,6 +5705,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5228864569973675462}
+  - {fileID: 8734254713509089188}
   m_Father: {fileID: 8734254713289972268}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5952,20 +5952,22 @@ MonoBehaviour:
   Agent: {fileID: 8734254713289972259}
   AgentRotator: {fileID: 8734254712940621941}
   PlayerTransform: {fileID: 0}
-  m_Health: 200
+  m_Health: 50
   m_MoveSpeed: 5
   m_Ragdoll: {fileID: 8734254713289972257}
   Anim: {fileID: 5699887942047970331}
   AlertPos: {fileID: 8734254712492478069}
   AlertText: {fileID: 8734254713230596114}
+  AS: {fileID: 0}
   ShootPos: {fileID: 8734254713509089188}
   Projectile: {fileID: 3272860189397787726, guid: de8f86bd37fa88e4b97cf1cd0a3969bd,
     type: 3}
-  FireRate: 0.5
-  MoveTimeRange: {x: 0, y: 1}
-  AttackTimeRange: {x: 0.5, y: 1}
+  FireRate: 1
+  MoveTimeRange: {x: 0, y: 2}
+  AttackTimeRange: {x: 1, y: 2}
   LerpPos: {x: 0, y: 0, z: 0}
   Drone: {fileID: 5228864569973675462}
+  DroneAS: {fileID: 8734254713289972256}
 --- !u!114 &8734254713289972257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5990,11 +5992,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 3937c4ed531ba5c4d8bb8ae2e9e36780, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -6036,7 +6038,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -6099,12 +6101,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8734254713509089211}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.5}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 2, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 5228864569973675462}
-  m_RootOrder: 3
+  m_Father: {fileID: 8734254712940621941}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8864356817610875012
 GameObject:
