@@ -34,6 +34,7 @@ public class AIMoveState : AIState
         agent.GetNavMeshAgent().SetDestination(agent.transform.position +
          new Vector3(Random.Range(-agent.Config.WanderExtents.x, agent.Config.WanderExtents.y), 0, Random.Range(-agent.Config.WanderExtents.x, agent.Config.WanderExtents.y)));
     }
+
     //Chose random point to move to
     public void Enter(Script_BaseAI agent)
     {

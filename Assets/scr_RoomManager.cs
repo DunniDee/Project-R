@@ -22,7 +22,7 @@ public class scr_RoomManager : MonoBehaviour
         {
             GameObject Enemy = SpawnPoint.SpawnEnemy();
             LocalEnemies.Add(Enemy);
-            Enemy.GetComponent<Script_BaseAI>().WakeUpDisabled();
+            /*Enemy.GetComponent<Script_BaseAI>().WakeUpDisabled();*/
         }
     }
 

@@ -15,7 +15,7 @@ public class Script_AIStateMachine
 
     public void RegisterState(AIState state)
     {
-/*        Debug.Log(agent.name + " Changing to State" + state.getID()); */
+        
         int index = (int)state.getID();
         States[index] = state;
     }
@@ -31,6 +31,7 @@ public class Script_AIStateMachine
     public void ChangeState(AIStateID newStateID){
         GetState(currentStateID)?.Exit(agent);
         currentStateID = newStateID;
+        Debug.Log(agent.name + " Changing to State" + newStateID.ToString());
         GetState(currentStateID)?.Enter(agent);
     }
      

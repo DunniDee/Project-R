@@ -79,6 +79,11 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
     {
         return FiringPoint;
     }
+
+    public Rigidbody GetRigid()
+    {
+        return rigidBody;
+    }
     public void SetIsInCombat(bool _bool)
     {
         isInCombat = _bool;
@@ -104,7 +109,7 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
     public bool Damage(float _Damage, CustomCollider.DamageType _DamageType, Vector3 _direction)
     {
         
-        if (StateMachine.currentStateID == AIStateID.Idle || StateMachine.currentStateID == AIStateID.Moving)
+        if (StateMachine.currentStateID == AIStateID.Idle)
         {
             isInCombat = true;
             if (this is AI_Melee)
@@ -121,7 +126,7 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
             }
             else if (this is AI_Brute)
             {
-                StateMachine.ChangeState(AIStateID.BruteChase);
+                StateMachine.ChangeState(AIStateID.ChasePlayer);
             }
 
 
@@ -151,7 +156,6 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
         UITimer = 5.0f;
         m_UIHealth.gameObject.SetActive(true);
         m_Animator.SetTrigger("Hit");
-        AlertLocalAI(10.0f);
     }
 
     public void ResetAgent()
@@ -185,19 +189,19 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
         m_UIHealth.Start();
 
         // Load AI Config
-       /* if (Config = Resources.Load("AI/AIConfig/" + AI_Name_Config) as AIStateConfig)
+        if (Config = Resources.Load("AI/AIConfig/" + AI_Name_Config) as AIStateConfig)
         {
             Debug.Log("Loaded Config: " + Config.name);
         }
         else
         {
             Debug.LogWarning("Failed to Load AI Config: " + gameObject.name);
-        }*/
+        }
 
         LootPrefab = Resources.Load(LootPrefabPath) as GameObject;
         HealthPrefab = Resources.Load("GameObjects/Loot/HealthCredit") as GameObject;
         //Find Player Transform Reference
-        PlayerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        PlayerTransform = FindObjectOfType<Scr_PlayerMotor>().gameObject.transform;
 
         ///Set the Max Health and the Slider Values
         m_Health = Config.maxHealth;
@@ -213,7 +217,7 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
         // Add On Player Found Event Delegate
         GetComponent<Scr_AISensor>().OnPlayerFoundEvent += StateMachine.ChangeState;
 
-        WakeUp();
+       
     }
 
     protected void UpdateUIHealth(){
@@ -223,11 +227,6 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
     // Update is called once per frame
     protected void Update()
     {
-        if (Vector3.Distance(transform.position,PlayerTransform.position) > 30.0f)
-        {
-           // Debug.Log("Skipped Update");
-            return;
-        }
         if(UITimer > 0.0f)
         {
             UITimer -= Time.deltaTime;
@@ -238,24 +237,13 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
         }
 
 
-        if(m_navMeshAgent.enabled){
-            StateMachine.Update();
-            Locomotion();
-        }
+        StateMachine.Update();
+        Locomotion();
+
         UpdateUIHealth();
     }
 
-    public void WakeUp()
-    {
-        m_navMeshAgent.enabled = false;
-
-        Invoke("EnableNavmesh", 0.25f);
-    }
-
-    public void WakeUpDisabled()
-    {
-        Invoke("EnableNavmesh", 0.25f);
-    }
+   
 
     public void EnableNavmesh()
     {

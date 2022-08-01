@@ -29,7 +29,7 @@ public class AIDeathState : AIState
             var go = GameObject.Instantiate(agent.HealthPrefab, agent.transform.position + new Vector3(Random.Range(0f, 2f), Random.Range(0, 1), Random.Range(0f, 2f)), Quaternion.identity);
         }
 
-       ReturnToPool(agent);
+      // ReturnToPool(agent);
     }
 
     public void Update(Script_BaseAI agent)
@@ -42,15 +42,15 @@ public class AIDeathState : AIState
        /* GameObject.Destroy(agent.gameObject, 1.0f);*/
     }
 
-    void ReturnToPool(Script_BaseAI agent)
+  /*  void ReturnToPool(Script_BaseAI agent)
     {
         agent.GetRagdoll().DeactivateRagdoll();
         agent.GetAnimator().enabled = true;
         agent.GetNavMeshAgent().enabled = false;
-        agent.GetUIHealthBar().gameObject.SetActive(true);
-        agent.GetStateMachine().ChangeState(AIStateID.Idle);
-        agent.ResetAgent();
+       // agent.GetUIHealthBar().gameObject.SetActive(true);
+        //agent.GetStateMachine().ChangeState(AIStateID.dea);
+       // agent.ResetAgent();
 
-        ObjectPooler.Instance.ReturnObject(agent.gameObject);
-    }
+        //ObjectPooler.Instance.ReturnObject(agent.gameObject);
+    }*/
 }

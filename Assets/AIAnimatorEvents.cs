@@ -6,9 +6,9 @@ using UnityEngine.AI;
 public class AIAnimatorEvents : MonoBehaviour
 {
     public delegate void OnAttackDelegate(Script_BaseAI agent);
-    public OnAttackDelegate OnAttackEvent;
-    public OnAttackDelegate OnFarAttackEvent;
-
+    public OnAttackDelegate OnSlashHorizontalAttack;
+    public OnAttackDelegate OnSlashVerticalAttack;
+    public OnAttackDelegate OnJumpAttack;
     Script_BaseAI AIagent;
     [SerializeField] AudioSource audioSource;
     [SerializeField] NavMeshAgent agent;
@@ -19,24 +19,26 @@ public class AIAnimatorEvents : MonoBehaviour
     [SerializeField]
     AudioClip[] FireSoundClipArr;
 
-    public void ActivateRagdoll()
+    public void SlashHorizontal(Script_BaseAI agent)
     {
-        AIagent.GetRagdoll().ActivateRagdoll();
-        AIagent.GetAnimator().enabled = false;
-    }
-    public void Attack(Script_BaseAI agent)
-    {
-        if (OnAttackEvent != null)
+        if (OnSlashHorizontalAttack != null)
         {
-            OnAttackEvent(AIagent);
+            OnSlashHorizontalAttack(AIagent);
         }
     }
 
-    public void FarAttack(Script_BaseAI agent)
+    public void SlashVertical(Script_BaseAI agent)
     {
-        if (OnFarAttackEvent != null)
+        if (OnSlashVerticalAttack != null)
         {
-            OnFarAttackEvent(AIagent);
+            OnSlashVerticalAttack(AIagent);
+        }
+    }
+    public void JumpAttack(Script_BaseAI agent)
+    {
+        if (OnJumpAttack != null)
+        {
+            OnJumpAttack(AIagent);
         }
     }
     public void PlayFootStep() { audioSource.PlayOneShot(FootStepClipArr[Random.Range(0, FootStepClipArr.Length)]); }
