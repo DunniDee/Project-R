@@ -12,6 +12,7 @@ public class AI_Brute : Script_BaseAI
         StateMachine.RegisterState(new AIDeathState());
         StateMachine.RegisterState(new AIIdleState());
         StateMachine.RegisterState(new AIChaseState());
+        StateMachine.RegisterState(new AIJumpAttackState());
 
         StateMachine.ChangeState(InitalState);
     }

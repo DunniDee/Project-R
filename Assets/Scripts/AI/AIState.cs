@@ -7,6 +7,7 @@ public enum AIStateID {
     Moving,
     ShootPlayer,
     Death,
+    JumpAttack,
 
     CommanderBuff,
     BruteChase,

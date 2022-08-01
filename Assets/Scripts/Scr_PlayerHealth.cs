@@ -25,20 +25,19 @@ public class Scr_PlayerHealth : MonoBehaviour
 
     public void TakeDamage(float _Damage)
     {
-        if(OnTakeDamageEvent != null)
+       /* if(OnTakeDamageEvent != null)
         {
             OnTakeDamageEvent(0.2f,0.5f);
             timer = waitTime;
-        }
+        }*/
         PlayDamageNoise();
-        m_healthUI.m_HurtImage.CrossFadeAlpha(1, 0.1f, false);
-        m_healthUI.m_HurtImage.CrossFadeAlpha(0, 1.0f, false);
+        
         currentHealth -= _Damage;
-        m_healthUI.m_healthSlider.value = currentHealth;
+        m_healthUI.HealthValueText.text = currentHealth.ToString();
     }
     public void Heal(float _HealthAmount) {
         currentHealth += _HealthAmount;
-        m_healthUI.m_healthSlider.value = currentHealth;
+        m_healthUI.HealthValueText.text = currentHealth.ToString();
     }
     void PlayDamageNoise()
     {
@@ -48,16 +47,8 @@ public class Scr_PlayerHealth : MonoBehaviour
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        m_healthUI = GetComponent<Script_HealthUI>();
-        m_healthUI.m_HurtImage.CrossFadeAlpha(0, 1.0f, false);
+        m_healthUI = GetComponentInChildren<Script_HealthUI>();
         currentHealth = maxHealth;
-
-        m_healthUI = GetComponent<Script_HealthUI>();
-        m_healthUI.m_healthSlider.maxValue = maxHealth;
-        m_healthUI.m_healthSlider.value = currentHealth;
-
-        m_healthUI.m_followSlider.maxValue = maxHealth;
-        m_healthUI.m_followSlider.value = currentHealth;
         
     }
 
@@ -65,10 +56,10 @@ public class Scr_PlayerHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (currentHealth <= 0)
+        /*if (currentHealth <= 0)
         {
             Script_SceneManager.Instance.LoadScene("HubWorld");
-        }
+        }*/
 
         if (timer > 0.0f)
         {

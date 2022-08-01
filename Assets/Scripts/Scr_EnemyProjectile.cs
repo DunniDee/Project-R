@@ -10,7 +10,7 @@ public class Scr_EnemyProjectile : MonoBehaviour
     {
         if(collision.collider.tag == "Player")
         {
-            //collision.rigidbody.GetComponent<Scr_PlayerHealth>().TakeDamage(m_fDamage);
+            collision.collider.GetComponentInParent<Scr_PlayerHealth>().TakeDamage(m_fDamage);
             Debug.Log("Damage Done " + m_fDamage);
             Disable();
         }

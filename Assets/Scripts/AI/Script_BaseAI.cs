@@ -12,6 +12,12 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
     protected Rigidbody rigidBody;
     protected Script_AIStateMachine StateMachine;
     protected AIAnimatorEvents AnimatorEvents;
+
+
+    [SerializeField] protected Transform Rotator;
+    [SerializeField] protected AnimationCurve JumpCurve;
+    protected float m_Gravity = -9.84f;
+
     public AudioSource audioSource;
 
     protected private NavMeshAgent m_navMeshAgent;
@@ -43,6 +49,14 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
     protected float UITimer = 0.0f;
     protected float dieForce = 100.0f;
 
+    public AnimationCurve GetJumpCurve()
+    {
+        return JumpCurve;
+    }
+    public Transform GetRotator()
+    {
+        return Rotator;
+    }
     public void PlayCombatNoise()
     {
         audioSource.PlayOneShot(CombatNoise[Random.Range(0, CombatNoise.Count)]);

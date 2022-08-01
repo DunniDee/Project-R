@@ -38,6 +38,7 @@ public class AIAnimatorEvents : MonoBehaviour
     {
         if (OnJumpAttack != null)
         {
+            Debug.Log("JUMPY ATTACK!");
             OnJumpAttack(AIagent);
         }
     }
@@ -45,6 +46,7 @@ public class AIAnimatorEvents : MonoBehaviour
 
     public void PlayGunShot() { audioSource.PlayOneShot(FireSoundClipArr[Random.Range(0, FireSoundClipArr.Length)], 0.7f); }
 
+   
     public void StopAgent() {
         agent.velocity = Vector3.zero;
         agent.isStopped = true; }

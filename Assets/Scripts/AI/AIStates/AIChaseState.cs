@@ -11,7 +11,7 @@ public class AIChaseState : AIState
     public float attackRange = 2.0f;
     public float attackCurCooldown = 0.0f;
     public float attackMaxCooldown = 2.0f;
-    float m_ProjectileForce = 30.0f;
+    float m_ProjectileForce = 60.0f;
 
     void Attack(Script_BaseAI agent)
     {
@@ -48,6 +48,7 @@ public class AIChaseState : AIState
         obj.GetComponent<Scr_EnemyProjectile>().m_fDamage = agent.Config.projectileDamage;
         obj.GetComponent<Rigidbody>().velocity = obj.transform.forward * m_ProjectileForce;
     }
+
     void SlashAttackVertical(Script_BaseAI agent)
     {
         var obj = GameObject.Instantiate(agent.Config.projectile, agent.GetFiringPoint().position, agent.GetFiringPoint().rotation);
@@ -59,9 +60,19 @@ public class AIChaseState : AIState
 
     void JumpSlashAttack(Script_BaseAI agent)
     {
-        agent.GetNavMeshAgent().isStopped = true;
-        agent.GetRigid().AddForce(agent.transform.forward + agent.transform.up * 200.0f);
+        OnJump(agent);
+
+        agent.GetStateMachine().ChangeState(AIStateID.JumpAttack);
     }
+
+
+    void OnJump(Script_BaseAI agent)
+    {
+        //agent.GetNavMeshAgent().enabled = false;
+        //agent.GetRigid().isKinematic = false;
+
+    }
+   
     public AIStateID getID()
     {
         return AIStateID.ChasePlayer;
@@ -84,10 +95,10 @@ public class AIChaseState : AIState
 
     public void Update(Script_BaseAI agent)
     {
-        agent.transform.LookAt(agent.GetPlayerTransform());
+        agent.transform.LookAt(new Vector3(agent.GetPlayerTransform().position.x,1.0f, agent.GetPlayerTransform().position.z));
         AttackCooldownUpdate();
         Attack(agent);
-        //agent.GetNavMeshAgent().destination = playerTransform.position;
+       
     }
 
     private void AttackCooldownUpdate()
