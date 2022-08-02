@@ -49,6 +49,8 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
     protected float UITimer = 0.0f;
     protected float dieForce = 100.0f;
 
+    public delegate void UpdateUIDelegate();
+    public event UpdateUIDelegate UpdateUIEvent;
     public float GetHealth()
     {
         return m_Health;
@@ -152,11 +154,17 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
         switch(_DamageType){
             case CustomCollider.DamageType.Critical:
                 m_Health -= _Damage + StatDamage * 2;
-                
+                if (UpdateUIEvent != null)
+                {
+                    UpdateUIEvent();
+                }
                 break;
             case CustomCollider.DamageType.Normal:
                 m_Health -= _Damage + StatDamage;
-
+                if (UpdateUIEvent != null)
+                {
+                    UpdateUIEvent();
+                }
                 break;
         }
         if (m_Health <= 0 && StateMachine.currentStateID != AIStateID.Death)

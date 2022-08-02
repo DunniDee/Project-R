@@ -30,8 +30,8 @@ public class Scr_BossArena : MonoBehaviour
         {
             BossHealthSlider = GetComponentInChildren<Slider>();
         }
-        SetSliderMaxValue(BossAI.GetHealth());
         BossAI.enabled = true;
+
     }
 
     public void DisableBossFight()
@@ -43,10 +43,17 @@ public class Scr_BossArena : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (BossAI.enabled) { BossAI.enabled = false; } 
-  
-
+        if (BossAI.enabled) { BossAI.enabled = false; }
+        BossAI.UpdateUIEvent += UpdateHealthSlider;
+        
        
+    }
+    void Update()
+    {
+        if (BossHealthSlider.maxValue == 1 && BossAI.GetHealth() != 0)
+        {
+            SetSliderMaxValue(BossAI.GetHealth());
+        }
     }
 
 }

@@ -83,7 +83,7 @@ public class GridController : MonoBehaviour
 
     private void ActivateGrid(bool _b)
     {
-        GameObject.FindGameObjectWithTag("Player").GetComponent<Scr_PlayerLook>().enabled = !_b;
+        FindObjectOfType<Scr_PlayerLook>().enabled = !_b;
         SetIsGridActive(_b);
         canvasTransform.gameObject.SetActive(_b);
         UpgradeUI.enabled = _b;

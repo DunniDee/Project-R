@@ -13,12 +13,22 @@ public class AIChaseState : AIState
     public float attackMaxCooldown = 2.0f;
     float m_ProjectileForce = 60.0f;
 
+    public Vector2 ChaseTimerExtents = new Vector2(3f, 6f);
+    public float currentChaseTime = 0.0f;
+    public bool isChasing = false;
+
+    public float MaxDistanceThreshold = 30.0f;
     void Attack(Script_BaseAI agent)
     {
+        if (isChasing) return;
+        float Distance = Vector3.Distance(agent.transform.position, agent.GetPlayerTransform().position);
+        if (Distance > MaxDistanceThreshold)
+        {
+            StartChasing(agent);
+        }
         if (attackCurCooldown <= 0.0f)
         {
             int attackIndex = Random.Range(1, 4);
-
 
             switch (attackIndex)
             {
@@ -29,7 +39,8 @@ public class AIChaseState : AIState
                     agent.GetAnimator().SetTrigger("Attack2");
                     break;
                 case 3:
-                    agent.GetAnimator().SetTrigger("Attack3");
+                    
+                    agent.GetStateMachine().ChangeState(AIStateID.JumpAttack);
                     break;
             }
             
@@ -58,18 +69,26 @@ public class AIChaseState : AIState
         obj.GetComponent<Rigidbody>().velocity = obj.transform.forward * m_ProjectileForce;
     }
 
-    void JumpSlashAttack(Script_BaseAI agent)
-    {
-        OnJump(agent);
+   
 
-        agent.GetStateMachine().ChangeState(AIStateID.JumpAttack);
+    public void StartChasing(Script_BaseAI agent)
+    {
+        currentChaseTime = Random.Range(ChaseTimerExtents.x, ChaseTimerExtents.y);
+        isChasing = true;
     }
 
-
-    void OnJump(Script_BaseAI agent)
+    private void ChaseUpdate(Script_BaseAI agent)
     {
-        //agent.GetNavMeshAgent().enabled = false;
-        //agent.GetRigid().isKinematic = false;
+        if (currentChaseTime > 0.0f)
+        {
+            currentChaseTime -= Time.deltaTime;
+        }
+        else if (currentChaseTime <= 0.0f && isChasing == true)
+        {
+            isChasing = false;
+        }
+
+        agent.GetNavMeshAgent().SetDestination(agent.GetPlayerTransform().position);
 
     }
    
@@ -87,7 +106,7 @@ public class AIChaseState : AIState
 
         agent.GetAnimatorEvents().OnSlashHorizontalAttack += SlashAttackHorizontal;
         agent.GetAnimatorEvents().OnSlashVerticalAttack += SlashAttackVertical;
-        agent.GetAnimatorEvents().OnJumpAttack += JumpSlashAttack;
+/*        agent.GetAnimatorEvents().OnJumpAttack += JumpSlashAttack;*/
 
         playerTransform = agent.GetPlayerTransform();
         agent.PlayCombatNoise();
@@ -98,7 +117,7 @@ public class AIChaseState : AIState
         agent.transform.LookAt(new Vector3(agent.GetPlayerTransform().position.x,1.0f, agent.GetPlayerTransform().position.z));
         AttackCooldownUpdate();
         Attack(agent);
-       
+        ChaseUpdate(agent);
     }
 
     private void AttackCooldownUpdate()
