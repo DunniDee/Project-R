@@ -49,6 +49,10 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
     protected float UITimer = 0.0f;
     protected float dieForce = 100.0f;
 
+    public float GetHealth()
+    {
+        return m_Health;
+    }
     public AnimationCurve GetJumpCurve()
     {
         return JumpCurve;
@@ -167,8 +171,8 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
             return false;
         }
        
-        UITimer = 5.0f;
-        m_UIHealth.gameObject.SetActive(true);
+/*        UITimer = 5.0f;
+        m_UIHealth.gameObject.SetActive(true);*/
         m_Animator.SetTrigger("Hit");
     }
 
@@ -200,7 +204,7 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
         m_Ragdoll = GetComponent<Script_Ragdoll>();
         audioSource = GetComponent<AudioSource>();
 
-        m_UIHealth.Start();
+/*        m_UIHealth.Start();*/
 
         // Load AI Config
         if (Config = Resources.Load("AI/AIConfig/" + AI_Name_Config) as AIStateConfig)
@@ -220,9 +224,9 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
         ///Set the Max Health and the Slider Values
         m_Health = Config.maxHealth;
 
-        m_UIHealth.HealthSlider.maxValue = Config.maxHealth;
+       /* m_UIHealth.HealthSlider.maxValue = Config.maxHealth;
         m_UIHealth.HealthSlider.value = Config.maxHealth;
-        m_UIHealth.gameObject.SetActive(false);
+        m_UIHealth.gameObject.SetActive(false);*/
 
 
         AIStateInit();
@@ -241,20 +245,20 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
     // Update is called once per frame
     protected void Update()
     {
-        if(UITimer > 0.0f)
+        /*if(UITimer > 0.0f)
         {
             UITimer -= Time.deltaTime;
         }
         else if(UITimer <= 0.0f)
         {
             m_UIHealth.gameObject.SetActive(false);
-        }
+        }*/
 
 
         StateMachine.Update();
         Locomotion();
 
-        UpdateUIHealth();
+        //UpdateUIHealth();
     }
 
    

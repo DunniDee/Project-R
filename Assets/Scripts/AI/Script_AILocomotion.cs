@@ -14,9 +14,17 @@ public class Script_AILocomotion : MonoBehaviour
     public bool ShowVelocity = true;
     public bool ShowLineSight = true;
 
+    public bool ShowAIPosition = true;
+
    public 
    
    void OnDrawGizmos(){
+        if (ShowAIPosition)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(transform.position, new Vector3(transform.position.x, transform.position.y + 50.0f, transform.position.z));
+            Gizmos.DrawSphere(new Vector3(transform.position.x, transform.position.y + 50.0f, transform.position.z), 2.0f);
+        }
        if(ShowPath){
            Gizmos.color = Color.magenta;
            var agentPath = agent.path;
