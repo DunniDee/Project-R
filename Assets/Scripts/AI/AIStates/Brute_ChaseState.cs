@@ -66,13 +66,15 @@ public class Brute_ChaseState : AIState
     public void Enter(Script_BaseAI agent)
     {
         agent.GetNavMeshAgent().speed = agent.Config.ChaseSpeed;
-        agent.SetIsInCombat(true);
-        agent.GetAnimator().SetBool("isInCombat", true);
-        agent.GetNavMeshAgent().stoppingDistance = 3.5f;
-        agent.AlertLocalAI(20.0f);
-        agent.GetAnimatorEvents().OnAttackEvent += AttackFront;
-        agent.GetAnimatorEvents().OnFarAttackEvent += FarAttack;
-        agent.PlayCombatNoise();
+        /*        agent.SetIsInCombat(true);
+                agent.GetAnimator().SetBool("isInCombat", true);
+                agent.GetNavMeshAgent().stoppingDistance = 1;
+                agent.GetAnimatorEvents().OnAttackEvent += AttackFront;
+                agent.GetAnimatorEvents().OnFarAttackEvent += FarAttack;*/
+        // agent.GetNavMeshAgent().destination = agent.GetPlayerTransform().position;
+        //playerTransform = agent.GetPlayerTransform();
+        //agent.PlayCombatNoise();
+
     }
 
     public void Exit(Script_BaseAI agent)
@@ -82,15 +84,14 @@ public class Brute_ChaseState : AIState
 
     public void Update(Script_BaseAI agent)
     {
-        if (!agent.enabled)
-        {
-            return;
-        }
 
-        if (attackCurCooldown > 0.0f) { attackCurCooldown -= Time.deltaTime; }
-        IsInRange(agent);
-
+        Debug.Log("UPDATEUPDATEUPATE");
         agent.GetNavMeshAgent().destination = agent.GetPlayerTransform().position;
+        /*        if (attackCurCooldown > 0.0f) { attackCurCooldown -= Time.deltaTime; }
+                IsInRange(agent);*/
+
+
+
     }
 
     public AIStateID getID()

@@ -6,7 +6,7 @@ public class Script_PlayerStatManager : MonoBehaviour
 {
     //Singleton Pattern
     public static Script_PlayerStatManager Instance;
-    private void Awake()
+    public void Start()
     {
         if (Instance != null && Instance != this)
         {
@@ -16,6 +16,8 @@ public class Script_PlayerStatManager : MonoBehaviour
           	DontDestroyOnLoad(gameObject);
         }
     }
+
+    
     [System.Serializable]
     public struct WeaponStats {
         [SerializeField]
