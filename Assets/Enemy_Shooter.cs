@@ -57,8 +57,12 @@ public class Enemy_Shooter : Scr_BaseAI
         StateTimer -= Time.deltaTime;
 
 
-        AgentRotator.LookAt(PlayerTransform);
+        //AgentRotator.LookAt(PlayerTransform);
+        FacePlayer();
+
         ShootPos.LookAt(PlayerTransform);
+
+
         if (ShootTimer < 0)
         {
             ShootTimer = FireRate; 
@@ -107,7 +111,11 @@ public class Enemy_Shooter : Scr_BaseAI
     protected virtual void Strafe()
     {
         Agent.Move(AgentRotator.right * m_CurrentMoveSpeed * Time.deltaTime);
-        AgentRotator.LookAt(PlayerTransform);
+        FacePlayer();
+
+         var delta = PlayerTransform.position - transform.position;
+        var angle = Mathf.Atan2(delta.y, delta.x) * Mathf.Rad2Deg;
+        var rotation = Quaternion.Euler(0, angle, 0);
     }
 
 
