@@ -154,6 +154,11 @@ public class Scr_PlayerMotor : MonoBehaviour
 
         if (m_IsTouchingWall)
         {
+            if (!m_WasTouchingWall)
+            {
+                m_MomentumDirection = Orientation.forward * m_MomentumMagnuitude;
+            }
+
             if (Physics.Raycast(transform.position + (Vector3.up * 0.40f), Orientation.right,out RightHit, 1.5f, WallRunMask))
             {
                 CamEffects.RotateTo += new Vector3(0,0,45) * Time.deltaTime;
