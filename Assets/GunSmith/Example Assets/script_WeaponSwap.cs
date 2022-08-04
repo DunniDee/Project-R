@@ -34,7 +34,9 @@ public class script_WeaponSwap : MonoBehaviour
     public void Start() 
     {
         //Turn UICannvasOff
-        FindObjectOfType<GridController>().GetUICanvas().gameObject.SetActive(false);
+        GridController gridcontroller = FindObjectOfType<GridController>();
+        gridcontroller.enabled = true;
+        gridcontroller.GetUICanvas().gameObject.SetActive(false);
         m_LastIndex = Index;
         // Load Weapon Stats to Player Stat Manager
 
