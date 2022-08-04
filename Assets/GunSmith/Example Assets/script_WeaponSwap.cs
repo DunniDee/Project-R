@@ -33,7 +33,10 @@ public class script_WeaponSwap : MonoBehaviour
     // Update is called once per frame
     public void Start() 
     {
-        FindObjectOfType<GridController>().enabled = true;
+        //Turn UICannvasOff
+        GridController gridcontroller = FindObjectOfType<GridController>();
+        gridcontroller.enabled = true;
+        gridcontroller.GetUICanvas().gameObject.SetActive(false);
         m_LastIndex = Index;
         // Load Weapon Stats to Player Stat Manager
 
@@ -51,8 +54,9 @@ public class script_WeaponSwap : MonoBehaviour
             Weapon.SetActive(false);
            
             i++;
+            
         }
-
+       
         Weapons[Index].SetActive(true);
     }
 

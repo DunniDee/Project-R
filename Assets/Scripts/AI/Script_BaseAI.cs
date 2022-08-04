@@ -12,7 +12,7 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
     protected Rigidbody rigidBody;
     protected Script_AIStateMachine StateMachine;
     protected AIAnimatorEvents AnimatorEvents;
-
+    [SerializeField] protected Transform DamagePopUpParent;
 
     [SerializeField] protected Transform Rotator;
     [SerializeField] protected AnimationCurve JumpCurve;
@@ -49,6 +49,8 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
     protected float UITimer = 0.0f;
     protected float dieForce = 100.0f;
 
+    public delegate void UpdateUIDelegate();
+    public event UpdateUIDelegate UpdateUIEvent;
     public float GetHealth()
     {
         return m_Health;
@@ -124,6 +126,10 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
         return m_Animator;
     }
 
+    public void ShowFloatingDamage(float _Damage)
+    {
+       
+    }
     public bool Damage(float _Damage, CustomCollider.DamageType _DamageType, Vector3 _direction)
     {
         
@@ -149,14 +155,24 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
 
 
         }
-        switch(_DamageType){
+        float totalDamage = _Damage + StatDamage;
+        switch (_DamageType){
             case CustomCollider.DamageType.Critical:
-                m_Health -= _Damage + StatDamage * 2;
-                
+               
+                m_Health -= totalDamage * 2;
+                Scr_DamagePopupManager.Instance.DisplayDamagePopup((int)totalDamage * 2, DamagePopUpParent);
+                if (UpdateUIEvent != null)
+                {
+                    UpdateUIEvent();
+                }
                 break;
             case CustomCollider.DamageType.Normal:
-                m_Health -= _Damage + StatDamage;
-
+                m_Health -= totalDamage;
+                Scr_DamagePopupManager.Instance.DisplayDamagePopup((int)totalDamage, DamagePopUpParent);
+                if (UpdateUIEvent != null)
+                {
+                    UpdateUIEvent();
+                }
                 break;
         }
         if (m_Health <= 0 && StateMachine.currentStateID != AIStateID.Death)
@@ -170,10 +186,6 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
         {
             return false;
         }
-       
-/*        UITimer = 5.0f;
-        m_UIHealth.gameObject.SetActive(true);*/
-        m_Animator.SetTrigger("Hit");
     }
 
     public void ResetAgent()

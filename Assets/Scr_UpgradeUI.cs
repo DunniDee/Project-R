@@ -36,7 +36,7 @@ public class Scr_UpgradeUI : MonoBehaviour
 
     public void SetWeaponUIElement(WeaponUI weaponUI, int weaponIndex)
     {
-        Script_PlayerStatManager.WeaponStats weaponStats = Script_PlayerStatManager.Instance.WeaponStatList.ToArray()[0];
+        Script_PlayerStatManager.WeaponStats weaponStats = Script_PlayerStatManager.Instance.WeaponStatList.ToArray()[weaponIndex];
         weaponUI.Header.text = weaponStats.WeaponName;
         weaponUI.Damage.text = weaponStats.Modified_Damage.ToString();
         weaponUI.Firerate.text = weaponStats.Modified_Firerate.ToString();

@@ -6,12 +6,13 @@ public class Scr_EnemyProjectile : MonoBehaviour
 {
     public float m_fDamage = 0.0f;
     public float m_Lifetime = 0.0f;
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider collision)
     {
-        if(collision.collider.tag == "Player")
+        if(collision.tag == "Player")
         {
-            collision.collider.GetComponentInParent<Scr_PlayerHealth>().TakeDamage(m_fDamage);
+            collision.GetComponent<Scr_PlayerHealth>().TakeDamage(m_fDamage);
             Debug.Log("Damage Done " + m_fDamage);
+            //Destroy(gameObject);
             Disable();
         }
         
