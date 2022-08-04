@@ -58,6 +58,12 @@ public class AIChaseState : AIState
         obj.transform.localScale = new Vector3(obj.transform.localScale.y, obj.transform.localScale.x, obj.transform.localScale.z);
         obj.GetComponent<Scr_EnemyProjectile>().m_fDamage = agent.Config.projectileDamage;
         obj.GetComponent<Rigidbody>().velocity = obj.transform.forward * m_ProjectileForce;
+        CapsuleCollider collider = obj.GetComponent<CapsuleCollider>();
+
+        float height = collider.height;
+        float width = collider.radius;
+        collider.radius = height;
+        collider.height = width;
     }
 
     void SlashAttackVertical(Script_BaseAI agent)
