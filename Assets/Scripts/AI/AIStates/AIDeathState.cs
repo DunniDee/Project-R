@@ -14,7 +14,7 @@ public class AIDeathState : AIState
         agent.GetRagdoll().ActivateRagdoll();
         agent.GetAnimator().enabled = false;
         agent.GetNavMeshAgent().enabled = false;
-        agent.GetUIHealthBar().gameObject.SetActive(false);
+        //agent.GetUIHealthBar().gameObject.SetActive(false);
         agent.PlayDeathNoise();
         Script_PlayerStatManager.Instance.Bounty += agent.Config.Bounty;
 

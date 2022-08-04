@@ -11,6 +11,8 @@ public class Scr_BossArena : MonoBehaviour
     [SerializeField]Slider BossHealthSlider;
 
     public GameObject BossCanvas;
+    Animator animator;
+
     public void UpdateHealthSlider()
     {
         BossHealthSlider.value = BossAI.GetHealth();
@@ -31,7 +33,7 @@ public class Scr_BossArena : MonoBehaviour
             BossHealthSlider = GetComponentInChildren<Slider>();
         }
         BossAI.enabled = true;
-
+        animator.SetTrigger("FadeIn");
     }
 
     public void DisableBossFight()
@@ -45,8 +47,9 @@ public class Scr_BossArena : MonoBehaviour
     {
         if (BossAI.enabled) { BossAI.enabled = false; }
         BossAI.UpdateUIEvent += UpdateHealthSlider;
-        
-       
+        animator = BossCanvas.GetComponent<Animator>();
+
+
     }
     void Update()
     {

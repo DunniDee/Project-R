@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -49,9 +50,19 @@ public class AIJumpAttackState : AIState
         agent.GetRigid().useGravity = false;
         initalPosition = agent.transform.position;
         FinalPosition = agent.GetPlayerTransform().position;
+        CheckFinalYPos();
         timeJumping = 0.0f;
 
         agent.GetAnimator().SetTrigger("Attack3");
+    }
+
+    private void CheckFinalYPos()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(FinalPosition + (Vector3.up * 10), Vector3.down, out hit, Mathf.Infinity, LayerMask.NameToLayer("Ground")))
+        {
+            FinalPosition.y = hit.point.y;
+        }
     }
 
     public void Update(Script_BaseAI agent)
