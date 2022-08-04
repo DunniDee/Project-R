@@ -11,6 +11,8 @@ public class Scr_BossArena : MonoBehaviour
     [SerializeField]Slider BossHealthSlider;
 
     public GameObject BossCanvas;
+    Animator animator;
+
     public void UpdateHealthSlider()
     {
         BossHealthSlider.value = BossAI.GetHealth();
@@ -30,8 +32,8 @@ public class Scr_BossArena : MonoBehaviour
         {
             BossHealthSlider = GetComponentInChildren<Slider>();
         }
-        SetSliderMaxValue(BossAI.GetHealth());
         BossAI.enabled = true;
+        animator.SetTrigger("FadeIn");
     }
 
     public void DisableBossFight()
@@ -43,10 +45,18 @@ public class Scr_BossArena : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (BossAI.enabled) { BossAI.enabled = false; } 
-  
+        if (BossAI.enabled) { BossAI.enabled = false; }
+        BossAI.UpdateUIEvent += UpdateHealthSlider;
+        animator = BossCanvas.GetComponent<Animator>();
 
-       
+
+    }
+    void Update()
+    {
+        if (BossHealthSlider.maxValue == 1 && BossAI.GetHealth() != 0)
+        {
+            SetSliderMaxValue(BossAI.GetHealth());
+        }
     }
 
 }

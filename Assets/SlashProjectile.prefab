@@ -5286,9 +5286,9 @@ GameObject:
   - component: {fileID: 2340733471675557750}
   - component: {fileID: 727979577271180317}
   - component: {fileID: 1161015814872166291}
-  - component: {fileID: 5044020553746137892}
   - component: {fileID: 1491144147742564874}
   - component: {fileID: 7819601807660589177}
+  - component: {fileID: 4379267169023505065}
   m_Layer: 0
   m_Name: SlashProjectile
   m_TagString: Untagged
@@ -5362,19 +5362,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &5044020553746137892
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6142322038458992940}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &1491144147742564874
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5405,6 +5392,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_fDamage: 10
   m_Lifetime: 3
+--- !u!136 &4379267169023505065
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6142322038458992940}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 7
+  m_Height: 2.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 4.19}
 --- !u!1 &8145127935203883314
 GameObject:
   m_ObjectHideFlags: 0

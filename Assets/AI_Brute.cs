@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class AI_Brute : Script_BaseAI
 {
+    public Scr_CameraEffects CameraEffects;
+    public GameObject VFX_Slam;
+    public AudioClip SlamAudio;
     protected override void AIStateInit()
     {
         base.AIStateInit();
@@ -21,7 +24,7 @@ public class AI_Brute : Script_BaseAI
     void Start()
     {
         base.Start();
-        
+        CameraEffects = FindObjectOfType<Scr_CameraEffects>();
     }
 
     // Update is called once per frame
