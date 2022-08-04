@@ -8,13 +8,4 @@ public class Script_HealthUI : MonoBehaviour
 {
     public TMP_Text HealthValueText;
 
-    public void DecreaseValue()
-    {
-       
-    }
-
-    public void Update()
-    {
-       
-    }
 }

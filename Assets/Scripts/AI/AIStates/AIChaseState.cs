@@ -85,6 +85,10 @@ public class AIChaseState : AIState
 
     private void ChaseUpdate(Script_BaseAI agent)
     {
+        if (Vector3.Distance(agent.transform.position, agent.GetPlayerTransform().position) < 5.0f)
+        {
+            currentChaseTime = -1;
+        }
         if (currentChaseTime > 0.0f)
         {
             currentChaseTime -= Time.deltaTime;
@@ -120,7 +124,7 @@ public class AIChaseState : AIState
 
     public void Update(Script_BaseAI agent)
     {
-        agent.transform.LookAt(new Vector3(agent.GetPlayerTransform().position.x,1.0f, agent.GetPlayerTransform().position.z));
+        agent.transform.LookAt(new Vector3(agent.GetPlayerTransform().position.x,agent.transform.position.y, agent.GetPlayerTransform().position.z));
         AttackCooldownUpdate();
         Attack(agent);
         ChaseUpdate(agent);

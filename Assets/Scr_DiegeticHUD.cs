@@ -5,6 +5,7 @@ using TMPro;
 
 public class Scr_DiegeticHUD : MonoBehaviour
 {
+    public Scr_PlayerHealth playerhealth;
     [SerializeField] Transform OuterTransform;
     [SerializeField] Transform MiddleTransform;
     [SerializeField] Transform InnerTransform;
@@ -45,6 +46,7 @@ public class Scr_DiegeticHUD : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerhealth = GetComponentInParent<Scr_PlayerHealth>();
         OuterTransform.localScale = Vector3.zero;
         MiddleTransform.localScale = Vector3.zero;
         InnerTransform.localScale = Vector3.zero;
@@ -77,10 +79,10 @@ public class Scr_DiegeticHUD : MonoBehaviour
 
         AmmoText.text = AmmoCount.ToString();
         AmmoReserveText.text = AmmoReserve.ToString();
-        HealthText.text = Health.ToString();
+        HealthText.text = playerhealth.currentHealth.ToString();
 
         AmmoAngleLerp = (float)AmmoCount/(float)MagSize;
-        HealthAngleLerp = Health/100;
+        HealthAngleLerp = playerhealth.currentHealth / playerhealth.maxHealth;
 
         AmmoColorLerp = Color.magenta;
         HealthColorLerp = Color.magenta;
