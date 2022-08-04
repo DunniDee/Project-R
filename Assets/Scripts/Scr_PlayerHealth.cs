@@ -33,13 +33,13 @@ public class Scr_PlayerHealth : MonoBehaviour
         PlayDamageNoise();
 
         currentHealth -= _Damage;
-        m_healthUI.HealthValueText.text = currentHealth.ToString();
+        m_healthUI.HealthValueText.text = currentHealth.ToString("F0");
         CamEffects.ShakeTime += 0.25f;
         CamEffects.ShakeAmplitude += 0.7f;
     }
     public void Heal(float _HealthAmount) {
         currentHealth += _HealthAmount;
-        m_healthUI.HealthValueText.text = currentHealth.ToString();
+        m_healthUI.HealthValueText.text = currentHealth.ToString("F0");
     }
     void PlayDamageNoise()
     {
