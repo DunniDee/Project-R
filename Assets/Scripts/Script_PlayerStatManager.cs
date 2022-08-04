@@ -39,6 +39,7 @@ public class Script_PlayerStatManager : MonoBehaviour
         public float Modified_Firerate;
     }
 
+
     // Weapon Stats
     public List<WeaponStats> WeaponStatList;
 

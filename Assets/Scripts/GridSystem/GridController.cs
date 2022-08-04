@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GridController : MonoBehaviour
 {
@@ -25,6 +26,7 @@ public class GridController : MonoBehaviour
     [SerializeField] GameObject itemPrefab;
     [SerializeField] Transform canvasTransform;
 
+    [SerializeField] Slider slider;
     public Transform GetUICanvas()
     {
         return canvasTransform;
@@ -41,7 +43,19 @@ public class GridController : MonoBehaviour
     public bool GetIsGridActive() { return isGridActive; }
     public void SetIsGridActive(bool _b) { isGridActive = _b; }
 
-   
+    public void SetFullScreen(bool _Fullscreen)
+    {
+        Screen.fullScreen = _Fullscreen;
+    }
+    public void SetQuality(int _graphicsIndex)
+    {
+        QualitySettings.SetQualityLevel(_graphicsIndex);
+    }
+
+    public void SetMasterAudio(float _Audio)
+    {
+        AudioListener.volume = _Audio;
+    }
     public void Awake()
     {
         gridHighlight = GetComponent<GridHighlight>();
@@ -85,7 +99,7 @@ public class GridController : MonoBehaviour
 
     }
 
-    private void ActivateGrid(bool _b)
+    public void ActivateGrid(bool _b)
     {
         FindObjectOfType<Scr_PlayerLook>().enabled = !_b;
         SetIsGridActive(_b);
@@ -181,13 +195,14 @@ public class GridController : MonoBehaviour
     private void DropItem(Vector2Int posOnGrid)
     {
         bool complete = SelectedItemGrid.PlaceItem(selectedItem, posOnGrid.x, posOnGrid.y, ref overlapItem);
-        if (SelectedItemGrid.CheckGridType() == Grid.GridType.EQUIPPED)
-        {
-            selectedItem.Equip(SelectedItemGrid);
-            UpgradeUI.SetWeaponUIElements();
-        }
+       
         if (complete)
         {
+            if (SelectedItemGrid.CheckGridType() == Grid.GridType.EQUIPABILITY)
+            {
+                selectedItem.Equip(SelectedItemGrid);
+                UpgradeUI.SetWeaponUIElements();
+            }
             audioSource.PlayOneShot(dropNoise);
             selectedItem = null;
             UpgradeUI.Description.text = "";
@@ -213,7 +228,7 @@ public class GridController : MonoBehaviour
             
             UpgradeUI.Description.text = selectedItem.itemData.itemDescription;
 
-            if (SelectedItemGrid.CheckGridType() == Grid.GridType.EQUIPPED)
+            if (SelectedItemGrid.CheckGridType() == Grid.GridType.EQUIPABILITY)
             {
                 selectedItem.Dequip(SelectedItemGrid);
                 UpgradeUI.SetWeaponUIElements();

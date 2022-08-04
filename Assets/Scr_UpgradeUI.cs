@@ -8,6 +8,9 @@ public class Scr_UpgradeUI : MonoBehaviour
 {
     public TMP_Text Description;
 
+    public List<GameObject> MenuTabs;
+    public int currentIndex = 0;
+
     [System.Serializable]
     public struct WeaponUI {
         public TMP_Text Header;
@@ -43,8 +46,26 @@ public class Scr_UpgradeUI : MonoBehaviour
 
         Debug.Log("Updating UI Elements...");
     }
+
+    public void SetCurrentIndex(int _Index)
+    {
+        currentIndex = _Index;
+    }
+
     public void Update()
     {
+        if (!MenuTabs[currentIndex].activeSelf)
+        {
+            MenuTabs[currentIndex].SetActive(true);
+        }
+
+        foreach (GameObject go in MenuTabs)
+        {
+            if (go != MenuTabs[currentIndex] && go.activeSelf)
+            {
+                go.SetActive(false);
+            }
+        }
         
     }
 }
