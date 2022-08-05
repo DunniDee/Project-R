@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3688669351419481396}
   - component: {fileID: 1500893238308534782}
   - component: {fileID: 9125222595943493101}
+  - component: {fileID: 1619246133711242694}
   m_Layer: 9
   m_Name: Door_Large
   m_TagString: Untagged
@@ -26,7 +27,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1140749921851660331}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_Children:
@@ -66,7 +67,7 @@ MeshRenderer:
   - {fileID: -8899972668171306391, guid: f59ea783feae9214eaf0e7c7c57768e4, type: 3}
   - {fileID: 2100000, guid: 438420ed54720f0469e8bf9813ffb8c8, type: 2}
   - {fileID: -8417018191770995657, guid: f59ea783feae9214eaf0e7c7c57768e4, type: 3}
-  - {fileID: -4838933450186888610, guid: f59ea783feae9214eaf0e7c7c57768e4, type: 3}
+  - {fileID: 2100000, guid: dc3085fd5db3cb547b89dcb7f6facfad, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -101,6 +102,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 247.45741, y: 71.44947, z: 116.8546}
   m_Center: {x: 0, y: 723.3805, z: -38.84865}
+--- !u!65 &1619246133711242694
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1140749921851660331}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 831.7695, y: 69.20757, z: 65.130615}
+  m_Center: {x: 0, y: 1165.3945, z: -58.932495}
 --- !u!1 &8773826241508008896
 GameObject:
   m_ObjectHideFlags: 0
@@ -130,7 +144,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8773826241508008896}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 333005436371698321}
