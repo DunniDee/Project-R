@@ -64,6 +64,7 @@ public class Scr_PlayerMotor : MonoBehaviour
     RaycastHit VaultHit;
 
     Vector3 WallNormal;
+    [SerializeField] Transform[] WallCheckPos;
 
     float SlideBoostTimer;
 
@@ -154,39 +155,59 @@ public class Scr_PlayerMotor : MonoBehaviour
 
         if (m_IsTouchingWall)
         {
+            if (!m_IsGrounded)
+            {
+                //Movment.Move(-WallNormal);
+            }
+
             if (!m_WasTouchingWall)
             {
-                m_MomentumDirection = Orientation.forward * m_MomentumMagnuitude;
+                m_MomentumDirection = m_MomentumDirection * m_MomentumMagnuitude;
+                StepAS.PlayOneShot(LandSounds[Random.Range(0,LandSounds.Length-1)]);
             }
 
-            if (Physics.Raycast(transform.position + (Vector3.up * 0.40f), Orientation.right,out RightHit, 1.5f, WallRunMask))
-            {
-                CamEffects.RotateTo += new Vector3(0,0,45) * Time.deltaTime;
-                WallNormal = RightHit.normal;
-            }
+            //m_MomentumDirection = Vector3.ProjectOnPlane(m_MomentumDirection, WallNormal);
+            m_MomentumDirection += Orientation.forward * 2.5f * Time.deltaTime;
 
-            if (Physics.Raycast(transform.position + (Vector3.up * 0.40f), -Orientation.right,out LeftHit, 1.5f, WallRunMask))
-            {
-                CamEffects.RotateTo += new Vector3(0,0,-45) * Time.deltaTime;
-                WallNormal = LeftHit.normal;
-            }
+            // if (Physics.Raycast(transform.position + (Vector3.up * 0.40f), Orientation.right,out RightHit, 1.5f, WallRunMask))
+            // {
+            //     CamEffects.RotateTo += new Vector3(0,0,45) * Time.deltaTime;
+            //     WallNormal = RightHit.normal;
+            //     return;
+            // }
 
-            if (Physics.Raycast(transform.position + (Vector3.up * 0.40f), Orientation.forward,out FrontHit, 1.5f, WallRunMask))
-            {
-                CamEffects.RotateTo += new Vector3(-45,0,0) * Time.deltaTime;
-                WallNormal = FrontHit.normal;
-            }
+            // if (Physics.Raycast(transform.position + (Vector3.up * 0.40f), -Orientation.right,out LeftHit, 1.5f, WallRunMask))
+            // {
+            //     CamEffects.RotateTo += new Vector3(0,0,-45) * Time.deltaTime;
+            //     WallNormal = LeftHit.normal;
+            //     return;
+                
+            // }
 
-            if (Physics.Raycast(transform.position + (Vector3.up * 0.40f), -Orientation.forward,out BackHit, 1.5f, WallRunMask))
-            {
-                CamEffects.RotateTo += new Vector3(45,0,0) * Time.deltaTime;
-                WallNormal = BackHit.normal;
-            }
-        }
+            // if (Physics.Raycast(transform.position + (Vector3.up * 0.40f), Orientation.forward,out FrontHit, 1.5f, WallRunMask))
+            // {
+            //     CamEffects.RotateTo += new Vector3(-45,0,0) * Time.deltaTime;
+            //     WallNormal = FrontHit.normal;
+            //     return;
+            // }
 
-        if (m_IsTouchingWall && !m_WasTouchingWall)
-        {
-            StepAS.PlayOneShot(LandSounds[Random.Range(0,LandSounds.Length-1)]);
+            // if (Physics.Raycast(transform.position + (Vector3.up * 0.40f), -Orientation.forward,out BackHit, 1.5f, WallRunMask))
+            // {
+            //     CamEffects.RotateTo += new Vector3(45,0,0) * Time.deltaTime;
+            //     WallNormal = BackHit.normal;
+            //     return;
+            // }
+
+            foreach (var Pos in WallCheckPos)
+            {  
+                RaycastHit Hit;
+                if (Physics.Raycast(Pos.position, Pos.forward,out Hit, 1.5f, WallRunMask))
+                {
+                    CamEffects.RotateTo += Pos.localPosition * 100 * Time.deltaTime;
+                    WallNormal = Hit.normal;
+                    return;
+                }
+            }
         }
 
 
@@ -396,8 +417,8 @@ public class Scr_PlayerMotor : MonoBehaviour
             }
 
 
-            CamEffects.LerpPos = new Vector3(0,-1,0);
-            CamEffects.RotateTo.z += 25 * Time.deltaTime;
+            CamEffects.LerpPos = new Vector3(0,0.5f,0);
+            CamEffects.RotateTo.z += 45 * Time.deltaTime;
             
             Weapons.SlideAnim(true);
 
@@ -406,7 +427,7 @@ public class Scr_PlayerMotor : MonoBehaviour
         }
         else
         {
-            CamEffects.LerpPos = new Vector3(0,0,0);
+            CamEffects.LerpPos = new Vector3(0,1.5f,0);
             Weapons.SlideAnim(false);
 
             
@@ -417,7 +438,7 @@ public class Scr_PlayerMotor : MonoBehaviour
 
     void Vault()
     {
-        if (Physics.Raycast(VaultCheckPos.position, VaultCheckPos.forward,out VaultHit, 0.5f, GroundMask) && !m_IsVaulting)
+        if (Physics.Raycast(VaultCheckPos.position, VaultCheckPos.forward,out VaultHit, 0.75f, GroundMask) && !m_IsVaulting)
         {
             m_IsVaulting = true;
             vaultPos = VaultHit.point + Vector3.up;
@@ -445,7 +466,7 @@ public class Scr_PlayerMotor : MonoBehaviour
             Movment.enabled = false;
             transform.position = Vector3.Lerp( vaultPos, transform.position, VaultCurve.Evaluate(m_VaultTimer));
             Debug.Log(vaultPos);
-            CamEffects.RotateTo.x += 150 * Time.deltaTime;
+            CamEffects.RotateTo.x += 200 * Time.deltaTime;
 
         }
         else
