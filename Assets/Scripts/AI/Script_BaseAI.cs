@@ -136,19 +136,7 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
         if (StateMachine.currentStateID == AIStateID.Idle)
         {
             isInCombat = true;
-            if (this is AI_Melee)
-            {
-                StateMachine.ChangeState(AIStateID.ChasePlayer);
-            }
-            else if (this is AI_Gun)
-            {
-                StateMachine.ChangeState(AIStateID.ShootPlayer);
-            }
-            else if (this is AI_Commander)
-            {
-                StateMachine.ChangeState(AIStateID.CommanderBuff);
-            }
-            else if (this is AI_Brute)
+            if (this is AI_Brute)
             {
                 StateMachine.ChangeState(AIStateID.ChasePlayer);
             }
