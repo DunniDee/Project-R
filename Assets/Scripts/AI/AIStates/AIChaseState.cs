@@ -11,7 +11,7 @@ public class AIChaseState : AIState
     public float attackRange = 2.0f;
     public float attackCurCooldown = 0.0f;
     public float attackMaxCooldown = 2.0f;
-    float m_ProjectileForce = 60.0f;
+    float m_ProjectileForce = 40.0f;
 
     public Vector2 ChaseTimerExtents = new Vector2(3f, 6f);
     public float currentChaseTime = 0.0f;
@@ -54,11 +54,12 @@ public class AIChaseState : AIState
     {
         var obj = GameObject.Instantiate(agent.Config.projectile, agent.GetFiringPoint().position, agent.GetFiringPoint().rotation);
         Scr_PlayerMotor motor = agent.GetPlayerTransform().GetComponent<Scr_PlayerMotor>();
-        obj.gameObject.transform.LookAt(agent.GetPlayerTransform().position + motor.m_MomentumDirection);
+       // obj.gameObject.transform.LookAt(new Vector3(agent.GetPlayerTransform().position.x,agent.transform.position.y, agent.GetPlayerTransform().position.z));
         obj.transform.localScale = new Vector3(obj.transform.localScale.y, obj.transform.localScale.x, obj.transform.localScale.z);
         obj.GetComponent<Scr_EnemyProjectile>().m_fDamage = agent.Config.projectileDamage;
         obj.GetComponent<Rigidbody>().velocity = obj.transform.forward * m_ProjectileForce;
         CapsuleCollider collider = obj.GetComponent<CapsuleCollider>();
+        collider.direction = 0;
 
         float height = collider.height;
         float width = collider.radius;
@@ -69,8 +70,8 @@ public class AIChaseState : AIState
     void SlashAttackVertical(Script_BaseAI agent)
     {
         var obj = GameObject.Instantiate(agent.Config.projectile, agent.GetFiringPoint().position, agent.GetFiringPoint().rotation);
-        obj.gameObject.transform.LookAt(agent.GetPlayerTransform().position + new Vector3(0.0f, 1.0f, 0.0f));
-       
+        //obj.gameObject.transform.LookAt(new Vector3(agent.GetPlayerTransform().position.x, agent.transform.position.y, agent.GetPlayerTransform().position.z));
+
         obj.GetComponent<Scr_EnemyProjectile>().m_fDamage = agent.Config.projectileDamage;
         obj.GetComponent<Rigidbody>().velocity = obj.transform.forward * m_ProjectileForce;
     }

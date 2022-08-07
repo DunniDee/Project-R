@@ -45,6 +45,11 @@ public class Scr_PlayerHealth : MonoBehaviour
     {
         audioSource.PlayOneShot(damageNoise[Random.Range(0,damageNoise.Length)]);
     }
+
+    public void ResetHealth()
+    {
+        currentHealth = maxHealth;
+    }
     // Start is called before the first frame update
     void Start()
     {
