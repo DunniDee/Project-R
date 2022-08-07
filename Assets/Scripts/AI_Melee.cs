@@ -12,7 +12,7 @@ public class AI_Melee : Script_BaseAI
 
         StateMachine.RegisterState(new AIDeathState());
         StateMachine.RegisterState(new AIIdleState());
-        StateMachine.RegisterState(new AIMoveState());
+
         StateMachine.RegisterState(new AIChaseState());
 
         StateMachine.ChangeState(InitalState);
