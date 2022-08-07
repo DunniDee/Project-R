@@ -101,7 +101,7 @@ public class script_WeaponSwap : MonoBehaviour
         if(Input.GetKeyDown(ScrollLeft))
         {
             Index--;
-            if (Index < 1)
+            if (Index < 0)
             {
                 Index = EquippedWeapons.Count - 1;
             }
