@@ -23,6 +23,7 @@ public class script_WeaponSwap : MonoBehaviour
 
     // Start is called before the first frame update
     [SerializeField] GameObject[] Weapons;
+     public List<GameObject> EquippedWeapons;
     [SerializeField] Animator[] WeaponAnimations;
     [SerializeField] KeyCode ScrollLeft = KeyCode.Q;
     [SerializeField] KeyCode ScrollRight = KeyCode.E;
@@ -49,8 +50,11 @@ public class script_WeaponSwap : MonoBehaviour
             Script_PlayerStatManager.Instance.WeaponStatList.Add(new Script_PlayerStatManager.WeaponStats());
             Script_PlayerStatManager.Instance.SetWeaponStats(i, weaponBase);
 
-          
-
+         
+            if (i < 4)
+            {
+                EquippedWeapons.Add(Weapon);
+            }
             Weapon.SetActive(false);
            
             i++;
@@ -82,13 +86,13 @@ public class script_WeaponSwap : MonoBehaviour
                 Weapon.SetActive(false);
             }
 
-            Weapons[Index].SetActive(true);
+            EquippedWeapons[Index].SetActive(true);
         }
 
         if(Input.GetKeyDown(ScrollRight))
         {
             Index++;
-            if (Index > Weapons.Length - 1)
+            if (Index > EquippedWeapons.Count - 1)
             {
                 Index = 0;
             }
@@ -99,7 +103,7 @@ public class script_WeaponSwap : MonoBehaviour
             Index--;
             if (Index < 1)
             {
-                Index = Weapons.Length - 1;
+                Index = EquippedWeapons.Count - 1;
             }
         }
     }
