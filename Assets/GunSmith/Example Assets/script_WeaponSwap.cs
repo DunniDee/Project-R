@@ -22,7 +22,7 @@ public class script_WeaponSwap : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    [SerializeField] GameObject[] Weapons;
+    public GameObject[] Weapons;
      public List<GameObject> EquippedWeapons;
     [SerializeField] Animator[] WeaponAnimations;
     [SerializeField] KeyCode ScrollLeft = KeyCode.Q;
