@@ -7,8 +7,8 @@ using TMPro;
 public class Scr_LoadOutUI : MonoBehaviour
 {
 
-    public List<TMP_Text> WeaponSlots;
-    private Scr_ScrollableButton[] AvaliableWeapons;
+    public List<TMP_Text> UI_EquippedWeaponSlots;
+    private Scr_ScrollableButton[] UI_AvaliableWeapons;
 
     [System.Serializable]
     public struct GunDescription {
@@ -49,18 +49,30 @@ public class Scr_LoadOutUI : MonoBehaviour
     {
         //Dont equip weapon that is already equipped
         if (selectedButton.weaponToEquipIndex == weaponToSwapIndex) return;
+
+        for (int i = 0; i < script_WeaponSwap.Instance.EquippedWeapons.Count; i++)
+        {
+          
+        }
+
         var selectedGun = script_WeaponSwap.Instance.Weapons[selectedButton.weaponToEquipIndex].GetComponent<Script_WeaponBase>();
 
+        //Set the currently active weapon to false as its no longer equipped
         script_WeaponSwap.Instance.EquippedWeapons[weaponToSwapIndex].SetActive(false);
+
         script_WeaponSwap.Instance.EquippedWeapons[weaponToSwapIndex] = script_WeaponSwap.Instance.Weapons[selectedButton.weaponToEquipIndex];
 
-        WeaponSlots[weaponToSwapIndex].text = selectedGun.GetGunName();
+        script_WeaponSwap.Instance.EquippedWeapons[weaponToSwapIndex].SetActive(true);
+
+        //Change name of Weapon slot to equipped item.
+        UI_EquippedWeaponSlots[weaponToSwapIndex].text = selectedGun.GetGunName();
     }
 
     public void SetWeaponSlots()
     {
         int i = 0;
-        foreach(TMP_Text text in WeaponSlots)
+        //Set the name of the Equipped Weapon Slots UI
+        foreach(TMP_Text text in UI_EquippedWeaponSlots)
         {
             var weapon = script_WeaponSwap.Instance.EquippedWeapons[i].GetComponent<Script_WeaponBase>();
             text.text = weapon.GetGunName();
@@ -70,10 +82,11 @@ public class Scr_LoadOutUI : MonoBehaviour
 
     public void SetAvaliableWeapons()
     {
+        //Get avaliable Weapons from weapon swap and load the buttons with their index's
         for(int i = 0; i < script_WeaponSwap.Instance.Weapons.Length; i++)
         {
-            AvaliableWeapons[i].tmpText.text = script_WeaponSwap.Instance.Weapons[i].GetComponent<Script_WeaponBase>().GetGunName();
-            AvaliableWeapons[i].weaponToEquipIndex = i;
+            UI_AvaliableWeapons[i].tmpText.text = script_WeaponSwap.Instance.Weapons[i].GetComponent<Script_WeaponBase>().GetGunName();
+            UI_AvaliableWeapons[i].weaponToEquipIndex = i;
         }
     }
 
@@ -81,8 +94,8 @@ public class Scr_LoadOutUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        UI_AvaliableWeapons = GetComponentsInChildren<Scr_ScrollableButton>();
         SetWeaponSlots();
-        AvaliableWeapons = GetComponentsInChildren<Scr_ScrollableButton>();
         SetAvaliableWeapons();
     }
 
