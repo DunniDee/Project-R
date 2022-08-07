@@ -5,6 +5,7 @@ using UnityEngine;
 public class AltFire_FanHammer : Scr_AltFireBase
 {
     [SerializeField] float ShotInterval;
+    [SerializeField] Animator Anim;
 
     protected override void OnAbilityStart()
     {
@@ -20,6 +21,7 @@ public class AltFire_FanHammer : Scr_AltFireBase
 
     void Shoot()
     {
-        Weapon.Shoot();
+        Weapon.ShootNoAnim();
+        Anim.SetTrigger("altfire");
     }
 }

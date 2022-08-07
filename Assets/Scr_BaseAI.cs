@@ -45,6 +45,8 @@ public class Scr_BaseAI : MonoBehaviour, IDamageable
 
     [SerializeField] protected AudioSource AS;
 
+    [SerializeField] protected Transform DamagePopupPos;
+
     protected void StartAttackUI()
     {
         AlertPos.LookAt(PlayerTransform);
@@ -66,9 +68,11 @@ public class Scr_BaseAI : MonoBehaviour, IDamageable
         {
             case CustomCollider.DamageType.Critical:
                 m_Health -= _Damage * 2;
+                Scr_DamagePopupManager.Instance.DisplayDamagePopup((int)_Damage * 2, DamagePopupPos);
             break;
             case CustomCollider.DamageType.Normal:
                 m_Health -= _Damage;
+                Scr_DamagePopupManager.Instance.DisplayDamagePopup((int)_Damage * 2, DamagePopupPos);
             break;
         }
 
