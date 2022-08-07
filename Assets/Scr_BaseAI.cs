@@ -47,6 +47,12 @@ public class Scr_BaseAI : MonoBehaviour, IDamageable
 
     [SerializeField] protected Transform DamagePopupPos;
 
+
+    protected void Start() 
+    {
+        Debug.Log(Script_PlayerStatManager.Instance.PlayerTransform);
+        PlayerTransform = Script_PlayerStatManager.Instance.PlayerTransform;
+    }
     protected void StartAttackUI()
     {
         AlertPos.LookAt(PlayerTransform);
@@ -72,7 +78,7 @@ public class Scr_BaseAI : MonoBehaviour, IDamageable
             break;
             case CustomCollider.DamageType.Normal:
                 m_Health -= _Damage;
-                Scr_DamagePopupManager.Instance.DisplayDamagePopup((int)_Damage * 2, DamagePopupPos);
+                Scr_DamagePopupManager.Instance.DisplayDamagePopup((int)_Damage, DamagePopupPos);
             break;
         }
 
@@ -228,9 +234,18 @@ public class Scr_BaseAI : MonoBehaviour, IDamageable
         m_Ragdoll.ApplyForce(Vector3.up * 10);
     }
 
+    protected float DeadTimer = 2;
     protected virtual void DeadUpdate()
     {
         FadeAttackUI();
+        if (DeadTimer > 0)
+        {
+            DeadTimer -= Time.deltaTime;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     protected virtual void DeadEnd()

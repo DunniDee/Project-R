@@ -79,5 +79,14 @@ public class Enemy_FlyingShooter : Enemy_Shooter
         FadeAttackUI();
         DroneAS.volume = Mathf.Lerp(DroneAS.volume,0, Time.deltaTime  * 2);
         DroneAS.pitch = Mathf.Lerp(DroneAS.pitch,0.25f, Time.deltaTime * 2);
+
+        if (DeadTimer > 0)
+        {
+            DeadTimer -= Time.deltaTime;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 }
