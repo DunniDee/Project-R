@@ -141,6 +141,7 @@ public abstract class Script_WeaponBase : MonoBehaviour
     }
 
     public virtual void Shoot(){}
+    public virtual void ShootNoAnim(){}
     protected virtual void Reload()
     {
         if ((CurMagCount < 1 && ShotTimer < 1 && !IsReloading && CurReserveCount > 0) ||

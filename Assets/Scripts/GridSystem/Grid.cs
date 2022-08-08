@@ -7,8 +7,9 @@ public class Grid : MonoBehaviour
 {
     public enum GridType
     {
-        EQUIPPED,
+        EQUIPABILITY,
         INVENTORY,
+        EQUIPWEAPON,
         STATIC
     }
     
@@ -19,6 +20,7 @@ public class Grid : MonoBehaviour
     public const float tileSizeWidth = 32;
     public const float tileSizeHeight = 32;
 
+    public Color StaticColor;
     InventoryItem[,] inventoryItemSlot;
 
     RectTransform rectTransform;
@@ -71,6 +73,11 @@ public class Grid : MonoBehaviour
         inventoryItemSlot = new InventoryItem[_width, _height];
         Vector2 size = new Vector2(_width * tileSizeWidth, _height * tileSizeHeight);
         rectTransform.sizeDelta = size;
+        if (gridType == GridType.STATIC)
+        {
+            GetComponent<UnityEngine.UI.Image>().color = StaticColor;
+            
+        }
     }
 
     internal InventoryItem GetItem(int x, int y)
@@ -182,8 +189,8 @@ public class Grid : MonoBehaviour
         {
             case GridType.INVENTORY:
                 return GridType.INVENTORY;
-            case GridType.EQUIPPED:
-                return GridType.EQUIPPED;
+            case GridType.EQUIPABILITY:
+                return GridType.EQUIPABILITY;
             default:
                 return GridType.STATIC;
         }

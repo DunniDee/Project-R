@@ -8,7 +8,7 @@ public class Scr_PlayerHealth : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip[] damageNoise;
     public Script_HealthUI m_healthUI;
-
+    public Scr_CameraEffects CamEffects;
     public float maxHealth = 100.0f;
     public float currentHealth = 0.0f;
 
@@ -25,29 +25,37 @@ public class Scr_PlayerHealth : MonoBehaviour
 
     public void TakeDamage(float _Damage)
     {
-       /* if(OnTakeDamageEvent != null)
+        if (OnTakeDamageEvent != null)
         {
-            OnTakeDamageEvent(0.2f,0.5f);
+            OnTakeDamageEvent(0.2f, 0.5f);
             timer = waitTime;
-        }*/
+        }
         PlayDamageNoise();
-        
+
         currentHealth -= _Damage;
-        m_healthUI.HealthValueText.text = currentHealth.ToString();
+        m_healthUI.HealthValueText.text = currentHealth.ToString("F0");
+        CamEffects.ShakeTime += 0.25f;
+        CamEffects.ShakeAmplitude += 0.7f;
     }
     public void Heal(float _HealthAmount) {
         currentHealth += _HealthAmount;
-        m_healthUI.HealthValueText.text = currentHealth.ToString();
+        m_healthUI.HealthValueText.text = currentHealth.ToString("F0");
     }
     void PlayDamageNoise()
     {
         audioSource.PlayOneShot(damageNoise[Random.Range(0,damageNoise.Length)]);
+    }
+
+    public void ResetHealth()
+    {
+        currentHealth = maxHealth;
     }
     // Start is called before the first frame update
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
         m_healthUI = GetComponentInChildren<Script_HealthUI>();
+        CamEffects = GetComponentInChildren<Scr_CameraEffects>();
         currentHealth = maxHealth;
         
     }
@@ -56,6 +64,7 @@ public class Scr_PlayerHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Return the Player to Hub World if they Die...
         /*if (currentHealth <= 0)
         {
             Script_SceneManager.Instance.LoadScene("HubWorld");
@@ -65,10 +74,12 @@ public class Scr_PlayerHealth : MonoBehaviour
         {
             timer -= Time.deltaTime;
         }
-        else if (timer <= 0.0f && currentHealth < maxHealth)
+       /* else if (timer <= 0.0f && currentHealth < maxHealth)
         {
             currentHealth += curRegenRate;
             currentHealth += RegenRate;
-        }
+        }*/
     }
+
+   
 }

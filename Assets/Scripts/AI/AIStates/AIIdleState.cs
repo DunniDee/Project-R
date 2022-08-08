@@ -37,23 +37,15 @@ public class AIIdleState : AIState
                     idleTimer = waitTime;
                     agent.GetStateMachine().ChangeState(AIStateID.Moving);
                 }
-                break;
+            break;
+            
             case true:
-                if (agent is AI_Melee)
-                {
-                    agent.GetStateMachine().ChangeState(AIStateID.ChasePlayer);
-
-                }
-                else if (agent is AI_Gun)
-                {
-                     agent.GetStateMachine().ChangeState(AIStateID.ShootPlayer);
-                }
-                else if (agent is AI_Brute)
+                if (agent is AI_Brute)
                 {
                     agent.GetStateMachine().ChangeState(AIStateID.BruteChase);
                 }
 
-                break;
+            break;
         }
     }
 

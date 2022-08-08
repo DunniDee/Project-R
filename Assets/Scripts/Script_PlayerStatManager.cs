@@ -6,14 +6,18 @@ public class Script_PlayerStatManager : MonoBehaviour
 {
     //Singleton Pattern
     public static Script_PlayerStatManager Instance;
-    public void Start()
+    public Transform PlayerTransform;
+    public void Awake()
     {
-        if (Instance != null && Instance != this)
+        if (Instance == null)
         {
-            Destroy(this.gameObject);
-        } else {
             Instance = this;
-          	DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(this);
+        }
+        else
+        {
+            Debug.Log("Damagepopup Manager fucked up");
+            Destroy(gameObject);
         }
     }
 
@@ -35,6 +39,7 @@ public class Script_PlayerStatManager : MonoBehaviour
         [SerializeField]
         public float Modified_Firerate;
     }
+
 
     // Weapon Stats
     public List<WeaponStats> WeaponStatList;
