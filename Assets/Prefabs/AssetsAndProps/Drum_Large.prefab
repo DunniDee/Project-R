@@ -11,6 +11,10 @@ GameObject:
   - component: {fileID: 5677893705427562352}
   - component: {fileID: 8747175386130981077}
   - component: {fileID: 6809656915261412383}
+  - component: {fileID: 999678624}
+  - component: {fileID: 999678623}
+  - component: {fileID: 999678622}
+  - component: {fileID: 999678621}
   m_Layer: 0
   m_Name: Drum_Large
   m_TagString: Untagged
@@ -25,7 +29,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5008071584886289866}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_Children: []
@@ -81,3 +85,58 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!136 &999678624
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5008071584886289866}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 201.6716
+  m_Height: 643.5136
+  m_Direction: 1
+  m_Center: {x: 0, y: 321.7568, z: -13.838959}
+--- !u!136 &999678623
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5008071584886289866}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 261.1011
+  m_Height: 522.2022
+  m_Direction: 1
+  m_Center: {x: -0.000047683716, y: -1.0350943, z: -0.00023841858}
+--- !u!65 &999678622
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5008071584886289866}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 354.49936, y: 88.30461, z: 362.64038}
+  m_Center: {x: -2.4419427, y: 599.3607, z: 1.6281128}
+--- !u!136 &999678621
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5008071584886289866}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 213.88397
+  m_Height: 452.18964
+  m_Direction: 1
+  m_Center: {x: -0.000047683716, y: 453.23868, z: -11.398315}

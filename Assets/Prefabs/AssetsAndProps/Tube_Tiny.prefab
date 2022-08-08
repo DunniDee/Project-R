@@ -11,7 +11,9 @@ GameObject:
   - component: {fileID: 8600301759803821239}
   - component: {fileID: 4680844711878525714}
   - component: {fileID: 7426792297722410968}
-  m_Layer: 0
+  - component: {fileID: 8183354754242686544}
+  - component: {fileID: 6542306979272503154}
+  m_Layer: 9
   m_Name: Tube_Tiny
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25,7 +27,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8940129383691474445}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_Children: []
@@ -81,3 +83,31 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!136 &8183354754242686544
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8940129383691474445}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 15.513611
+  m_Height: 488.12094
+  m_Direction: 1
+  m_Center: {x: 0, y: 244.06018, z: -0.34942627}
+--- !u!136 &6542306979272503154
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8940129383691474445}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 6.6991806
+  m_Height: 113.10425
+  m_Direction: 2
+  m_Center: {x: 0, y: 482.0499, z: -50.83313}
