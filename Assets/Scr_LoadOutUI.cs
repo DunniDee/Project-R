@@ -37,7 +37,7 @@ public class Scr_LoadOutUI : MonoBehaviour
 
     public void SetSelectedGunUI()
     {
-        var selectedGun = script_WeaponSwap.Instance.Weapons[selectedButton.weaponToEquipIndex].GetComponent<Script_WeaponBase>();
+        var selectedGun = script_WeaponSwap.Instance.Weapons[selectedButton.GetEquipIndex()].GetComponent<Script_WeaponBase>();
         UI_GunDescription.title.text = selectedGun.GetGunName();
         UI_GunDescription.Damage.text = selectedGun.GetDamage().ToString();
         UI_GunDescription.Firerate.text = selectedGun.GetFireRate().ToString();
@@ -48,19 +48,19 @@ public class Scr_LoadOutUI : MonoBehaviour
     public void EquipWeapon()
     {
         //Dont equip weapon that is already equipped
-        if (selectedButton.weaponToEquipIndex == weaponToSwapIndex) return;
+        if (selectedButton.GetEquipIndex() == weaponToSwapIndex) return;
 
         for (int i = 0; i < script_WeaponSwap.Instance.EquippedWeapons.Count; i++)
         {
           
         }
 
-        var selectedGun = script_WeaponSwap.Instance.Weapons[selectedButton.weaponToEquipIndex].GetComponent<Script_WeaponBase>();
+        var selectedGun = script_WeaponSwap.Instance.Weapons[selectedButton.GetEquipIndex()].GetComponent<Script_WeaponBase>();
 
         //Set the currently active weapon to false as its no longer equipped
         script_WeaponSwap.Instance.EquippedWeapons[weaponToSwapIndex].SetActive(false);
 
-        script_WeaponSwap.Instance.EquippedWeapons[weaponToSwapIndex] = script_WeaponSwap.Instance.Weapons[selectedButton.weaponToEquipIndex];
+        script_WeaponSwap.Instance.EquippedWeapons[weaponToSwapIndex] = script_WeaponSwap.Instance.Weapons[selectedButton.GetEquipIndex()];
 
         script_WeaponSwap.Instance.EquippedWeapons[weaponToSwapIndex].SetActive(true);
 
@@ -85,8 +85,11 @@ public class Scr_LoadOutUI : MonoBehaviour
         //Get avaliable Weapons from weapon swap and load the buttons with their index's
         for(int i = 0; i < script_WeaponSwap.Instance.Weapons.Length; i++)
         {
-            UI_AvaliableWeapons[i].tmpText.text = script_WeaponSwap.Instance.Weapons[i].GetComponent<Script_WeaponBase>().GetGunName();
-            UI_AvaliableWeapons[i].weaponToEquipIndex = i;
+            Script_WeaponBase gun = script_WeaponSwap.Instance.Weapons[i].GetComponent<Script_WeaponBase>();
+
+
+            UI_AvaliableWeapons[i].SetUIElements(gun.GetGunName(), gun.GetDamage().ToString(), gun.GetMagCount().ToString());
+            UI_AvaliableWeapons[i].SetEquipIndex(i);
         }
     }
 

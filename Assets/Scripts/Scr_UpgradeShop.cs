@@ -6,37 +6,44 @@ using TMPro;
 
 public class Scr_UpgradeShop : MonoBehaviour
 {
-    public GameObject PlayerCanvas;
+    [Header("Canvas")]
+    public GameObject UpgradeShop_Canvas;
+    [Space]
+    public bool isShopActive = false;
 
-    public TMP_Text SpeedCost;
-    public TMP_Text DamageCost;
-    public TMP_Text JumpCost;
-    public TMP_Text MagCost;
-    public TMP_Text FirerateCost;
+    public void EnableShopCanvas(bool _b)
+    {
+        UpgradeShop_Canvas.SetActive(_b);
+        isShopActive = _b;
+    }
+    
+    [System.Serializable]
+    public struct ShopWeaponUI
+    {
+        public TMP_Text GunName;
+        public TMP_Text Damage;
+        public TMP_Text Cost;
+        public TMP_Text magazineSize;
 
-    public float SpeedUpgradeCost = 100.0f;
-    public float JumpUpgradeCost = 1000.0f;
-
-    public float DamageUpgradeCost = 1000.0f;
-    public float FireRateUpgradeCost = 1000.0f;
-    public float MagCountUpgradeCost = 1000.0f;
+    }
+    public List<ShopWeaponUI> ShopSlots;
 
     private void Start()
-    {
-        PlayerCanvas = GameObject.FindGameObjectWithTag("PlayerUI");
-
-        SpeedCost.text = "Cost: " + SpeedUpgradeCost.ToString("F0");
-        JumpCost.text = "Cost: " + JumpUpgradeCost.ToString("F0");
-
-        DamageCost.text = "Cost: " + DamageUpgradeCost.ToString("F0");
-        FirerateCost.text = "Cost: " + FireRateUpgradeCost.ToString("F0");
-        MagCost.text = "Cost: " + MagCountUpgradeCost.ToString("F0");
+    { 
+        if (UpgradeShop_Canvas == null)
+        {
+            Debug.LogWarning("Missing UpgradeShopCanvas");
+        }
+     
 
         
     }
 
-    private void Awake()
+    private void Update()
     {
-        
+        if (isShopActive)
+        {
+            EnableShopCanvas(false);
+        }
     }
 }

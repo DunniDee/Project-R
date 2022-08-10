@@ -4,9 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum ItemType { 
-    
-}
 public class InventoryItem : MonoBehaviour
 {
     public ItemData itemData;

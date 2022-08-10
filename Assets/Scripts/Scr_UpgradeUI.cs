@@ -19,6 +19,7 @@ public class Scr_UpgradeUI : MonoBehaviour
         public TMP_Text MagCount;
     }
 
+    [Header("Equipped Weapon Ability UI")]
     public WeaponUI Weapon1;
     public WeaponUI Weapon2;
     public WeaponUI Weapon3;
