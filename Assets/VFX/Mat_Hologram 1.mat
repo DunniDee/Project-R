@@ -10,7 +10,7 @@ Material:
   m_Name: Mat_Hologram 1
   m_Shader: {fileID: -6465566751694194690, guid: de079b3a93079f84083dfa6950338641,
     type: 3}
-  m_ShaderKeywords: _DISABLE_SSR_TRANSPARENT _SURFACE_TYPE_TRANSPARENT
+  m_ShaderKeywords: _SURFACE_TYPE_TRANSPARENT
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -19,11 +19,10 @@ Material:
     MotionVector: User
     RenderType: Transparent
   disabledShaderPasses:
-  - TransparentDepthPrepass
+  - MOTIONVECTORS
   - TransparentDepthPostpass
   - TransparentBackface
   - RayTracingPrepass
-  - MOTIONVECTORS
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -140,17 +139,17 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_072bcc4cf13545d7b45c383313d7d036: 1
-    - Vector1_11f2847dfc2b49df9b57719096a8c3ec: 1
+    - Vector1_072bcc4cf13545d7b45c383313d7d036: 4
+    - Vector1_11f2847dfc2b49df9b57719096a8c3ec: 7.5
     - Vector1_23e8bccb2d92472da34eb36cc9d033c5: 0.1
-    - Vector1_4e813b7054fa44d5a39222f008f4559a: 3
+    - Vector1_4e813b7054fa44d5a39222f008f4559a: 2.5
     - Vector1_560165f6f1fd4aa1ad5f9df106e3de0d: 0.5
-    - Vector1_8547b3cdb52f4c6f93b7e6c213eb3e78: 63.08
+    - Vector1_8547b3cdb52f4c6f93b7e6c213eb3e78: 50
     - Vector1_86f416f415c14669ae348a5b3c752903: 1
     - Vector1_a8e5b57cf17b4e88a1aa127b900eb270: -0.49
     - Vector1_b0276446a5434fe894821ed3f87a316b: 35
-    - Vector1_caa540414a0e4a2a8b0af6820bfb4f24: 1.19
-    - Vector1_cc2d7d63a0d443bf8ce704fe273e791d: 0.5
+    - Vector1_caa540414a0e4a2a8b0af6820bfb4f24: 0.5
+    - Vector1_cc2d7d63a0d443bf8ce704fe273e791d: -0.0006
     - Vector1_ee805278da374823ae48cd3b7d90f260: 100
     - _AORemapMax: 1
     - _AORemapMin: 0
@@ -220,7 +219,7 @@ Material:
     - _PPDPrimitiveWidth: 1
     - _RayTracing: 0
     - _ReceivesSSR: 1
-    - _ReceivesSSRTransparent: 0
+    - _ReceivesSSRTransparent: 1
     - _RefractionModel: 0
     - _RenderQueueType: 4
     - _RequireSplitLighting: 0
@@ -232,10 +231,10 @@ Material:
     - _SpecularOcclusionMode: 1
     - _SrcBlend: 1
     - _StencilRef: 0
-    - _StencilRefDepth: 0
+    - _StencilRefDepth: 8
     - _StencilRefDistortionVec: 4
-    - _StencilRefGBuffer: 2
-    - _StencilRefMV: 32
+    - _StencilRefGBuffer: 10
+    - _StencilRefMV: 40
     - _StencilWriteMask: 6
     - _StencilWriteMaskDepth: 8
     - _StencilWriteMaskDistortionVec: 4
@@ -266,14 +265,15 @@ Material:
     - _ZWrite: 0
     m_Colors:
     - Color_50ec490cc84a46b69a83a79bebed0b48: {r: 1, g: 0.25899854, b: 0, a: 0}
-    - Color_5c5664b24d4b4e2d9ea771aa66255199: {r: 1, g: 0, b: 0.83145046, a: 1}
+    - Color_5c5664b24d4b4e2d9ea771aa66255199: {r: 0.58018863, g: 0.8767673, b: 1,
+        a: 1}
     - Color_683ed0da81864791918ef320f9842b40: {r: 1, g: 0.4009434, b: 0.4009434, a: 0}
     - Color_78efe8979e624a4db6ce33111cacfad2: {r: 1, g: 0.49108696, b: 0, a: 1}
     - Color_8f505a2df6104d72a60d0ed565876eed: {r: 1, g: 0.5374451, b: 0, a: 0}
     - Color_9613132cfbab466c900658dcedb5f8c0: {r: 0, g: 0, b: 0, a: 0}
-    - Color_a52f25d44e2d4174927256728d2c99a4: {r: 1, g: 1, b: 1, a: 1}
+    - Color_a52f25d44e2d4174927256728d2c99a4: {r: 0.5613208, g: 0.8692831, b: 1, a: 1}
     - Vector2_60ff6b207cdd46d3a7f40a986c204a8d: {r: 1, g: 1, b: 0, a: 0}
-    - Vector2_8ee55a0679184f95961890f3ef5d0a1b: {r: 0.1, g: 0.1, b: 0, a: 0}
+    - Vector2_8ee55a0679184f95961890f3ef5d0a1b: {r: 0, g: 0.5, b: 0, a: 0}
     - Vector2_b146f9d6c46448768033a01e861ebc44: {r: 0, g: 2, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
