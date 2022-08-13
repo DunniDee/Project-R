@@ -6,6 +6,7 @@ public class Scr_PooledParticle : MonoBehaviour
 {
     [SerializeField] float Lifetime;
     [SerializeField] bool IsWorldSpace;
+    [SerializeField] ParticleSystem PS;
     // Update is called once per frame
     private void Start()
     {
@@ -14,11 +15,13 @@ public class Scr_PooledParticle : MonoBehaviour
             transform.parent = null;
         }
         Invoke("Disable", Lifetime);
+        PS.Play();
     }
 
     private void OnEnable() 
     {
         Invoke("Disable", Lifetime);
+        PS.Play();
     }
     public void Disable()
     {
