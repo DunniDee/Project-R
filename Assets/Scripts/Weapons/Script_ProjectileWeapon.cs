@@ -23,6 +23,11 @@ public class Script_ProjectileWeapon : Script_WeaponBase
                 Proj.transform.position = FiringPoint.position;
                 Proj.transform.rotation = ProjectileSpread;
 
+                GameObject Muzz = ObjectPooler.Instance.GetObject(Muzzleflash);
+
+                Muzz.transform.position = FiringPoint.position;
+                Muzz.transform.rotation = ProjectileSpread;
+
                 Script_RCProjectile temp = Proj.GetComponent<Script_RCProjectile>();
 
                 temp.SetDamage(Damage);

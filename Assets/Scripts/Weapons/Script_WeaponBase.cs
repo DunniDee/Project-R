@@ -50,6 +50,12 @@ public abstract class Script_WeaponBase : MonoBehaviour
 
     [Space]
 
+    [Header("VFX")]
+    [SerializeField] protected GameObject Muzzleflash;
+    
+
+    [Space]
+
     [Header("Animation Variables")]
     [SerializeField] protected Animator Anim;
     protected int ShootHash;
