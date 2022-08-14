@@ -65,7 +65,9 @@ public class Scr_UpgradeShop : MonoBehaviour
 
 
     private void Start()
-    { 
+    {
+        vcam = GetComponent<CinemachineVirtualCamera>();
+
         if (UpgradeShop_Canvas == null)
         {
             Debug.LogWarning("Missing UpgradeShopCanvas");
