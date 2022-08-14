@@ -23,14 +23,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3159240582260003093}
-  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 7.39, y: 25.66, z: 22.62}
   m_LocalScale: {x: 0.31161994, y: 0.31162, z: 0.31161994}
   m_Children:
   - {fileID: 3755329054893349340}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1 &7986258407940718011
 GameObject:
   m_ObjectHideFlags: 0
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 3755329054893349340}
   - component: {fileID: 1611938374308045068}
   - component: {fileID: 2026975792752322047}
-  - component: {fileID: 2575062995613975475}
+  - component: {fileID: 1655886076236063060}
   m_Layer: 9
   m_Name: rock_8_solidShatter1
   m_TagString: Untagged
@@ -113,8 +113,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &2575062995613975475
-MeshCollider:
+--- !u!65 &1655886076236063060
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -123,7 +123,6 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -3777297447807659236, guid: 0d3873f1b58df7743a570a517eac417a, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 3.834013, y: 3.707357, z: 3.1322417}
+  m_Center: {x: -0.000061035156, y: 0, z: 0.000030517578}

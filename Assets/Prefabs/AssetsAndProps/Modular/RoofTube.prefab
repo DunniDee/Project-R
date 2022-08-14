@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 5966480913379038908}
   - component: {fileID: 4492126615878663384}
   - component: {fileID: 4305159317863822219}
-  m_Layer: 0
+  - component: {fileID: 8732973451144719509}
+  m_Layer: 9
   m_Name: PipeMain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 3619928647219608824}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 100, y: 100, z: 100}
   m_Children: []
   m_Father: {fileID: 4605877007203283228}
   m_RootOrder: 0
@@ -59,7 +60,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 8748892135801146194, guid: f8e42cb8750c83d4ab6820bcd4529915, type: 3}
+  - {fileID: 2100000, guid: 467858da2c100934b8c3bb3855b4a60d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -81,6 +82,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!136 &8732973451144719509
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3619928647219608824}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.29548407
+  m_Height: 4.4548035
+  m_Direction: 2
+  m_Center: {x: 0, y: -0.019180775, z: -1.928699}
 --- !u!1 &3792184889677048742
 GameObject:
   m_ObjectHideFlags: 0
@@ -104,9 +119,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3792184889677048742}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_Children:
   - {fileID: 5966480913379038908}
   - {fileID: 2577402365317518193}
@@ -124,13 +139,13 @@ GameObject:
   - component: {fileID: 2577402365317518193}
   - component: {fileID: 3390428211383357828}
   - component: {fileID: 8239866746663438148}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: PipeStick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2577402365317518193
 Transform:
   m_ObjectHideFlags: 0
@@ -140,7 +155,7 @@ Transform:
   m_GameObject: {fileID: 4124628602523749478}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 100, y: 100, z: 100}
   m_Children: []
   m_Father: {fileID: 4605877007203283228}
   m_RootOrder: 1

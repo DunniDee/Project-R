@@ -167,7 +167,7 @@ public class Scr_PlayerMotor : MonoBehaviour
             }
 
             //m_MomentumDirection = Vector3.ProjectOnPlane(m_MomentumDirection, WallNormal);
-            m_MomentumDirection += Orientation.forward * 2.5f * Time.deltaTime;
+            //m_MomentumDirection += Orientation.forward * Time.deltaTime;
 
             // if (Physics.Raycast(transform.position + (Vector3.up * 0.40f), Orientation.right,out RightHit, 1.5f, WallRunMask))
             // {
@@ -321,8 +321,9 @@ public class Scr_PlayerMotor : MonoBehaviour
         {
             if (m_IsTouchingWall  && !m_IsGrounded)
             {
-                m_MomentumDirection += m_SmoothMoveDirection.normalized * m_DashMomentum * 0.25f;
-                m_MomentumDirection += WallNormal * 10;
+                m_MomentumDirection = Orientation.forward * m_MomentumMagnuitude * 0.5f;
+                m_MomentumDirection += WallNormal * m_MomentumMagnuitude * 0.6f;
+                //m_MomentumDirection += WallNormal * 10;
             }
             
             IsLaunched = false;
