@@ -13,6 +13,8 @@ public class AltFire_360NoScope : Scr_AltFireBase
 
     [SerializeField] bool IsHorizontal;
 
+    [SerializeField] Animator Anim;
+
 
     protected override void OnAbilityStart()
     {
@@ -21,6 +23,8 @@ public class AltFire_360NoScope : Scr_AltFireBase
 
         Motor.m_VerticalVelocity.y = JumpForce;
         Motor.MovePlayer(new Vector3(0, 0.25f,0));
+
+        Anim.SetTrigger("altfire");
     }
     
     protected override void OnAbilityDurration()

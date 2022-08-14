@@ -14,6 +14,12 @@ public class Scr_EnemyRoomManager : MonoBehaviour
     [SerializeField] List<Scr_BaseAI> Wave2;
     int m_Wave2Count;
     [SerializeField] List<Scr_BaseAI> Wave3;
+    int m_Wave3Count;
+    [SerializeField] List<Scr_BaseAI> Wave4;
+    int m_Wave4Count;
+    [SerializeField] List<Scr_BaseAI> Wave5;
+    int m_Wave5Count;
+    [SerializeField] List<Scr_BaseAI> Wave6;
 
     bool IsClear;
     bool WasClear;
@@ -37,9 +43,27 @@ public class Scr_EnemyRoomManager : MonoBehaviour
             EnemyList.Add(item);
         }
 
+        foreach (var item in Wave4)
+        {
+            EnemyList.Add(item);
+        }
+
+        foreach (var item in Wave5)
+        {
+            EnemyList.Add(item);
+        }
+
+        foreach (var item in Wave6)
+        {
+            EnemyList.Add(item);
+        }
+
         m_MaxCount = EnemyList.Count;
         m_Wave1Count = Wave1.Count;
         m_Wave2Count = Wave2.Count;
+        m_Wave3Count = Wave3.Count;
+        m_Wave4Count = Wave4.Count;
+        m_Wave5Count = Wave5.Count;
 
     }
 
@@ -77,39 +101,139 @@ public class Scr_EnemyRoomManager : MonoBehaviour
     {
         if (EnemyList.Count != lastCount)
         {
-            if (EnemyList.Count <= m_MaxCount - (m_Wave1Count + m_Wave2Count))
+            if (EnemyList.Count <= m_MaxCount - (m_Wave1Count + m_Wave2Count + m_Wave3Count + m_Wave4Count + m_Wave5Count))
             {
-                foreach (var Enemy in Wave3)
+                foreach (var Enemy in Wave6)
                 {
                     if (Enemy == null) //clear any dead enemies
                     {
-                        Wave3.Remove(Enemy);
+                        Wave6.Remove(Enemy);
                     }
                 }
 
-                foreach (var Enemy in Wave3)
+                foreach (var Enemy in Wave6)
                 {
                     Enemy.gameObject.SetActive(true);
                 }
             }
-
-            if (EnemyList.Count <= m_MaxCount - m_Wave1Count)
-            {
-                foreach (var Enemy in Wave2)
-                {
-                    if (Enemy == null) //clear any dead enemies
-                    {
-                        Wave2.Remove(Enemy);
-                    }
-                }
-
-                foreach (var Enemy in Wave2)
-                {
-                    Enemy.gameObject.SetActive(true);
-                }
-            }
-
         }
+
+        if (EnemyList.Count <= m_MaxCount - (m_Wave1Count + m_Wave2Count + m_Wave3Count + m_Wave4Count))
+        {
+            foreach (var Enemy in Wave5)
+            {
+                if (Enemy == null) //clear any dead enemies
+                {
+                    Wave5.Remove(Enemy);
+                }
+            }
+
+            foreach (var Enemy in Wave5)
+            {
+                Enemy.gameObject.SetActive(true);
+            }
+        }
+
+        if (EnemyList.Count <= m_MaxCount - (m_Wave1Count + m_Wave2Count + m_Wave3Count))
+        {
+            foreach (var Enemy in Wave4)
+            {
+                if (Enemy == null) //clear any dead enemies
+                {
+                    Wave4.Remove(Enemy);
+                }
+            }
+
+            foreach (var Enemy in Wave4)
+            {
+                Enemy.gameObject.SetActive(true);
+            }
+        }
+
+        if (EnemyList.Count <= m_MaxCount - (m_Wave1Count + m_Wave2Count))
+        {
+            foreach (var Enemy in Wave3)
+            {
+                if (Enemy == null) //clear any dead enemies
+                {
+                    Wave3.Remove(Enemy);
+                }
+            }
+
+            foreach (var Enemy in Wave3)
+            {
+                Enemy.gameObject.SetActive(true);
+            }
+        }
+
+        if (EnemyList.Count <= m_MaxCount - (m_Wave1Count))
+        {
+            foreach (var Enemy in Wave2)
+            {
+                if (Enemy == null) //clear any dead enemies
+                {
+                    Wave2.Remove(Enemy);
+                }
+            }
+
+            foreach (var Enemy in Wave2)
+            {
+                Enemy.gameObject.SetActive(true);
+            }
+        }
+        if (EnemyList.Count <= m_MaxCount)
+        {
+            foreach (var Enemy in Wave1)
+            {
+                if (Enemy == null) //clear any dead enemies
+                {
+                    Wave1.Remove(Enemy);
+                }
+            }
+
+            foreach (var Enemy in Wave1)
+            {
+                Enemy.gameObject.SetActive(true);
+            }
+        }
+
+
+
+        // if (EnemyList.Count != lastCount)
+        // {
+        //     if (EnemyList.Count <= m_MaxCount - (m_Wave1Count + m_Wave2Count))
+        //     {
+        //         foreach (var Enemy in Wave3)
+        //         {
+        //             if (Enemy == null) //clear any dead enemies
+        //             {
+        //                 Wave3.Remove(Enemy);
+        //             }
+        //         }
+
+        //         foreach (var Enemy in Wave3)
+        //         {
+        //             Enemy.gameObject.SetActive(true);
+        //         }
+        //     }
+
+        //     if (EnemyList.Count <= m_MaxCount - m_Wave1Count)
+        //     {
+        //         foreach (var Enemy in Wave2)
+        //         {
+        //             if (Enemy == null) //clear any dead enemies
+        //             {
+        //                 Wave2.Remove(Enemy);
+        //             }
+        //         }
+
+        //         foreach (var Enemy in Wave2)
+        //         {
+        //             Enemy.gameObject.SetActive(true);
+        //         }
+        //     }
+
+        // }
 
         lastCount = EnemyList.Count;
     }
