@@ -9,7 +9,7 @@ public class AltFire_DashReset : Scr_AltFireBase
     protected override void OnAbilityStart()
     {
         base.OnAbilityStart();
-        Motor.m_DashCount++;
+        Motor.m_DashCount = 3;
         Anim.SetTrigger("altfire");
     }
 }
