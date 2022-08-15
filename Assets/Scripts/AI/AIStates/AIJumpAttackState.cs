@@ -32,6 +32,16 @@ public class AIJumpAttackState : AIState
             }
         }
     }
+
+    public void SetFinalLeapPosition(Script_BaseAI agent)
+    {
+        Vector3 position = agent.GetPlayerTransform().position;
+        RaycastHit hit;
+        if (Physics.Raycast(position + (Vector3.up * 3), Vector3.down, out hit, Mathf.Infinity))
+        {
+            FinalPosition = hit.point;
+        }
+    }
     public AIStateID getID()
     {
         return AIStateID.JumpAttack;
@@ -44,7 +54,7 @@ public class AIJumpAttackState : AIState
         agent.GetRigid().isKinematic = false;
         agent.GetRigid().useGravity = false;
         initalPosition = agent.transform.position;
-        FinalPosition = agent.GetPlayerTransform().position;
+        SetFinalLeapPosition(agent);
 
         timeJumping = 0.0f;
     }
@@ -55,14 +65,12 @@ public class AIJumpAttackState : AIState
     {
         timeJumping += Time.deltaTime;
      
-        if (timeJumping <= 1)
+        if (timeJumping < 1.8f)
         {
-            agent.transform.position = Vector3.Lerp(initalPosition, FinalPosition, timeJumping);
-
-            Debug.Log(FinalPosition);
-            agent.GetRotator().localPosition = new Vector3(0.0f, agent.GetJumpCurve().Evaluate(timeJumping) * 3f, 0.0f);
+            agent.GetRotator().localPosition = new Vector3(0.0f, agent.GetJumpCurve().Evaluate(timeJumping) * 5f, 0.0f);
+            agent.transform.position = Vector3.Lerp(initalPosition, FinalPosition, timeJumping);       
         }
-        if(timeJumping >= 1)
+        else if(timeJumping >= 1.8f) // 1.8 seconds = 0.2 for launch while AI is apused
         {
             agent.GetStateMachine().ChangeState(AIStateID.ChasePlayer);
         }

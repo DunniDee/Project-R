@@ -43,15 +43,20 @@ public class AIAnimatorEvents : MonoBehaviour
         }
     }
 
-    public void BeginLeapAttack()
-    { 
-        
-    }
+   
 
     public void PlayFootStep() { audioSource.PlayOneShot(FootStepClipArr[Random.Range(0, FootStepClipArr.Length)]); }
 
     public void PlayGunShot() { audioSource.PlayOneShot(FireSoundClipArr[Random.Range(0, FireSoundClipArr.Length)], 0.7f); }
-   
+
+    public void StopAI()
+    {
+        AIagent.enabled = false;
+    }
+    public void StartAI()
+    {
+        AIagent.enabled = true;
+    }
     public void StopAgent() {  agent.enabled = false; }
 
     public void StartAgent() { agent.enabled = true; }

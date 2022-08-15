@@ -28,7 +28,7 @@ public class AIChaseState : AIState
         }
         if (attackCurCooldown <= 0.0f)
         {
-            int attackIndex = Random.Range(1, 4);
+            int attackIndex = Random.Range(3, 3);
 
             switch (attackIndex)
             {
@@ -39,7 +39,7 @@ public class AIChaseState : AIState
                     agent.GetAnimator().SetTrigger("Attack2");
                     break;
                 case 3:
-                    
+                    agent.GetAnimator().SetTrigger("Attack3");
                     agent.GetStateMachine().ChangeState(AIStateID.JumpAttack);
                     break;
             }
@@ -52,8 +52,7 @@ public class AIChaseState : AIState
 
     void SlashAttackHorizontal(Script_BaseAI agent)
     {
-        var obj = GameObject.Instantiate(agent.Config.projectile, agent.GetFiringPoint().position, agent.GetFiringPoint().rotation);
-        Scr_PlayerMotor motor = agent.GetPlayerTransform().GetComponent<Scr_PlayerMotor>();
+        var obj = GameObject.Instantiate(agent.Config.projectile, agent.GetFiringPoint().position, Quaternion.Euler(agent.GetFiringPoint().forward));
 
         obj.transform.localScale = new Vector3(obj.transform.localScale.y, obj.transform.localScale.x, obj.transform.localScale.z);
         obj.GetComponent<Scr_EnemyProjectile>().m_fDamage = Random.Range(agent.Config.ProjectileDamageExtents.x, agent.Config.ProjectileDamageExtents.y);
@@ -69,7 +68,7 @@ public class AIChaseState : AIState
 
     void SlashAttackVertical(Script_BaseAI agent)
     {
-        var obj = GameObject.Instantiate(agent.Config.projectile, agent.GetFiringPoint().position, agent.GetFiringPoint().rotation);
+        var obj = GameObject.Instantiate(agent.Config.projectile, agent.GetFiringPoint().position, Quaternion.Euler(agent.GetFiringPoint().forward));
 
 
         obj.GetComponent<Scr_EnemyProjectile>().m_fDamage = Random.Range(agent.Config.ProjectileDamageExtents.x, agent.Config.ProjectileDamageExtents.y);
@@ -117,7 +116,6 @@ public class AIChaseState : AIState
 
         agent.GetAnimatorEvents().OnSlashHorizontalAttack += SlashAttackHorizontal;
         agent.GetAnimatorEvents().OnSlashVerticalAttack += SlashAttackVertical;
-/*        agent.GetAnimatorEvents().OnJumpAttack += JumpSlashAttack;*/
         
         playerTransform = agent.GetPlayerTransform();
         agent.PlayCombatNoise();
@@ -126,7 +124,7 @@ public class AIChaseState : AIState
 
     public void Update(Script_BaseAI agent)
     {
-   agent.transform.LookAt(new Vector3(agent.GetPlayerTransform().position.x,agent.transform.position.y, agent.GetPlayerTransform().position.z));
+        agent.transform.LookAt(new Vector3(agent.GetPlayerTransform().position.x,agent.transform.position.y, agent.GetPlayerTransform().position.z));
         AttackCooldownUpdate();
         Attack(agent);
         ChaseUpdate(agent);
