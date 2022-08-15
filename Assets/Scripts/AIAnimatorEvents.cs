@@ -19,7 +19,7 @@ public class AIAnimatorEvents : MonoBehaviour
     [SerializeField]
     AudioClip[] FireSoundClipArr;
 
-    public void SlashHorizontal(Script_BaseAI agent)
+    public void SlashHorizontal()
     {
         if (OnSlashHorizontalAttack != null)
         {
@@ -27,14 +27,14 @@ public class AIAnimatorEvents : MonoBehaviour
         }
     }
 
-    public void SlashVertical(Script_BaseAI agent)
+    public void SlashVertical()
     {
         if (OnSlashVerticalAttack != null)
         {
             OnSlashVerticalAttack(AIagent);
         }
     }
-    public void JumpAttack(Script_BaseAI agent)
+    public void JumpAttack()
     {
         if (OnJumpAttack != null)
         {
@@ -42,15 +42,19 @@ public class AIAnimatorEvents : MonoBehaviour
             OnJumpAttack(AIagent);
         }
     }
+
+    public void BeginLeapAttack()
+    { 
+        
+    }
+
     public void PlayFootStep() { audioSource.PlayOneShot(FootStepClipArr[Random.Range(0, FootStepClipArr.Length)]); }
 
     public void PlayGunShot() { audioSource.PlayOneShot(FireSoundClipArr[Random.Range(0, FireSoundClipArr.Length)], 0.7f); }
-
    
-    public void StopAgent() {
-        agent.velocity = Vector3.zero;
-        agent.isStopped = true; }
-    public void StartAgent() { agent.isStopped = false; }
+    public void StopAgent() {  agent.enabled = false; }
+
+    public void StartAgent() { agent.enabled = true; }
 
     // Start is called before the first frame update
     void Start()

@@ -54,9 +54,9 @@ public class AIChaseState : AIState
     {
         var obj = GameObject.Instantiate(agent.Config.projectile, agent.GetFiringPoint().position, agent.GetFiringPoint().rotation);
         Scr_PlayerMotor motor = agent.GetPlayerTransform().GetComponent<Scr_PlayerMotor>();
-       // obj.gameObject.transform.LookAt(new Vector3(agent.GetPlayerTransform().position.x,agent.transform.position.y, agent.GetPlayerTransform().position.z));
+
         obj.transform.localScale = new Vector3(obj.transform.localScale.y, obj.transform.localScale.x, obj.transform.localScale.z);
-        obj.GetComponent<Scr_EnemyProjectile>().m_fDamage = agent.Config.projectileDamage;
+        obj.GetComponent<Scr_EnemyProjectile>().m_fDamage = Random.Range(agent.Config.ProjectileDamageExtents.x, agent.Config.ProjectileDamageExtents.y);
         obj.GetComponent<Rigidbody>().velocity = obj.transform.forward * m_ProjectileForce;
         CapsuleCollider collider = obj.GetComponent<CapsuleCollider>();
         collider.direction = 0;
@@ -70,9 +70,9 @@ public class AIChaseState : AIState
     void SlashAttackVertical(Script_BaseAI agent)
     {
         var obj = GameObject.Instantiate(agent.Config.projectile, agent.GetFiringPoint().position, agent.GetFiringPoint().rotation);
-        //obj.gameObject.transform.LookAt(new Vector3(agent.GetPlayerTransform().position.x, agent.transform.position.y, agent.GetPlayerTransform().position.z));
 
-        obj.GetComponent<Scr_EnemyProjectile>().m_fDamage = agent.Config.projectileDamage;
+
+        obj.GetComponent<Scr_EnemyProjectile>().m_fDamage = Random.Range(agent.Config.ProjectileDamageExtents.x, agent.Config.ProjectileDamageExtents.y);
         obj.GetComponent<Rigidbody>().velocity = obj.transform.forward * m_ProjectileForce;
     }
 
@@ -118,19 +118,22 @@ public class AIChaseState : AIState
         agent.GetAnimatorEvents().OnSlashHorizontalAttack += SlashAttackHorizontal;
         agent.GetAnimatorEvents().OnSlashVerticalAttack += SlashAttackVertical;
 /*        agent.GetAnimatorEvents().OnJumpAttack += JumpSlashAttack;*/
-
+        
         playerTransform = agent.GetPlayerTransform();
         agent.PlayCombatNoise();
+
     }
 
     public void Update(Script_BaseAI agent)
     {
-        agent.transform.LookAt(new Vector3(agent.GetPlayerTransform().position.x,agent.transform.position.y, agent.GetPlayerTransform().position.z));
+   agent.transform.LookAt(new Vector3(agent.GetPlayerTransform().position.x,agent.transform.position.y, agent.GetPlayerTransform().position.z));
         AttackCooldownUpdate();
         Attack(agent);
         ChaseUpdate(agent);
     }
 
+    //Hew fuckin floaty for no reason 
+  
     private void AttackCooldownUpdate()
     {
         if (attackCurCooldown > 0.0f)
@@ -141,6 +144,6 @@ public class AIChaseState : AIState
 
     public void Exit(Script_BaseAI agent)
     {
-
+        
     }
 }
