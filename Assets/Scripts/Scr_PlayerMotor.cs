@@ -144,7 +144,7 @@ public class Scr_PlayerMotor : MonoBehaviour
 
     void WallRun()
     {
-        if (Physics.CheckSphere(transform.position + Vector3.up,0.6f,WallRunMask))
+        if (Physics.CheckSphere(transform.position + Vector3.up,0.6f,WallRunMask | GroundMask) && !m_IsGrounded)
         {
            m_IsTouchingWall = true; 
         }
@@ -155,19 +155,19 @@ public class Scr_PlayerMotor : MonoBehaviour
 
         if (m_IsTouchingWall)
         {
-            if (!m_IsGrounded)
-            {
-                //Movment.Move(-WallNormal);
-            }
-
             if (!m_WasTouchingWall)
             {
+                IsLaunched = false;
+                m_MomentumMagnuitude = Mathf.Clamp(m_MomentumMagnuitude,0, m_MomentumMax);
                 m_MomentumDirection = m_MomentumDirection * m_MomentumMagnuitude;
+
                 StepAS.PlayOneShot(LandSounds[Random.Range(0,LandSounds.Length-1)]);
             }
 
-            //m_MomentumDirection = Vector3.ProjectOnPlane(m_MomentumDirection, WallNormal);
-            //m_MomentumDirection += Orientation.forward * Time.deltaTime;
+            m_SmoothMoveDirection = Vector3.ProjectOnPlane(m_SmoothMoveDirection, WallNormal);
+            m_MomentumDirection += m_SmoothMoveDirection * Time.deltaTime;
+            // m_MomentumDirection = Vector3.ProjectOnPlane(m_MomentumDirection, WallNormal);
+            // Movment.Move(-WallNormal * 10 * Time.deltaTime);
 
             // if (Physics.Raycast(transform.position + (Vector3.up * 0.40f), Orientation.right,out RightHit, 1.5f, WallRunMask))
             // {
@@ -201,7 +201,7 @@ public class Scr_PlayerMotor : MonoBehaviour
             foreach (var Pos in WallCheckPos)
             {  
                 RaycastHit Hit;
-                if (Physics.Raycast(Pos.position, Pos.forward,out Hit, 1.5f, WallRunMask))
+                if (Physics.Raycast(Pos.position, Pos.forward,out Hit, 1.5f, WallRunMask | GroundMask))
                 {
                     CamEffects.RotateTo += Pos.localPosition * 100 * Time.deltaTime;
                     WallNormal = Hit.normal;
@@ -439,7 +439,7 @@ public class Scr_PlayerMotor : MonoBehaviour
 
     void Vault()
     {
-        if (Physics.Raycast(VaultCheckPos.position, VaultCheckPos.forward,out VaultHit, 0.75f, GroundMask) && !m_IsVaulting)
+        if (Physics.Raycast(VaultCheckPos.position, VaultCheckPos.forward,out VaultHit, 1, GroundMask) && !m_IsVaulting)
         {
             m_IsVaulting = true;
             vaultPos = VaultHit.point + Vector3.up;
