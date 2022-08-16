@@ -9,7 +9,8 @@ public class Scr_EnemyProjectile : MonoBehaviour
     float initalY;
     private void OnTriggerEnter(Collider collision)
     {
-        if(collision.tag == "Player")
+        Debug.Log(collision.name);
+        if (collision.tag == "Player")
         {
             collision.GetComponent<Scr_PlayerHealth>().TakeDamage(m_fDamage);
             Debug.Log("Damage Done " + m_fDamage);
@@ -24,7 +25,7 @@ public class Scr_EnemyProjectile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = new Vector3(transform.position.x, initalY, transform.position.z);
+        //transform.position = new Vector3(transform.position.x, initalY, transform.position.z);
         m_Lifetime -= Time.deltaTime;
         if (m_Lifetime < 0)
         {
