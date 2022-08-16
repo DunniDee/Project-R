@@ -24,6 +24,12 @@ public class Script_SceneManager : MonoBehaviour
     public GameObject loadingScreen;
     public string sceneToLoad;
     public CanvasGroup canvasGroup;
+    public int currentSceneIndex;
+
+    private void OnLevelWasLoaded(int level)
+    {
+        currentSceneIndex = level;
+    }
     public void LoadScene(string SceneName)
     {
         if (!IsTransitioning)

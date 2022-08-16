@@ -20,20 +20,26 @@ public class AIJumpAttackState : AIState
         Collider[] hit = Physics.OverlapSphere(FinalPosition, 10.0f);
         agent.audioSource.PlayOneShot(bruteAgent.SlamAudio);
         foreach (Collider collider in hit)
-        {
-            
+        { 
             if (collider.tag == "Player")
             {
                 Debug.Log("Hit! :" + collider.name);
                 Scr_PlayerMotor motor = collider.GetComponent<Scr_PlayerMotor>();
                 motor.m_MomentumDirection = Vector3.up * 30;
                 Scr_PlayerHealth playerHealth = collider.GetComponent<Scr_PlayerHealth>();
-                playerHealth.TakeDamage(agent.StatDamage);
+                float damage = UnityEngine.Random.Range(agent.Config.MeleeDamageExtents.x, agent.Config.MeleeDamageExtents.y);
+                playerHealth.TakeDamage(damage);
             }
-         
+        }
+    }
 
-           
-
+    public void SetFinalLeapPosition(Script_BaseAI agent)
+    {
+        Vector3 position = agent.GetPlayerTransform().position;
+        RaycastHit hit;
+        if (Physics.Raycast(position + (Vector3.up * 3), Vector3.down, out hit, Mathf.Infinity))
+        {
+            FinalPosition = hit.point;
         }
     }
     public AIStateID getID()
@@ -43,17 +49,14 @@ public class AIJumpAttackState : AIState
 
     public void Enter(Script_BaseAI agent)
     {
-       
         agent.GetAnimatorEvents().OnJumpAttack += Attack;
         agent.GetNavMeshAgent().enabled = false;
         agent.GetRigid().isKinematic = false;
         agent.GetRigid().useGravity = false;
         initalPosition = agent.transform.position;
-        FinalPosition = agent.GetPlayerTransform().position;
+        SetFinalLeapPosition(agent);
 
         timeJumping = 0.0f;
-        
-        agent.GetAnimator().SetTrigger("Attack3");
     }
 
    
@@ -62,24 +65,22 @@ public class AIJumpAttackState : AIState
     {
         timeJumping += Time.deltaTime;
      
-        if (timeJumping <= 1)
+        if (timeJumping < 1.8f)
         {
-            agent.transform.position = Vector3.Lerp(initalPosition, FinalPosition, timeJumping);
-
-            Debug.Log(FinalPosition);
-            agent.GetRotator().localPosition = new Vector3(0.0f, agent.GetJumpCurve().Evaluate(timeJumping), 0.0f);
+            agent.GetRotator().localPosition = new Vector3(0.0f, agent.GetJumpCurve().Evaluate(timeJumping) * 5f, 0.0f);
+            agent.transform.position = Vector3.Lerp(initalPosition, FinalPosition, timeJumping);       
         }
-        if(timeJumping > 2)
+        else if(timeJumping >= 1.8f) // 1.8 seconds = 0.2 for launch while AI is apused
         {
-           
-            
             agent.GetStateMachine().ChangeState(AIStateID.ChasePlayer);
         }
     }
 
     public void Exit(Script_BaseAI agent)
     {
-       // Attack(agent);
+        // Attack(agent);
+        //Make sure rotator isnt fucked
+        agent.GetRotator().localPosition = Vector3.zero;
         agent.GetNavMeshAgent().enabled = true;
         agent.GetRigid().isKinematic = true;
         agent.GetRigid().useGravity = true;

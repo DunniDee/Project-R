@@ -131,6 +131,7 @@ public class Grid : MonoBehaviour
         Vector2 Position = CalculatePositionOnGrid(_inventoryItem, _posX, _posY);
 
         rectTransform.localPosition = Position;
+        rectTransform.localScale = Vector3.one;
         return true;
     }
 

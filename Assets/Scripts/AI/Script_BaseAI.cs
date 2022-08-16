@@ -40,7 +40,6 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
     [SerializeField]
     protected bool isInCombat = false;
 
-    public float StatDamage = 0.0f;
     [SerializeField] protected float m_Health;
 
     public Transform FiringPoint;
@@ -126,10 +125,6 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
         return m_Animator;
     }
 
-    public void ShowFloatingDamage(float _Damage)
-    {
-       
-    }
     public bool Damage(float _Damage, CustomCollider.DamageType _DamageType, Vector3 _direction)
     {
         
@@ -143,7 +138,7 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
 
 
         }
-        float totalDamage = _Damage + StatDamage;
+        float totalDamage = _Damage;
         switch (_DamageType){
             case CustomCollider.DamageType.Critical:
                
@@ -224,13 +219,7 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
         ///Set the Max Health and the Slider Values
         m_Health = Config.maxHealth;
 
-       /* m_UIHealth.HealthSlider.maxValue = Config.maxHealth;
-        m_UIHealth.HealthSlider.value = Config.maxHealth;
-        m_UIHealth.gameObject.SetActive(false);*/
-
-
         AIStateInit();
-       
 
         // Add On Player Found Event Delegate
         GetComponent<Scr_AISensor>().OnPlayerFoundEvent += StateMachine.ChangeState;

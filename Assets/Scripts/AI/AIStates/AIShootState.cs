@@ -18,7 +18,7 @@ public class AIShootState : AIState
         var obj = GameObject.Instantiate(agent.Config.projectile, agent.GetFiringPoint().position, agent.GetFiringPoint().rotation);
         agent.GetAnimator().SetTrigger("Shoot");
         obj.gameObject.transform.LookAt(agent.GetPlayerTransform().position + new Vector3(0.0f,1.0f,0.0f));
-        obj.GetComponent<Scr_EnemyProjectile>().m_fDamage = agent.Config.projectileDamage;
+        obj.GetComponent<Scr_EnemyProjectile>().m_fDamage = Random.Range(agent.Config.ProjectileDamageExtents.x,agent.Config.ProjectileDamageExtents.y);
         obj.GetComponent<Rigidbody>().velocity = obj.transform.forward  * m_ProjectileForce;
         ShootTimer = fireRate;
         GameObject.Destroy(obj,5.0f);

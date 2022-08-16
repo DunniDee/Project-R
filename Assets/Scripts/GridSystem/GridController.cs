@@ -71,10 +71,10 @@ public class GridController : MonoBehaviour
         {
             if (!isGridActive)
             {
-                ActivateGrid(true);
+                SetUIActive(true);
             }
             else {
-                ActivateGrid(false);
+                SetUIActive(false);
             }
         }
         if (isGridActive)
@@ -99,9 +99,10 @@ public class GridController : MonoBehaviour
 
     }
 
-    public void ActivateGrid(bool _b)
+    public void SetUIActive(bool _b)
     {
         FindObjectOfType<Scr_PlayerLook>().enabled = !_b;
+        script_WeaponSwap.Instance.SetCanShoot(!_b);
         SetIsGridActive(_b);
         canvasTransform.gameObject.SetActive(_b);
         UpgradeUI.enabled = _b;
