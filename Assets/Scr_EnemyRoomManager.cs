@@ -65,6 +65,10 @@ public class Scr_EnemyRoomManager : MonoBehaviour
         m_Wave4Count = Wave4.Count;
         m_Wave5Count = Wave5.Count;
 
+        foreach (Scr_BaseAI ai in EnemyList)
+        {
+            ai.enabled = false;
+        }
     }
 
     void Update()
@@ -236,5 +240,13 @@ public class Scr_EnemyRoomManager : MonoBehaviour
         // }
 
         lastCount = EnemyList.Count;
+    }
+
+    public void StartEvent()
+    {
+        foreach (Scr_BaseAI ai in EnemyList)
+        {
+            ai.enabled = true;
+        }
     }
 }

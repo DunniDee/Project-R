@@ -6,21 +6,27 @@ public class Scr_EnemyProjectile : MonoBehaviour
 {
     public float m_fDamage = 0.0f;
     public float m_Lifetime = 0.0f;
+    float initalY;
     private void OnTriggerEnter(Collider collision)
     {
-        if(collision.tag == "Player")
+        Debug.Log(collision.name);
+        if (collision.tag == "Player")
         {
             collision.GetComponent<Scr_PlayerHealth>().TakeDamage(m_fDamage);
             Debug.Log("Damage Done " + m_fDamage);
-            //Destroy(gameObject);
             Disable();
         }
         
     }
+    private void Start()
+    {
+        initalY = transform.position.y;
+    }
     // Update is called once per frame
     void Update()
     {
-        m_Lifetime-= Time.deltaTime;
+        //transform.position = new Vector3(transform.position.x, initalY, transform.position.z);
+        m_Lifetime -= Time.deltaTime;
         if (m_Lifetime < 0)
         {
             Disable();

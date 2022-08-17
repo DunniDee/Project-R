@@ -30,7 +30,13 @@ public class script_WeaponSwap : MonoBehaviour
 
     [SerializeField] public int Index = 0;
     int m_LastIndex = 0;
+    bool m_IsActive = false;
 
+    public void SetCanShoot(bool _b)
+    {
+        EquippedWeapons[Index].GetComponent<Script_WeaponBase>().enabled = _b;
+        m_IsActive = _b;
+    }
     // Update is called once per frame
     public void Start() 
     {
@@ -77,35 +83,39 @@ public class script_WeaponSwap : MonoBehaviour
     }
     void Update()
     {
-        if (m_LastIndex != Index)
+        if (m_IsActive)
         {
-            m_LastIndex = Index;
-
-            foreach (var Weapon in Weapons)
+            if (m_LastIndex != Index)
             {
-                Weapon.SetActive(false);
+                m_LastIndex = Index;
+
+                foreach (var Weapon in Weapons)
+                {
+                    Weapon.SetActive(false);
+                }
+
+                EquippedWeapons[Index].SetActive(true);
             }
 
-            EquippedWeapons[Index].SetActive(true);
-        }
-
-        if(Input.GetKeyDown(ScrollRight))
-        {
-            Index++;
-            if (Index > EquippedWeapons.Count - 1)
+            if (Input.GetKeyDown(ScrollRight))
             {
-                Index = 0;
+                Index++;
+                if (Index > EquippedWeapons.Count - 1)
+                {
+                    Index = 0;
+                }
+            }
+
+            if (Input.GetKeyDown(ScrollLeft))
+            {
+                Index--;
+                if (Index < 0)
+                {
+                    Index = EquippedWeapons.Count - 1;
+                }
             }
         }
-
-        if(Input.GetKeyDown(ScrollLeft))
-        {
-            Index--;
-            if (Index < 0)
-            {
-                Index = EquippedWeapons.Count - 1;
-            }
-        }
+        
     }
 
     public void JumpAnim()

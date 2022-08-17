@@ -29,7 +29,7 @@ public class Scr_CommanderSphere : MonoBehaviour
             {
                 return;
             }
-            agent.StatDamage = agent.Config.projectileDamage * 0.5f;
+           // agent.StatDamage = agent.Config.ProjectileDamageExtents * 0.5f;
             var newParticlesystem = Instantiate(ps, agent.transform);
             psList.Add(newParticlesystem);
         }
@@ -40,7 +40,7 @@ public class Scr_CommanderSphere : MonoBehaviour
         if (other.GetComponentInParent<Script_BaseAI>())
         {
             var agent = other.GetComponentInParent<Script_BaseAI>();
-            agent.StatDamage = agent.Config.projectileDamage * 0.5f;
+          //  agent.StatDamage = agent.Config.projectileDamage * 0.5f;
             foreach (GameObject ps in psList)
             {
                 if (psList.Count == 0)

@@ -3,40 +3,85 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Cinemachine;
+using System;
 
 public class Scr_UpgradeShop : MonoBehaviour
 {
-    public GameObject PlayerCanvas;
+    [Header("Canvas")]
+    public GameObject UpgradeShop_Canvas;
+    [Space]
+    public bool isShopActive = false;
 
-    public TMP_Text SpeedCost;
-    public TMP_Text DamageCost;
-    public TMP_Text JumpCost;
-    public TMP_Text MagCost;
-    public TMP_Text FirerateCost;
+    public CinemachineVirtualCamera vcam;
 
-    public float SpeedUpgradeCost = 100.0f;
-    public float JumpUpgradeCost = 1000.0f;
+   
 
-    public float DamageUpgradeCost = 1000.0f;
-    public float FireRateUpgradeCost = 1000.0f;
-    public float MagCountUpgradeCost = 1000.0f;
+    [System.Serializable]
+    public struct ShopWeaponUI
+    {
+        public TMP_Text GunName;
+        public TMP_Text Damage;
+        public TMP_Text Cost;
+        public TMP_Text magazineSize;
+
+    }
+
+    public List<ShopWeaponUI> ShopSlots;
+
+    public void EnableShopCanvas(bool _b)
+    {
+        UpgradeShop_Canvas.SetActive(_b);
+        isShopActive = _b;
+        if (_b == true)
+        {
+            vcam.Priority = 10;
+        }
+        else {
+            vcam.Priority = 9;
+        }
+    }
+    private void Init()
+    {
+        int i = 0; 
+        foreach (Script_PlayerStatManager.WeaponStats weapon in Script_PlayerStatManager.Instance.WeaponStatList)
+        {
+            /*Script_PlayerStatManager.WeaponStats weaponStats = Script_PlayerStatManager.Instance.WeaponStatList.ToArray()[i];*/
+            SetWeaponShopSlot(weapon, i);
+            i++;
+        }
+    }
+
+    private void SetWeaponShopSlot(Script_PlayerStatManager.WeaponStats weaponStats,int i)
+    {
+        ShopSlots.Add(new ShopWeaponUI());
+
+        ShopSlots[i].GunName.text = weaponStats.WeaponName;
+        ShopSlots[i].Damage.text = weaponStats.Modified_Damage.ToString();
+        ShopSlots[i].magazineSize.text = weaponStats.Modified_MaxAmmo.ToString();
+
+        ShopSlots[i].Cost.text = "100";
+    }
+
 
     private void Start()
     {
-        PlayerCanvas = GameObject.FindGameObjectWithTag("PlayerUI");
+        vcam = GetComponent<CinemachineVirtualCamera>();
 
-        SpeedCost.text = "Cost: " + SpeedUpgradeCost.ToString("F0");
-        JumpCost.text = "Cost: " + JumpUpgradeCost.ToString("F0");
-
-        DamageCost.text = "Cost: " + DamageUpgradeCost.ToString("F0");
-        FirerateCost.text = "Cost: " + FireRateUpgradeCost.ToString("F0");
-        MagCost.text = "Cost: " + MagCountUpgradeCost.ToString("F0");
+        if (UpgradeShop_Canvas == null)
+        {
+            Debug.LogWarning("Missing UpgradeShopCanvas");
+        }
+        Init();
 
         
     }
 
-    private void Awake()
+    private void Update()
     {
-        
+        if (isShopActive && Input.GetKeyDown(KeyCode.Tab))
+        {
+            EnableShopCanvas(false);
+        }
     }
 }

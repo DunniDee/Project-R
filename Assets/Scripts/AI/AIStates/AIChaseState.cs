@@ -17,7 +17,7 @@ public class AIChaseState : AIState
     public float currentChaseTime = 0.0f;
     public bool isChasing = false;
 
-    public float MaxDistanceThreshold = 30.0f;
+    public float MaxDistanceThreshold = 30;
     void Attack(Script_BaseAI agent)
     {
         if (isChasing) return;
@@ -25,10 +25,18 @@ public class AIChaseState : AIState
         if (Distance > MaxDistanceThreshold)
         {
             StartChasing(agent);
+            int jumpChance = Random.Range(0, 100);
+            if (jumpChance < 25)
+            {
+                agent.GetAnimator().SetTrigger("Attack3");
+                agent.GetStateMachine().ChangeState(AIStateID.JumpAttack);
+            }
+            return;
         }
+
         if (attackCurCooldown <= 0.0f)
         {
-            int attackIndex = Random.Range(1, 4);
+            int attackIndex = Random.Range(1, 3);
 
             switch (attackIndex)
             {
@@ -39,7 +47,7 @@ public class AIChaseState : AIState
                     agent.GetAnimator().SetTrigger("Attack2");
                     break;
                 case 3:
-                    
+                    agent.GetAnimator().SetTrigger("Attack3");
                     agent.GetStateMachine().ChangeState(AIStateID.JumpAttack);
                     break;
             }
@@ -52,11 +60,11 @@ public class AIChaseState : AIState
 
     void SlashAttackHorizontal(Script_BaseAI agent)
     {
-        var obj = GameObject.Instantiate(agent.Config.projectile, agent.GetFiringPoint().position, agent.GetFiringPoint().rotation);
-        Scr_PlayerMotor motor = agent.GetPlayerTransform().GetComponent<Scr_PlayerMotor>();
-       // obj.gameObject.transform.LookAt(new Vector3(agent.GetPlayerTransform().position.x,agent.transform.position.y, agent.GetPlayerTransform().position.z));
+        var obj = GameObject.Instantiate(agent.Config.projectile, agent.GetFiringPoint().position, Quaternion.identity);
+
+        obj.transform.LookAt(new Vector3(agent.GetPlayerTransform().position.x, obj.transform.position.y, agent.GetPlayerTransform().position.z));
         obj.transform.localScale = new Vector3(obj.transform.localScale.y, obj.transform.localScale.x, obj.transform.localScale.z);
-        obj.GetComponent<Scr_EnemyProjectile>().m_fDamage = agent.Config.projectileDamage;
+        obj.GetComponent<Scr_EnemyProjectile>().m_fDamage = Random.Range(agent.Config.ProjectileDamageExtents.x, agent.Config.ProjectileDamageExtents.y);
         obj.GetComponent<Rigidbody>().velocity = obj.transform.forward * m_ProjectileForce;
         CapsuleCollider collider = obj.GetComponent<CapsuleCollider>();
         collider.direction = 0;
@@ -69,10 +77,10 @@ public class AIChaseState : AIState
 
     void SlashAttackVertical(Script_BaseAI agent)
     {
-        var obj = GameObject.Instantiate(agent.Config.projectile, agent.GetFiringPoint().position, agent.GetFiringPoint().rotation);
-        //obj.gameObject.transform.LookAt(new Vector3(agent.GetPlayerTransform().position.x, agent.transform.position.y, agent.GetPlayerTransform().position.z));
+        var obj = GameObject.Instantiate(agent.Config.projectile, agent.GetFiringPoint().position, Quaternion.identity);
 
-        obj.GetComponent<Scr_EnemyProjectile>().m_fDamage = agent.Config.projectileDamage;
+        obj.transform.LookAt(new Vector3(agent.GetPlayerTransform().position.x,obj.transform.position.y, agent.GetPlayerTransform().position.z));
+        obj.GetComponent<Scr_EnemyProjectile>().m_fDamage = Random.Range(agent.Config.ProjectileDamageExtents.x, agent.Config.ProjectileDamageExtents.y);
         obj.GetComponent<Rigidbody>().velocity = obj.transform.forward * m_ProjectileForce;
     }
 
@@ -86,20 +94,24 @@ public class AIChaseState : AIState
 
     private void ChaseUpdate(Script_BaseAI agent)
     {
-        if (Vector3.Distance(agent.transform.position, agent.GetPlayerTransform().position) < 5.0f)
+        if (isChasing)
         {
-            currentChaseTime = -1;
-        }
-        if (currentChaseTime > 0.0f)
-        {
-            currentChaseTime -= Time.deltaTime;
-        }
-        else if (currentChaseTime <= 0.0f && isChasing == true)
-        {
-            isChasing = false;
-        }
+            if (Vector3.Distance(agent.transform.position, agent.GetPlayerTransform().position) < 5.0f)
+            {
+                currentChaseTime = -1;
+            }
+            if (currentChaseTime > 0.0f)
+            {
+                currentChaseTime -= Time.deltaTime;
+            }
+            else if (currentChaseTime <= 0.0f && isChasing == true)
+            {
+                isChasing = false;
+            }
 
-        agent.GetNavMeshAgent().SetDestination(agent.GetPlayerTransform().position);
+            agent.GetNavMeshAgent().SetDestination(agent.GetPlayerTransform().position);
+        }
+      
 
     }
    
@@ -117,10 +129,10 @@ public class AIChaseState : AIState
 
         agent.GetAnimatorEvents().OnSlashHorizontalAttack += SlashAttackHorizontal;
         agent.GetAnimatorEvents().OnSlashVerticalAttack += SlashAttackVertical;
-/*        agent.GetAnimatorEvents().OnJumpAttack += JumpSlashAttack;*/
-
+        
         playerTransform = agent.GetPlayerTransform();
         agent.PlayCombatNoise();
+
     }
 
     public void Update(Script_BaseAI agent)
@@ -131,6 +143,8 @@ public class AIChaseState : AIState
         ChaseUpdate(agent);
     }
 
+    //Hew fuckin floaty for no reason 
+  
     private void AttackCooldownUpdate()
     {
         if (attackCurCooldown > 0.0f)
@@ -141,6 +155,6 @@ public class AIChaseState : AIState
 
     public void Exit(Script_BaseAI agent)
     {
-
+        
     }
 }
