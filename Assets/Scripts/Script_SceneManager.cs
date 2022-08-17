@@ -30,6 +30,22 @@ public class Script_SceneManager : MonoBehaviour
     {
         currentSceneIndex = level;
     }
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Keypad1))
+        {
+            if (currentSceneIndex < SceneManager.sceneCount)
+            {
+                currentSceneIndex++;
+                LoadScene(SceneManager.GetSceneAt(currentSceneIndex).name);
+            }
+            else if ((currentSceneIndex + 1) > SceneManager.sceneCount)
+            {
+                currentSceneIndex = 0;
+                LoadScene(SceneManager.GetSceneAt(currentSceneIndex).name);
+            }
+        }
+    }
     public void LoadScene(string SceneName)
     {
         if (!IsTransitioning)

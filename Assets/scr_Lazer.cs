@@ -4,25 +4,63 @@ using UnityEngine;
 
 public class scr_Lazer : MonoBehaviour
 {
-    private LineRenderer lineRenderer;
+    [SerializeField] LineRenderer lineRenderer;
+    bool hitBlocked;
 
-    Vector3 lineStart;
-    Vector3 lineEnd;
-
-    
+    RaycastHit Hit;
+    public float maxLaserDistance = 10.0f;
+    float damagePerTick = 17.5f;
     // Start is called before the first frame update
     void Start()
     {
-        lineStart = transform.localPosition;
         lineRenderer = GetComponent<LineRenderer>();
 
-        lineRenderer.SetPosition(0, transform.localPosition);
-        lineRenderer.SetPosition(1, transform.position + lineEnd);
     }
-
+    private void OnValidate()
+    {
+        if (lineRenderer)
+        {
+            lineRenderer.SetPosition(0, transform.position);
+            if (hitBlocked == true) // we've hit something, so our line renderer end point should stop here
+            {
+                lineRenderer.SetPosition(1, Hit.point);
+            }
+            else
+            {
+                lineRenderer.SetPosition(1, transform.position + transform.forward * maxLaserDistance);
+            }
+        }
+    }
     // Update is called once per frame
     void Update()
     {
-        
+        if (lineRenderer)
+        {
+            lineRenderer.SetPosition(0, transform.position);
+            if (hitBlocked == true) // we've hit something, so our line renderer end point should stop here
+            {
+                lineRenderer.SetPosition(1, Hit.point);
+            }
+            else
+            {
+                lineRenderer.SetPosition(1, transform.position + transform.forward * maxLaserDistance);
+            }
+        }
+
+        if (Physics.Raycast(transform.position, transform.forward, out Hit, maxLaserDistance))
+        {
+            hitBlocked = true;
+            if (Hit.transform.CompareTag("Player"))
+            {
+                var playerhealth = Hit.transform.GetComponent<Scr_PlayerHealth>();
+
+                playerhealth.TakeDamage(damagePerTick, 0.1f,0.1f);
+            }
+        }
+    }
+    public void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(transform.position, transform.position + transform.forward * maxLaserDistance);
     }
 }

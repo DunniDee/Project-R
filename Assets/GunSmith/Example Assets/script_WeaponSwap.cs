@@ -30,7 +30,7 @@ public class script_WeaponSwap : MonoBehaviour
 
     [SerializeField] public int Index = 0;
     int m_LastIndex = 0;
-    bool m_IsActive = false;
+    bool m_IsActive = true;
 
     public void SetCanShoot(bool _b)
     {
