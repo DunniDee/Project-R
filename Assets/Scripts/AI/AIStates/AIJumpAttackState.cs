@@ -28,7 +28,7 @@ public class AIJumpAttackState : AIState
                 motor.m_MomentumDirection = Vector3.up * 30;
                 Scr_PlayerHealth playerHealth = collider.GetComponent<Scr_PlayerHealth>();
                 float damage = UnityEngine.Random.Range(agent.Config.MeleeDamageExtents.x, agent.Config.MeleeDamageExtents.y);
-                playerHealth.TakeDamage(damage);
+                playerHealth.TakeDamage(damage, 0.15f, 0.4f);
             }
         }
     }
@@ -55,7 +55,6 @@ public class AIJumpAttackState : AIState
         agent.GetRigid().useGravity = false;
         initalPosition = agent.transform.position;
         SetFinalLeapPosition(agent);
-
         timeJumping = 0.0f;
     }
 

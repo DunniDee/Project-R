@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using UnityEngine.Events;
+
 using TMPro;
 
 public class Scr_BossArena : MonoBehaviour
@@ -14,7 +17,9 @@ public class Scr_BossArena : MonoBehaviour
     Animator animator;
     public bool isBossFightActive = false;
 
- 
+
+    public UnityEvent OnBossFightComplete;
+    bool doCompleteEventOnce = false;
 
    
     private float GetTotalBossHealth()
@@ -79,6 +84,12 @@ public class Scr_BossArena : MonoBehaviour
     }
     void Update()
     {
+        if(GetTotalBossHealth() <= 0 && !doCompleteEventOnce && isBossFightActive)
+        {
+            isBossFightActive = false;
+            OnBossFightComplete.Invoke();
+            doCompleteEventOnce = true;
+        }
         foreach (AI_Brute brute in BossAI)
         {
             if (BossHealthSlider.maxValue == 1 && brute.GetHealth() != 0)

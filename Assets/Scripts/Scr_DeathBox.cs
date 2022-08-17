@@ -9,7 +9,7 @@ public class Scr_DeathBox : MonoBehaviour
     private void OnTriggerEnter(Collider other) {
         if (other.CompareTag("Player"))
         {
-            other.GetComponent<Scr_PlayerHealth>().TakeDamage(50);
+            other.GetComponent<Scr_PlayerHealth>().TakeDamage(50,0,0);
             other.transform.position = RespwanPositon.position;
         }
     }

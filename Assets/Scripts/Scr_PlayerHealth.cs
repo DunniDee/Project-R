@@ -23,7 +23,7 @@ public class Scr_PlayerHealth : MonoBehaviour
     public delegate void OnTakeDamageDelegate(float Time, float Amplitude);
     public OnTakeDamageDelegate OnTakeDamageEvent;
 
-    public void TakeDamage(float _Damage)
+    public void TakeDamage(float _Damage,float _cameraShakeTime, float _cameraShakeAmplitude)
     {
         if (OnTakeDamageEvent != null)
         {
@@ -34,8 +34,8 @@ public class Scr_PlayerHealth : MonoBehaviour
 
         currentHealth -= _Damage;
         m_healthUI.HealthValueText.text = currentHealth.ToString("F0");
-        CamEffects.ShakeTime += 0.25f;
-        CamEffects.ShakeAmplitude += 0.7f;
+        CamEffects.ShakeTime += _cameraShakeTime;
+        CamEffects.ShakeAmplitude += _cameraShakeAmplitude;
     }
     public void Heal(float _HealthAmount) {
         currentHealth += _HealthAmount;
@@ -64,21 +64,16 @@ public class Scr_PlayerHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Return the Player to Hub World if they Die...
-        /*if (currentHealth <= 0)
+        if (currentHealth <= 0)
         {
-            Script_SceneManager.Instance.LoadScene("HubWorld");
-        }*/
+            Script_SceneManager.Instance.LoadScene("MainMenu");
+        }
 
         if (timer > 0.0f)
         {
             timer -= Time.deltaTime;
         }
-       /* else if (timer <= 0.0f && currentHealth < maxHealth)
-        {
-            currentHealth += curRegenRate;
-            currentHealth += RegenRate;
-        }*/
+ 
     }
 
    

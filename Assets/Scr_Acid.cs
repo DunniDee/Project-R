@@ -4,18 +4,25 @@ using UnityEngine;
 
 public class Scr_Acid : MonoBehaviour
 {
-    public float Damage = 10.0f;
+    public float daamgePerTick = 0.5f;
 
     public void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {
             var health = other.GetComponent<Scr_PlayerHealth>();
-            var motor = other.GetComponent<Scr_PlayerMotor>();
 
-            health.TakeDamage(Damage);
-            motor.m_MomentumDirection = new Vector3(motor.m_MomentumDirection.x, 10, motor.m_MomentumDirection.z);
+            health.TakeDamage(daamgePerTick,0.15f,0.1f);
         }
     }
-   
+    public void OnTriggerStay(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            var health = other.GetComponent<Scr_PlayerHealth>();
+
+            health.TakeDamage(daamgePerTick, 0.15f, 0.1f);
+        }
+    }
+
 }
