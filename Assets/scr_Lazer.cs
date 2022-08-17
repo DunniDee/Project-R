@@ -9,7 +9,7 @@ public class scr_Lazer : MonoBehaviour
 
     RaycastHit Hit;
     public float maxLaserDistance = 10.0f;
-    float damagePerTick = 0.5f;
+    float damagePerTick = 17.5f;
     // Start is called before the first frame update
     void Start()
     {
@@ -53,7 +53,8 @@ public class scr_Lazer : MonoBehaviour
             if (Hit.transform.CompareTag("Player"))
             {
                 var playerhealth = Hit.transform.GetComponent<Scr_PlayerHealth>();
-                playerhealth.TakeDamage(damagePerTick);
+
+                playerhealth.TakeDamage(damagePerTick, 0.1f,0.1f);
             }
         }
     }
