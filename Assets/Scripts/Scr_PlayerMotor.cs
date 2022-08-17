@@ -64,6 +64,7 @@ public class Scr_PlayerMotor : MonoBehaviour
     RaycastHit VaultHit;
 
     Vector3 WallNormal;
+    Vector3 m_LastWallNormal;
     [SerializeField] Transform[] WallCheckPos;
 
     float SlideBoostTimer;
@@ -292,14 +293,15 @@ public class Scr_PlayerMotor : MonoBehaviour
         }
         else
         {
-
-            m_VerticalVelocity.y -= m_Gravity * Time.deltaTime;   
-            m_VerticalVelocity.y = Mathf.Clamp(m_VerticalVelocity.y, -25,100000000);
-
-
             if (m_IsTouchingWall)
             {
-                m_VerticalVelocity.y = Mathf.Clamp(m_VerticalVelocity.y, -1, 1000000);
+                m_VerticalVelocity.y = Mathf.Clamp(m_VerticalVelocity.y, -15, 5);
+                m_VerticalVelocity.y -= m_Gravity * 0.25f * Time.deltaTime;   
+            }
+            else
+            {
+                m_VerticalVelocity.y -= m_Gravity * Time.deltaTime;   
+                m_VerticalVelocity.y = Mathf.Clamp(m_VerticalVelocity.y, -50,100000000);
             }
 
             if (m_WasGrounded && !m_IsCrouching )
@@ -313,29 +315,44 @@ public class Scr_PlayerMotor : MonoBehaviour
             if (!m_WasTouchingWall)
             {
                 CamEffects.RotateTo.x += 15;
+                if (m_VerticalVelocity.y < 1)
+                {
+                    m_VerticalVelocity.y = 1;
+                }
             }
             m_JumpCount = m_MaxJumps;
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && m_JumpCount > 0)
         {
+                IsLaunched = false;
+                m_DashMomentumTimer = 0.25f;
+                m_JumpCount--;
+                m_VerticalVelocity.y = Mathf.Sqrt(2 * m_JumpHeight * m_Gravity);
+                CamEffects.RotateTo.x += 5;
+                CamEffects.RotateTo += new Vector3(m_ForwardMovement,0,-m_SidewardMovement).normalized * m_DashMomentum;
+                CamEffects.FovTo += 10;
+                Movment.Move(new Vector3(0,0.15f,0));
+                Weapons.JumpAnim();
+
+            //is touching wall
             if (m_IsTouchingWall  && !m_IsGrounded)
             {
                 m_MomentumDirection = Orientation.forward * m_MomentumMagnuitude * 0.5f;
                 m_MomentumDirection += WallNormal * m_MomentumMagnuitude * 0.6f;
-                //m_MomentumDirection += WallNormal * 10;
+                m_MomentumDirection += WallNormal * 5;
+                m_LastWallNormal = WallNormal;
+
+                if (WallNormal != m_LastWallNormal)
+                {
+                    m_VerticalVelocity.y = Mathf.Sqrt(2 * m_JumpHeight * m_Gravity);
+                }
+            }
+            else
+            {
+                m_VerticalVelocity.y = Mathf.Sqrt(2 * m_JumpHeight * m_Gravity);
             }
             
-            IsLaunched = false;
-            m_DashMomentumTimer = 0.25f;
-            m_JumpCount--;
-            m_VerticalVelocity.y = Mathf.Sqrt(2 * m_JumpHeight * m_Gravity);
-            CamEffects.RotateTo.x += 5;
-            CamEffects.RotateTo += new Vector3(m_ForwardMovement,0,-m_SidewardMovement).normalized * m_DashMomentum;
-            CamEffects.FovTo += 10;
-            Movment.Move(new Vector3(0,0.15f,0));
-
-            Weapons.JumpAnim();
         }
 
         float VerticalTilt = m_VerticalVelocity.y;
@@ -485,6 +502,7 @@ public class Scr_PlayerMotor : MonoBehaviour
             IsLaunched = true;
             Movment.Move(new Vector3(0,0.5f,0));
             m_MomentumDirection = _direction;
+            m_SmoothMoveDirection = _direction;
             m_VerticalVelocity.y = Mathf.Sqrt(2 * _Height * m_Gravity);
             CamEffects.FovTo += 45;
             CamEffects.RotateTo += new Vector3(15,0,0);
