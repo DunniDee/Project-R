@@ -12,6 +12,7 @@ public class Enemy_Shooter : Scr_BaseAI
     [SerializeField] protected Vector2 MoveTimeRange;
     [SerializeField] protected Vector2 AttackTimeRange;
 
+    [SerializeField] protected Animator Anim;
     protected float ShootTimer;
     protected float StateTimer;
 
@@ -49,6 +50,11 @@ public class Enemy_Shooter : Scr_BaseAI
     {
         StateTimer = Random.Range(AttackTimeRange.x,AttackTimeRange.y);
         ShootTimer = FireRate;
+
+        if (Anim != null)
+        {
+            Anim.SetTrigger("StartAim");
+        }
     }
 
     protected override void AttackUpdate()
@@ -113,7 +119,20 @@ public class Enemy_Shooter : Scr_BaseAI
         Agent.Move(AgentRotator.right * m_CurrentMoveSpeed * Time.deltaTime);
         FacePlayer();
 
-         var delta = PlayerTransform.position - transform.position;
+
+        if (Anim != null)
+        {
+            if (m_CurrentMoveSpeed > 0)
+            {
+                Anim.SetTrigger("strafe left");
+            }
+            else
+            {
+                Anim.SetTrigger("strafe right");
+            }
+        }
+
+        var delta = PlayerTransform.position - transform.position;
         var angle = Mathf.Atan2(delta.y, delta.x) * Mathf.Rad2Deg;
         var rotation = Quaternion.Euler(0, angle, 0);
     }
@@ -121,6 +140,10 @@ public class Enemy_Shooter : Scr_BaseAI
 
     protected void Shoot()
     {
+        if (Anim != null)
+        {
+            Anim.SetTrigger("Shoot");
+        }
 
         GameObject Proj = ObjectPooler.Instance.GetObject(Projectile);
         Proj.transform.position = ShootPos.position;
