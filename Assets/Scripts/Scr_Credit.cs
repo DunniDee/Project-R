@@ -9,20 +9,19 @@ public class Scr_Credit : MonoBehaviour
     public AudioClip pickupAudio;
 
     [Header("Internal Properties")]
-    public Transform Parent;
     public Transform Target;
     public float minSpeed;
     public float maxSpeed;
 
+    public AnimationCurve SpeedCurve;
+
     public Vector2 ValueMinMax;
 
-    private Vector3 Velocity;
-
-    bool isFollowing = false;
+    bool isFollowing = true;
 
     public float Value = 0;
 
-
+    float lifeTime;
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
@@ -31,7 +30,7 @@ public class Scr_Credit : MonoBehaviour
             OnPlayerCollided(other);
             PlayPickUpNoise();
             Script_PlayerStatManager.Instance.Credits += Value;
-            Destroy(Parent.gameObject, 0.25f);
+            Destroy(transform.gameObject, 0.25f);
         }
     }
     protected virtual void OnPlayerCollided(Collider other) {
@@ -49,12 +48,14 @@ public class Scr_Credit : MonoBehaviour
 
     private void FollowTarget()
     {
+        
         if (isFollowing)
         {
-            Parent.position = Vector3.SmoothDamp(Parent.position, new Vector3(Target.position.x, Target.position.y + 1, Target.position.z), ref Velocity, Time.deltaTime * Random.Range(minSpeed, maxSpeed));
-
+            lifeTime += Time.deltaTime;
+            transform.position = Vector3.Lerp(transform.position, Target.position, lifeTime);
         }
     }
+
     // Start is called before the first frame update
     public void Start()
     {
@@ -68,7 +69,7 @@ public class Scr_Credit : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
-
+        
         FollowTarget();
 
     }

@@ -5,10 +5,15 @@ using UnityEngine.AI;
 
 public class AIAnimatorEvents : MonoBehaviour
 {
+    /// <summary>
+    ///  Attack Delegate event called in animation events.
+    /// </summary>
+    /// <param name="agent"></param>
     public delegate void OnAttackDelegate(Script_BaseAI agent);
-    public OnAttackDelegate OnSlashHorizontalAttack;
-    public OnAttackDelegate OnSlashVerticalAttack;
-    public OnAttackDelegate OnJumpAttack;
+    public OnAttackDelegate OnSlashHorizontalAttackEvent;
+    public OnAttackDelegate OnSlashVerticalAttackEvent;
+    public OnAttackDelegate OnJumpAttackEvent;
+
     Script_BaseAI AIagent;
     [SerializeField] AudioSource audioSource;
     [SerializeField] NavMeshAgent agent;
@@ -21,25 +26,24 @@ public class AIAnimatorEvents : MonoBehaviour
 
     public void SlashHorizontal()
     {
-        if (OnSlashHorizontalAttack != null)
+        if (OnSlashHorizontalAttackEvent != null)
         {
-            OnSlashHorizontalAttack(AIagent);
+            OnSlashHorizontalAttackEvent(AIagent);
         }
     }
 
     public void SlashVertical()
     {
-        if (OnSlashVerticalAttack != null)
+        if (OnSlashVerticalAttackEvent != null)
         {
-            OnSlashVerticalAttack(AIagent);
+            OnSlashVerticalAttackEvent(AIagent);
         }
     }
     public void JumpAttack()
     {
-        if (OnJumpAttack != null)
+        if (OnJumpAttackEvent != null)
         {
-            Debug.Log("JUMPY ATTACK!");
-            OnJumpAttack(AIagent);
+            OnJumpAttackEvent(AIagent);
         }
     }
 

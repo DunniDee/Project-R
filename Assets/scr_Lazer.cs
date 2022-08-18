@@ -9,7 +9,7 @@ public class scr_Lazer : MonoBehaviour
 
     RaycastHit Hit;
     public float maxLaserDistance = 10.0f;
-    float damagePerTick = 17.5f;
+    float m_damagePerTick = 17.5f;
     // Start is called before the first frame update
     void Start()
     {
@@ -50,14 +50,17 @@ public class scr_Lazer : MonoBehaviour
         if (Physics.Raycast(transform.position, transform.forward, out Hit, maxLaserDistance))
         {
             hitBlocked = true;
+            // If ray hits tag player deal damage to the player
             if (Hit.transform.CompareTag("Player"))
             {
                 var playerhealth = Hit.transform.GetComponent<Scr_PlayerHealth>();
 
-                playerhealth.TakeDamage(damagePerTick, 0.1f,0.1f);
+                playerhealth.TakeDamage(m_damagePerTick, 0.1f,0.1f);
             }
         }
     }
+
+    //Draw ray infront of gameobject
     public void OnDrawGizmos()
     {
         Gizmos.color = Color.red;

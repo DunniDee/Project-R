@@ -4,8 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 public class Scr_ScreenSpaceHud : MonoBehaviour
 {
+    [SerializeField] Scr_PlayerHealth Health;
     [SerializeField] Scr_PlayerMotor Motor;
     [SerializeField] int WasCount;
+
+    [SerializeField] Image BloodyScreenImage;
 
     [SerializeField] Image[] DashImages;
 
@@ -13,10 +16,27 @@ public class Scr_ScreenSpaceHud : MonoBehaviour
     bool Dash2;
     bool Dash3;
 
+    private void Start()
+    {
+        Health = GetComponentInParent<Scr_PlayerHealth>();
 
+    }
+
+    public void HealScreenEffect()
+    { 
+       
+    }
+    public void DamageScreenEffect()
+    {
+     
+    }
     // Update is called once per frame
     void Update()
     {
+       /* if (BloodyScreenImage.color.a > 0)
+        {
+            BloodyScreenImage.color = Color.Lerp(BloodyScreenImage.color, new Color(BloodyScreenImage.color.r, BloodyScreenImage.color.g, BloodyScreenImage.color.b, 0), Time.deltaTime * 10);
+        }*/
         if (Motor.m_DashCount != WasCount)
         {
             switch (Motor.m_DashCount)
@@ -50,6 +70,7 @@ public class Scr_ScreenSpaceHud : MonoBehaviour
             }
         }
 
+        
         if (Dash1)
         {
             DashImages[0].color = Color.Lerp(DashImages[0].color, new Color(1,1,1,1), Time.deltaTime * 10);
