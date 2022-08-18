@@ -27,6 +27,7 @@ public abstract class Script_WeaponBase : MonoBehaviour
     [SerializeField] protected int MagCount;
     public int CurMagCount;
     [SerializeField] protected float ReloadTime;
+    protected float m_ReloadTimer;
     protected float CurReloadTime;
     public bool IsReloading = false;
 
@@ -85,7 +86,13 @@ public abstract class Script_WeaponBase : MonoBehaviour
        HUD.MagSize = MagCount;
        HUD.AmmoCount = CurMagCount;
        HUD.SetGunName(GunName);
-
+        if (m_ReloadTimer > 0)
+        {
+            IsReloading = true;
+            AS.PlayOneShot(ReloadSound);
+            Anim.SetTrigger(ReloadHash);
+            m_ReloadTimer = ReloadTime;
+        }
     }
 
     #region Getters And Setters
@@ -119,33 +126,6 @@ public abstract class Script_WeaponBase : MonoBehaviour
 
     #endregion
 
-    protected virtual IEnumerator IE_Reload()
-    {
-        IsReloading = true;
-        yield return new WaitForSeconds(ReloadTime);
-        IsReloading = false;
-        
-        CurReserveCount-= MagCount - CurMagCount;
-
-        if (CurReserveCount < 0)
-        {
-            int LeftOver = Mathf.Abs(CurReserveCount);
-            CurReserveCount += LeftOver;
-            CurMagCount = MagCount - LeftOver;
-        }
-        else
-        {
-            CurMagCount = MagCount;
-        }
-        
-        if(onAmmoChangeEvent != null)
-        {
-            onAmmoChangeEvent(CurMagCount);
-        }
-
-        HUD.AmmoReserve = CurReserveCount;
-    }
-
     public virtual void Shoot(){}
     public virtual void ShootNoAnim(){}
     protected virtual void Reload()
@@ -153,11 +133,48 @@ public abstract class Script_WeaponBase : MonoBehaviour
         if ((CurMagCount < 1 && ShotTimer < 1 && !IsReloading && CurReserveCount > 0) ||
             (CurMagCount < MagCount && ShotTimer < 1 && !IsReloading && Input.GetKey(ReloadKey) && CurReserveCount > 0))
         {
-            StartCoroutine(IE_Reload());
+            IsReloading = true;
             AS.PlayOneShot(ReloadSound);
             Anim.SetTrigger(ReloadHash);
+            m_ReloadTimer = ReloadTime;
         }
     }
+
+    protected virtual void ReloadUpdate()
+    {
+        if (IsReloading)
+        {
+            if (m_ReloadTimer > 0)
+            {
+                m_ReloadTimer -= Time.deltaTime;
+            }
+            else
+            {
+                IsReloading = false;
+    
+                CurReserveCount-= MagCount - CurMagCount;
+
+                if (CurReserveCount < 0)
+                {
+                    int LeftOver = Mathf.Abs(CurReserveCount);
+                    CurReserveCount += LeftOver;
+                    CurMagCount = MagCount - LeftOver;
+                }
+                else
+                {
+                    CurMagCount = MagCount;
+                }
+                
+                if(onAmmoChangeEvent != null)
+                {
+                    onAmmoChangeEvent(CurMagCount);
+                }
+
+                HUD.AmmoReserve = CurReserveCount;
+            }
+        }
+    }
+
 
     protected virtual void Initialize() // make sure to call initialise in the start of other sublcasses
     {
