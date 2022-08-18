@@ -100,6 +100,7 @@ public class Scr_PlayerMotor : MonoBehaviour
         WallRun();
 
         Jump();
+
         Movment.Move(m_VerticalVelocity * Time.deltaTime);
 
         Vault();
@@ -167,37 +168,6 @@ public class Scr_PlayerMotor : MonoBehaviour
 
             m_SmoothMoveDirection = Vector3.ProjectOnPlane(m_SmoothMoveDirection, WallNormal);
             m_MomentumDirection += m_SmoothMoveDirection * Time.deltaTime;
-            // m_MomentumDirection = Vector3.ProjectOnPlane(m_MomentumDirection, WallNormal);
-            // Movment.Move(-WallNormal * 10 * Time.deltaTime);
-
-            // if (Physics.Raycast(transform.position + (Vector3.up * 0.40f), Orientation.right,out RightHit, 1.5f, WallRunMask))
-            // {
-            //     CamEffects.RotateTo += new Vector3(0,0,45) * Time.deltaTime;
-            //     WallNormal = RightHit.normal;
-            //     return;
-            // }
-
-            // if (Physics.Raycast(transform.position + (Vector3.up * 0.40f), -Orientation.right,out LeftHit, 1.5f, WallRunMask))
-            // {
-            //     CamEffects.RotateTo += new Vector3(0,0,-45) * Time.deltaTime;
-            //     WallNormal = LeftHit.normal;
-            //     return;
-                
-            // }
-
-            // if (Physics.Raycast(transform.position + (Vector3.up * 0.40f), Orientation.forward,out FrontHit, 1.5f, WallRunMask))
-            // {
-            //     CamEffects.RotateTo += new Vector3(-45,0,0) * Time.deltaTime;
-            //     WallNormal = FrontHit.normal;
-            //     return;
-            // }
-
-            // if (Physics.Raycast(transform.position + (Vector3.up * 0.40f), -Orientation.forward,out BackHit, 1.5f, WallRunMask))
-            // {
-            //     CamEffects.RotateTo += new Vector3(45,0,0) * Time.deltaTime;
-            //     WallNormal = BackHit.normal;
-            //     return;
-            // }
 
             foreach (var Pos in WallCheckPos)
             {  
@@ -502,7 +472,7 @@ public class Scr_PlayerMotor : MonoBehaviour
             IsLaunched = true;
             Movment.Move(new Vector3(0,0.5f,0));
             m_MomentumDirection = _direction;
-            m_SmoothMoveDirection = _direction;
+            m_SmoothMoveDirection = Vector3.zero;
             m_VerticalVelocity.y = Mathf.Sqrt(2 * _Height * m_Gravity);
             CamEffects.FovTo += 45;
             CamEffects.RotateTo += new Vector3(15,0,0);
