@@ -1,20 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Script_PlayerInteract : MonoBehaviour
 {
     [Header("Internal Components")]
     public Transform MainCamera;
+    public GameObject InteractText;
 
     [Header("Interact Properties")]
-    public float m_InteractDistance = 5f;
-    public LayerMask m_InteractLayer;
+    public KeyCode InteractKey = KeyCode.F;
+    public float InteractRayLength = 5f;
+    public LayerMask InteractLayer;
+
+    //Interact function casts a ray looking for a interactable layer.
     void Interact()
     {
         RaycastHit hit;
-        if (Physics.Raycast(MainCamera.position, MainCamera.forward, out hit, m_InteractDistance, m_InteractLayer))
+        if (Physics.Raycast(MainCamera.position, MainCamera.forward, out hit, InteractRayLength, InteractLayer))
         {
+            // if the Interact event component is attached to the object play the interact event.
             if (hit.collider.GetComponent<Script_InteractEvent>() != null)
             {
                 Debug.Log("Interacting with " + hit.collider.name);
@@ -28,17 +34,36 @@ public class Script_PlayerInteract : MonoBehaviour
 
     }
 
+    void HandleInteractText()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(MainCamera.position, MainCamera.forward, out hit, InteractRayLength, InteractLayer))
+        {
+            if (!InteractText.activeSelf)
+            {
+                InteractText.SetActive(true);
+            }
+
+        }
+        else if (InteractText.activeSelf)
+        {
+            InteractText.SetActive(false);
+        }
+    }
+    // Gizmos draws a line in front of the player
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawRay(MainCamera.position, MainCamera.forward * m_InteractDistance);
+        Gizmos.DrawRay(MainCamera.position, MainCamera.forward * InteractRayLength);
     }
 
+    // Update called everyframe
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(InteractKey))
         {
             Interact();
         }
+        HandleInteractText();
     }
 }

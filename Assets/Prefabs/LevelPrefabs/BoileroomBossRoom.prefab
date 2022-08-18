@@ -14475,7 +14475,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 803816854773682864}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -56.5, y: 66, z: -232}
+  m_LocalPosition: {x: -57.5, y: 66, z: -232}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4884810542192569418}
@@ -14510,7 +14510,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   TriggerCenter: {x: 0, y: 0, z: 0}
-  TriggerSize: {x: 6, y: 6, z: 6}
+  TriggerSize: {x: 8, y: 6, z: 8}
   TriggerColor: {r: 0, g: 1, b: 0, a: 0.09803922}
   DoEventOnce: 1
   IsActive: 1
@@ -16582,10 +16582,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fe19395680b72044ba1882625d1611d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BossAI:
+  ArenaCanvas: {fileID: 3134706339520483288}
+  AIList:
   - {fileID: 4437915664391287308}
-  BossHealthSlider: {fileID: 6643081005389538863}
-  BossCanvas: {fileID: 3134706339520483288}
   isBossFightActive: 0
   OnBossFightComplete:
     m_PersistentCalls:
@@ -16601,6 +16600,30 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: Open
           m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: MainMenu
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: GridController, Assembly-CSharp
+        m_MethodName: SetPlayerCanMove
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!1 &4884810542272814915
 GameObject:
@@ -22259,20 +22282,9 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7531698652867550763, guid: 87410eec7b0f852408eb5bb4d4b22bfe, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 87410eec7b0f852408eb5bb4d4b22bfe, type: 3}
---- !u!114 &6643081005389538863 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2304334156169869078, guid: 87410eec7b0f852408eb5bb4d4b22bfe,
-    type: 3}
-  m_PrefabInstance: {fileID: 4884810541785059641}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &3162551292414976106 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7505801745624625491, guid: 87410eec7b0f852408eb5bb4d4b22bfe,
@@ -23729,12 +23741,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 86abdee593e6a74429a323a7d23da84c, type: 3}
---- !u!4 &6252155625980810147 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1517232743105538283, guid: 86abdee593e6a74429a323a7d23da84c,
-    type: 3}
-  m_PrefabInstance: {fileID: 4884810542443559752}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &4437915664391287308 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9105418105106024772, guid: 86abdee593e6a74429a323a7d23da84c,
@@ -23747,6 +23753,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e96241dac26b5843a2ad0877292f3f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &6252155625980810147 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1517232743105538283, guid: 86abdee593e6a74429a323a7d23da84c,
+    type: 3}
+  m_PrefabInstance: {fileID: 4884810542443559752}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4884810542510968424
 PrefabInstance:
   m_ObjectHideFlags: 0

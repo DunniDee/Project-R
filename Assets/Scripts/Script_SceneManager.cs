@@ -6,13 +6,16 @@ using UnityEngine.UI;
 
 public class Script_SceneManager : MonoBehaviour
 {
-    bool IsTransitioning = false;
-    public static Script_SceneManager Instance; // Singleton
+
+    // Singleton Pattern
+    #region Singleton
+    public static Script_SceneManager Instance; 
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
+            SceneManager.sceneLoaded += SceneLoaded;
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -21,15 +24,26 @@ public class Script_SceneManager : MonoBehaviour
         }
     }
 
+    private void SceneLoaded(Scene _Scene, LoadSceneMode _SceneLoadMode)
+    {
+        currentSceneIndex = _Scene.buildIndex;
+    }
+    #endregion
+
+    [Header("Internal Components")]
     public GameObject loadingScreen;
-    public string sceneToLoad;
     public CanvasGroup canvasGroup;
+    [Header("SceneManager Properties")]
+    public string sceneToLoad;
     public int currentSceneIndex;
 
+    bool IsTransitioning = false;
+    
     private void OnLevelWasLoaded(int level)
     {
-        currentSceneIndex = level;
+      
     }
+    
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.Keypad1))
@@ -46,6 +60,7 @@ public class Script_SceneManager : MonoBehaviour
             }
         }
     }
+
     public void LoadScene(string SceneName)
     {
         if (!IsTransitioning)
@@ -66,6 +81,7 @@ public class Script_SceneManager : MonoBehaviour
             yield return null;
         }
     }
+
     IEnumerator FadeLoadingScreen(float targetValue, float duration)
     {
         float startValue = canvasGroup.alpha;

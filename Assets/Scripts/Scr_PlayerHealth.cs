@@ -17,18 +17,22 @@ public class Scr_PlayerHealth : MonoBehaviour
     public float curRegenRate = 0.0f;
     public float MaxRegenRate = 3.0f;
 
-    private float timer = 0.0f;
-    private float waitTime = 5.0f;
 
     public delegate void OnTakeDamageDelegate(float Time, float Amplitude);
     public OnTakeDamageDelegate OnTakeDamageEvent;
 
+    #region Member Functions
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="_Damage"></param>
+    /// <param name="_cameraShakeTime"></param>
+    /// <param name="_cameraShakeAmplitude"></param>
     public void TakeDamage(float _Damage,float _cameraShakeTime, float _cameraShakeAmplitude)
     {
         if (OnTakeDamageEvent != null)
         {
             OnTakeDamageEvent(0.2f, 0.5f);
-            timer = waitTime;
         }
         PlayDamageNoise();
 
@@ -37,27 +41,41 @@ public class Scr_PlayerHealth : MonoBehaviour
         CamEffects.ShakeTime += _cameraShakeTime;
         CamEffects.ShakeAmplitude += _cameraShakeAmplitude;
     }
-    public void Heal(float _HealthAmount) {
-        currentHealth += _HealthAmount;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="_HealAmount"></param>
+    public void Heal(float _HealAmount) {
+        currentHealth += _HealAmount;
         m_healthUI.HealthValueText.text = currentHealth.ToString("F0");
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
     void PlayDamageNoise()
     {
         audioSource.PlayOneShot(damageNoise[Random.Range(0,damageNoise.Length)]);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public void ResetHealth()
     {
         currentHealth = maxHealth;
     }
+    #endregion
+
     // Start is called before the first frame update
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
         m_healthUI = GetComponentInChildren<Script_HealthUI>();
         CamEffects = GetComponentInChildren<Scr_CameraEffects>();
+
         currentHealth = maxHealth;
-        
     }
 
    
@@ -69,10 +87,6 @@ public class Scr_PlayerHealth : MonoBehaviour
             Script_SceneManager.Instance.LoadScene("MainMenu");
         }
 
-        if (timer > 0.0f)
-        {
-            timer -= Time.deltaTime;
-        }
  
     }
 

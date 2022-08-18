@@ -121,8 +121,8 @@ public class AIChaseState : AIState
         agent.GetAnimator().SetBool("isInCombat", true);
         agent.GetNavMeshAgent().stoppingDistance = 2.5f;
 
-        agent.GetAnimatorEvents().OnSlashHorizontalAttack += SlashAttackHorizontal;
-        agent.GetAnimatorEvents().OnSlashVerticalAttack += SlashAttackVertical;
+        agent.GetAnimatorEvents().OnSlashHorizontalAttackEvent += SlashAttackHorizontal;
+        agent.GetAnimatorEvents().OnSlashVerticalAttackEvent += SlashAttackVertical;
         
         playerTransform = agent.GetPlayerTransform();
         agent.PlayCombatNoise();
