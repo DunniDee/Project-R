@@ -147,7 +147,7 @@ public class Scr_PlayerMotor : MonoBehaviour
     void WallRun()
     { 
         //initial check for contact with wall
-        if (Physics.CheckSphere(transform.position + Vector3.up,0.6f,WallRunMask | GroundMask) && !m_IsGrounded)
+        if (Physics.CheckSphere(transform.position + Vector3.up,0.6f,GroundMask) && !m_IsGrounded)
         {
            m_IsTouchingWall = true; 
         }
@@ -257,8 +257,8 @@ public class Scr_PlayerMotor : MonoBehaviour
             m_MomentumDirection = Vector3.ProjectOnPlane(m_MomentumDirection,m_GroundNormal);
         }
 
+        // horizontal movement
         Movment.Move(m_SmoothMoveDirection * m_MovementSpeed * Time.deltaTime);
-
         Movment.Move(m_MomentumDirection * Time.deltaTime);
 
 
