@@ -8,8 +8,6 @@ public class Scr_ScreenSpaceHud : MonoBehaviour
     [SerializeField] Scr_PlayerMotor Motor;
     [SerializeField] int WasCount;
 
-    [SerializeField] Image BloodyScreenImage;
-
     [SerializeField] Image[] DashImages;
 
     bool Dash1;

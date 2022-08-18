@@ -37,6 +37,7 @@ public class script_WeaponSwap : MonoBehaviour
         EquippedWeapons[Index].GetComponent<Script_WeaponBase>().enabled = _b;
         m_IsActive = _b;
     }
+
     // Update is called once per frame
     public void Start() 
     {
@@ -57,7 +58,7 @@ public class script_WeaponSwap : MonoBehaviour
             Script_PlayerStatManager.Instance.SetWeaponStats(i, weaponBase);
 
          
-            if (i < 4)
+            if (i < 3)
             {
                 EquippedWeapons.Add(Weapon);
             }

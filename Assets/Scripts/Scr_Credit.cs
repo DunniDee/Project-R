@@ -52,7 +52,7 @@ public class Scr_Credit : MonoBehaviour
         if (isFollowing)
         {
             lifeTime += Time.deltaTime;
-            transform.position = Vector3.Lerp(transform.position, Target.position, lifeTime);
+            transform.position = Vector3.Lerp(transform.position + (Vector3.up * 2), Target.position, lifeTime);
         }
     }
 
@@ -63,7 +63,7 @@ public class Scr_Credit : MonoBehaviour
     
         Target = GameObject.FindGameObjectWithTag("Player").transform;
 
-        Value = Random.Range(ValueMinMax.x, ValueMinMax.y);
+        //Value = Random.Range(ValueMinMax.x, ValueMinMax.y);
     }
 
     // Update is called once per frame
