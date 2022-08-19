@@ -16,12 +16,11 @@ public class Scr_EnemyProjectile : MonoBehaviour
             Debug.Log("Damage Done " + m_fDamage);
             Disable();
         }
-        else if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
-        {
-            Disable();    
 
+        if (collision.tag == "Ground" || collision.tag == "Wallrunable")
+        {
+            Disable();
         }
-        
     }
     private void Start()
     {
