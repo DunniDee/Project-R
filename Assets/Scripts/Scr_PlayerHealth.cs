@@ -110,13 +110,13 @@ public class Scr_PlayerHealth : MonoBehaviour
         m_healthUI = GetComponentInChildren<Script_HealthUI>();
         CamEffects = GetComponentInChildren<Scr_CameraEffects>();
 
-        Color c = BloodyScreenImage.material.color;
+    /*    Color c = BloodyScreenImage.material.color;
         c.a = 0f;
         BloodyScreenImage.material.color = c;
 
         Color ca = HealingScreenImage.material.color;
         ca.a = 0f;
-        HealingScreenImage.material.color = ca;
+        HealingScreenImage.material.color = ca;*/
 
         currentHealth = maxHealth;
     }
