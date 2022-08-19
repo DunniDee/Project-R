@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Scr_HealthOrb : Scr_Credit
-{
+{ 
     protected override void OnPlayerCollided(Collider other) 
     {
         base.OnPlayerCollided(other);
-        other.GetComponentInParent<Scr_PlayerHealth>().Heal(Value);
 
-        Debug.Log("healing Player " + Value);
+            other.GetComponent<Scr_PlayerHealth>().Heal(Value);
+
+            Debug.Log("healing Player " + Value);
+     
     }
 
     // Start is called before the first frame update

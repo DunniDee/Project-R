@@ -5,9 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class Scr_MainMenu : MonoBehaviour
 {
-    public void Play()
+    public void Play(string _SceneToLoad)
     {
-        SceneManager.LoadScene("HubWorld");
+        SceneManager.LoadScene(_SceneToLoad);
     }
 
     public void QuitApplication()

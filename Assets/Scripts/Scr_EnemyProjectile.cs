@@ -12,9 +12,14 @@ public class Scr_EnemyProjectile : MonoBehaviour
         Debug.Log(collision.name);
         if (collision.tag == "Player")
         {
-            collision.GetComponent<Scr_PlayerHealth>().TakeDamage(m_fDamage,0.25f,0.3f);
+            collision.GetComponent<Scr_PlayerHealth>().TakeDamage(m_fDamage, 0.25f, 0.3f);
             Debug.Log("Damage Done " + m_fDamage);
             Disable();
+        }
+        else if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        {
+            Disable();    
+
         }
         
     }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Scr_PlayerHealth : MonoBehaviour
 {
@@ -12,23 +13,31 @@ public class Scr_PlayerHealth : MonoBehaviour
     public float maxHealth = 100.0f;
     public float currentHealth = 0.0f;
 
+    public Image BloodyScreenImage;
+    public Image HealingScreenImage;
+
     [Header("Regen Properties")]
     public float RegenRate = 0.1f;
     public float curRegenRate = 0.0f;
     public float MaxRegenRate = 3.0f;
 
-    private float timer = 0.0f;
-    private float waitTime = 5.0f;
 
     public delegate void OnTakeDamageDelegate(float Time, float Amplitude);
     public OnTakeDamageDelegate OnTakeDamageEvent;
 
+    #region Member Functions
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="_Damage"></param>
+    /// <param name="_cameraShakeTime"></param>
+    /// <param name="_cameraShakeAmplitude"></param>
     public void TakeDamage(float _Damage,float _cameraShakeTime, float _cameraShakeAmplitude)
     {
+        StartCoroutine(FadeInCoroutine(BloodyScreenImage));
         if (OnTakeDamageEvent != null)
         {
             OnTakeDamageEvent(0.2f, 0.5f);
-            timer = waitTime;
         }
         PlayDamageNoise();
 
@@ -37,27 +46,79 @@ public class Scr_PlayerHealth : MonoBehaviour
         CamEffects.ShakeTime += _cameraShakeTime;
         CamEffects.ShakeAmplitude += _cameraShakeAmplitude;
     }
-    public void Heal(float _HealthAmount) {
-        currentHealth += _HealthAmount;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="_HealAmount"></param>
+    public void Heal(float _HealAmount) {
+        StartCoroutine(FadeInCoroutine(HealingScreenImage));
+        if (currentHealth + _HealAmount > maxHealth)
+        {
+            currentHealth = maxHealth;
+            return;
+        }
+        currentHealth += _HealAmount;
         m_healthUI.HealthValueText.text = currentHealth.ToString("F0");
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
     void PlayDamageNoise()
     {
         audioSource.PlayOneShot(damageNoise[Random.Range(0,damageNoise.Length)]);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public void ResetHealth()
     {
         currentHealth = maxHealth;
     }
+
+    public IEnumerator FadeInCoroutine(Image _imageToFade)
+    {
+        for (float f = 0.05f; f < 0.3; f++)
+        {
+            Color c = _imageToFade.color;
+            c.a = f;
+            _imageToFade.color = c;
+            yield return new WaitForSeconds(0.05f);
+        }
+        yield return new WaitUntil(() => _imageToFade.color.a >= 0.3f);
+        StartCoroutine(FadeOutCoroutine(_imageToFade));
+    }
+
+    public IEnumerator FadeOutCoroutine(Image _imageToFade)
+    {
+        for (float f = 0.05f; f > 0; f -= 0.05f)
+        {
+            Color c = _imageToFade.color;
+            c.a = f;
+            _imageToFade.color = c;
+            yield return new WaitForSeconds(0.05f);
+        }
+    }
+    #endregion
+
     // Start is called before the first frame update
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
         m_healthUI = GetComponentInChildren<Script_HealthUI>();
         CamEffects = GetComponentInChildren<Scr_CameraEffects>();
+
+        Color c = BloodyScreenImage.material.color;
+        c.a = 0f;
+        BloodyScreenImage.material.color = c;
+
+        Color ca = HealingScreenImage.material.color;
+        ca.a = 0f;
+        HealingScreenImage.material.color = ca;
+
         currentHealth = maxHealth;
-        
     }
 
    
@@ -68,11 +129,7 @@ public class Scr_PlayerHealth : MonoBehaviour
         {
             Script_SceneManager.Instance.LoadScene("MainMenu");
         }
-
-        if (timer > 0.0f)
-        {
-            timer -= Time.deltaTime;
-        }
+        
  
     }
 

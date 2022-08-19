@@ -5,20 +5,35 @@ using UnityEngine;
 
 public class AIJumpAttackState : AIState
 {
+    //Member Functions
     float timeJumping = 0.0f;
     public Vector3 initalPosition;
     public Vector3 FinalPosition;
+    
+    #region Member Functions
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="agent"></param>
     private void Attack(Script_BaseAI agent)
     {
         AI_Brute bruteAgent = (AI_Brute)agent;
+        
         bruteAgent.CameraEffects.ShakeTime = 0.25f;
         bruteAgent.CameraEffects.ShakeAmplitude = 2.5f;
-        //Add to object pooler Later
+
+        //Instantiate VFX
         var slamVFX = MonoBehaviour.Instantiate(bruteAgent.VFX_Slam, FinalPosition, Quaternion.identity);
         MonoBehaviour.Destroy(slamVFX, 15.0f);
+        
+        //Cast Overlap sphere Checking for Player
         Collider[] hit = Physics.OverlapSphere(FinalPosition, 10.0f);
+
+        //Play Slam Audio
         agent.audioSource.PlayOneShot(bruteAgent.SlamAudio);
+
+        //Apply damage and upwards force to player
         foreach (Collider collider in hit)
         { 
             if (collider.tag == "Player")
@@ -33,6 +48,10 @@ public class AIJumpAttackState : AIState
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="agent"></param>
     public void SetFinalLeapPosition(Script_BaseAI agent)
     {
         Vector3 position = agent.GetPlayerTransform().position;
@@ -42,6 +61,9 @@ public class AIJumpAttackState : AIState
             FinalPosition = hit.point;
         }
     }
+    #endregion
+
+    #region Inheritted Functions
     public AIStateID getID()
     {
         return AIStateID.JumpAttack;
@@ -49,7 +71,7 @@ public class AIJumpAttackState : AIState
 
     public void Enter(Script_BaseAI agent)
     {
-        agent.GetAnimatorEvents().OnJumpAttack += Attack;
+        agent.GetAnimatorEvents().OnJumpAttackEvent += Attack;
         agent.GetNavMeshAgent().enabled = false;
         agent.GetRigid().isKinematic = false;
         agent.GetRigid().useGravity = false;
@@ -77,12 +99,10 @@ public class AIJumpAttackState : AIState
 
     public void Exit(Script_BaseAI agent)
     {
-        // Attack(agent);
-        //Make sure rotator isnt fucked
         agent.GetRotator().localPosition = Vector3.zero;
         agent.GetNavMeshAgent().enabled = true;
         agent.GetRigid().isKinematic = true;
         agent.GetRigid().useGravity = true;
     }
-
+    #endregion
 }

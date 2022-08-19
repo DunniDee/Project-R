@@ -13,7 +13,6 @@ public class AI_Gun : Script_BaseAI
 
         StateMachine.RegisterState(new AIDeathState());
         StateMachine.RegisterState(new AIIdleState());
-        StateMachine.RegisterState(new AIShootState());
 
         StateMachine.ChangeState(InitalState);
     }
