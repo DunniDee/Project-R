@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class AI_Brute : Script_BaseAI
 {
+    [Header("Internal Effects")]
     public Scr_CameraEffects CameraEffects;
     public GameObject VFX_Slam;
     public AudioClip SlamAudio;
+
     protected override void AIStateInit()
     {
         base.AIStateInit();

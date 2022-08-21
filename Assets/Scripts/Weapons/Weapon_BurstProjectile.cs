@@ -32,6 +32,7 @@ public class Weapon_BurstProjectile : Script_ProjectileWeapon
         }
 
         Reload();
+        ReloadUpdate();
 
         Animate();
     }

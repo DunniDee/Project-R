@@ -27,6 +27,7 @@ public class Weapon_FullAutoProjectile : Script_ProjectileWeapon
         }
         
         Reload();
+        ReloadUpdate();
 
         Animate();
     }

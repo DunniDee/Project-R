@@ -12,11 +12,15 @@ public class Scr_EnemyProjectile : MonoBehaviour
         Debug.Log(collision.name);
         if (collision.tag == "Player")
         {
-            collision.GetComponent<Scr_PlayerHealth>().TakeDamage(m_fDamage);
+            collision.GetComponent<Scr_PlayerHealth>().TakeDamage(m_fDamage, 0.25f, 0.3f);
             Debug.Log("Damage Done " + m_fDamage);
             Disable();
         }
-        
+
+        if (collision.tag == "Ground" || collision.tag == "Wallrunable")
+        {
+            Disable();
+        }
     }
     private void Start()
     {

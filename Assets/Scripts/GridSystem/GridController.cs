@@ -101,14 +101,24 @@ public class GridController : MonoBehaviour
 
     public void SetUIActive(bool _b)
     {
-        FindObjectOfType<Scr_PlayerLook>().enabled = !_b;
-        script_WeaponSwap.Instance.SetCanShoot(!_b);
+        SetCursorActive(_b);
+
         SetIsGridActive(_b);
         canvasTransform.gameObject.SetActive(_b);
         UpgradeUI.enabled = _b;
+
+
+    }
+
+    public void SetCursorActive(bool _b)
+    {
+        FindObjectOfType<Scr_PlayerMotor>().enabled = !_b;
+        FindObjectOfType<Scr_PlayerLook>().enabled = !_b;
+        FindObjectOfType<Scr_PlayerHealth>().enabled = !_b;
+        script_WeaponSwap.Instance.SetCanShoot(!_b);
+
         Cursor.visible = _b;
         Cursor.lockState = Cursor.visible ? CursorLockMode.Confined : CursorLockMode.Locked;
-        
     }
 
     Vector2Int oldPositionOnGrid;

@@ -34,25 +34,20 @@ public class Scr_BaseAI : MonoBehaviour, IDamageable
 
     [SerializeField]
     protected Script_Ragdoll m_Ragdoll;
-
-
     [SerializeField] protected Animator Anim;
-
-    
     [SerializeField] protected Transform AlertPos;
     [SerializeField] protected TextMeshPro AlertText;
-
-
     [SerializeField] protected AudioSource AS;
-
     [SerializeField] protected Transform DamagePopupPos;
 
 
     protected void Start() 
     {
         Debug.Log(Script_PlayerStatManager.Instance.PlayerTransform);
-        PlayerTransform = Script_PlayerStatManager.Instance.PlayerTransform;
+        PlayerTransform = Script_PlayerStatManager.Instance.PlayerTransform; // get player transform
     }
+
+    //base classes for the behaviours
     protected void StartAttackUI()
     {
         AlertPos.LookAt(PlayerTransform);
@@ -75,6 +70,7 @@ public class Scr_BaseAI : MonoBehaviour, IDamageable
             case CustomCollider.DamageType.Critical:
                 m_Health -= _Damage * 2;
                 Scr_DamagePopupManager.Instance.DisplayDamagePopup((int)_Damage * 2, DamagePopupPos);
+                Scr_DamagePopupManager.Instance.CreateHealthOrb(this.gameObject.transform);
             break;
             case CustomCollider.DamageType.Normal:
                 m_Health -= _Damage;
@@ -95,7 +91,7 @@ public class Scr_BaseAI : MonoBehaviour, IDamageable
     // Update is called once per frame
     void Update()
     {
-        if (m_Health <= 0)
+        if (m_Health <= 0) // enemy dead
         {
            m_CurrentState = State.Dead; 
         }

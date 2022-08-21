@@ -28,6 +28,7 @@ public class Weapon_SemiAutioProjectile : Script_ProjectileWeapon
         }
 
         Reload();
+        ReloadUpdate();
 
         Animate(); 
 

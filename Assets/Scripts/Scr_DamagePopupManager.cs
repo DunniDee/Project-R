@@ -29,5 +29,14 @@ public class Scr_DamagePopupManager : MonoBehaviour
         var obj = Instantiate(damagePopupPrefab, _PopupParent.transform.position, Quaternion.identity, _PopupParent);
         obj.GetComponent<Scr_DamagePopup>().Init(_DamageAmount);
     }
-    
+
+    [SerializeField]
+    private GameObject HealthOrbPrefab;
+
+    public void CreateHealthOrb(Transform _HealthOrbParent)
+    {
+        var obj = Instantiate(HealthOrbPrefab, _HealthOrbParent.transform.position, Quaternion.identity);
+       
+    }
+
 }

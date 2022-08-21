@@ -13,17 +13,31 @@ public class Enemy_Meele : Scr_BaseAI
     float MoveDelayTimer;
 
     float xVel;
-
     public float BackOffTimer;
+
+    bool m_ChaseDoOnce;
+    bool m_RunBackDoOnce;
     protected virtual void Seek()
     {
         Agent.isStopped = false;
         Agent.SetDestination(PlayerTransform.position);
         FacePlayer();
+        
+        if (m_ChaseDoOnce)
+        { 
+            Anim.SetTrigger("Chase");
+            m_ChaseDoOnce = false;
+        }
     }
     protected virtual void BackOff()
     {
         Agent.isStopped = true;
+
+        if (m_RunBackDoOnce)
+        { 
+            Anim.SetTrigger("RunBack");
+            m_RunBackDoOnce = false;
+        }
         Agent.Move(-AgentRotator.forward * 2 * Time.deltaTime);
         Agent.Move(AgentRotator.right * xVel * Time.deltaTime);
         FacePlayer();
@@ -48,13 +62,14 @@ public class Enemy_Meele : Scr_BaseAI
         {
             if (BackOffTimer > 0)
             {
+                m_ChaseDoOnce = true;
                 BackOffTimer -= Time.deltaTime;
                 BackOff();
             }
             else
             {
                 Seek();
-
+                m_RunBackDoOnce = true;
                 if ((PlayerTransform.position - Agent.transform.position).sqrMagnitude < AgroRange * AgroRange)
                 {
                     m_CurrentState = State.Attack;
