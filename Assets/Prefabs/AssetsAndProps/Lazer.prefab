@@ -44,7 +44,8 @@ GameObject:
   - component: {fileID: 8629783560022761182}
   - component: {fileID: 1037597866472530609}
   - component: {fileID: 5063169548053104597}
-  - component: {fileID: 2193322148620776582}
+  - component: {fileID: 7427851578256497844}
+  - component: {fileID: 7427851578256497843}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -140,9 +141,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 015efc5922ee784439de3491a5d3dacb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lineRenderer: {fileID: 2193322148620776582}
+  lineRenderer: {fileID: 0}
   maxLaserDistance: 10
---- !u!120 &2193322148620776582
+--- !u!120 &7427851578256497844
 LineRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -193,7 +194,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1
+        value: 0.120191574
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -240,3 +241,17 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!114 &7427851578256497843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6997337946048333873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 015efc5922ee784439de3491a5d3dacb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lineRenderer: {fileID: 7427851578256497844}
+  maxLaserDistance: 10

@@ -59,6 +59,10 @@ public class Script_InteractEvent : MonoBehaviour
        
     }
 
+    public bool GetHasEventTriggered()
+    {
+        return hasEventTrigger;
+    }
     public void ShowCursor()
     {
         Cursor.visible = true;

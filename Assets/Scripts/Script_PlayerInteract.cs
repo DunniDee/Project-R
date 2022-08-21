@@ -14,6 +14,8 @@ public class Script_PlayerInteract : MonoBehaviour
     public float InteractRayLength = 5f;
     public LayerMask InteractLayer;
 
+    //[SerializeField] Script_InteractEvent hitEvent;
+
     //Interact function casts a ray looking for a interactable layer.
     void Interact()
     {
@@ -39,7 +41,11 @@ public class Script_PlayerInteract : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(MainCamera.position, MainCamera.forward, out hit, InteractRayLength, InteractLayer))
         {
-            if (!InteractText.activeSelf)
+            if (hit.transform.GetComponent<Script_InteractEvent>().GetHasEventTriggered() && InteractText.activeSelf)
+            {
+                InteractText.SetActive(false);
+            }
+            else if(!InteractText.activeSelf && !hit.transform.GetComponent<Script_InteractEvent>().GetHasEventTriggered())
             {
                 InteractText.SetActive(true);
             }
