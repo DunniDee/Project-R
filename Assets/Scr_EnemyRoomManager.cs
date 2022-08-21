@@ -247,6 +247,7 @@ public class Scr_EnemyRoomManager : MonoBehaviour
         foreach (Scr_BaseAI ai in EnemyList)
         {
             ai.enabled = true;
+            scr_ObjectiveHandler.i.ShowObjective("Exterminate Enemies");
         }
     }
 }

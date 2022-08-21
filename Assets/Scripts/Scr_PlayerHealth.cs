@@ -80,25 +80,24 @@ public class Scr_PlayerHealth : MonoBehaviour
 
     public IEnumerator FadeInCoroutine(Image _imageToFade)
     {
-        for (float f = 0.05f; f < 0.3; f++)
+        for (float f = 0.05f; f < 0.3; f += 0.05f)
         {
             Color c = _imageToFade.color;
             c.a = f;
             _imageToFade.color = c;
             yield return new WaitForSeconds(0.05f);
         }
-        yield return new WaitUntil(() => _imageToFade.color.a >= 0.3f);
         StartCoroutine(FadeOutCoroutine(_imageToFade));
     }
 
     public IEnumerator FadeOutCoroutine(Image _imageToFade)
     {
-        for (float f = 0.05f; f > 0; f -= 0.05f)
+        for (float f = 0.05f; f >= 0; f -= 0.02f)
         {
             Color c = _imageToFade.color;
             c.a = f;
             _imageToFade.color = c;
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.02f);
         }
     }
     #endregion
@@ -109,15 +108,17 @@ public class Scr_PlayerHealth : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         m_healthUI = GetComponentInChildren<Script_HealthUI>();
         CamEffects = GetComponentInChildren<Scr_CameraEffects>();
-
-    /*    Color c = BloodyScreenImage.material.color;
+        
+        //Initalise Color Values
+        Color c = BloodyScreenImage.color;
         c.a = 0f;
-        BloodyScreenImage.material.color = c;
+        BloodyScreenImage.color = c;
 
-        Color ca = HealingScreenImage.material.color;
+        Color ca = HealingScreenImage.color;
         ca.a = 0f;
-        HealingScreenImage.material.color = ca;*/
+        HealingScreenImage.color = ca;
 
+    
         currentHealth = maxHealth;
     }
 
@@ -130,7 +131,6 @@ public class Scr_PlayerHealth : MonoBehaviour
             Script_SceneManager.Instance.LoadScene("MainMenu");
         }
         
- 
     }
 
    
