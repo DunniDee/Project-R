@@ -42,6 +42,10 @@ public class scr_Tram : MonoBehaviour
     {
         Velocity = transform.forward * (Speed);
         transform.position += Velocity * Time.deltaTime;
+        if (transform.position.z >= 600)
+        {
+            isMoving = false;
+        }
     }
     // Start is called before the first frame update
     void Start()
@@ -56,6 +60,7 @@ public class scr_Tram : MonoBehaviour
         {
             Move();
         }
+        
     }
 
 }
