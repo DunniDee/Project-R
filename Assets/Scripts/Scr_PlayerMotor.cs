@@ -52,6 +52,8 @@ public class Scr_PlayerMotor : MonoBehaviour
     public Vector3 m_SmoothMoveDirection;
     public Vector3 m_MomentumDirection;
     public Vector3 m_VerticalVelocity;
+    public Vector3 m_TertiaryVelocity;
+
     float m_ForwardMovement;
     float m_SidewardMovement;
 
@@ -260,7 +262,7 @@ public class Scr_PlayerMotor : MonoBehaviour
         // horizontal movement
         Movment.Move(m_SmoothMoveDirection * m_MovementSpeed * Time.deltaTime);
         Movment.Move(m_MomentumDirection * Time.deltaTime);
-
+        Movment.Move(m_TertiaryVelocity * Time.deltaTime);
 
     }
 
