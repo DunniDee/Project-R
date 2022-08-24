@@ -7,6 +7,7 @@ public class scr_Tram : MonoBehaviour
     public float Speed = 5.0f;
     public bool isMoving = false;
 
+    public float StopDistance = 600f;
     [SerializeField] Vector3 Velocity = Vector3.zero;
     Scr_PlayerMotor motorReference;
     private void OnTriggerEnter(Collider other)
@@ -14,7 +15,7 @@ public class scr_Tram : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             if(motorReference == null) motorReference = other.GetComponent<Scr_PlayerMotor>();
-            motorReference.m_MomentumDirection += new Vector3(0, 0, Velocity.z);
+            motorReference.m_TertiaryVelocity = new Vector3(0, 0, Velocity.z);
         }
     }
 
@@ -22,7 +23,7 @@ public class scr_Tram : MonoBehaviour
     {
         if (isMoving && other.CompareTag("Player"))
         {
-            motorReference.m_MomentumDirection += new Vector3(0,0,Velocity.z);
+            motorReference.m_TertiaryVelocity = new Vector3(0,0,Velocity.z);
         }
     }
 
@@ -31,7 +32,8 @@ public class scr_Tram : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             if (motorReference == null) motorReference = other.GetComponent<Scr_PlayerMotor>();
-            motorReference.m_MomentumDirection -= new Vector3(0, 0, Velocity.z);
+            motorReference.m_TertiaryVelocity = Vector3.zero;
+            motorReference.m_MomentumDirection += new Vector3(0, 0, Velocity.z);
         }
     }
     public void SetIsMoving(bool _b)
@@ -42,9 +44,10 @@ public class scr_Tram : MonoBehaviour
     {
         Velocity = transform.forward * (Speed);
         transform.position += Velocity * Time.deltaTime;
-        if (transform.position.z >= 600)
+        if (transform.position.z >= StopDistance)
         {
             isMoving = false;
+            Velocity = Vector3.zero;
         }
     }
     // Start is called before the first frame update
