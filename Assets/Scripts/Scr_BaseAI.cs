@@ -34,7 +34,7 @@ public class Scr_BaseAI : MonoBehaviour, IDamageable
 
     [SerializeField]
     protected Script_Ragdoll m_Ragdoll;
-    [SerializeField] protected Animator Anim;
+    [SerializeField] protected Animator m_animator;
     [SerializeField] protected Transform AlertPos;
     [SerializeField] protected TextMeshPro AlertText;
     [SerializeField] protected AudioSource AS;
@@ -225,7 +225,7 @@ public class Scr_BaseAI : MonoBehaviour, IDamageable
 
     protected virtual void DeadStart()
     {
-        Anim.enabled = false;
+        m_animator.enabled = false;
         m_Ragdoll.ActivateRagdoll();
         m_Ragdoll.ApplyForce(Vector3.up * 10);
     }

@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 [RequireComponent(typeof(Grid))]
 public class GridInteract : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    GridController gridController;
+    LoadoutController gridController;
     Grid grid;
 
     public void OnPointerEnter(PointerEventData _eventData)
@@ -25,7 +25,7 @@ public class GridInteract : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     void Start()
     {
         grid = GetComponent<Grid>();
-        gridController = FindObjectOfType(typeof(GridController)) as GridController;
+        gridController = FindObjectOfType(typeof(LoadoutController)) as LoadoutController;
     }
 
 }

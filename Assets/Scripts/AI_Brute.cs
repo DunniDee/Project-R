@@ -4,22 +4,25 @@ using UnityEngine;
 
 public class AI_Brute : Script_BaseAI
 {
-    [Header("Internal Effects")]
+    [Header("Brute Properties")]
     public Scr_CameraEffects CameraEffects;
     public GameObject VFX_Slam;
     public AudioClip SlamAudio;
 
+    /// <summary>
+    /// 
+    /// </summary>
     protected override void AIStateInit()
     {
         base.AIStateInit();
-        StateMachine = new Script_AIStateMachine(this);
+        AIStateMachine = new Script_AIStateMachine(this);
 
-        StateMachine.RegisterState(new AIDeathState());
-        StateMachine.RegisterState(new AIIdleState());
-        StateMachine.RegisterState(new AIChaseState());
-        StateMachine.RegisterState(new AIJumpAttackState());
+        AIStateMachine.RegisterState(new AIDeathState());
+        AIStateMachine.RegisterState(new AIIdleState());
+        AIStateMachine.RegisterState(new AIChaseState());
+        AIStateMachine.RegisterState(new AIJumpAttackState());
 
-        StateMachine.ChangeState(InitalState);
+        AIStateMachine.ChangeState(InitalState);
     }
 
     // Start is called before the first frame update

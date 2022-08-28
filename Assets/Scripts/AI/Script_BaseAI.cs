@@ -3,22 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+//Script Owner: Ashley Rickit
+
 [RequireComponent(typeof(Script_Ragdoll))]
 [RequireComponent(typeof(NavMeshAgent))]
 public class Script_BaseAI : MonoBehaviour, IDamageable
 {
     [Header("Internal Components")]
-    protected Transform PlayerTransform;
-    protected Rigidbody rigidBody;
-    protected Script_AIStateMachine StateMachine;
-    protected AIAnimatorEvents AnimatorEvents;
-    [SerializeField] protected Transform DamagePopUpParent;
+    protected Transform m_PlayerTransform;
+    protected Rigidbody m_rigidBody;
+    protected Script_AIStateMachine AIStateMachine;
+    protected AIAnimatorEvents m_AnimatorEvents;
+    [SerializeField] protected Transform m_DamagePopUpParent;
 
-    [SerializeField] protected Transform Rotator;
-    [SerializeField] protected AnimationCurve JumpCurve;
+    [SerializeField] protected Transform m_RotatorTransform;
+    [SerializeField] protected AnimationCurve m_JumpCurve;
     protected float m_Gravity = -9.84f;
 
-    public AudioSource audioSource;
+    public AudioSource m_audioSource;
 
     protected private NavMeshAgent m_navMeshAgent;
     protected private Animator m_Animator;
@@ -38,102 +40,167 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
     public List<AudioClip> DeathNoise;
 
     [SerializeField]
-    protected bool isInCombat = false;
+    protected bool m_isInCombat = false;
 
     [SerializeField] protected float m_Health;
 
     public Transform FiringPoint;
     public GameObject DamageIndicator;
 
-    protected float UITimer = 0.0f;
-    protected float dieForce = 100.0f;
+    protected float m_UITimer = 0.0f;
+    protected float m_dieForce = 100.0f;
 
     public delegate void UpdateUIDelegate();
     public event UpdateUIDelegate UpdateUIEvent;
+
+    #region Getters & Setters
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     public float GetHealth()
     {
         return m_Health;
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     public AnimationCurve GetJumpCurve()
     {
-        return JumpCurve;
+        return m_JumpCurve;
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     public Transform GetRotator()
     {
-        return Rotator;
+        return m_RotatorTransform;
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
     public void PlayCombatNoise()
     {
-        audioSource.PlayOneShot(CombatNoise[Random.Range(0, CombatNoise.Count)]);
+        m_audioSource.PlayOneShot(CombatNoise[Random.Range(0, CombatNoise.Count)]);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public void PlayDeathNoise()
     {
-        audioSource.PlayOneShot(DeathNoise[Random.Range(0, DeathNoise.Count)]);
-    }
-    public void AlertLocalAI(float _radius)
-    {
-        
-        Collider[] colliders = Physics.OverlapSphere(transform.position, _radius);
-        foreach (Collider collider in colliders)
-        {
-            if (collider.gameObject.layer == LayerMask.GetMask("Enemy"))
-            {
-                Script_BaseAI agent = collider.GetComponentInParent<Script_BaseAI>();
-                if (agent != null)
-                {
-
-                    Debug.Log(agent + "Alert this AI!!!");
-
-                }
-            }
-           
-        }
+        m_audioSource.PlayOneShot(DeathNoise[Random.Range(0, DeathNoise.Count)]);
     }
 
-    public AIAnimatorEvents GetAnimatorEvents() { return AnimatorEvents; }
-    public Script_AIStateMachine GetStateMachine() { return StateMachine;  }
-    public Transform GetPlayerTransform() { return PlayerTransform; }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public AIAnimatorEvents GetAnimatorEvents() { return m_AnimatorEvents; }
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public Script_AIStateMachine GetStateMachine() { return AIStateMachine;  }
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public Transform GetPlayerTransform() { return m_PlayerTransform; }
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     public Transform GetFiringPoint()
     {
         return FiringPoint;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     public Rigidbody GetRigid()
     {
-        return rigidBody;
+        return m_rigidBody;
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="_bool"></param>
     public void SetIsInCombat(bool _bool)
     {
-        isInCombat = _bool;
+        m_isInCombat = _bool;
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     public bool GetIsInCombat()
     {
-        return isInCombat;
+        return m_isInCombat;
     }
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     public NavMeshAgent GetNavMeshAgent()
     {
         return m_navMeshAgent;
     }
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     public Script_Ragdoll GetRagdoll(){
         return m_Ragdoll;
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     public Script_UIHealth GetUIHealthBar(){
         return m_UIHealth;
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     public Animator GetAnimator(){
         return m_Animator;
     }
 
+    #endregion
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="_Damage"></param>
+    /// <param name="_DamageType"></param>
+    /// <param name="_direction"></param>
+    /// <returns></returns>
     public bool Damage(float _Damage, CustomCollider.DamageType _DamageType, Vector3 _direction)
     {
-        
-        if (StateMachine.currentStateID == AIStateID.Idle)
+        if (AIStateMachine.currentStateID == AIStateID.Idle)
         {
-            isInCombat = true;
+            m_isInCombat = true;
             if (this is AI_Brute)
             {
-                StateMachine.ChangeState(AIStateID.ChasePlayer);
+                AIStateMachine.ChangeState(AIStateID.ChasePlayer);
             }
 
 
@@ -143,7 +210,7 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
             case CustomCollider.DamageType.Critical:
                
                 m_Health -= totalDamage * 2;
-                Scr_DamagePopupManager.Instance.DisplayDamagePopup((int)totalDamage * 2, DamagePopUpParent);
+                Scr_DamagePopupManager.Instance.DisplayDamagePopup((int)totalDamage * 2, m_DamagePopUpParent);
                 if (UpdateUIEvent != null)
                 {
                     UpdateUIEvent();
@@ -151,18 +218,18 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
                 break;
             case CustomCollider.DamageType.Normal:
                 m_Health -= totalDamage;
-                Scr_DamagePopupManager.Instance.DisplayDamagePopup((int)totalDamage, DamagePopUpParent);
+                Scr_DamagePopupManager.Instance.DisplayDamagePopup((int)totalDamage, m_DamagePopUpParent);
                 if (UpdateUIEvent != null)
                 {
                     UpdateUIEvent();
                 }
                 break;
         }
-        if (m_Health <= 0 && StateMachine.currentStateID != AIStateID.Death)
+        if (m_Health <= 0 && AIStateMachine.currentStateID != AIStateID.Death)
         {
-            StateMachine.ChangeState(AIStateID.Death);
+            AIStateMachine.ChangeState(AIStateID.Death);
             _direction.y = 0.0f;
-            m_Ragdoll.ApplyForce(_direction * dieForce);
+            m_Ragdoll.ApplyForce(_direction * m_dieForce);
             return true;
         }
         else
@@ -171,9 +238,12 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public void ResetAgent()
     {
-        isInCombat = false;
+        m_isInCombat = false;
         m_Health = Config.maxHealth;
         m_UIHealth.HealthSlider.maxValue = Config.maxHealth;
         m_UIHealth.HealthSlider.value = Config.maxHealth;
@@ -181,27 +251,44 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
 
         m_navMeshAgent.enabled= false;
     }
+    /// <summary>
+    /// 
+    /// </summary>
     protected virtual void AIStateInit() { }
-    protected void Locomotion()
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    protected void DebugLocomotion()
     {
         m_Animator.SetFloat("Speed", m_navMeshAgent.velocity.magnitude);
     }
 
+    protected void UpdateUIHealth(){
+        m_UIHealth.HealthSlider.value = m_Health;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void EnableNavmeshAgent()
+    {
+        m_navMeshAgent.enabled = true;
+    }
+    
     // Start is called before the first frame update
     protected void Start()
     {
         //Get Components
-        AnimatorEvents = GetComponentInChildren<AIAnimatorEvents>();
+        m_AnimatorEvents = GetComponentInChildren<AIAnimatorEvents>();
         m_Animator = GetComponentInChildren<Animator>();
         m_UIHealth = GetComponentInChildren<Script_UIHealth>();
         m_navMeshAgent = GetComponent<NavMeshAgent>();
-        rigidBody = GetComponent<Rigidbody>();
+        m_rigidBody = GetComponent<Rigidbody>();
         m_Ragdoll = GetComponent<Script_Ragdoll>();
-        audioSource = GetComponent<AudioSource>();
+        m_audioSource = GetComponent<AudioSource>();
 
-/*        m_UIHealth.Start();*/
-
-        // Load AI Config
+        // Load AI Config from resources
         if (Config = Resources.Load("AI/AIConfig/" + AI_Name_Config) as AIStateConfig)
         {
             Debug.Log("Loaded Config: " + Config.name);
@@ -214,7 +301,7 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
         LootPrefab = Resources.Load(LootPrefabPath) as GameObject;
         HealthPrefab = Resources.Load("GameObjects/Loot/HealthCredit") as GameObject;
         //Find Player Transform Reference
-        PlayerTransform = Camera.main.transform;
+        m_PlayerTransform = FindObjectOfType<Scr_PlayerMotor>().gameObject.transform;
 
         ///Set the Max Health and the Slider Values
         m_Health = Config.maxHealth;
@@ -222,44 +309,14 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
         AIStateInit();
 
         // Add On Player Found Event Delegate
-        GetComponent<Scr_AISensor>().OnPlayerFoundEvent += StateMachine.ChangeState;
-
-       
+        GetComponent<Scr_AISensor>().OnPlayerFoundEvent += AIStateMachine.ChangeState;
     }
 
-    protected void UpdateUIHealth(){
-        m_UIHealth.HealthSlider.value = m_Health;
-    }
 
     // Update is called once per frame
     protected void Update()
     {
-        /*if(UITimer > 0.0f)
-        {
-            UITimer -= Time.deltaTime;
-        }
-        else if(UITimer <= 0.0f)
-        {
-            m_UIHealth.gameObject.SetActive(false);
-        }*/
-
-
-        StateMachine.Update();
-        Locomotion();
-
-        //UpdateUIHealth();
-    }
-
-   
-
-    public void EnableNavmesh()
-    {
-        m_navMeshAgent.enabled = true;
-    }
-
-    public void OnDrawGizmos()
-    {
-        Gizmos.color = Color.magenta;
-        Gizmos.DrawWireSphere(transform.position + new Vector3(0.0f, 1.0f, 0.0f) + 2.0f * transform.forward , 2.0f);
+        AIStateMachine.Update();
+        DebugLocomotion();
     }
 }

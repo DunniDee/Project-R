@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Script Owner: Ashley Rickit
+
 public class Scr_Credit : MonoBehaviour
 {
     [Header("Internal Components")]
