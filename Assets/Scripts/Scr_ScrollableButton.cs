@@ -7,8 +7,6 @@ using UnityEngine.EventSystems;
 
 public class Scr_ScrollableButton : MonoBehaviour, IPointerClickHandler
 {
-    private Scr_LoadOutUI loadoutUI;
-    
     [Header("UI Elements")]
     public Image GunImage;
 
@@ -21,13 +19,12 @@ public class Scr_ScrollableButton : MonoBehaviour, IPointerClickHandler
     {
         weaponToEquipIndex = _index;
     }
+
     public int GetEquipIndex() { return weaponToEquipIndex; }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        /*        loadoutUI = GetComponentInParent<Scr_LoadOutUI>();
-                loadoutUI.SetSelectedButton(this);
-                loadoutUI.SetSelectedGunUI();*/
+        Scr_LoadOutUI.i.SetSelectedButton(this);
         Debug.Log("Pressed Button");
     }
 
@@ -39,11 +36,13 @@ public class Scr_ScrollableButton : MonoBehaviour, IPointerClickHandler
     {
         GunNameText.text = _GunName;
     }
-    public void SetUIElements(string _gunName, string _gunDamage, string _gunMaxAmmo)
+
+    public void SetUIElements(string _gunName, string _gunDamage, string _gunMaxAmmo, Sprite _gunImage)
     {
         GunNameText.text = _gunName;
         GunDamageText.text = _gunDamage;
         GunMaxAmmo.text = _gunMaxAmmo + "/" + _gunMaxAmmo;
+        GunImage.sprite = _gunImage;
     }
 
     // Start is called before the first frame update

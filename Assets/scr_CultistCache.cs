@@ -31,7 +31,7 @@ public class scr_CultistCache : MonoBehaviour
 
     public void ConfirmSelection()
     {
-        Scr_UpgradeUI.i.AddAbilityChip(itemList[selectedIndex].itemData);
+        Scr_UpgradeUI.i.AddAbilityChip(itemList[selectedIndex]);
     }
 
     // Start is called before the first frame update
