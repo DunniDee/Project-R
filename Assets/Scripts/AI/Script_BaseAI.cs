@@ -214,7 +214,7 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
         LootPrefab = Resources.Load(LootPrefabPath) as GameObject;
         HealthPrefab = Resources.Load("GameObjects/Loot/HealthCredit") as GameObject;
         //Find Player Transform Reference
-        PlayerTransform = FindObjectOfType<Scr_PlayerMotor>().gameObject.transform;
+        PlayerTransform = Camera.main.transform;
 
         ///Set the Max Health and the Slider Values
         m_Health = Config.maxHealth;
