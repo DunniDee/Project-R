@@ -42,7 +42,7 @@ public class script_WeaponSwap : MonoBehaviour
     public void Start() 
     {
         //Turn UICannvasOff
-        GridController gridcontroller = FindObjectOfType<GridController>();
+        LoadoutController gridcontroller = FindObjectOfType<LoadoutController>();
         gridcontroller.enabled = true;
         gridcontroller.GetUICanvas().gameObject.SetActive(false);
         m_LastIndex = Index;

@@ -8,10 +8,8 @@ public class Scr_HealthOrb : Scr_Credit
     {
         base.OnPlayerCollided(other);
 
-            other.GetComponent<Scr_PlayerHealth>().Heal(Value);
-
-            Debug.Log("healing Player " + Value);
-     
+        other.GetComponent<Scr_PlayerHealth>().Heal(Value);
+        Debug.Log("healing Player " + Value);
     }
 
     // Start is called before the first frame update

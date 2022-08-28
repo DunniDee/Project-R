@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//Script Owner: Ashley Rickit
+
 public class Scr_PlayerHealth : MonoBehaviour
 {
     [Header("Internal Components")]
@@ -26,8 +28,9 @@ public class Scr_PlayerHealth : MonoBehaviour
     public OnTakeDamageDelegate OnTakeDamageEvent;
 
     #region Member Functions
+
     /// <summary>
-    /// 
+    /// Deal damage to the player and update the players UI. 
     /// </summary>
     /// <param name="_Damage"></param>
     /// <param name="_cameraShakeTime"></param>
@@ -48,7 +51,7 @@ public class Scr_PlayerHealth : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Add heal amount to the player health and update player UI
     /// </summary>
     /// <param name="_HealAmount"></param>
     public void Heal(float _HealAmount) {
@@ -63,7 +66,7 @@ public class Scr_PlayerHealth : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Play Random Damage Audio Clip
     /// </summary>
     void PlayDamageNoise()
     {
@@ -71,13 +74,18 @@ public class Scr_PlayerHealth : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Reset Player Health to max Health
     /// </summary>
     public void ResetHealth()
     {
         currentHealth = maxHealth;
     }
 
+    /// <summary>
+    /// Fade hurtImage or Heal image in from 0 opacity.
+    /// </summary>
+    /// <param name="_imageToFade"></param>
+    /// <returns></returns>
     public IEnumerator FadeInCoroutine(Image _imageToFade)
     {
         for (float f = 0.05f; f < 0.3; f += 0.05f)
@@ -90,6 +98,11 @@ public class Scr_PlayerHealth : MonoBehaviour
         StartCoroutine(FadeOutCoroutine(_imageToFade));
     }
 
+    /// <summary>
+    /// Fade hurtimage or heal image out from 0.3 opacity
+    /// </summary>
+    /// <param name="_imageToFade"></param>
+    /// <returns></returns>
     public IEnumerator FadeOutCoroutine(Image _imageToFade)
     {
         for (float f = 0.05f; f >= 0; f -= 0.02f)

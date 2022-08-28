@@ -25,7 +25,7 @@ public class Enemy_Meele : Scr_BaseAI
         
         if (m_ChaseDoOnce)
         { 
-            Anim.SetTrigger("Chase");
+            m_animator.SetTrigger("Chase");
             m_ChaseDoOnce = false;
         }
     }
@@ -35,7 +35,7 @@ public class Enemy_Meele : Scr_BaseAI
 
         if (m_RunBackDoOnce)
         { 
-            Anim.SetTrigger("RunBack");
+            m_animator.SetTrigger("RunBack");
             m_RunBackDoOnce = false;
         }
         Agent.Move(-AgentRotator.forward * 2 * Time.deltaTime);
@@ -115,7 +115,7 @@ public class Enemy_Meele : Scr_BaseAI
     {
         base.AttackEnd();
         Agent.isStopped = true;
-        Anim.SetTrigger("Attack0");
+        m_animator.SetTrigger("Attack0");
     }
     
 }

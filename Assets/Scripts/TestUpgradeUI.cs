@@ -5,14 +5,14 @@ using TMPro;
 
 public class TestUpgradeUI : MonoBehaviour
 {
-    [SerializeField] GridController gridController;
+    [SerializeField] LoadoutController gridController;
     [SerializeField] TMP_Text TMP_Description;
     float Health = 100;
 
     // Start is called before the first frame update
     void Start()
     {
-        gridController = FindObjectOfType<GridController>();
+        gridController = FindObjectOfType<LoadoutController>();
     }
 
     // Update is called once per frame

@@ -74,8 +74,8 @@ public class Script_PlayerStatManager : MonoBehaviour
 
     public void SetModifiedDamage(Grid SelectGrid, float _damageIncrease, bool _isAdditive)
     {
-        if (SelectGrid.WeaponIndex > 3) return;
-        WeaponStats weapon = WeaponStatList.ToArray()[SelectGrid.WeaponIndex];
+        if (SelectGrid.WeaponIndexToEdit > 3) return;
+        WeaponStats weapon = WeaponStatList.ToArray()[SelectGrid.WeaponIndexToEdit];
         if (_isAdditive)
         {
             weapon.Modified_Damage += _damageIncrease;
@@ -83,13 +83,13 @@ public class Script_PlayerStatManager : MonoBehaviour
         else {
             weapon.Modified_Damage -= _damageIncrease;
         }
-        WeaponStatList[SelectGrid.WeaponIndex] = weapon;
+        WeaponStatList[SelectGrid.WeaponIndexToEdit] = weapon;
     }
 
     public void SetModifiedFireRate(Grid SelectGrid, float _firerateIncrease, bool _isAdditive)
     {
-        if (SelectGrid.WeaponIndex > 3) return;
-        WeaponStats weapons = WeaponStatList.ToArray()[SelectGrid.WeaponIndex];
+        if (SelectGrid.WeaponIndexToEdit > 3) return;
+        WeaponStats weapons = WeaponStatList.ToArray()[SelectGrid.WeaponIndexToEdit];
 
         if (_isAdditive)
         {
@@ -101,7 +101,7 @@ public class Script_PlayerStatManager : MonoBehaviour
             weapons.Modified_Firerate -= _firerateIncrease;
         }
 
-        WeaponStatList[SelectGrid.WeaponIndex] = weapons;  
+        WeaponStatList[SelectGrid.WeaponIndexToEdit] = weapons;  
     }
     public void SetModifiedMaxAmmo(int weaponIndex, int _ammoIncrease, bool _isAdditive)
     {
