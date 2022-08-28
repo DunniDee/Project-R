@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+//Script Owner: Ashley Rickit
+
 public class AIChaseState : AIState
 {
     public Transform playerTransform;
-
 
     public float attackRange = 2.0f;
     public float attackCurCooldown = 0.0f;
@@ -18,10 +19,14 @@ public class AIChaseState : AIState
     public bool isChasing = false;
 
     public float MaxDistanceThreshold = 30;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="agent"></param>
     void Attack(Script_BaseAI agent)
     {
         if (isChasing) return;
-       
 
         if (attackCurCooldown <= 0.0f)
         {
@@ -41,13 +46,14 @@ public class AIChaseState : AIState
                     agent.GetStateMachine().ChangeState(AIStateID.JumpAttack);
                     break;
             }
-            
-
-            
         }
        
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="agent"></param>
     void SlashAttackHorizontal(Script_BaseAI agent)
     {
         var obj = GameObject.Instantiate(agent.Config.projectile, agent.GetFiringPoint().position, Quaternion.identity);
@@ -65,6 +71,10 @@ public class AIChaseState : AIState
         collider.height = width;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="agent"></param>
     void SlashAttackVertical(Script_BaseAI agent)
     {
         var obj = GameObject.Instantiate(agent.Config.projectile, agent.GetFiringPoint().position, Quaternion.identity);
@@ -75,17 +85,24 @@ public class AIChaseState : AIState
     }
 
    
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="agent"></param>
     public void StartChasing(Script_BaseAI agent)
     {
         currentChaseTime = Random.Range(ChaseTimerExtents.x, ChaseTimerExtents.y);
         isChasing = true;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="agent"></param>
     private void ChaseUpdate(Script_BaseAI agent)
     {
-
             float Distance = Vector3.Distance(agent.transform.position, agent.GetPlayerTransform().position);
+
             if (Distance > MaxDistanceThreshold && attackCurCooldown <= 0)
             {
                 agent.GetAnimator().SetTrigger("Attack3");
@@ -140,8 +157,6 @@ public class AIChaseState : AIState
         ChaseUpdate(agent);
     }
 
-    //Hew fuckin floaty for no reason 
-  
     private void AttackCooldownUpdate()
     {
         if (attackCurCooldown > 0.0f)
@@ -150,8 +165,5 @@ public class AIChaseState : AIState
         }
     }
 
-    public void Exit(Script_BaseAI agent)
-    {
-        
-    }
+    public void Exit(Script_BaseAI agent) { }
 }

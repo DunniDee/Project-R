@@ -6,11 +6,11 @@ using UnityEngine.UI;
 public class Scr_AbilityUI : MonoBehaviour
 {
     public Slider CooldownSLider;
-    [SerializeField] Script_AbilityBase Ability;
+    [SerializeField] Script_AbilityBase m_Ability;
 
     // Update is called once per frame
     void Update()
     {
-        CooldownSLider.value = 1 - (Ability.GetCurCooldown()/Ability.GetMaxCooldown());
+        CooldownSLider.value = 1 - (m_Ability.GetCurCooldown()/m_Ability.GetMaxCooldown());
     }
 }

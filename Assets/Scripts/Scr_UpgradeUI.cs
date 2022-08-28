@@ -8,44 +8,43 @@ public class Scr_UpgradeUI : MonoBehaviour
 {
     public TMP_Text Description;
 
-    public List<GameObject> MenuTabs;
-    public int currentIndex = 0;
-
-    [System.Serializable]
-    public struct WeaponUI {
-        public TMP_Text Header;
-        public TMP_Text Damage;
-        public TMP_Text Firerate;
-        public TMP_Text MagCount;
-    }
-
-    [Header("Equipped Weapon Ability UI")]
-    public WeaponUI Weapon1;
-    public WeaponUI Weapon2;
-    public WeaponUI Weapon3;
-    public WeaponUI Weapon4;
+    public static Scr_UpgradeUI i;
 
     public void Awake()
     {
-        
+        if (i == null)
+        {
+            i = this;
+        }
+        else
+        {
+            Debug.Log("Damagepopup Manager fucked up");
+            Destroy(gameObject);
+        }
     }
+
+    public GameObject AbilityChipContainer;
+    [SerializeField] GameObject AbilityChipUI;
+
+    public List<GameObject> MenuTabs;
+    public int currentIndex = 0;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="_itemdata"></param>
+    public void AddAbilityChip(ItemData _itemdata)
+    {
+        var newAbilityChip = Instantiate(AbilityChipUI, AbilityChipContainer.transform);
+        UI_AbilityChip Abilitydata = newAbilityChip.GetComponent<UI_AbilityChip>();
+
+        Abilitydata.SetItemData(_itemdata);
+    }
+
 
     public void SetWeaponUIElements()
     {
-        SetWeaponUIElement(Weapon1,0);
-        SetWeaponUIElement(Weapon2,1);
-        SetWeaponUIElement(Weapon3,2);
-        SetWeaponUIElement(Weapon4,3);
-    }
 
-    public void SetWeaponUIElement(WeaponUI weaponUI, int weaponIndex)
-    {
-        Script_PlayerStatManager.WeaponStats weaponStats = Script_PlayerStatManager.Instance.WeaponStatList.ToArray()[weaponIndex];
-        weaponUI.Header.text = weaponStats.WeaponName;
-        weaponUI.Damage.text = weaponStats.Modified_Damage.ToString();
-        weaponUI.Firerate.text = weaponStats.Modified_Firerate.ToString();
-
-        Debug.Log("Updating UI Elements...");
     }
 
     public void SetCurrentIndex(int _Index)
@@ -60,6 +59,10 @@ public class Scr_UpgradeUI : MonoBehaviour
             MenuTabs[currentIndex].SetActive(true);
         }
 
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            AddAbilityChip(LoadoutController.i.m_itemDataList[Random.Range(0, LoadoutController.i.m_itemDataList.Count)]);
+        }
         foreach (GameObject go in MenuTabs)
         {
             if (go != MenuTabs[currentIndex] && go.activeSelf)

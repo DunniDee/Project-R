@@ -7,6 +7,7 @@ public class Script_AIStateMachine
     public AIState[] States;
     public Script_BaseAI agent;
     public AIStateID currentStateID;
+
     public Script_AIStateMachine(Script_BaseAI _agent){
         this.agent = _agent;
         int numStates = System.Enum.GetNames(typeof(AIStateID)).Length;
@@ -14,8 +15,7 @@ public class Script_AIStateMachine
     }
 
     public void RegisterState(AIState state)
-    {
-        
+    {  
         int index = (int)state.getID();
         States[index] = state;
     }

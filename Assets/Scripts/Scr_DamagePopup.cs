@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+//Script Owner: Ashley Rickit
+
 public class Scr_DamagePopup : MonoBehaviour
 {
 
-    private TMP_Text text; // Access text mesh properties
-    public Color textColor; // change alpha -> fade out
-    private Transform playerTransform; // look towards the player..
+    private TMP_Text text; 
+    public Color textColor;
+    private Transform playerTransform; 
 
     private float m_Lifetime = 1f;
     private Vector3 MoveDir = Vector3.zero;
@@ -18,6 +20,7 @@ public class Scr_DamagePopup : MonoBehaviour
     [SerializeField] AnimationCurve ColorCurve;
     [SerializeField] Color m_Color;
     [SerializeField] Color m_Transparent;
+
     public void Init(int _Damage)
     {
        
