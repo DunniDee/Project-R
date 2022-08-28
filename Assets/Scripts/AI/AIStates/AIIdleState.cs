@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AIIdleState : AIState
-{
+//Script Owner: Ashley Rickit
 
-  
+public class AIIdleState : AIState
+{ 
     public AIStateID getID()
     {
         return AIStateID.Idle;

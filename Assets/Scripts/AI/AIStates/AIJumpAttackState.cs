@@ -3,9 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Script Owner: Ashley Rickit
+
 public class AIJumpAttackState : AIState
 {
-    //Member Functions
     float timeJumping = 0.0f;
     public Vector3 initalPosition;
     public Vector3 FinalPosition;
@@ -31,7 +32,7 @@ public class AIJumpAttackState : AIState
         Collider[] hit = Physics.OverlapSphere(FinalPosition, 10.0f);
 
         //Play Slam Audio
-        agent.audioSource.PlayOneShot(bruteAgent.SlamAudio);
+        agent.m_audioSource.PlayOneShot(bruteAgent.SlamAudio);
 
         //Apply damage and upwards force to player
         foreach (Collider collider in hit)
