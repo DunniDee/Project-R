@@ -33,7 +33,7 @@ public class Scr_UpgradeUI : MonoBehaviour
     /// 
     /// </summary>
     /// <param name="_itemdata"></param>
-    public void AddAbilityChip(ItemData _itemdata)
+    public void AddAbilityChip(InventoryItem _itemdata)
     {
         var newAbilityChip = Instantiate(AbilityChipUI, AbilityChipContainer.transform);
         UI_AbilityChip Abilitydata = newAbilityChip.GetComponent<UI_AbilityChip>();
@@ -61,7 +61,7 @@ public class Scr_UpgradeUI : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            AddAbilityChip(LoadoutController.i.m_itemDataList[Random.Range(0, LoadoutController.i.m_itemDataList.Count)]);
+            AddAbilityChip(LoadoutController.i.CreateItem(LoadoutController.i.m_itemDataList[Random.Range(0, LoadoutController.i.m_itemDataList.Count)]));
         }
         foreach (GameObject go in MenuTabs)
         {

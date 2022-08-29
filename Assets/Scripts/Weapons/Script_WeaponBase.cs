@@ -71,9 +71,15 @@ public abstract class Script_WeaponBase : MonoBehaviour
     protected Scr_PlayerLook Look;
     protected AudioSource AS;
 
+    [Header("UI Variables")]
+    [SerializeField] protected Sprite GunImage;
+
+
     //Delegate for Ammo UI    
     public delegate void OnAmmoChangeDelegate(int _ammo);
     public OnAmmoChangeDelegate onAmmoChangeEvent;
+
+    [Space]
 
     [SerializeField] protected Scr_DiegeticHUD HUD;
     [SerializeField] protected Scr_HandAnimator HandEffects;
@@ -96,6 +102,11 @@ public abstract class Script_WeaponBase : MonoBehaviour
     }
 
     #region Getters And Setters
+
+    public Sprite GetGunSprite()
+    {
+        return GunImage;
+    }
 
     public string GetGunName()
     {

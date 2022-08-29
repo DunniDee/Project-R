@@ -6,21 +6,26 @@ using TMPro;
 
 public class Scr_LoadOutUI : MonoBehaviour
 {
+    public static Scr_LoadOutUI i;
+
+    public void Awake()
+    {
+        if (i == null)
+        {
+            i = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     public List<TMP_Text> UI_EquippedWeaponSlots;
     private Scr_ScrollableButton[] UI_AvaliableWeapons;
 
-    [System.Serializable]
-    public struct GunDescription {
-        public TMP_Text title;
-        public TMP_Text Damage;
-        public TMP_Text Firerate;
-        public TMP_Text MagazineSize;
-        public TMP_Text FiringType;
-    }
-    public GunDescription UI_GunDescription;
-
     Scr_ScrollableButton selectedButton;
+
+    [SerializeField] Image dragImage;
 
     public int weaponToSwapIndex = 0;
 
@@ -35,15 +40,13 @@ public class Scr_LoadOutUI : MonoBehaviour
         weaponToSwapIndex = _index;
     }
 
-    public void SetSelectedGunUI()
-    {
-        var selectedGun = script_WeaponSwap.Instance.Weapons[selectedButton.GetEquipIndex()].GetComponent<Script_WeaponBase>();
-        UI_GunDescription.title.text = selectedGun.GetGunName();
-        UI_GunDescription.Damage.text = selectedGun.GetDamage().ToString();
-        UI_GunDescription.Firerate.text = selectedGun.GetFireRate().ToString();
-        UI_GunDescription.MagazineSize.text = selectedGun.GetMagCount().ToString();
-        UI_GunDescription.FiringType.text = "SemiAuto (Add FiringType to Weapon)";
-
+    public void HandleIconDrag()
+    { 
+        if(selectedButton != null)
+        {
+            dragImage.sprite = selectedButton.GunImage.sprite;
+            dragImage.rectTransform.position = Input.mousePosition;
+        }
     }
     public void EquipWeapon()
     {
@@ -68,7 +71,7 @@ public class Scr_LoadOutUI : MonoBehaviour
         UI_EquippedWeaponSlots[weaponToSwapIndex].text = selectedGun.GetGunName();
     }
 
-    public void SetWeaponSlots()
+    public void SetEquippedWeaponSlots()
     {
         int i = 0;
         //Set the name of the Equipped Weapon Slots UI
@@ -79,7 +82,7 @@ public class Scr_LoadOutUI : MonoBehaviour
             i++;
         }
     }
-
+   
     public void SetAvaliableWeapons()
     {
         //Get avaliable Weapons from weapon swap and load the buttons with their index's
@@ -88,8 +91,8 @@ public class Scr_LoadOutUI : MonoBehaviour
             Script_WeaponBase gun = script_WeaponSwap.Instance.Weapons[i].GetComponent<Script_WeaponBase>();
 
 
-            /*UI_AvaliableWeapons[i].SetUIElements(gun.GetGunName(), gun.GetDamage().ToString(), gun.GetMagCount().ToString());
-            UI_AvaliableWeapons[i].SetEquipIndex(i);*/
+            UI_AvaliableWeapons[i].SetUIElements(gun.GetGunName(), gun.GetDamage().ToString(), gun.GetMagCount().ToString(), gun.GetGunSprite());
+            UI_AvaliableWeapons[i].SetEquipIndex(i);
         }
     }
 
@@ -98,13 +101,13 @@ public class Scr_LoadOutUI : MonoBehaviour
     void Start()
     {
         UI_AvaliableWeapons = GetComponentsInChildren<Scr_ScrollableButton>();
-        SetWeaponSlots();
+        SetEquippedWeaponSlots();
         SetAvaliableWeapons();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        HandleIconDrag();
     }
 }
