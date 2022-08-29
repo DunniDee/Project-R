@@ -18,16 +18,34 @@ public class Scr_LoadOutUI : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        //Initalise Avaliable & Equipped Weapon Arrays
+        UI_AvaliableWeapons = GetComponentsInChildren<Scr_ScrollableButton>();
+        UI_EquippedWeapons = GetComponentsInChildren<scr_EquippedWeaponButton>();
     }
 
-    public List<TMP_Text> UI_EquippedWeaponSlots;
     private Scr_ScrollableButton[] UI_AvaliableWeapons;
+    [SerializeField] scr_EquippedWeaponButton[] UI_EquippedWeapons;
+
 
     Scr_ScrollableButton selectedButton;
 
     [SerializeField] Image dragImage;
 
     public int weaponToSwapIndex = 0;
+
+    public Scr_ScrollableButton GetSelectedButton()
+    {
+        if (selectedButton != null)
+        {
+            return selectedButton;
+        }
+        else
+        {
+            Debug.LogError("SelectedButton Does not exist");
+            return null;
+        }
+    }
 
     public void SetSelectedButton(Scr_ScrollableButton _button)
     {
@@ -53,12 +71,7 @@ public class Scr_LoadOutUI : MonoBehaviour
         //Dont equip weapon that is already equipped
         if (selectedButton.GetEquipIndex() == weaponToSwapIndex) return;
 
-        for (int i = 0; i < script_WeaponSwap.Instance.EquippedWeapons.Count; i++)
-        {
-          
-        }
-
-        var selectedGun = script_WeaponSwap.Instance.Weapons[selectedButton.GetEquipIndex()].GetComponent<Script_WeaponBase>();
+       // var selectedGun = script_WeaponSwap.Instance.Weapons[selectedButton.GetEquipIndex()].GetComponent<Script_WeaponBase>();
 
         //Set the currently active weapon to false as its no longer equipped
         script_WeaponSwap.Instance.EquippedWeapons[weaponToSwapIndex].SetActive(false);
@@ -68,18 +81,21 @@ public class Scr_LoadOutUI : MonoBehaviour
         script_WeaponSwap.Instance.EquippedWeapons[weaponToSwapIndex].SetActive(true);
 
         //Change name of Weapon slot to equipped item.
-        UI_EquippedWeaponSlots[weaponToSwapIndex].text = selectedGun.GetGunName();
+        SetEquippedWeaponSlots();
+        selectedButton = null;
+        dragImage.rectTransform.position = Vector3.one * 10000f;
+
+
     }
 
     public void SetEquippedWeaponSlots()
     {
-        int i = 0;
         //Set the name of the Equipped Weapon Slots UI
-        foreach(TMP_Text text in UI_EquippedWeaponSlots)
+        for (int i = 0; i < script_WeaponSwap.Instance.EquippedWeapons.Count; i++)
         {
-            var weapon = script_WeaponSwap.Instance.EquippedWeapons[i].GetComponent<Script_WeaponBase>();
-            text.text = weapon.GetGunName();
-            i++;
+            Script_WeaponBase gun = script_WeaponSwap.Instance.EquippedWeapons[i].GetComponent<Script_WeaponBase>();
+
+            UI_EquippedWeapons[i].SetUIElements(gun.GetGunName(), gun.GetDamage().ToString(), gun.GetMagCount().ToString(), gun.GetGunSprite());
         }
     }
    
@@ -100,7 +116,9 @@ public class Scr_LoadOutUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        UI_AvaliableWeapons = GetComponentsInChildren<Scr_ScrollableButton>();
+
+
+        //Set UI Elemements
         SetEquippedWeaponSlots();
         SetAvaliableWeapons();
     }

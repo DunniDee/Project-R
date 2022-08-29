@@ -39,13 +39,7 @@ public class Scr_UpgradeUI : MonoBehaviour
         UI_AbilityChip Abilitydata = newAbilityChip.GetComponent<UI_AbilityChip>();
 
         Abilitydata.SetItemData(_itemdata);
-    }
-
-
-    public void SetWeaponUIElements()
-    {
-
-    }
+    } 
 
     public void SetCurrentIndex(int _Index)
     {

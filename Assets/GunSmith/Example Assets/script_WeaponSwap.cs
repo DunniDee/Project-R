@@ -18,7 +18,7 @@ public class script_WeaponSwap : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
-
+        InitalseEquippedWeapons();
     }
 
     // Start is called before the first frame update
@@ -32,14 +32,15 @@ public class script_WeaponSwap : MonoBehaviour
     int m_LastIndex = 0;
     bool m_IsActive = true;
 
+    public int MaxEquippedWeapons = 2;
     public void SetCanShoot(bool _b)
     {
         EquippedWeapons[Index].GetComponent<Script_WeaponBase>().enabled = _b;
         m_IsActive = _b;
     }
 
-    // Update is called once per frame
-    public void Start() 
+  
+    public void Start()
     {
         //Turn UICannvasOff
         LoadoutController gridcontroller = FindObjectOfType<LoadoutController>();
@@ -48,26 +49,30 @@ public class script_WeaponSwap : MonoBehaviour
         m_LastIndex = Index;
         // Load Weapon Stats to Player Stat Manager
 
+    }
+
+    private void InitalseEquippedWeapons()
+    {
         int i = 0;
-      
-        foreach (var Weapon in Weapons)
+
+        foreach (GameObject Weapon in Weapons)
         {
-            Script_WeaponBase weaponBase = Weapon.GetComponent<Script_WeaponBase>();
-
-            Script_PlayerStatManager.Instance.WeaponStatList.Add(new Script_PlayerStatManager.WeaponStats());
-            Script_PlayerStatManager.Instance.SetWeaponStats(i, weaponBase);
-
-         
-            if (i < 3)
+            if (i >= MaxEquippedWeapons)
             {
-                EquippedWeapons.Add(Weapon);
+                return;
             }
-            Weapon.SetActive(false);
+            else
+            {
+                Script_WeaponBase weaponBase = Weapon.GetComponent<Script_WeaponBase>();
+
+                EquippedWeapons.Add(Weapon);
+
+                Weapon.SetActive(false);
+            }
            
             i++;
-            
         }
-       
+
         Weapons[Index].SetActive(true);
     }
 
