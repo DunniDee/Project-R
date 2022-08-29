@@ -66,7 +66,8 @@ public class scr_Tram : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        MoveDirection = transform.forward;
+        StopPosition.x = transform.position.x;
+        StopPosition.y = transform.position.y;
         Gizmos.color = Color.blue;
         Gizmos.DrawLine(transform.position, StopPosition);
         Gizmos.DrawSphere(StopPosition, 2.0f);

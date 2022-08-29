@@ -89,23 +89,7 @@ public class script_WeaponSwap : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
-    public bool CheckIfWeaponEquipped(Scr_ScrollableButton _selectedButton)
-    {
-        int i = 0;
-        foreach (GameObject equippedWeapon in EquippedWeapons)
-        {
-            if (equippedWeapon == EquippedWeapons[i])
-            {
-                return false;
-            }
-            i++;
-        }
-        return true;
-    }
+   
     void Update()
     {
         if (m_IsActive)

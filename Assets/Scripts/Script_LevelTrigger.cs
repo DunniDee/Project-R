@@ -17,4 +17,16 @@ public class Script_LevelTrigger : MonoBehaviour
         }
        
     }
+
+   /* public void LoadScene(int _SceneIndex)
+    {
+        if (ReloadCurrentScene)
+        {
+            Script_SceneManager.Instance.LoadScene(SceneManager.GetActiveScene().name);
+        }
+        else
+        {
+            Script_SceneManager.Instance.LoadScene(SceneToLoad);
+        }
+    }*/
 }
