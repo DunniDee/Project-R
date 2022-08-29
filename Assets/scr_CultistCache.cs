@@ -32,6 +32,7 @@ public class scr_CultistCache : MonoBehaviour
     public void ConfirmSelection()
     {
         Scr_UpgradeUI.i.AddAbilityChip(itemList[selectedIndex]);
+        CultistCanvas.SetActive(false);
     }
 
     // Start is called before the first frame update
