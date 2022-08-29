@@ -19,6 +19,8 @@ public class script_WeaponSwap : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
         InitalseEquippedWeapons();
+
+        Weapons[EquippedIndex].SetActive(true);
     }
 
     // Start is called before the first frame update
@@ -28,14 +30,14 @@ public class script_WeaponSwap : MonoBehaviour
     [SerializeField] KeyCode ScrollLeft = KeyCode.Q;
     [SerializeField] KeyCode ScrollRight = KeyCode.E;
 
-    [SerializeField] public int Index = 0;
+    [SerializeField] public int EquippedIndex = 0;
     int m_LastIndex = 0;
     bool m_IsActive = true;
 
     public int MaxEquippedWeapons = 2;
     public void SetCanShoot(bool _b)
     {
-        EquippedWeapons[Index].GetComponent<Script_WeaponBase>().enabled = _b;
+        EquippedWeapons[EquippedIndex].GetComponent<Script_WeaponBase>().enabled = _b;
         m_IsActive = _b;
     }
 
@@ -46,7 +48,7 @@ public class script_WeaponSwap : MonoBehaviour
         LoadoutController gridcontroller = FindObjectOfType<LoadoutController>();
         gridcontroller.enabled = true;
         gridcontroller.GetUICanvas().gameObject.SetActive(false);
-        m_LastIndex = Index;
+        m_LastIndex = EquippedIndex;
         // Load Weapon Stats to Player Stat Manager
 
     }
@@ -73,7 +75,6 @@ public class script_WeaponSwap : MonoBehaviour
             i++;
         }
 
-        Weapons[Index].SetActive(true);
     }
 
     public void UpdateWeaponStats()
@@ -87,37 +88,55 @@ public class script_WeaponSwap : MonoBehaviour
             i++;
         }
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckIfWeaponEquipped(Scr_ScrollableButton _selectedButton)
+    {
+        int i = 0;
+        foreach (GameObject equippedWeapon in EquippedWeapons)
+        {
+            if (equippedWeapon == EquippedWeapons[i])
+            {
+                return false;
+            }
+            i++;
+        }
+        return true;
+    }
     void Update()
     {
         if (m_IsActive)
         {
-            if (m_LastIndex != Index)
+            if (m_LastIndex != EquippedIndex)
             {
-                m_LastIndex = Index;
+                m_LastIndex = EquippedIndex;
 
                 foreach (var Weapon in Weapons)
                 {
                     Weapon.SetActive(false);
                 }
 
-                EquippedWeapons[Index].SetActive(true);
+                EquippedWeapons[EquippedIndex].SetActive(true);
             }
 
             if (Input.GetKeyDown(ScrollRight))
             {
-                Index++;
-                if (Index > EquippedWeapons.Count - 1)
+                EquippedIndex++;
+                if (EquippedIndex > EquippedWeapons.Count - 1)
                 {
-                    Index = 0;
+                    EquippedIndex = 0;
                 }
             }
 
             if (Input.GetKeyDown(ScrollLeft))
             {
-                Index--;
-                if (Index < 0)
+                EquippedIndex--;
+                if (EquippedIndex < 0)
                 {
-                    Index = EquippedWeapons.Count - 1;
+                    EquippedIndex = EquippedWeapons.Count - 1;
                 }
             }
         }
@@ -126,30 +145,30 @@ public class script_WeaponSwap : MonoBehaviour
 
     public void JumpAnim()
     {
-        WeaponAnimations[Index].SetTrigger("jump");
+        WeaponAnimations[EquippedIndex].SetTrigger("jump");
     }
 
     public void SlideAnim(bool _isSliding)
     {
-        WeaponAnimations[Index].SetBool("sliding", _isSliding);
+        WeaponAnimations[EquippedIndex].SetBool("sliding", _isSliding);
         if (_isSliding ) 
         {
-            WeaponAnimations[Index].SetTrigger("startslide");
+            WeaponAnimations[EquippedIndex].SetTrigger("startslide");
         }
         else
         {
-            WeaponAnimations[Index].SetTrigger("endslide");
+            WeaponAnimations[EquippedIndex].SetTrigger("endslide");
         }
     }
 
     public void DashAnim()
     {
-        WeaponAnimations[Index].SetTrigger("dash");
+        WeaponAnimations[EquippedIndex].SetTrigger("dash");
     }
 
     public void SetActiveAnim(bool _isActive)
     {
-        WeaponAnimations[Index].SetBool("hide", _isActive);
+        WeaponAnimations[EquippedIndex].SetBool("hide", _isActive);
     }
 }
 

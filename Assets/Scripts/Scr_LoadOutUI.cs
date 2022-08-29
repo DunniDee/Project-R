@@ -66,15 +66,36 @@ public class Scr_LoadOutUI : MonoBehaviour
             dragImage.rectTransform.position = Input.mousePosition;
         }
     }
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckIfWeaponEquipped()
+    {
+        int i = 0;
+        foreach (scr_EquippedWeaponButton equippedWeapon in UI_EquippedWeapons)
+        {
+            if (equippedWeapon == UI_AvaliableWeapons[selectedButton.GetEquipIndex()])
+            {
+                return false;
+            }
+            i++;
+        }
+        return true;
+    }
+    /// <summary>
+    /// 
+    /// </summary>
     public void EquipWeapon()
     {
         //Dont equip weapon that is already equipped
         if (selectedButton.GetEquipIndex() == weaponToSwapIndex) return;
 
-       // var selectedGun = script_WeaponSwap.Instance.Weapons[selectedButton.GetEquipIndex()].GetComponent<Script_WeaponBase>();
 
         //Set the currently active weapon to false as its no longer equipped
-        script_WeaponSwap.Instance.EquippedWeapons[weaponToSwapIndex].SetActive(false);
+        script_WeaponSwap.Instance.EquippedWeapons[script_WeaponSwap.Instance.EquippedIndex].SetActive(false);
 
         script_WeaponSwap.Instance.EquippedWeapons[weaponToSwapIndex] = script_WeaponSwap.Instance.Weapons[selectedButton.GetEquipIndex()];
 
@@ -82,6 +103,7 @@ public class Scr_LoadOutUI : MonoBehaviour
 
         //Change name of Weapon slot to equipped item.
         SetEquippedWeaponSlots();
+
         selectedButton = null;
         dragImage.rectTransform.position = Vector3.one * 10000f;
 
