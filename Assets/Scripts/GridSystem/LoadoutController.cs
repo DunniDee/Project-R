@@ -262,7 +262,6 @@ public class LoadoutController: MonoBehaviour
             if (SelectedItemGrid.CheckGridType() == Grid.GridType.EQUIPABILITY)
             {
                 m_selectedItem.Equip(SelectedItemGrid);
-                UpgradeUI.SetWeaponUIElements();
             }
             audioSource.PlayOneShot(dropNoise);
             m_selectedItem = null;
@@ -296,7 +295,6 @@ public class LoadoutController: MonoBehaviour
             if (SelectedItemGrid.CheckGridType() == Grid.GridType.EQUIPABILITY)
             {
                 m_selectedItem.Dequip(SelectedItemGrid);
-                UpgradeUI.SetWeaponUIElements();
 
             }
         }
@@ -356,7 +354,6 @@ public class LoadoutController: MonoBehaviour
         gridHighlight = GetComponent<GridHighlight>();
         UpgradeUI = FindObjectOfType<Scr_UpgradeUI>();
         FindObjectOfType<script_WeaponSwap>().Start();
-        UpgradeUI.SetWeaponUIElements();
         UpgradeUI.gameObject.SetActive(false);
     }
 

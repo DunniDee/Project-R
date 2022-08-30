@@ -7,7 +7,10 @@ public class scr_Tram : MonoBehaviour
     public float Speed = 5.0f;
     public bool isMoving = false;
 
-    public float StopDistance = 600f;
+    public Vector3 StopPosition = Vector3.zero;
+
+    public Vector3 MoveDirection = Vector3.zero;
+
     [SerializeField] Vector3 Velocity = Vector3.zero;
     Scr_PlayerMotor motorReference;
     private void OnTriggerEnter(Collider other)
@@ -36,24 +39,20 @@ public class scr_Tram : MonoBehaviour
             motorReference.m_MomentumDirection += new Vector3(0, 0, Velocity.z);
         }
     }
+
     public void SetIsMoving(bool _b)
     {
         isMoving = _b;
     }
     public void Move()
     {
-        Velocity = transform.forward * (Speed);
+        Velocity = MoveDirection * (Speed);
         transform.position += Velocity * Time.deltaTime;
-        if (transform.position.z >= StopDistance)
+        if (transform.position.z >= StopPosition.z)
         {
             isMoving = false;
             Velocity = Vector3.zero;
         }
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
     }
 
     // Update is called once per frame
@@ -63,7 +62,13 @@ public class scr_Tram : MonoBehaviour
         {
             Move();
         }
-        
     }
 
+    private void OnDrawGizmos()
+    {
+        MoveDirection = transform.forward;
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(transform.position, StopPosition);
+        Gizmos.DrawSphere(StopPosition, 2.0f);
+    }
 }

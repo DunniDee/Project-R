@@ -11,9 +11,9 @@ public class UI_AbilityChip : MonoBehaviour
 
     [SerializeField] InventoryItem attachedItem;
 
-    public void SetItemData(ItemData _itemdata)
+    public void SetItemData(InventoryItem _item)
     {
-        attachedItem.Set(_itemdata);
+        attachedItem = _item;
     }
 
     public InventoryItem GetItem()
@@ -24,7 +24,7 @@ public class UI_AbilityChip : MonoBehaviour
     void Init()
     {
         int i = Random.Range(0, LoadoutController.i.m_itemDataList.Count);
-        attachedItem = LoadoutController.i.CreateItem(LoadoutController.i.m_itemDataList[0]);
+        //attachedItem = LoadoutController.i.CreateItem(LoadoutController.i.m_itemDataList[0]);
     }
 
     public void PickUp()
