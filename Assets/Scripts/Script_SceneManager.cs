@@ -60,8 +60,19 @@ public class Script_SceneManager : MonoBehaviour
             }
         }
     }
-
     public void LoadScene(string SceneName)
+    {
+        if (!IsTransitioning)
+        {
+            LockTransition();
+            sceneToLoad = SceneName;
+            FadeDark();
+            Invoke("TransitionScene", 1);
+            Invoke("FadeLight", 2);
+            Invoke("UnlockTransition", 2);
+        }
+    }
+   /* public void LoadScene(int _sceneIndex)
     {
         if (!IsTransitioning)
         {
@@ -72,7 +83,7 @@ public class Script_SceneManager : MonoBehaviour
             Invoke("FadeLight",2);
             Invoke("UnlockTransition",2);
         }
-    }
+    }*/
     IEnumerator LoadScene()
     {
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneToLoad);

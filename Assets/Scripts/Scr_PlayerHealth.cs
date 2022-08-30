@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 //Script Owner: Ashley Rickit
 
@@ -141,7 +142,7 @@ public class Scr_PlayerHealth : MonoBehaviour
     {
         if (currentHealth <= 0)
         {
-            Script_SceneManager.Instance.LoadScene("MainMenu");
+            Script_SceneManager.Instance.LoadScene(SceneManager.GetActiveScene().name);
         }
         
     }
