@@ -211,6 +211,7 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
                
                 m_Health -= totalDamage * 2;
                 Scr_DamagePopupManager.Instance.DisplayDamagePopup((int)totalDamage * 2, m_DamagePopUpParent);
+                Scr_DamagePopupManager.Instance.CreateHealthOrb(this.gameObject.transform);
                 if (UpdateUIEvent != null)
                 {
                     UpdateUIEvent();
