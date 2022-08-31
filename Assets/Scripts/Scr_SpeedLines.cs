@@ -9,6 +9,8 @@ public class Scr_SpeedLines : MonoBehaviour
     [SerializeField] Scr_PlayerMotor Motor;
     [SerializeField] ParticleSystem SpeedLines;
     [SerializeField] AudioSource AS;
+    public GameObject vfx2; //artist code  fraser ;)
+
     private void Start() 
     {     
         AS = gameObject.GetComponent<AudioSource>();
@@ -25,11 +27,13 @@ public class Scr_SpeedLines : MonoBehaviour
         {
             SpeedLines.startSpeed = 0;
             AS.volume = Mathf.Lerp(AS.volume,0,Time.deltaTime);
+            vfx2.SetActive (false);//artist code  
         }
         else
         {
             SpeedLines.startSpeed = Motor.m_MomentumMagnuitude * 5;
             AS.volume = Mathf.Lerp(AS.volume,0.02f,Time.deltaTime);
+            vfx2.SetActive(true);//artist code  
         }
     
     }
