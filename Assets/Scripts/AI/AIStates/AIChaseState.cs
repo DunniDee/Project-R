@@ -19,6 +19,7 @@ public class AIChaseState : AIState
     public bool isChasing = false;
 
     public float MaxDistanceThreshold = 30;
+    
 
     /// <summary>
     /// 
