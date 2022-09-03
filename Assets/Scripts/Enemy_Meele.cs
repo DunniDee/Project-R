@@ -13,6 +13,10 @@ public class Enemy_Meele : Scr_BaseAI
     float MoveDelayTimer;
 
     float xVel;
+    float yVel;
+
+    float xVelLerp;
+    float yVelLerp;
     public float BackOffTimer;
 
     bool m_ChaseDoOnce;
@@ -25,9 +29,9 @@ public class Enemy_Meele : Scr_BaseAI
         
         if (m_ChaseDoOnce)
         { 
-            m_animator.SetTrigger("Chase");
             m_ChaseDoOnce = false;
         }
+        yVel = 1;
     }
     protected virtual void BackOff()
     {
@@ -35,12 +39,12 @@ public class Enemy_Meele : Scr_BaseAI
 
         if (m_RunBackDoOnce)
         { 
-            m_animator.SetTrigger("RunBack");
             m_RunBackDoOnce = false;
         }
         Agent.Move(-AgentRotator.forward * 2 * Time.deltaTime);
         Agent.Move(AgentRotator.right * xVel * Time.deltaTime);
         FacePlayer();
+        yVel = -1;
     }
 
     protected override void MoveStart()
@@ -48,7 +52,8 @@ public class Enemy_Meele : Scr_BaseAI
         FadeAttackUI();
         base.MoveStart();
 
-        xVel = Random.Range(-2,2);
+        xVel = Random.Range(-1,1);
+
         BackOffTimer = BackOffTime;
         MoveDelayTimer = MoveDelay;
     }
@@ -80,6 +85,12 @@ public class Enemy_Meele : Scr_BaseAI
         {
             MoveDelayTimer-= Time.deltaTime;
         }
+
+        xVelLerp = Mathf.Lerp(xVelLerp, xVel, Time.deltaTime * 3);
+        yVelLerp = Mathf.Lerp(yVelLerp, yVel, Time.deltaTime * 3);
+
+        m_animator.SetFloat("x", xVelLerp);
+        m_animator.SetFloat("y", yVelLerp);
     }
 
     protected override void AttackStart()
@@ -115,7 +126,7 @@ public class Enemy_Meele : Scr_BaseAI
     {
         base.AttackEnd();
         Agent.isStopped = true;
-        m_animator.SetTrigger("Attack0");
+        m_animator.SetTrigger("Attack");
     }
     
 }
