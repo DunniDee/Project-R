@@ -13,8 +13,12 @@ public class scr_Tram : MonoBehaviour
         Z
     }
 
+    public float maxWaitTime = 2.0f;
+    public float currentWaitTime = 0.0f;
+
     public MoveAlignment CurrentMovementAlignment = MoveAlignment.Z;
 
+    public Vector3 initalPosition = Vector3.zero;
     public Vector3 StopPosition = Vector3.zero;
 
     public Vector3 MoveDirection = Vector3.zero;
@@ -93,6 +97,7 @@ public class scr_Tram : MonoBehaviour
     {
         isMoving = _b;
     }
+
     public void OnValidate()
     {
         switch (CurrentMovementAlignment)
@@ -123,6 +128,7 @@ public class scr_Tram : MonoBehaviour
                 {
                     isMoving = false;
                     Velocity = Vector3.zero;
+                    currentWaitTime = maxWaitTime;
                 }
                 break;
             // Stop Along the Y Axis
@@ -133,6 +139,7 @@ public class scr_Tram : MonoBehaviour
                 {
                     isMoving = false;
                     Velocity = Vector3.zero;
+                    currentWaitTime = maxWaitTime;
                 }
                 break;
 
@@ -144,6 +151,7 @@ public class scr_Tram : MonoBehaviour
                 {
                     isMoving = false;
                     Velocity = Vector3.zero;
+                    currentWaitTime = maxWaitTime;
                 }
                 break;
         }
@@ -151,14 +159,103 @@ public class scr_Tram : MonoBehaviour
        
     }
 
+    void MoveBack()
+    {
+        switch (CurrentMovementAlignment)
+        {
+            //Stop along the X Axis
+            case MoveAlignment.X:
+                Velocity = -MoveDirection * (Speed);
+                transform.position += Velocity * Time.deltaTime;
+               
+                break;
+            // Stop Along the Y Axis
+            case MoveAlignment.Y:
+                Velocity = -MoveDirection * (Speed);
+                transform.position += Velocity * Time.deltaTime;
+                
+                break;
+
+            // Stop Along the Z Axis
+            case MoveAlignment.Z:
+                Velocity = -MoveDirection * (Speed);
+                transform.position += Velocity * Time.deltaTime;
+               
+                break;
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
+        if (currentWaitTime <= maxWaitTime)
+        {
+            currentWaitTime -= Time.deltaTime;
+
+        }
+        else if (currentWaitTime <= 0 && isMoving)
+        {
+            isMoving = false;
+        }
+
         if (isMoving)
         {
             Move();
         }
+        else if (!isMoving && currentWaitTime <= 0)
+        {
+            if (transform.position == initalPosition)
+                return;
+            
+
+            switch (CurrentMovementAlignment)
+            {
+                //Stop along the X Axis
+                case MoveAlignment.X:
+                    if (transform.position.x >= initalPosition.x)
+                    {
+                        MoveBack();
+                    }
+                    else
+                    {
+                        Velocity = Vector3.zero;
+                    }
+                    
+                    break;
+                // Stop Along the Y Axis
+                case MoveAlignment.Y:
+                    if (transform.position.y >= initalPosition.y)
+                    {
+                        MoveBack();
+                    }
+                    else
+                    {
+                        Velocity = Vector3.zero;
+                    }
+                    break;
+
+                // Stop Along the Z Axis
+                case MoveAlignment.Z:
+                    if (transform.position.z >= initalPosition.z)
+                    {
+                        MoveBack();
+                    }
+                    else
+                    {
+                        Velocity = Vector3.zero;
+                    }
+
+                    break;
+            }
+            
+        }
     }
+
+    private void Start()
+    {
+        initalPosition = transform.position;
+    }
+
 
     private void OnDrawGizmos()
     {
