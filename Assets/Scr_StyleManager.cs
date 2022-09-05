@@ -20,7 +20,8 @@ public class Scr_StyleManager : MonoBehaviour
         }
     }
     [Header("UI Elements")]
-    public TMP_Text styleRankText;
+    public GameObject StyleHider;
+    public TMP_Text styleRankTextMesh;
     public TMP_Text styleText;
 
     public List<string> stylePhrases;
@@ -30,7 +31,7 @@ public class Scr_StyleManager : MonoBehaviour
     [Header("Internal Properties")]
     public float maxStylePoints = 1000;
 
-    private float currentStylePoints;
+    [SerializeField] float currentStylePoints = 0.0f;
 
     private float maxWaitTime = 5.0f;
     private float currentWaitTime = 0.0f;
@@ -44,30 +45,64 @@ public class Scr_StyleManager : MonoBehaviour
     {
         currentStylePoints += _increaseAmount;
         currentWaitTime = maxWaitTime;
+
+        StyleHider.SetActive(true);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public void DecreaseStylePoints()
     {
         if (currentStylePoints < 0.0f)
         {
-            currentStylePoints = 0; 
+            currentStylePoints = 0;
+            StyleHider.SetActive(false);
             return;
         }
+        else
+        {
+            currentStylePoints -= 100 * Time.deltaTime;
+        }
 
-        currentStylePoints -= 3 * Time.deltaTime;
+       
     }
 
-
+    /// <summary>
+    /// 
+    /// </summary>
     private void UIUpdate()
     {
+        if (StyleHider.activeSelf == false) return;
+
         styleSlider.value = currentStylePoints;
 
-
+        if (currentStylePoints > (maxStylePoints / 2))
+        {
+            styleRankTextMesh.text = "S";
+            styleText.text = stylePhrases[3];
+        }
+        else if (currentStylePoints > (maxStylePoints / 3))
+        {
+            styleRankTextMesh.text = "A";
+            styleText.text = stylePhrases[2];
+        }
+        else if(currentStylePoints > (maxStylePoints / 4))
+        {
+            styleRankTextMesh.text = "B";
+            styleText.text = stylePhrases[1];
+        }
+        else
+        {
+            styleRankTextMesh.text = "C";
+            styleText.text = stylePhrases[0];
+        }
     }
+
     // Start is called before the first frame update
     void Start()
     {
-        styleSlider = GetComponentInChildren<Slider>();
+        //styleSlider = GetComponentInChildren<Slider>();
 
         styleSlider.maxValue = maxStylePoints;
     }
@@ -75,6 +110,7 @@ public class Scr_StyleManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        UIUpdate();
         if (currentWaitTime > 0.0f)
         {
             currentWaitTime -= Time.deltaTime;
@@ -86,7 +122,7 @@ public class Scr_StyleManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.M))
         {
-            IncreaseStylePoints(10.0f);
+            IncreaseStylePoints(100.0f);
         }
     }
 }
