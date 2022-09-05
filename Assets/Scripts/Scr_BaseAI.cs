@@ -71,10 +71,12 @@ public class Scr_BaseAI : MonoBehaviour, IDamageable
                 m_Health -= _Damage * 2;
                 Scr_DamagePopupManager.Instance.DisplayDamagePopup((int)_Damage * 2, DamagePopupPos);
                 Scr_DamagePopupManager.Instance.CreateHealthOrb(this.gameObject.transform);
-            break;
+                Scr_StyleManager.i.IncreaseStylePoints(50.0f);
+                break;
             case CustomCollider.DamageType.Normal:
                 m_Health -= _Damage;
                 Scr_DamagePopupManager.Instance.DisplayDamagePopup((int)_Damage, DamagePopupPos);
+                Scr_StyleManager.i.IncreaseStylePoints(10.0f);
             break;
         }
 
