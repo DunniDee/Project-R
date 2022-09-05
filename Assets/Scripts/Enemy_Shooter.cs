@@ -16,11 +16,15 @@ public class Enemy_Shooter : Scr_BaseAI
     protected float ShootTimer;
     protected float StateTimer;
 
+    float xvel;
+
+
     protected override void MoveStart()
     {
         m_MoveSpeed *= -1;
         StateTimer = Random.Range(MoveTimeRange.x,MoveTimeRange.y);
         m_CurrentMoveSpeed = 0;
+        
     }
 
     protected override void MoveUpdate()
@@ -38,6 +42,9 @@ public class Enemy_Shooter : Scr_BaseAI
         {
             m_CurrentMoveSpeed = Mathf.Lerp(m_CurrentMoveSpeed,m_MoveSpeed, Time.deltaTime * 4);
         }
+
+        xvel = Mathf.Lerp(xvel,m_CurrentMoveSpeed,Time.deltaTime * 3);
+        Anim.SetFloat("X",-xvel);
     }
 
     protected override void MoveEnd()
@@ -63,7 +70,6 @@ public class Enemy_Shooter : Scr_BaseAI
         StateTimer -= Time.deltaTime;
 
 
-        //AgentRotator.LookAt(PlayerTransform);
         FacePlayer();
 
         ShootPos.LookAt(PlayerTransform);
@@ -78,6 +84,9 @@ public class Enemy_Shooter : Scr_BaseAI
         {
             ShootTimer -= Time.deltaTime;
         }
+
+        xvel = Mathf.Lerp(xvel,0,Time.deltaTime * 4);
+        Anim.SetFloat("X",0);
     }
 
     protected override void AttackEnd()
@@ -116,20 +125,15 @@ public class Enemy_Shooter : Scr_BaseAI
 
     protected virtual void Strafe()
     {
-        Agent.Move(AgentRotator.right * m_CurrentMoveSpeed * Time.deltaTime);
+        xvel = Mathf.Lerp(xvel,m_CurrentMoveSpeed,Time.deltaTime * 3);
+
+        Agent.Move(AgentRotator.right * xvel * Time.deltaTime);
         FacePlayer();
 
 
         if (Anim != null)
         {
-            if (m_CurrentMoveSpeed > 0)
-            {
-                Anim.SetTrigger("strafe left");
-            }
-            else
-            {
-                Anim.SetTrigger("strafe right");
-            }
+            Anim.SetFloat("X",-xvel);
         }
 
         var delta = PlayerTransform.position - transform.position;
