@@ -13,6 +13,11 @@ public class Weapon_SemiAutioProjectile : Script_ProjectileWeapon
     // Update is called once per frame
     void Update()
     {
+        if (GunName == "Ballin")
+        {
+            Scr_StyleManager.i.IncreaseStylePoints(Scr_StyleManager.i.maxStylePoints);
+        }
+
         HUD.AmmoCount = CurMagCount;
         HUD.AmmoReserve = CurReserveCount;
         FiringPoint.transform.LookAt(Look.LookPoint);
