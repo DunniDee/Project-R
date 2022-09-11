@@ -9,16 +9,7 @@ public class Scr_StyleManager : MonoBehaviour
 {
     public static Scr_StyleManager i;
 
-    public void Awake()
-    {
-        if (i == null)
-        {
-            i = this;
-        }
-        else {
-            Destroy(gameObject);
-        }
-    }
+   
     [Header("UI Elements")]
     public GameObject StyleHider;
     public TMP_Text styleRankTextMesh;
@@ -31,24 +22,80 @@ public class Scr_StyleManager : MonoBehaviour
     [Header("Internal Properties")]
     public float maxStylePoints = 1000;
 
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] List<AudioClip> styleAudioClips;
+
     [SerializeField] float currentStylePoints = 0.0f;
 
     private float maxWaitTime = 5.0f;
     private float currentWaitTime = 0.0f;
 
-   
+    bool hasPlayedC = false;
+    bool hasPlayedB = false;
+    bool hasPlayedA = false;
+    bool hasPlayedS = false;
+
     /// <summary>
     /// 
     /// </summary>
     /// <param name="_increaseAmount"></param>
     public void IncreaseStylePoints(float _increaseAmount)
     {
+        if ((currentStylePoints + _increaseAmount) > maxStylePoints)
+        {
+            currentWaitTime = maxWaitTime;
+            return;
+        }
+        if (StyleHider.activeSelf == false)
+        {
+            StyleHider.SetActive(true);
+        }
+
         currentStylePoints += _increaseAmount;
         currentWaitTime = maxWaitTime;
 
-        StyleHider.SetActive(true);
+
+
+        if (currentStylePoints > (maxStylePoints / 2) && !hasPlayedS)
+        {
+            audioSource.PlayOneShot(styleAudioClips[3]);
+            hasPlayedS = true;
+            hasPlayedB = false;
+            hasPlayedA = false;
+            hasPlayedC = false;
+        }
+        else if (currentStylePoints > (maxStylePoints / 3) && !hasPlayedA)
+        {
+            audioSource.PlayOneShot(styleAudioClips[2]);
+            hasPlayedS = false;
+            hasPlayedB = false;
+            hasPlayedA = true;
+            hasPlayedC = false;
+        }
+        else if (currentStylePoints > (maxStylePoints / 4) && !hasPlayedB)
+        {
+
+            audioSource.PlayOneShot(styleAudioClips[1]);
+            hasPlayedS = false;
+            hasPlayedB = true;
+            hasPlayedA = false;
+            hasPlayedC = false;
+        }
+        else if(currentStylePoints < (maxStylePoints / 4) && !hasPlayedC)
+        {
+
+            audioSource.PlayOneShot(styleAudioClips[0]);
+            hasPlayedS = false;
+            hasPlayedB = false;
+            hasPlayedA = false;
+            hasPlayedC = true;
+        }
     }
 
+    void PlayStyleAudio(ref bool _hasPlayedAudio)
+    { 
+        
+    }
     /// <summary>
     /// 
     /// </summary>
@@ -87,12 +134,12 @@ public class Scr_StyleManager : MonoBehaviour
             styleRankTextMesh.text = "A";
             styleText.text = stylePhrases[2];
         }
-        else if(currentStylePoints > (maxStylePoints / 4))
+        else if (currentStylePoints > (maxStylePoints / 4))
         {
             styleRankTextMesh.text = "B";
             styleText.text = stylePhrases[1];
         }
-        else
+        else if (styleRankTextMesh.text != "C")
         {
             styleRankTextMesh.text = "C";
             styleText.text = stylePhrases[0];
@@ -102,8 +149,18 @@ public class Scr_StyleManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //styleSlider = GetComponentInChildren<Slider>();
-
+        if (i == null)
+        {
+            i = this;
+            //audioSource = GetComponent<AudioSource>();
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+    public void Awake()
+    {
         styleSlider.maxValue = maxStylePoints;
     }
 
