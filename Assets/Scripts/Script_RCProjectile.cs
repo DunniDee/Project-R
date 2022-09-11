@@ -32,7 +32,10 @@ public class Script_RCProjectile : MonoBehaviour
             if (hit.collider.GetComponent<Script_InteractEvent>())
             {
                 var hitEvent = hit.collider.GetComponent<Script_InteractEvent>();
-                hitEvent.Interact();
+                if (hitEvent.EventType == Script_InteractEvent.InteractEventType.OnHit)
+                {
+                    hitEvent.Interact();
+                }
             }
 
             GameObject Decal = ObjectPooler.Instance.GetObject(BulletHoleDecal);

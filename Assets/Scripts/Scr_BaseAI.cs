@@ -230,6 +230,7 @@ public class Scr_BaseAI : MonoBehaviour, IDamageable
         m_animator.enabled = false;
         m_Ragdoll.ActivateRagdoll();
         m_Ragdoll.ApplyForce(Vector3.up * 10);
+        scr_GameManager.i.IncreaseKillCount(); // Added by Ash
     }
 
     protected float DeadTimer = 2;
