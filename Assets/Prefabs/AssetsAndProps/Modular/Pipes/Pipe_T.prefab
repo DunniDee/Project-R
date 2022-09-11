@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 981865553878475321}
   - component: {fileID: 4183723183281630620}
   - component: {fileID: 2155928276466506070}
-  - component: {fileID: 8967195770376114397}
+  - component: {fileID: 3467122343096115865}
   m_Layer: 9
   m_Name: Pipe_T
   m_TagString: Untagged
@@ -60,7 +60,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 5561349426305759274, guid: 453f989dee1063e4591577bdd6d8726a, type: 3}
+  - {fileID: 2100000, guid: 7fa2ac3f23f546e4f9ea920352a78669, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -82,8 +82,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8967195770376114397
-MeshCollider:
+--- !u!65 &3467122343096115865
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -92,7 +92,6 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -6723543185329951191, guid: 4e9a7c0d282b421429575c2ef1729baf, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 4, y: 2.0400002, z: 3.0200005}
+  m_Center: {x: 0, y: 0, z: 1.5100002}

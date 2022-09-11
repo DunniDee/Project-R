@@ -11,6 +11,7 @@ public class Script_InteractEvent : MonoBehaviour
         Interact,
         ColliderEnter,
         ColliderExit,
+        OnHit,
     }
 
     private BoxCollider m_TriggerCollider;
@@ -118,6 +119,17 @@ public class Script_InteractEvent : MonoBehaviour
     // {
     //     gameObject.layer = LayerMask.NameToLayer("Interactable");      
     // }
+
+    void OnCollisionEnter(Collision collider)
+    {
+        if (EventType == InteractEventType.OnHit)
+        {
+            if (collider.gameObject.CompareTag("Projectile"))
+            {
+                Interact();
+            }
+        }
+    }
 
     void OnTriggerEnter(Collider collider)
     {

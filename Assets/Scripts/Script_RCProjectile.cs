@@ -28,6 +28,16 @@ public class Script_RCProjectile : MonoBehaviour
         RaycastHit hit;
         if(Physics.Raycast(transform.position, transform.forward, out hit, Speed * Time.deltaTime))
         {
+            //Check if the Object hit is an interact event - Added by Ash
+            if (hit.collider.GetComponent<Script_InteractEvent>())
+            {
+                var hitEvent = hit.collider.GetComponent<Script_InteractEvent>();
+                if (hitEvent.EventType == Script_InteractEvent.InteractEventType.OnHit)
+                {
+                    hitEvent.Interact();
+                }
+            }
+
             GameObject Decal = ObjectPooler.Instance.GetObject(BulletHoleDecal);
             Decal.transform.position  = hit.point - hit.normal * 0.05f;
             Decal.transform.LookAt (hit.point + hit.normal);
@@ -41,6 +51,7 @@ public class Script_RCProjectile : MonoBehaviour
             {
                 hitCollider.TakeDamage(Damage, hitCollider.damageType, transform.forward);
             }
+            
             Disable();
         }
 
