@@ -13,10 +13,7 @@ public class Script_MenuManager : MonoBehaviour
 
     private bool isMenuActive = false;
     public GameObject menuObject;
-    public GameObject PlayerUI;
 
-    public TMP_Text Credits;
-    public TMP_Text Bounty;
     public GameObject GetPlayerGUI()
     {
         return GameObject.FindGameObjectWithTag("PlayerGUI");
@@ -31,17 +28,12 @@ public class Script_MenuManager : MonoBehaviour
             ToggleMenu(true);
         }
     }
-     private void ToggleCursor(){
-        Cursor.visible = !Cursor.visible;
-        Cursor.lockState = Cursor.visible ? CursorLockMode.Confined  : CursorLockMode.Locked;
-    }
 
     public void ToggleMenu(bool _activeState){
         menuObject.SetActive(_activeState);
-        isMenuActive = menuObject.active;
-        PlayerUI.SetActive(!_activeState);
+        isMenuActive = menuObject.activeSelf;
 
-        FindObjectOfType<Script_PlayerLook>().enabled = !_activeState;
+        LoadoutController.i.SetCursorActive(_activeState);
 
         if (_activeState)
         {
@@ -50,8 +42,6 @@ public class Script_MenuManager : MonoBehaviour
         else {
             Time.timeScale = 1.0f;
         }
-
-        ToggleCursor();
     }
 
     public void ToggleOptions(){
@@ -67,7 +57,6 @@ public class Script_MenuManager : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(this);
-        PlayerUI = GetPlayerGUI();
         if (Instance == null)
         {
             Instance = this;
@@ -77,23 +66,11 @@ public class Script_MenuManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        PlayerUI = GetPlayerGUI();
-    }
 
-    private void OnEnable()
-    {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
+ 
     // Update is called once per frame
     void Update()
     {
         ProcessInput();
-        if (isMenuActive)
-        {
-            Bounty.text = (Script_PlayerStatManager.Instance.Bounty * 100).ToString();
-            Credits.text = Script_PlayerStatManager.Instance.Credits.ToString("F0");
-        }
     }
 }
