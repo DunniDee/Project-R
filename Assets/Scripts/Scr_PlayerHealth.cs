@@ -142,7 +142,8 @@ public class Scr_PlayerHealth : MonoBehaviour
     {
         if (currentHealth <= 0)
         {
-            Script_SceneManager.Instance.LoadScene(SceneManager.GetActiveScene().name);
+            Scr_CheckPointManager.i.RespawnPlayer();
+            currentHealth = maxHealth;
         }
         
     }
