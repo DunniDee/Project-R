@@ -10,6 +10,8 @@ public class Script_SceneManager : MonoBehaviour
     // Singleton Pattern
     #region Singleton
     public static Script_SceneManager Instance; 
+    [SerializeField] Scr_PlayerLook Look;
+    public Transform SpawnPos;
     private void Awake()
     {
         if (Instance == null)
@@ -130,5 +132,29 @@ public class Script_SceneManager : MonoBehaviour
     public void UnlockTransition()
     {
         IsTransitioning = false;
+    }
+
+    public void Respawn()
+    {
+        Look.m_YRotation = SpawnPos.rotation.y;
+        Look.transform.position = SpawnPos.position;
+    }
+
+
+    public void SpawnCheckpoint()
+    {
+        if (!IsTransitioning)
+        {
+            LockTransition();
+            FadeDark();
+            Invoke("Respawn", 1);
+            Invoke("FadeLight", 2);
+            Invoke("UnlockTransition", 2);
+        }
+    }
+
+    public void SetSpawnPoint(Transform RespawnPoint)
+    {
+        SpawnPos = RespawnPoint;
     }
 }
