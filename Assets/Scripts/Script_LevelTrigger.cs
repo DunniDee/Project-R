@@ -18,6 +18,11 @@ public class Script_LevelTrigger : MonoBehaviour
        
     }
 
+    public void Respawn()
+    {
+        Script_SceneManager.Instance.Respawn();
+    }
+
    /* public void LoadScene(int _SceneIndex)
     {
         if (ReloadCurrentScene)
