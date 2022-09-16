@@ -20,9 +20,11 @@ public class Scr_PlayerHealth : MonoBehaviour
     public Image HealingScreenImage;
 
     [Header("Regen Properties")]
-    public float RegenRate = 0.1f;
+    public float RegenRate = 1;
     public float curRegenRate = 0.0f;
     public float MaxRegenRate = 3.0f;
+    private float CurrentRegenTimer = 0.0f;
+    private float MaxRegenTimer = 5.0f;
 
 
     public delegate void OnTakeDamageDelegate(float Time, float Amplitude);
@@ -49,6 +51,7 @@ public class Scr_PlayerHealth : MonoBehaviour
         m_healthUI.HealthValueText.text = currentHealth.ToString("F0");
         CamEffects.ShakeTime += _cameraShakeTime;
         CamEffects.ShakeAmplitude += _cameraShakeAmplitude;
+        CurrentRegenTimer = MaxRegenTimer;
     }
 
     /// <summary>
@@ -140,6 +143,14 @@ public class Scr_PlayerHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (CurrentRegenTimer > 0.0f)
+        {
+            CurrentRegenTimer -= Time.deltaTime;
+        }
+        else if (CurrentRegenTimer <= 0.0f && currentHealth < maxHealth)
+        {
+            currentHealth += RegenRate;
+        }
         if (currentHealth <= 0)
         {
             Scr_CheckPointManager.i.RespawnPlayer();
