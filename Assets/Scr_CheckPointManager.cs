@@ -6,8 +6,16 @@ public class Scr_CheckPointManager : MonoBehaviour
 {
     public static Scr_CheckPointManager i;
 
+    [Header("CheckPoint Properties")]
     public Transform CurrentCheckPoint;
     public GameObject Player;
+
+    [Header("Fade Properties")]
+    public CanvasGroup canvas;
+    public GameObject FadeObject;
+
+    public bool IsTransitioning { get; private set; }
+
     private void Awake()
     {
         if (i == null)
@@ -18,6 +26,37 @@ public class Scr_CheckPointManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    IEnumerator FadeLoadingScreen(float targetValue, float duration)
+    {
+        float startValue = canvas.alpha;
+        float time = 0;
+        while (time < duration)
+        {
+            canvas.alpha = Mathf.Lerp(startValue, targetValue, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        canvas.alpha = targetValue;
+    }
+    public void FadeDark()
+    {
+        FadeObject.SetActive(true);
+        StartCoroutine(FadeLoadingScreen(1, 0.5f));
+    }
+
+    public void FadeLight()
+    {
+        StartCoroutine(FadeLoadingScreen(0, 0.5f));
+    }
+
+    public void LockTransition()
+    {
+        IsTransitioning = true;
+    }
+    public void UnlockTransition()
+    {
+        IsTransitioning = false;
+    }
 
     public void Start()
     {
@@ -25,10 +64,22 @@ public class Scr_CheckPointManager : MonoBehaviour
         CurrentCheckPoint = Player.transform;
     }
 
-    public void RespawnPlayer()
+    private void SetPositionOfPlayer()
     {
         Debug.Log("RespawningPlayer");
         Player.transform.position = CurrentCheckPoint.position;
+    }
+    public void RespawnPlayer()
+    {
+        if (!IsTransitioning)
+        {
+            LockTransition();
+            FadeDark();
+            Invoke("SetPositionOfPlayer", 1);
+            Invoke("FadeLight", 2);
+            Invoke("UnlockTransition", 2);
+        }
+       
     }
 
     public void SetCurrentCheckPoint(GameObject _Gameobject)
