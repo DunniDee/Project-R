@@ -70,7 +70,7 @@ public class Scr_BaseAI : MonoBehaviour, IDamageable
             case CustomCollider.DamageType.Critical:
                 m_Health -= _Damage * 2;
                 Scr_DamagePopupManager.Instance.DisplayDamagePopup((int)_Damage * 2, DamagePopupPos);
-                Scr_DamagePopupManager.Instance.CreateHealthOrb(this.gameObject.transform);
+                //Scr_DamagePopupManager.Instance.CreateHealthOrb(this.gameObject.transform);
                 Scr_StyleManager.i.IncreaseStylePoints(50.0f);
                 break;
             case CustomCollider.DamageType.Normal:
