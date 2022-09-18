@@ -52,7 +52,8 @@ public class Scr_PlayerLook : MonoBehaviour
         HandEffects.RotateTo += new Vector3(-m_MouseY, m_MouseX, 0) * 2 * Time.deltaTime;
 
         RaycastHit Hit;
-        if (Physics.Raycast(CameraTransform.position, CameraTransform.forward,out Hit, 1000))
+        LayerMask AllMask = 1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16;
+        if (Physics.Raycast(CameraTransform.position, CameraTransform.forward,out Hit, 1000,AllMask , QueryTriggerInteraction.Ignore))
         {
             LookPoint = Hit.point;
         }
