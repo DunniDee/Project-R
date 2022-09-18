@@ -25,6 +25,8 @@ public abstract class Script_WeaponBase : MonoBehaviour
     [SerializeField] protected int MaxReserveCount;
     [SerializeField] protected int CurReserveCount;
     [SerializeField] protected int MagCount;
+    
+    [SerializeField] protected bool SingleReload;
     public int CurMagCount;
     [SerializeField] protected float ReloadTime;
     protected float m_ReloadTimer;
@@ -155,33 +157,77 @@ public abstract class Script_WeaponBase : MonoBehaviour
     {
         if (IsReloading)
         {
-            if (m_ReloadTimer > 0)
+            if (SingleReload)
             {
-                m_ReloadTimer -= Time.deltaTime;
-            }
-            else
-            {
-                IsReloading = false;
-    
-                CurReserveCount-= MagCount - CurMagCount;
-
-                if (CurReserveCount < 0)
+                if (m_ReloadTimer > 0)
                 {
-                    int LeftOver = Mathf.Abs(CurReserveCount);
-                    CurReserveCount += LeftOver;
-                    CurMagCount = MagCount - LeftOver;
+                    m_ReloadTimer -= Time.deltaTime;
                 }
                 else
                 {
-                    CurMagCount = MagCount;
-                }
-                
-                if(onAmmoChangeEvent != null)
-                {
-                    onAmmoChangeEvent(CurMagCount);
-                }
+                    if (CurMagCount < MagCount)
+                    {
+                        IsReloading = true;
+                        AS.PlayOneShot(ReloadSound);
+                        Anim.SetTrigger(ReloadHash);
+                        m_ReloadTimer = ReloadTime;
 
-                HUD.AmmoReserve = CurReserveCount;
+                        // CurReserveCount-= MagCount - CurMagCount;
+
+                        // if (CurReserveCount < 0)
+                        // {
+                        //     int LeftOver = Mathf.Abs(CurReserveCount);
+                            CurReserveCount--;
+                        //     CurMagCount = MagCount - LeftOver;
+                        // }
+                        // else
+                        // {
+                            CurMagCount++;
+                        // }
+                        
+                        if(onAmmoChangeEvent != null)
+                        {
+                            onAmmoChangeEvent(CurMagCount);
+                        }
+
+                        HUD.AmmoReserve = CurReserveCount;
+                    }
+                    else
+                    {
+                        IsReloading = false;
+                    }
+                }
+            }
+            else
+            {
+                if (m_ReloadTimer > 0)
+                {
+                    m_ReloadTimer -= Time.deltaTime;
+                }
+                else
+                {
+                    IsReloading = false;
+        
+                    CurReserveCount-= MagCount - CurMagCount;
+
+                    if (CurReserveCount < 0)
+                    {
+                        int LeftOver = Mathf.Abs(CurReserveCount);
+                        CurReserveCount += LeftOver;
+                        CurMagCount = MagCount - LeftOver;
+                    }
+                    else
+                    {
+                        CurMagCount = MagCount;
+                    }
+                    
+                    if(onAmmoChangeEvent != null)
+                    {
+                        onAmmoChangeEvent(CurMagCount);
+                    }
+
+                    HUD.AmmoReserve = CurReserveCount;
+                }
             }
         }
     }
