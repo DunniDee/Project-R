@@ -11,14 +11,16 @@ public class Script_RCProjectile : MonoBehaviour
     [SerializeField] protected float Damage;
     [SerializeField] protected GameObject BulletHoleDecal;
 
-    TrailRenderer Trail;
+    TrailRenderer m_Trail;
 
     private void Start() 
     {
-        Trail = gameObject.GetComponentInChildren<TrailRenderer>();
+        m_Trail = gameObject.GetComponentInChildren<TrailRenderer>();
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// translates the projectile , raycasts between the old position and the translated position and checks for collisions
+    /// </summary>
     void Update()
     {
         Vector3 NextPos = transform.position + transform.forward * Speed * Time.deltaTime;
@@ -26,18 +28,9 @@ public class Script_RCProjectile : MonoBehaviour
         float distance = (transform.position - NextPos).magnitude;
 
         RaycastHit hit;
-        if(Physics.Raycast(transform.position, transform.forward, out hit, Speed * Time.deltaTime))
+        LayerMask AllMask = 1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16;
+        if(Physics.Raycast(transform.position, transform.forward, out hit, Speed * Time.deltaTime, AllMask, QueryTriggerInteraction.Ignore))
         {
-            //Check if the Object hit is an interact event - Added by Ash
-            if (hit.collider.GetComponent<Script_InteractEvent>())
-            {
-                var hitEvent = hit.collider.GetComponent<Script_InteractEvent>();
-                if (hitEvent.EventType == Script_InteractEvent.InteractEventType.OnHit)
-                {
-                    hitEvent.Interact();
-                }
-            }
-
             GameObject Decal = ObjectPooler.Instance.GetObject(BulletHoleDecal);
             Decal.transform.position  = hit.point - hit.normal * 0.05f;
             Decal.transform.LookAt (hit.point + hit.normal);
@@ -51,7 +44,6 @@ public class Script_RCProjectile : MonoBehaviour
             {
                 hitCollider.TakeDamage(Damage, hitCollider.damageType, transform.forward);
             }
-            
             Disable();
         }
 
@@ -69,26 +61,38 @@ public class Script_RCProjectile : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Setter function for lifetime
+    /// </summary>
     public void SetlifeTime(float time)
     {
         Lifetime = time;
     }
 
+    /// <summary>
+    /// Setter function for damage
+    /// </summary>
     public void SetDamage(float damage)
     {
         Damage = damage;
     }
 
+    /// <summary>
+    /// set function for speed
+    /// </summary>
     public void SetSpeed(float speed)
     {
         Speed = speed;
     }
 
+    /// <summary>
+    /// returns the projectile back to the object pooler
+    /// </summary>
     public void Disable()
     {
-        if (Trail != null)
+        if (m_Trail != null)
         {
-            Trail.Clear();
+            m_Trail.Clear();
         }
         ObjectPooler.Instance.ReturnObject(this.gameObject);
     }
