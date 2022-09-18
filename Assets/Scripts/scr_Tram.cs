@@ -78,15 +78,15 @@ public class scr_Tram : MonoBehaviour
             switch (CurrentMovementAlignment)
             {
                 case MoveAlignment.X:
-                    motorReference.m_MomentumDirection += new Vector3(Velocity.x, 0, 0);
+                    motorReference.m_MomentumDirection += new Vector3(Velocity.x + 200, 0, 0) ;
                     break;
                 // Stop Along the Y Axis
                 case MoveAlignment.Y:
-                    motorReference.m_MomentumDirection += new Vector3(0, Velocity.y, 0);
+                    motorReference.m_MomentumDirection += new Vector3(0, Velocity.y + 200, 0);
                     break;
                 // Stop Along the Z Axis
                 case MoveAlignment.Z:
-                    motorReference.m_MomentumDirection += new Vector3(0, 0, Velocity.z);
+                    motorReference.m_MomentumDirection += new Vector3(0, 0, Velocity.z + 200);
                     break;
             }
            

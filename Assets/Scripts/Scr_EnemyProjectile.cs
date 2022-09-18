@@ -17,7 +17,8 @@ public class Scr_EnemyProjectile : MonoBehaviour
             Disable();
         }
 
-        if (collision.tag == "Ground" || collision.tag == "Wallrunable")
+        /*if (collision.tag == "Ground" || collision.tag == "Wallrunable")*/
+        else
         {
             Disable();
         }
