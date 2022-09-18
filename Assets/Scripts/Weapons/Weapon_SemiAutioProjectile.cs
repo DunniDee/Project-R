@@ -10,14 +10,11 @@ public class Weapon_SemiAutioProjectile : Script_ProjectileWeapon
         Initialize();
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// bundles all the functionality from the base classs with the difference based on the input type
+    /// </summary>
     void Update()
     {
-        if (GunName == "Ballin")
-        {
-            Scr_StyleManager.i.IncreaseStylePoints(Scr_StyleManager.i.maxStylePoints);
-        }
-
         HUD.AmmoCount = CurMagCount;
         HUD.AmmoReserve = CurReserveCount;
         FiringPoint.transform.LookAt(Look.LookPoint);
@@ -27,7 +24,7 @@ public class Weapon_SemiAutioProjectile : Script_ProjectileWeapon
             ShotTimer-= Time.deltaTime;
         }
 
-        if (Input.GetKeyDown(ShootKey) && CurMagCount > 0 && ShotTimer <= 0 && !IsReloading)
+        if (Input.GetKeyDown(ShootKey) && CurMagCount > 0 && ShotTimer <= 0 && (!IsReloading || SingleReload && MagCount > 0))
         {
             Shoot();
         }

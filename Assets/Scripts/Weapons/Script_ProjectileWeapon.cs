@@ -13,6 +13,8 @@ public class Script_ProjectileWeapon : Script_WeaponBase
     
     public override void Shoot()
     {
+        IsReloading = false;
+
         if (CurMagCount > 0)
         {
             for (int i = 0; i < ShotCount; i++)
