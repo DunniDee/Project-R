@@ -31,6 +31,15 @@ public class Script_RCProjectile : MonoBehaviour
         LayerMask AllMask = 1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16;
         if(Physics.Raycast(transform.position, transform.forward, out hit, Speed * Time.deltaTime, AllMask, QueryTriggerInteraction.Ignore))
         {
+            //Check if the Object hit is an interact event - Added by Ash
+            if (hit.collider.GetComponent<Script_InteractEvent>())
+            {
+                var hitEvent = hit.collider.GetComponent<Script_InteractEvent>();
+                if (hitEvent.EventType == Script_InteractEvent.InteractEventType.OnHit)
+                {
+                    hitEvent.Interact();
+                }
+            }
             GameObject Decal = ObjectPooler.Instance.GetObject(BulletHoleDecal);
             Decal.transform.position  = hit.point - hit.normal * 0.05f;
             Decal.transform.LookAt (hit.point + hit.normal);
@@ -40,6 +49,7 @@ public class Script_RCProjectile : MonoBehaviour
             Decal.GetComponent<DecalProjector>().fadeFactor = 1;
 
             var hitCollider = hit.collider.gameObject.GetComponent<CustomCollider>();
+           
             if (hitCollider != null)
             {
                 hitCollider.TakeDamage(Damage, hitCollider.damageType, transform.forward);
