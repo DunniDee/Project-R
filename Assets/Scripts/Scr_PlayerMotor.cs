@@ -467,8 +467,18 @@ public class Scr_PlayerMotor : MonoBehaviour
     //Vault functionalty
     void Vault()
     {
+
         if (Physics.Raycast(VaultCheckPos.position, VaultCheckPos.forward,out VaultHit, 1, GroundMask) && !m_IsVaulting) //checks to see if vault is possible
         {
+            //added by ash, make sure there is no object is above the players head to avoid phasing through walls
+            RaycastHit hit;
+            if (Physics.Linecast(VaultCheckPos.position, Camera.main.transform.position, out hit, GroundMask))
+            {
+                if (hit.transform)
+                {
+                    return;
+                }
+            }
             m_IsVaulting = true;
             vaultPos = VaultHit.point + Vector3.up; // setting the lerp to position to lerp to
             m_VaultTimer = m_VaultTime; 
