@@ -32,7 +32,7 @@ public class AIChaseState : AIState
         if (attackCurCooldown <= 0.0f)
         {
             attackCurCooldown = attackMaxCooldown;
-            int attackIndex = Random.Range(1, 3);
+            int attackIndex = 3;//Random.Range(1, 4);
 
             switch (attackIndex)
             {
