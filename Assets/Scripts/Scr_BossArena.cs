@@ -86,6 +86,7 @@ public class Scr_BossArena : MonoBehaviour
         
         m_Animator = ArenaCanvas.GetComponent<Animator>();
 
+       
 
     }
     void Update()
@@ -113,7 +114,7 @@ public class Scr_BossArena : MonoBehaviour
 
             if (GetTotalBossHealth() <= 0 && !m_doCompleteEventOnce)
             {
-                
+
                 OnBossFightComplete.Invoke();
                 DisableBossFight();
 
@@ -121,8 +122,11 @@ public class Scr_BossArena : MonoBehaviour
                 isBossFightActive = false;
             }
 
-           
-            
+
+
+        }
+        else {
+            DisableBossFight();
         }
      
         

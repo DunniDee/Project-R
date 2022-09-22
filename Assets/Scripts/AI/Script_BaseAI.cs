@@ -32,10 +32,6 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
     public AIStateConfig Config;
     public string AI_Name_Config;
 
-    public string LootPrefabPath;
-    public GameObject LootPrefab;
-    public GameObject HealthPrefab;
-
     public List<AudioClip> CombatNoise;
     public List<AudioClip> DeathNoise;
 
@@ -211,7 +207,6 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
                
                 m_Health -= totalDamage * 2;
                 Scr_DamagePopupManager.Instance.DisplayDamagePopup((int)totalDamage * 2, m_DamagePopUpParent);
-                Scr_DamagePopupManager.Instance.CreateHealthOrb(this.gameObject.transform);
                 if (UpdateUIEvent != null)
                 {
                     UpdateUIEvent();
@@ -250,7 +245,7 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
         m_UIHealth.HealthSlider.value = Config.maxHealth;
         m_UIHealth.gameObject.SetActive(false);
 
-        m_navMeshAgent.enabled= false;
+        m_navMeshAgent.enabled = false;
     }
     /// <summary>
     /// 
@@ -299,8 +294,6 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
             Debug.LogWarning("Failed to Load AI Config: " + gameObject.name);
         }
 
-        LootPrefab = Resources.Load(LootPrefabPath) as GameObject;
-        HealthPrefab = Resources.Load("GameObjects/Loot/HealthCredit") as GameObject;
         //Find Player Transform Reference
         m_PlayerTransform = FindObjectOfType<Scr_PlayerMotor>().gameObject.transform;
 
