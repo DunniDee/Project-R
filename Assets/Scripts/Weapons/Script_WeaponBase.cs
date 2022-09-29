@@ -19,7 +19,7 @@ public abstract class Script_WeaponBase : MonoBehaviour
     [SerializeField] protected Vector2 RecoilVec;
     [Space]
 
-   
+    
 
     [Header("Reload Variables")]
     [SerializeField] protected int MaxReserveCount;
@@ -159,44 +159,46 @@ public abstract class Script_WeaponBase : MonoBehaviour
         {
             if (SingleReload)
             {
-                if (m_ReloadTimer > 0)
-                {
-                    m_ReloadTimer -= Time.deltaTime;
-                }
-                else
-                {
-                    if (CurMagCount < MagCount)
-                    {
-                        IsReloading = true;
-                        AS.PlayOneShot(ReloadSound);
-                        Anim.SetTrigger(ReloadHash);
-                        m_ReloadTimer = ReloadTime;
+                // if (m_ReloadTimer > 0)
+                // {
+                //     m_ReloadTimer -= Time.deltaTime;
+                // }
+                // else
+                // {
+                //     if (CurMagCount < MagCount)
+                //     {
+                //         IsReloading = true;
+                //         AS.PlayOneShot(ReloadSound);
+                //         Anim.SetTrigger(ReloadHash);
+                //         m_ReloadTimer = ReloadTime;
 
-                        // CurReserveCount-= MagCount - CurMagCount;
+                //         // CurReserveCount-= MagCount - CurMagCount;
 
-                        // if (CurReserveCount < 0)
-                        // {
-                        //     int LeftOver = Mathf.Abs(CurReserveCount);
-                            CurReserveCount--;
-                        //     CurMagCount = MagCount - LeftOver;
-                        // }
-                        // else
-                        // {
-                            CurMagCount++;
-                        // }
+                //         // if (CurReserveCount < 0)
+                //         // {
+                //         //     int LeftOver = Mathf.Abs(CurReserveCount);
+                //             CurReserveCount--;
+                //         //     CurMagCount = MagCount - LeftOver;
+                //         // }
+                //         // else
+                //         // {
+                //             CurMagCount++;
+                //         // }
                         
-                        if(onAmmoChangeEvent != null)
-                        {
-                            onAmmoChangeEvent(CurMagCount);
-                        }
+                //         if(onAmmoChangeEvent != null)
+                //         {
+                //             onAmmoChangeEvent(CurMagCount);
+                //         }
 
-                        HUD.AmmoReserve = CurReserveCount;
-                    }
-                    else
-                    {
-                        IsReloading = false;
-                    }
-                }
+                //         HUD.AmmoReserve = CurReserveCount;
+                //     }
+                //     else
+                //     {
+                //         IsReloading = false;
+                //     }
+
+                Anim.SetBool("Reloading", true);
+                Anim.SetInteger("AmmoCount", CurMagCount); 
             }
             else
             {
@@ -252,5 +254,10 @@ public abstract class Script_WeaponBase : MonoBehaviour
     {
         Anim.SetFloat(zVelHash, m_zVelocity);
         Anim.SetFloat(xVelHash, m_xVelocity);
+    }
+
+    protected void ReloadBullet()
+    {
+        CurMagCount++;
     }
 }
