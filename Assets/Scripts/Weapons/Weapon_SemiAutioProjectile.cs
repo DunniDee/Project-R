@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Weapon_SemiAutioProjectile : Script_ProjectileWeapon
 {
-    // Start is called before the first frame update
+    // Start is called before the first frame update bruh
+    
     private void Start()
     {
         Initialize();
