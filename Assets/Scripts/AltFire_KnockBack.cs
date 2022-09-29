@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class AltFire_KnockBack : Scr_AltFireBase
 {
-    // Start is called before the first frame update
+    // Start is called before the first frame update bruh
+    
     [SerializeField] Scr_PlayerMotor Motor;
 
     [SerializeField] Transform Look;
