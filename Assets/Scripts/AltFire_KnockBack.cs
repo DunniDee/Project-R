@@ -13,12 +13,12 @@ public class AltFire_KnockBack : Scr_AltFireBase
     protected override void OnAbilityStart()
     {
         base.OnAbilityStart();
-        // for (int i = 0; i < 4; i++)
-        // {
-        //     Invoke("Shoot", i * 0.1f);
-        // }
+        for (int i = 0; i < 4; i++)
+        {
+            Invoke("Shoot", i * 0.1f);
+        }
 
-        Shoot();
+        //Shoot();
     }
 
     void Shoot()
