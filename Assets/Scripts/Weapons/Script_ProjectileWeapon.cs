@@ -13,10 +13,9 @@ public class Script_ProjectileWeapon : Script_WeaponBase
     
     public override void Shoot()
     {
-        IsReloading = false;
-
         if (CurMagCount > 0)
         {
+            IsReloading = false;
             for (int i = 0; i < ShotCount; i++)
             {
                 Quaternion ProjectileSpread = FiringPoint.rotation * Quaternion.Euler(0, 0, Random.Range(0.0f, 360.0f)) * Quaternion.Euler(Random.Range(0.0f, SpreadAngle / 2), 0, 0);
