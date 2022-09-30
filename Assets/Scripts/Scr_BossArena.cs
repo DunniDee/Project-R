@@ -12,15 +12,36 @@ public class Scr_BossArena : MonoBehaviour
     public GameObject ArenaCanvas;
     Animator m_Animator;
     Slider m_BossHealthSlider;
+    [SerializeField] List<GameObject> AI_Prefabs;
 
     [Header("Boss Arena Properties")]
     [SerializeField] List<AI_Brute> AIList;
+    [SerializeField] List<Transform> AI_SpawnLocations;
+
+    public int SpawnCount = 18;
 
     public bool isBossFightActive = false;
     public UnityEvent OnBossFightComplete;
 
     bool m_doCompleteEventOnce = false;
 
+
+    private IEnumerator SpawnAICoroutine()
+    {
+        for (int i = 0; i < SpawnCount; i++)
+        {
+            int k = Random.Range(0, AI_Prefabs.Count);
+            int j = Random.Range(0, AI_SpawnLocations.Count);
+            Instantiate(AI_Prefabs[k], AI_SpawnLocations[j], false);
+            yield return new WaitForSeconds(1.0f);
+        }
+
+    }
+
+    public void StartSpawningAI()
+    {
+        StartCoroutine(SpawnAICoroutine());
+    }
    //Get the sum of all AI's Health 
     private float GetTotalBossHealth()
     {
