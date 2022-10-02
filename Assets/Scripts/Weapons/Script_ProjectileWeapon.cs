@@ -13,6 +13,9 @@ public class Script_ProjectileWeapon : Script_WeaponBase
     
     public override void Shoot()
     {
+        IsReloading = false;
+        Anim.SetBool("isReloading",IsReloading);
+
         if (CurMagCount > 0)
         {
             IsReloading = false;

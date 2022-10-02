@@ -27,6 +27,7 @@ public class Weapon_SemiAutioProjectile : Script_ProjectileWeapon
 
         if (Input.GetKeyDown(ShootKey) && CurMagCount > 0 && ShotTimer <= 0 && (!IsReloading || SingleReload && MagCount > 0))
         {
+            IsReloading = false;
             Shoot();
         }
 

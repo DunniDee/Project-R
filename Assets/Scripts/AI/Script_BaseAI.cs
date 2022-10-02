@@ -303,7 +303,7 @@ public class Script_BaseAI : MonoBehaviour, IDamageable
         AIStateInit();
 
         // Add On Player Found Event Delegate
-        GetComponent<Scr_AISensor>().OnPlayerFoundEvent += AIStateMachine.ChangeState;
+       // GetComponent<Scr_AISensor>().OnPlayerFoundEvent += AIStateMachine.ChangeState;
     }
 
 

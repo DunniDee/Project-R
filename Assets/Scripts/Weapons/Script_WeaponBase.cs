@@ -94,7 +94,9 @@ public abstract class Script_WeaponBase : MonoBehaviour
        HUD.MagSize = MagCount;
        HUD.AmmoCount = CurMagCount;
        HUD.SetGunName(GunName);
-        if (m_ReloadTimer > 0)
+       IsReloading = false;
+
+        if (CurMagCount <= 0)
         {
             IsReloading = true;
             AS.PlayOneShot(ReloadSound);
@@ -143,10 +145,19 @@ public abstract class Script_WeaponBase : MonoBehaviour
     public virtual void ShootNoAnim(){}
     protected virtual void Reload()
     {
-        if ((CurMagCount < 1 && ShotTimer < 1 && !IsReloading && CurReserveCount > 0) ||
-            (CurMagCount < MagCount && ShotTimer < 1 && !IsReloading && Input.GetKey(ReloadKey) && CurReserveCount > 0))
+        // if ((CurMagCount < 1 && ShotTimer < 1 && !IsReloading && CurReserveCount > 0) ||
+        //     (CurMagCount < MagCount && ShotTimer < 1 && !IsReloading && Input.GetKey(ReloadKey) && CurReserveCount > 0))
+        // {
+        //     IsReloading = true;
+        //     AS.PlayOneShot(ReloadSound);
+        //     Anim.SetTrigger(ReloadHash);
+        //     m_ReloadTimer = ReloadTime;
+        // }
+
+        if ((CurMagCount <= 0 || Input.GetKey(ReloadKey) && CurMagCount < MagCount) && !IsReloading)
         {
             IsReloading = true;
+            Anim.SetBool("isReloading",IsReloading);
             AS.PlayOneShot(ReloadSound);
             Anim.SetTrigger(ReloadHash);
             m_ReloadTimer = ReloadTime;
@@ -196,9 +207,18 @@ public abstract class Script_WeaponBase : MonoBehaviour
                 //     {
                 //         IsReloading = false;
                 //     }
-
-                Anim.SetBool("Reloading", true);
                 Anim.SetInteger("AmmoCount", CurMagCount); 
+
+                if (CurMagCount >= MagCount)
+                {
+                    IsReloading = false;
+                    Anim.SetBool("isReloading",IsReloading);
+                }
+                else
+                {
+                    IsReloading = true;
+                    Anim.SetBool("isReloading",IsReloading);
+                }
             }
             else
             {
@@ -209,19 +229,7 @@ public abstract class Script_WeaponBase : MonoBehaviour
                 else
                 {
                     IsReloading = false;
-        
-                    CurReserveCount-= MagCount - CurMagCount;
-
-                    if (CurReserveCount < 0)
-                    {
-                        int LeftOver = Mathf.Abs(CurReserveCount);
-                        CurReserveCount += LeftOver;
-                        CurMagCount = MagCount - LeftOver;
-                    }
-                    else
-                    {
-                        CurMagCount = MagCount;
-                    }
+                    Anim.SetBool("isReloading",IsReloading);
                     
                     if(onAmmoChangeEvent != null)
                     {
