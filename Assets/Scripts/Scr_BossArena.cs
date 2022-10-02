@@ -14,17 +14,19 @@ public class Scr_BossArena : MonoBehaviour
     Slider m_BossHealthSlider;
     [SerializeField] List<GameObject> AI_Prefabs;
 
+    [SerializeField] List<GameObject> InstantiatedAI;
     [Header("Boss Arena Properties")]
     [SerializeField] List<AI_Brute> AIList;
     [SerializeField] List<Transform> AI_SpawnLocations;
 
     public int SpawnCount = 18;
-
+   
     public bool isBossFightActive = false;
     public UnityEvent OnBossFightComplete;
-
+    public UnityEvent OnBigFightComplete;
     bool m_doCompleteEventOnce = false;
 
+    bool m_isSecondPhase = false;
 
     private IEnumerator SpawnAICoroutine()
     {
@@ -32,16 +34,32 @@ public class Scr_BossArena : MonoBehaviour
         {
             int k = Random.Range(0, AI_Prefabs.Count);
             int j = Random.Range(0, AI_SpawnLocations.Count);
-            Instantiate(AI_Prefabs[k], AI_SpawnLocations[j], false);
+            InstantiatedAI.Add(Instantiate(AI_Prefabs[k], AI_SpawnLocations[j], false));
             yield return new WaitForSeconds(1.0f);
         }
 
+    }
+
+    private void CheckForBigFight()
+    {
+        if (InstantiatedAI.Count > 0)
+        {
+            int deathcount = 0;
+            for (int i = 0; i < SpawnCount; i++)
+            {
+                if (InstantiatedAI[i] == null)
+                {
+                    deathcount++;
+                }
+            }
+        }
     }
 
     public void StartSpawningAI()
     {
         StartCoroutine(SpawnAICoroutine());
     }
+
    //Get the sum of all AI's Health 
     private float GetTotalBossHealth()
     {
@@ -84,7 +102,7 @@ public class Scr_BossArena : MonoBehaviour
         ArenaCanvas.SetActive(true);
         if (m_BossHealthSlider == null)
         {
-            m_BossHealthSlider = GetComponentInChildren<Slider>();
+            m_BossHealthSlider = ArenaCanvas.GetComponentInChildren<Slider>();
         }
         EnableBossAI(true);
         m_Animator.SetTrigger("FadeIn");
@@ -142,14 +160,19 @@ public class Scr_BossArena : MonoBehaviour
                 m_doCompleteEventOnce = true;
                 isBossFightActive = false;
             }
-
+            if (GetTotalBossHealth() < AIList[0].Config.maxHealth / 2 && !m_isSecondPhase)
+            {
+                StartCoroutine(SpawnAICoroutine());
+                m_Animator.SetTrigger("Lasers");
+                m_isSecondPhase = true;
+            }
 
 
         }
         else {
             DisableBossFight();
         }
-     
+        
         
     }
 
