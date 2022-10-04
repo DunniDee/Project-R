@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CustomCollider : MonoBehaviour
 {
+    [SerializeField] Scr_OnKillBonus KillBonus;
+
     public enum DamageType {
         Normal,
         Critical,
