@@ -12,8 +12,8 @@ public class Scr_PlayerMotor : MonoBehaviour
     [Space]
 
     [Header("Movement Stats")]
-    [SerializeField] float MoveSpeed;
-    [SerializeField] float AirSpeed;
+    public float MoveSpeed;
+    public float AirSpeed;
     [SerializeField] float Acceleration;
     [SerializeField] float m_MomentumMax;
     [SerializeField] float m_MomentumDecay;
@@ -547,6 +547,24 @@ public class Scr_PlayerMotor : MonoBehaviour
             m_MomentumDirection = _direction;
             m_SmoothMoveDirection = Vector3.zero;
             m_VerticalVelocity.y = Mathf.Sqrt(2 * _Height * m_Gravity);
+            CamEffects.FovTo += 45;
+            CamEffects.RotateTo += new Vector3(15,0,0);
+            StepAS.PlayOneShot(DashSounds[Random.Range(0,DashSounds.Length-1)],1);
+            CamEffects.ShakeTime += 1f;
+            CamEffects.ShakeAmplitude += 1f;
+        }
+    }
+
+    public void ExplosionForce(Vector3 _direction)
+    {
+        if (m_LauncherTimer <= 0)
+        {
+            m_LauncherTimer = 1;
+            IsLaunched = true;
+            Movment.Move(new Vector3(0,0.5f,0));
+            m_MomentumDirection += _direction;
+            m_SmoothMoveDirection = Vector3.zero;
+            m_VerticalVelocity.y = _direction.y;
             CamEffects.FovTo += 45;
             CamEffects.RotateTo += new Vector3(15,0,0);
             StepAS.PlayOneShot(DashSounds[Random.Range(0,DashSounds.Length-1)],1);

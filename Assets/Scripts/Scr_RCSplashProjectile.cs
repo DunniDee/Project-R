@@ -63,6 +63,14 @@ public class Scr_RCSplashProjectile : Script_RCProjectile
                 // {
                 //     CustomCollider.TakeDamage(Damage, CustomCollider.DamageType.Normal);
                 // }
+
+               float sqrDist = (transform.position - Script_PlayerStatManager.Instance.PlayerTransform.position).sqrMagnitude;
+
+                if (sqrDist < ExplosionRadius*ExplosionRadius)
+                {
+                    Vector3 Dir = (transform.position - Script_PlayerStatManager.Instance.PlayerTransform.position).normalized;
+                    Script_PlayerStatManager.Instance.Motor.ExplosionForce(-Dir * 10);
+                }
             }
         }
 

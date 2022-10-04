@@ -237,6 +237,8 @@ public abstract class Script_WeaponBase : MonoBehaviour
                         onAmmoChangeEvent(CurMagCount);
                     }
 
+                    CurMagCount = MagCount;
+
                     HUD.AmmoReserve = CurReserveCount;
                 }
             }
