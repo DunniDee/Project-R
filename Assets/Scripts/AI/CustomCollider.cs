@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CustomCollider : MonoBehaviour
 {
+    [SerializeField] Scr_OnKillBonus KillBonus;
+
     public enum DamageType {
         Normal,
         Critical,
@@ -22,6 +24,7 @@ public class CustomCollider : MonoBehaviour
             if (takeDamageEvent(_Damage,damageType,_direction))
             {
                 Script_HitMarker.current.KillMarker();
+                Scr_OnKillBonus.OnKillBonus.DoKillBonus();
             }
             else
             {
@@ -38,7 +41,8 @@ public class CustomCollider : MonoBehaviour
         }
     }
 
-    void Awake(){
+    void Awake()
+    {
         takeDamageEvent += GetComponentInParent<IDamageable>().Damage;
         if(gameObject.tag == "Head"){
             damageType = DamageType.Critical;

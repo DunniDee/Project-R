@@ -28,8 +28,8 @@ public class Script_RCProjectile : MonoBehaviour
         float distance = (transform.position - NextPos).magnitude;
 
         RaycastHit hit;
-        LayerMask AllMask = 1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16;
-        if(Physics.Raycast(transform.position, transform.forward, out hit, Speed * Time.deltaTime, AllMask, QueryTriggerInteraction.Ignore))
+        // LayerMask AllMask = 1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16;
+        if(Physics.Raycast(transform.position, transform.forward, out hit, Speed * Time.deltaTime, LayerMask.NameToLayer("Enemy") | LayerMask.NameToLayer("Ground_WallRunable"), QueryTriggerInteraction.Ignore))
         {
             //Check if the Object hit is an interact event - Added by Ash
             if (hit.collider.GetComponent<Script_InteractEvent>())

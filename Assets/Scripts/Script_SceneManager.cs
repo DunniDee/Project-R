@@ -35,6 +35,8 @@ public class Script_SceneManager : MonoBehaviour
     [Header("Internal Components")]
     public GameObject loadingScreen;
     public CanvasGroup canvasGroup;
+
+
     [Header("SceneManager Properties")]
     public string sceneToLoad;
     public int currentSceneIndex;
@@ -62,6 +64,10 @@ public class Script_SceneManager : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="SceneName"></param>
     public void LoadScene(string SceneName)
     {
         if (!IsTransitioning)
@@ -74,7 +80,11 @@ public class Script_SceneManager : MonoBehaviour
             Invoke("UnlockTransition", 2);
         }
     }
- 
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     IEnumerator LoadScene()
     {
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneToLoad);
@@ -84,6 +94,12 @@ public class Script_SceneManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="targetValue"></param>
+    /// <param name="duration"></param>
+    /// <returns></returns>
     IEnumerator FadeLoadingScreen(float targetValue, float duration)
     {
         float startValue = canvasGroup.alpha;
@@ -97,39 +113,58 @@ public class Script_SceneManager : MonoBehaviour
         canvasGroup.alpha = targetValue;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public void FadeDark()
     {
         loadingScreen.SetActive(true);
         StartCoroutine(FadeLoadingScreen(1,0.5f));
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public void FadeLight()
     {
 
         StartCoroutine(FadeLoadingScreen(0,0.5f));
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public void TransitionScene()
     {
         StartCoroutine(LoadScene());
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
     public void LockTransition()
     {
         IsTransitioning = true;
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
     public void UnlockTransition()
     {
         IsTransitioning = false;
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
     public void Respawn()
     {
         Look.m_YRotation = SpawnPos.rotation.y;
         Look.transform.position = SpawnPos.position;
     }
 
-
+    /// <summary>
+    /// 
+    /// </summary>
     public void SpawnCheckpoint()
     {
         if (!IsTransitioning)
@@ -142,6 +177,10 @@ public class Script_SceneManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="RespawnPoint"></param>
     public void SetSpawnPoint(Transform RespawnPoint)
     {
         SpawnPos = RespawnPoint;
