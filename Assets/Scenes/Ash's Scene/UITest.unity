@@ -138,6 +138,7 @@ MonoBehaviour:
   GunName: Pumpy
   ShootKey: 323
   ReloadKey: 114
+  weaponListIndex: 0
   Damage: 10
   FireRate: 1
   ShotTimer: 0
@@ -161,10 +162,10 @@ MonoBehaviour:
     type: 3}
   Anim: {fileID: 33697207}
   GunImage: {fileID: 0}
-  HUD: {fileID: 7502889656672085968}
-  HandEffects: {fileID: 6804544529610000577}
-  CamEffects: {fileID: 6804544530012984577}
-  WeaponSwap: {fileID: 7502889657101886047}
+  HUD: {fileID: 0}
+  HandEffects: {fileID: 0}
+  CamEffects: {fileID: 0}
+  WeaponSwap: {fileID: 0}
   Projectile: {fileID: 5964571975337414563, guid: b61557a25f3cdec4fab0698c18242718,
     type: 3}
   ProjectileLifetime: 1
@@ -186,10 +187,10 @@ MonoBehaviour:
   Durration: 0
   Cooldown: 0
   AltFireKey: 324
-  HUD: {fileID: 7502889656672085968}
+  HUD: {fileID: 0}
   Weapon: {fileID: 33697200}
-  Motor: {fileID: 6804544530289867112}
-  Look: {fileID: 410255929934767175}
+  Motor: {fileID: 0}
+  Look: {fileID: 0}
   KnockBackForce: 12
 --- !u!82 &33697202
 AudioSource:
@@ -1278,7 +1279,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 6920594314780682673}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 299530932, guid: 3fbb2261150a494409ee659f6e05791f, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1705,7 +1706,7 @@ PrefabInstance:
     - target: {fileID: 3942859197394867244, guid: 3fbb2261150a494409ee659f6e05791f,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3942859197394867244, guid: 3fbb2261150a494409ee659f6e05791f,
         type: 3}
@@ -1891,7 +1892,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1961449862}
+      objectReference: {fileID: 6010404243657668376}
     - target: {fileID: 7340522819212616850, guid: 3fbb2261150a494409ee659f6e05791f,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -2138,12 +2139,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 904b7f91691bf794fb400542b6980030, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &714764740 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4123743927030821299, guid: a5d535cc521a7474bb2ba693ae343615,
-    type: 3}
-  m_PrefabInstance: {fileID: 1098505617}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &751761309 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: ff809aca2ebb7ad409f99c05761b81a0,
@@ -2771,12 +2766,12 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 6920594314780682673}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 4123743927030821299, guid: a5d535cc521a7474bb2ba693ae343615,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4123743927030821299, guid: a5d535cc521a7474bb2ba693ae343615,
         type: 3}
@@ -2964,7 +2959,7 @@ MonoBehaviour:
   Durration: 0
   Cooldown: 0
   AltFireKey: 324
-  HUD: {fileID: 7502889656672085968}
+  HUD: {fileID: 0}
   Weapon: {fileID: 1133820027}
   ShotInterval: 0.1
   Anim: {fileID: 59770015}
@@ -2983,6 +2978,7 @@ MonoBehaviour:
   GunName: Revolver
   ShootKey: 323
   ReloadKey: 114
+  weaponListIndex: 0
   Damage: 75
   FireRate: 0.5
   ShotTimer: 0
@@ -3006,10 +3002,10 @@ MonoBehaviour:
     type: 3}
   Anim: {fileID: 59770015}
   GunImage: {fileID: 0}
-  HUD: {fileID: 7502889656672085968}
-  HandEffects: {fileID: 6804544529610000577}
-  CamEffects: {fileID: 6804544530012984577}
-  WeaponSwap: {fileID: 7502889657101886047}
+  HUD: {fileID: 0}
+  HandEffects: {fileID: 0}
+  CamEffects: {fileID: 0}
+  WeaponSwap: {fileID: 0}
   Projectile: {fileID: 1160261552384855930, guid: 8f3c6a71708f64b4ab00df26a8eff77c,
     type: 3}
   ProjectileLifetime: 3
@@ -3922,24 +3918,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1961449862 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7748175120881934405, guid: 52ae56cae82d5c04686b84db2c3f1731,
-    type: 3}
-  m_PrefabInstance: {fileID: 4102272283166955357}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ad876b847554724394a48bd2a8af1d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &1961449863 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7748175120881934406, guid: 52ae56cae82d5c04686b84db2c3f1731,
-    type: 3}
-  m_PrefabInstance: {fileID: 4102272283166955357}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &58374105357418622
 GameObject:
   m_ObjectHideFlags: 0
@@ -4006,6 +3984,7 @@ MonoBehaviour:
   GunName: Ballin
   ShootKey: 323
   ReloadKey: 114
+  weaponListIndex: 0
   Damage: 100
   FireRate: 0.5
   ShotTimer: 0
@@ -4028,9 +4007,9 @@ MonoBehaviour:
   Muzzleflash: {fileID: 0}
   Anim: {fileID: 7502889656969183668}
   GunImage: {fileID: 0}
-  HUD: {fileID: 7502889656672085968}
-  HandEffects: {fileID: 6804544529610000577}
-  CamEffects: {fileID: 6804544530012984577}
+  HUD: {fileID: 0}
+  HandEffects: {fileID: 0}
+  CamEffects: {fileID: 0}
   WeaponSwap: {fileID: 0}
   Projectile: {fileID: 5964571975337414563, guid: b61557a25f3cdec4fab0698c18242718,
     type: 3}
@@ -4067,6 +4046,7 @@ MonoBehaviour:
   GunName: Ballin
   ShootKey: 323
   ReloadKey: 114
+  weaponListIndex: 0
   Damage: 100
   FireRate: 0.5
   ShotTimer: 0
@@ -4090,10 +4070,10 @@ MonoBehaviour:
     type: 3}
   Anim: {fileID: 7502889656969183668}
   GunImage: {fileID: 0}
-  HUD: {fileID: 7502889656672085968}
-  HandEffects: {fileID: 6804544529610000577}
-  CamEffects: {fileID: 6804544530012984577}
-  WeaponSwap: {fileID: 7502889657101886047}
+  HUD: {fileID: 0}
+  HandEffects: {fileID: 0}
+  CamEffects: {fileID: 0}
+  WeaponSwap: {fileID: 0}
   Projectile: {fileID: 5964571975337414563, guid: b61557a25f3cdec4fab0698c18242718,
     type: 3}
   ProjectileLifetime: 0
@@ -5638,9 +5618,9 @@ MonoBehaviour:
   Durration: 0
   Cooldown: 6
   AltFireKey: 324
-  HUD: {fileID: 7502889656672085968}
+  HUD: {fileID: 0}
   Weapon: {fileID: 6414958771987340200}
-  Motor: {fileID: 6804544530289867112}
+  Motor: {fileID: 0}
   Anim: {fileID: 2401336377542202339}
 --- !u!198 &2834442136780483718
 ParticleSystem:
@@ -10453,6 +10433,7 @@ MonoBehaviour:
   GunName: Ballin
   ShootKey: 323
   ReloadKey: 114
+  weaponListIndex: 0
   Damage: 100
   FireRate: 0.5
   ShotTimer: 0
@@ -10476,9 +10457,9 @@ MonoBehaviour:
     type: 3}
   Anim: {fileID: 7502889656969183668}
   GunImage: {fileID: 0}
-  HUD: {fileID: 7502889656672085968}
-  HandEffects: {fileID: 6804544529610000577}
-  CamEffects: {fileID: 6804544530012984577}
+  HUD: {fileID: 0}
+  HandEffects: {fileID: 0}
+  CamEffects: {fileID: 0}
   WeaponSwap: {fileID: 0}
   Projectile: {fileID: 5964571975337414563, guid: b61557a25f3cdec4fab0698c18242718,
     type: 3}
@@ -10517,6 +10498,7 @@ MonoBehaviour:
   GunName: Pulsar
   ShootKey: 323
   ReloadKey: 114
+  weaponListIndex: 0
   Damage: 35
   FireRate: 0.25
   ShotTimer: 0
@@ -10539,9 +10521,9 @@ MonoBehaviour:
   Muzzleflash: {fileID: 0}
   Anim: {fileID: 698730172}
   GunImage: {fileID: 0}
-  HUD: {fileID: 7502889656672085968}
-  HandEffects: {fileID: 6804544529610000577}
-  CamEffects: {fileID: 6804544530012984577}
+  HUD: {fileID: 0}
+  HandEffects: {fileID: 0}
+  CamEffects: {fileID: 0}
   WeaponSwap: {fileID: 0}
   Projectile: {fileID: 1160261552384855930, guid: 8f3c6a71708f64b4ab00df26a8eff77c,
     type: 3}
@@ -10561,91 +10543,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b54dbc99848884478d4afefe773f336, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CameraEffects: {fileID: 6804544530012984577}
-  HandEffects: {fileID: 6804544529610000577}
+  CameraEffects: {fileID: 0}
+  HandEffects: {fileID: 0}
   RotateTo: {x: 0, y: 0, z: 0}
---- !u!1001 &4102272283166955357
-PrefabInstance:
+--- !u!225 &4102272283335390785
+CanvasGroup:
   m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 6920594314780682673}
-    m_Modifications:
-    - target: {fileID: 238690588, guid: 52ae56cae82d5c04686b84db2c3f1731, type: 3}
-      propertyPath: m_Interactable
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 238690588, guid: 52ae56cae82d5c04686b84db2c3f1731, type: 3}
-      propertyPath: m_BlocksRaycasts
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7748175120881934404, guid: 52ae56cae82d5c04686b84db2c3f1731,
-        type: 3}
-      propertyPath: m_Name
-      value: Scene Manager
-      objectReference: {fileID: 0}
-    - target: {fileID: 7748175120881934406, guid: 52ae56cae82d5c04686b84db2c3f1731,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7748175120881934406, guid: 52ae56cae82d5c04686b84db2c3f1731,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7748175120881934406, guid: 52ae56cae82d5c04686b84db2c3f1731,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7748175120881934406, guid: 52ae56cae82d5c04686b84db2c3f1731,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7748175120881934406, guid: 52ae56cae82d5c04686b84db2c3f1731,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7748175120881934406, guid: 52ae56cae82d5c04686b84db2c3f1731,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7748175120881934406, guid: 52ae56cae82d5c04686b84db2c3f1731,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7748175120881934406, guid: 52ae56cae82d5c04686b84db2c3f1731,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7748175120881934406, guid: 52ae56cae82d5c04686b84db2c3f1731,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7748175120881934406, guid: 52ae56cae82d5c04686b84db2c3f1731,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7748175120881934406, guid: 52ae56cae82d5c04686b84db2c3f1731,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7748175121847667877, guid: 52ae56cae82d5c04686b84db2c3f1731,
-        type: 3}
-      propertyPath: m_RaycastTarget
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 52ae56cae82d5c04686b84db2c3f1731, type: 3}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6010404243257208202}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &4191358027801151558
 GameObject:
   m_ObjectHideFlags: 0
@@ -11179,10 +11091,10 @@ MonoBehaviour:
   Durration: 1
   Cooldown: 1
   AltFireKey: 324
-  HUD: {fileID: 7502889656672085968}
+  HUD: {fileID: 0}
   Weapon: {fileID: 0}
-  Look: {fileID: 6804544530289867115}
-  Motor: {fileID: 6804544530289867112}
+  Look: {fileID: 0}
+  Motor: {fileID: 0}
   RotationCurve:
     serializedVersion: 2
     m_Curve:
@@ -11397,6 +11309,309 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6473897785612591907}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &6010404243257208196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6010404243257208202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UiScaleMode: 0
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 800, y: 600}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
+--- !u!114 &6010404243257208197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6010404243257208202}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!224 &6010404243257208198
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6010404243257208202}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_Children:
+  - {fileID: 6010404244554193913}
+  - {fileID: 6010404243877878847}
+  m_Father: {fileID: 6010404243657668379}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0, y: 0}
+--- !u!223 &6010404243257208199
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6010404243257208202}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 0
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 10
+  m_TargetDisplay: 0
+--- !u!1 &6010404243257208202
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6010404243257208198}
+  - component: {fileID: 6010404243257208199}
+  - component: {fileID: 6010404243257208196}
+  - component: {fileID: 6010404243257208197}
+  - component: {fileID: 4102272283335390785}
+  m_Layer: 0
+  m_Name: Loading Canvas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &6010404243657668376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6010404243657668377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ad876b847554724394a48bd2a8af1d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Look: {fileID: 0}
+  SpawnPos: {fileID: 0}
+  loadingScreen: {fileID: 6010404243257208202}
+  canvasGroup: {fileID: 4102272283335390785}
+  sceneToLoad: HubWorld
+  currentSceneIndex: 0
+--- !u!1 &6010404243657668377
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6010404243657668379}
+  - component: {fileID: 6010404243657668376}
+  m_Layer: 0
+  m_Name: Scene Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6010404243657668379
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6010404243657668377}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 6010404243257208198}
+  m_Father: {fileID: 6920594314780682673}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!222 &6010404243877878841
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6010404243877878844}
+  m_CullTransparentMesh: 1
+--- !u!1 &6010404243877878844
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6010404243877878847}
+  - component: {fileID: 6010404243877878841}
+  - component: {fileID: 6010404243877878846}
+  m_Layer: 0
+  m_Name: Text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &6010404243877878846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6010404243877878844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 5efba85143fbaec4faf2d997e56cb500, type: 3}
+    m_FontSize: 50
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 0
+    m_MaxSize: 300
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: Loading
+--- !u!224 &6010404243877878847
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6010404243877878844}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6010404243257208198}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.04578125, y: 0.75100005}
+  m_AnchorMax: {x: 0.28134373, y: 0.83536106}
+  m_AnchoredPosition: {x: 861.28, y: -422.18}
+  m_SizeDelta: {x: -103, y: -21}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &6010404244554193912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6010404244554193918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Texture: {fileID: 0}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+--- !u!224 &6010404244554193913
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6010404244554193918}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6010404243257208198}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 10000, y: 10000}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &6010404244554193915
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6010404244554193918}
+  m_CullTransparentMesh: 1
+--- !u!1 &6010404244554193918
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6010404244554193913}
+  - component: {fileID: 6010404244554193915}
+  - component: {fileID: 6010404244554193912}
+  m_Layer: 0
+  m_Name: RawImage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!114 &6298772479962652128
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11412,6 +11627,7 @@ MonoBehaviour:
   GunName: Rail Gun
   ShootKey: 323
   ReloadKey: 114
+  weaponListIndex: 0
   Damage: 100
   FireRate: 1.5
   ShotTimer: 0
@@ -11435,10 +11651,10 @@ MonoBehaviour:
     type: 3}
   Anim: {fileID: 94999338}
   GunImage: {fileID: 0}
-  HUD: {fileID: 7502889656672085968}
-  HandEffects: {fileID: 6804544529610000577}
-  CamEffects: {fileID: 6804544530012984577}
-  WeaponSwap: {fileID: 7502889657101886047}
+  HUD: {fileID: 0}
+  HandEffects: {fileID: 0}
+  CamEffects: {fileID: 0}
+  WeaponSwap: {fileID: 0}
   Projectile: {fileID: 8118343234448861193, guid: deafdebef0da48d41b803b66763080cb,
     type: 3}
   ProjectileLifetime: 5
@@ -11458,6 +11674,7 @@ MonoBehaviour:
   GunName: Ol'Reliable
   ShootKey: 323
   ReloadKey: 114
+  weaponListIndex: 0
   Damage: 25
   FireRate: 0.05
   ShotTimer: 0
@@ -11481,10 +11698,10 @@ MonoBehaviour:
     type: 3}
   Anim: {fileID: 2401336377542202339}
   GunImage: {fileID: 0}
-  HUD: {fileID: 7502889656672085968}
-  HandEffects: {fileID: 6804544529610000577}
-  CamEffects: {fileID: 6804544530012984577}
-  WeaponSwap: {fileID: 7502889657101886047}
+  HUD: {fileID: 0}
+  HandEffects: {fileID: 0}
+  CamEffects: {fileID: 0}
+  WeaponSwap: {fileID: 0}
   Projectile: {fileID: 5964571975337414563, guid: b61557a25f3cdec4fab0698c18242718,
     type: 3}
   ProjectileLifetime: 3
@@ -12107,7 +12324,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6804544529610000576}
   - component: {fileID: 6804544529610000577}
-  - component: {fileID: 7502889657101886047}
   m_Layer: 10
   m_Name: HandPos
   m_TagString: Untagged
@@ -13299,7 +13515,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: a0276e079030bf6478ffa3444ad5f56e, type: 3}
   DashSounds:
   - {fileID: 8300000, guid: 0b264a7c77aab264fbd7617d5473ef51, type: 3}
-  Weapons: {fileID: 7502889657101886047}
+  Weapons: {fileID: 0}
+  CamTransform: {fileID: 0}
 --- !u!143 &6804544530289867113
 CharacterController:
   m_ObjectHideFlags: 0
@@ -14560,11 +14777,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6804544530289867114}
-  - {fileID: 1891800792}
-  - {fileID: 714764740}
-  - {fileID: 1961449863}
+  - {fileID: 6010404243657668379}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &6991158593528502056
 Transform:
@@ -14650,10 +14865,10 @@ MonoBehaviour:
   Durration: 0.75
   Cooldown: 1
   AltFireKey: 324
-  HUD: {fileID: 7502889656672085968}
+  HUD: {fileID: 0}
   Weapon: {fileID: 7502889656969183669}
-  Look: {fileID: 6804544530289867115}
-  Motor: {fileID: 6804544530289867112}
+  Look: {fileID: 0}
+  Motor: {fileID: 0}
   RotationCurve:
     serializedVersion: 2
     m_Curve:
@@ -14762,10 +14977,10 @@ MonoBehaviour:
   Durration: 0
   Cooldown: 0
   AltFireKey: 324
-  HUD: {fileID: 7502889656672085968}
+  HUD: {fileID: 0}
   Weapon: {fileID: 7502889656880232867}
-  Motor: {fileID: 6804544530289867112}
-  Look: {fileID: 410255929934767175}
+  Motor: {fileID: 0}
+  Look: {fileID: 0}
   KnockBackForce: 12
 --- !u!4 &7502889656825500896
 Transform:
@@ -14906,6 +15121,7 @@ MonoBehaviour:
   GunName: Pumpy
   ShootKey: 323
   ReloadKey: 114
+  weaponListIndex: 0
   Damage: 10
   FireRate: 1
   ShotTimer: 0
@@ -14929,10 +15145,10 @@ MonoBehaviour:
     type: 3}
   Anim: {fileID: 7502889656880232866}
   GunImage: {fileID: 0}
-  HUD: {fileID: 7502889656672085968}
-  HandEffects: {fileID: 6804544529610000577}
-  CamEffects: {fileID: 6804544530012984577}
-  WeaponSwap: {fileID: 7502889657101886047}
+  HUD: {fileID: 0}
+  HandEffects: {fileID: 0}
+  CamEffects: {fileID: 0}
+  WeaponSwap: {fileID: 0}
   Projectile: {fileID: 5964571975337414563, guid: b61557a25f3cdec4fab0698c18242718,
     type: 3}
   ProjectileLifetime: 1
@@ -15111,6 +15327,7 @@ MonoBehaviour:
   GunName: Ballin
   ShootKey: 323
   ReloadKey: 114
+  weaponListIndex: 0
   Damage: 100
   FireRate: 0.5
   ShotTimer: 0
@@ -15133,9 +15350,9 @@ MonoBehaviour:
   Muzzleflash: {fileID: 0}
   Anim: {fileID: 7502889656969183668}
   GunImage: {fileID: 0}
-  HUD: {fileID: 7502889656672085968}
-  HandEffects: {fileID: 6804544529610000577}
-  CamEffects: {fileID: 6804544530012984577}
+  HUD: {fileID: 0}
+  HandEffects: {fileID: 0}
+  CamEffects: {fileID: 0}
   WeaponSwap: {fileID: 0}
   Projectile: {fileID: 5964571975337414563, guid: b61557a25f3cdec4fab0698c18242718,
     type: 3}
@@ -15271,6 +15488,7 @@ MonoBehaviour:
   GunName: Launcher
   ShootKey: 323
   ReloadKey: 114
+  weaponListIndex: 0
   Damage: 100
   FireRate: 1
   ShotTimer: 0
@@ -15293,9 +15511,9 @@ MonoBehaviour:
   Muzzleflash: {fileID: 0}
   Anim: {fileID: 7502889656978941602}
   GunImage: {fileID: 0}
-  HUD: {fileID: 7502889656672085968}
-  HandEffects: {fileID: 6804544529610000577}
-  CamEffects: {fileID: 6804544530012984577}
+  HUD: {fileID: 0}
+  HandEffects: {fileID: 0}
+  CamEffects: {fileID: 0}
   WeaponSwap: {fileID: 0}
   Projectile: {fileID: 3029453220441524780, guid: 2330a9c73a13c8f4ba70a61f954e1796,
     type: 3}
@@ -15934,45 +16152,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &7502889657101886047
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6804544529610000591}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0cdb84aa567a7947acb0227ac0dc3fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Weapons:
-  - {fileID: 837831453}
-  - {fileID: 452166435}
-  - {fileID: 59770014}
-  - {fileID: 94999337}
-  - {fileID: 478907411}
-  - {fileID: 1238094287}
-  - {fileID: 249274478}
-  - {fileID: 698730171}
-  - {fileID: 751761309}
-  - {fileID: 632637977}
-  EquippedWeapons: []
-  WeaponAnimations:
-  - {fileID: 33697207}
-  - {fileID: 2401336377542202339}
-  - {fileID: 59770015}
-  - {fileID: 94999338}
-  - {fileID: 2542338206858371526}
-  - {fileID: 7502889657830458543}
-  - {fileID: 7502889658434576076}
-  - {fileID: 698730172}
-  - {fileID: 7502889657451690217}
-  - {fileID: 7502889656978941602}
-  ScrollLeft: 113
-  ScrollRight: 101
-  EquippedIndex: 0
-  MaxEquippedWeapons: 3
 --- !u!114 &7502889657131508238
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16330,6 +16509,7 @@ MonoBehaviour:
   GunName: MiniGun
   ShootKey: 323
   ReloadKey: 114
+  weaponListIndex: 0
   Damage: 10
   FireRate: 0.05
   ShotTimer: 0
@@ -16352,9 +16532,9 @@ MonoBehaviour:
   Muzzleflash: {fileID: 0}
   Anim: {fileID: 7502889657451690217}
   GunImage: {fileID: 0}
-  HUD: {fileID: 7502889656672085968}
-  HandEffects: {fileID: 6804544529610000577}
-  CamEffects: {fileID: 6804544530012984577}
+  HUD: {fileID: 0}
+  HandEffects: {fileID: 0}
+  CamEffects: {fileID: 0}
   WeaponSwap: {fileID: 0}
   Projectile: {fileID: 5964571975337414563, guid: b61557a25f3cdec4fab0698c18242718,
     type: 3}
@@ -16840,6 +17020,7 @@ MonoBehaviour:
   GunName: MachinePistol
   ShootKey: 323
   ReloadKey: 114
+  weaponListIndex: 0
   Damage: 25
   FireRate: 0.05
   ShotTimer: 0
@@ -16862,9 +17043,9 @@ MonoBehaviour:
   Muzzleflash: {fileID: 0}
   Anim: {fileID: 7502889657830458543}
   GunImage: {fileID: 0}
-  HUD: {fileID: 7502889656672085968}
-  HandEffects: {fileID: 6804544529610000577}
-  CamEffects: {fileID: 6804544530012984577}
+  HUD: {fileID: 0}
+  HandEffects: {fileID: 0}
+  CamEffects: {fileID: 0}
   WeaponSwap: {fileID: 0}
   Projectile: {fileID: 7232122311577901664, guid: f22ee45e5fd45974a882396d412140a2,
     type: 3}
@@ -17573,6 +17754,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 073f159283f30fb4486c4a5ae08db5b3, type: 3}
   m_healthUI: {fileID: 7502889658184030359}
   CamEffects: {fileID: 0}
+  DeathScreen: {fileID: 0}
+  DeathCanvas: {fileID: 0}
+  playerMotor: {fileID: 0}
+  playerLook: {fileID: 0}
+  weaponSwap: {fileID: 0}
+  ScreenSpaceUI: {fileID: 0}
   maxHealth: 100
   currentHealth: 0
   BloodyScreenImage: {fileID: 131194377}
@@ -22760,6 +22947,7 @@ MonoBehaviour:
   GunName: Assult Rifle
   ShootKey: 323
   ReloadKey: 114
+  weaponListIndex: 0
   Damage: 35
   FireRate: 0.1
   ShotTimer: 0
@@ -22782,9 +22970,9 @@ MonoBehaviour:
   Muzzleflash: {fileID: 0}
   Anim: {fileID: 7502889658434576076}
   GunImage: {fileID: 0}
-  HUD: {fileID: 7502889656672085968}
-  HandEffects: {fileID: 6804544529610000577}
-  CamEffects: {fileID: 6804544530012984577}
+  HUD: {fileID: 0}
+  HandEffects: {fileID: 0}
+  CamEffects: {fileID: 0}
   WeaponSwap: {fileID: 0}
   Projectile: {fileID: 1160261552384855930, guid: 8f3c6a71708f64b4ab00df26a8eff77c,
     type: 3}
@@ -23018,6 +23206,7 @@ MonoBehaviour:
   GunName: Sword
   ShootKey: 323
   ReloadKey: 114
+  weaponListIndex: 0
   Damage: 100
   FireRate: 0.5
   ShotTimer: 0
@@ -23040,9 +23229,9 @@ MonoBehaviour:
   Muzzleflash: {fileID: 0}
   Anim: {fileID: 7502889658617680179}
   GunImage: {fileID: 0}
-  HUD: {fileID: 7502889656672085968}
-  HandEffects: {fileID: 6804544529610000577}
-  CamEffects: {fileID: 6804544530012984577}
+  HUD: {fileID: 0}
+  HandEffects: {fileID: 0}
+  CamEffects: {fileID: 0}
   WeaponSwap: {fileID: 0}
   Projectile: {fileID: 5964571975337414563, guid: b61557a25f3cdec4fab0698c18242718,
     type: 3}
@@ -23078,10 +23267,10 @@ MonoBehaviour:
   Durration: 0.5
   Cooldown: 0.5
   AltFireKey: 324
-  HUD: {fileID: 7502889656672085968}
+  HUD: {fileID: 0}
   Weapon: {fileID: 7502889658696174986}
-  Look: {fileID: 410255929934767175}
-  CamEffects: {fileID: 6804544530012984577}
+  Look: {fileID: 0}
+  CamEffects: {fileID: 0}
   AS: {fileID: 7502889658696174984}
   DeflectSounds:
   - {fileID: 8300000, guid: cac7b786ac470b549bc97bb3ed294c11, type: 3}

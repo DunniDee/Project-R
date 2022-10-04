@@ -8,6 +8,7 @@ public abstract class Script_WeaponBase : MonoBehaviour
     [SerializeField] protected string GunName;
     [SerializeField] protected KeyCode ShootKey = KeyCode.Mouse0;
     [SerializeField] protected KeyCode ReloadKey = KeyCode.R;
+    [SerializeField] public int weaponListIndex = 0;
     [Space]
 
     [Header("Shot Variables")]
