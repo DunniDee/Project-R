@@ -68,6 +68,9 @@ public class Scr_CheckPointManager : MonoBehaviour
     {
         Debug.Log("RespawningPlayer");
         Player.transform.position = CurrentCheckPoint.position;
+        Scr_PlayerHealth playerHealth = Player.GetComponent<Scr_PlayerHealth>();
+        playerHealth.RespawnPlayer();
+        
     }
     public void RespawnPlayer()
     {
