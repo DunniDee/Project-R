@@ -14,9 +14,16 @@ public class Scr_RCSplashProjectile : Script_RCProjectile
         float distance = (transform.position - NextPos).magnitude;
 
         RaycastHit hit;
-        if(Physics.Raycast(transform.position, transform.forward, out hit, Speed * Time.deltaTime))
+        if(Physics.Raycast(transform.position, transform.forward, out hit, Speed * Time.deltaTime, layermask,QueryTriggerInteraction.Ignore))
         {
             Hit();
+
+            Debug.Log("Decal SPawning at " + hit.point);
+            GameObject Decal = ObjectPooler.Instance.GetObject(BulletHoleDecal);
+            Decal.transform.position  = hit.point - hit.normal * 0.05f;
+            Decal.transform.LookAt (hit.point + hit.normal);
+            Decal.transform.localScale = new Vector3(Random.Range(0.5f, 1),1,Random.Range(0.5f, 1));
+            Decal.transform.localRotation *= Quaternion.Euler(0,0,Random.Range(0, 360));
         }
 
         Debug.DrawLine(transform.position, NextPos, Color.red);

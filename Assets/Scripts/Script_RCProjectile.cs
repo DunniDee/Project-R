@@ -11,6 +11,8 @@ public class Script_RCProjectile : MonoBehaviour
     [SerializeField] protected float Damage;
     [SerializeField] protected GameObject BulletHoleDecal;
 
+    [SerializeField] protected LayerMask layermask;
+
     TrailRenderer m_Trail;
 
     private void Start() 
@@ -28,8 +30,8 @@ public class Script_RCProjectile : MonoBehaviour
         float distance = (transform.position - NextPos).magnitude;
 
         RaycastHit hit;
-        // LayerMask AllMask = 1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16;
-        if(Physics.Raycast(transform.position, transform.forward, out hit, Speed * Time.deltaTime, LayerMask.NameToLayer("Enemy") | LayerMask.NameToLayer("Ground_WallRunable"), QueryTriggerInteraction.Ignore))
+        // LayerMask AllMask = LayerMask.NameToLayer("Ground_WallRunable") | LayerMask.NameToLayer("Enemy");
+        if(Physics.Raycast(transform.position, transform.forward, out hit, Speed * Time.deltaTime, layermask,QueryTriggerInteraction.Ignore))
         {
             //Check if the Object hit is an interact event - Added by Ash
             if (hit.collider.GetComponent<Script_InteractEvent>())
@@ -40,13 +42,9 @@ public class Script_RCProjectile : MonoBehaviour
                     hitEvent.Interact();
                 }
             }
-            GameObject Decal = ObjectPooler.Instance.GetObject(BulletHoleDecal);
-            Decal.transform.position  = hit.point - hit.normal * 0.05f;
-            Decal.transform.LookAt (hit.point + hit.normal);
-            Decal.transform.localScale = new Vector3(Random.Range(0.5f, 1),1,Random.Range(0.5f, 1));
-            Decal.transform.localRotation *= Quaternion.Euler(0,0,Random.Range(0, 360));
 
-            Decal.GetComponent<DecalProjector>().fadeFactor = 1;
+            Debug.Log("Hit at " + hit.point);
+
 
             var hitCollider = hit.collider.gameObject.GetComponent<CustomCollider>();
            
@@ -54,6 +52,17 @@ public class Script_RCProjectile : MonoBehaviour
             {
                 hitCollider.TakeDamage(Damage, hitCollider.damageType, transform.forward);
             }
+
+            
+            //Debug.Log("Decal SPawning at " + hit.point);
+            GameObject Decal = ObjectPooler.Instance.GetObject(BulletHoleDecal);
+            Decal.transform.position  = hit.point - hit.normal * 0.05f;
+            Decal.transform.LookAt (hit.point + hit.normal);
+            Decal.transform.localScale = new Vector3(Random.Range(0.5f, 1),1,Random.Range(0.5f, 1));
+            Decal.transform.localRotation *= Quaternion.Euler(0,0,Random.Range(0, 360));
+            Decal.transform.parent = hit.transform;
+            Decal.GetComponent<DecalProjector>().fadeFactor = 1;
+
             Disable();
         }
 
