@@ -12,8 +12,8 @@ public class Scr_PlayerMotor : MonoBehaviour
     [Space]
 
     [Header("Movement Stats")]
-    [SerializeField] float MoveSpeed;
-    [SerializeField] float AirSpeed;
+    public float MoveSpeed;
+    public float AirSpeed;
     [SerializeField] float Acceleration;
     [SerializeField] float m_MomentumMax;
     [SerializeField] float m_MomentumDecay;
@@ -24,7 +24,7 @@ public class Scr_PlayerMotor : MonoBehaviour
 
     [Header("Jump Stats")]
     [SerializeField] int m_MaxJumps;
-     int m_JumpCount;
+    int m_JumpCount;
     [SerializeField] float m_Gravity;
     [SerializeField] float m_JumpMomentum;
     [SerializeField] float m_JumpHeight;
@@ -45,6 +45,7 @@ public class Scr_PlayerMotor : MonoBehaviour
     public bool m_IsTouchingWall;
     public bool m_WasTouchingWall;
     private bool m_WasCrouching;
+    public bool m_IsHeadHit;
     public bool m_IsCrouching;
     public bool m_IsVaulting;
 
@@ -57,22 +58,16 @@ public class Scr_PlayerMotor : MonoBehaviour
     float m_ForwardMovement;
     float m_SidewardMovement;
 
-    RaycastHit LeftHit;
-    RaycastHit RightHit;
-    RaycastHit FrontHit;
-    RaycastHit BackHit;
-    RaycastHit WallHit;
+    RaycastHit m_VaultHit;
 
-    RaycastHit VaultHit;
-
-    Vector3 WallNormal;
+    Vector3 m_WallNormal;
     Vector3 m_LastWallNormal;
     [SerializeField] Transform[] WallCheckPos;
 
-    float SlideBoostTimer;
+    float m_SlideBoostTimer;
 
     [SerializeField] Transform VaultCheckPos;
-    Vector3 vaultPos;
+    Vector3 m_VaultPos;
     [SerializeField] float m_VaultTime;
     float m_VaultTimer;
     [SerializeField] AnimationCurve VaultCurve;
@@ -93,7 +88,7 @@ public class Scr_PlayerMotor : MonoBehaviour
     [SerializeField] AudioClip[] DashSounds;
 
     [SerializeField] script_WeaponSwap Weapons;
-
+    [SerializeField] Transform CamTransform;
 
     // Update is called once per frame
     void Update()
@@ -114,7 +109,8 @@ public class Scr_PlayerMotor : MonoBehaviour
         SmoothMovment();
 
         MoveMotor();
-
+        
+        //settiing the post frame stats
         m_WasGrounded = m_IsGrounded;
         m_WasTouchingWall = m_IsTouchingWall;
         LastYVelocity = m_VerticalVelocity.y;
@@ -127,8 +123,12 @@ public class Scr_PlayerMotor : MonoBehaviour
         }
     }
 
-    void CheckGround()
+    /// <summary>
+    /// Checks for the grounded tag below the player and sets m_IsGrounded accordingly
+    /// </summary>
+    void CheckGround() 
     {
+        // Checks for ground
         if (Physics.CheckSphere(transform.position + (Vector3.up * 0.3f), 0.5f, GroundMask) && m_GroundedTimer < 0)
         {
            m_IsGrounded = true; 
@@ -139,6 +139,18 @@ public class Scr_PlayerMotor : MonoBehaviour
             m_IsGrounded = false; 
         }
 
+        if (Physics.CheckSphere(CamTransform.position + (Vector3.up * 0.3f), 0.35f, GroundMask))
+        {
+           if (m_VerticalVelocity.y > 0)
+           {
+                m_VerticalVelocity.y = 0;
+           }
+           m_IsHeadHit = true;
+        }
+        else
+        {
+            m_IsHeadHit = false;
+        }
 
         if (m_GroundedTimer >= 0)
         {
@@ -146,6 +158,9 @@ public class Scr_PlayerMotor : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Wall running mechanic, checks if wallrunning is possible then applies neccsisary aterations when possible
+    /// </summary>
     void WallRun()
     { 
         //initial check for contact with wall
@@ -170,7 +185,7 @@ public class Scr_PlayerMotor : MonoBehaviour
             }
             
             // project movement onto the wall norma;
-            m_SmoothMoveDirection = Vector3.ProjectOnPlane(m_SmoothMoveDirection, WallNormal);
+            m_SmoothMoveDirection = Vector3.ProjectOnPlane(m_SmoothMoveDirection, m_WallNormal);
             m_MomentumDirection += m_SmoothMoveDirection * Time.deltaTime; // slight boost in momentum
 
             foreach (var Pos in WallCheckPos) // checking all the wall positiopns
@@ -179,13 +194,16 @@ public class Scr_PlayerMotor : MonoBehaviour
                 if (Physics.Raycast(Pos.position, Pos.forward,out Hit, 1.5f, WallRunMask | GroundMask)) // setting the current wall normal and the rotation based off of the normal
                 {
                     CamEffects.RotateTo += Pos.localPosition * 100 * Time.deltaTime;
-                    WallNormal = Hit.normal;
+                    m_WallNormal = Hit.normal;
                     return;
                 }
             }
         }
     }
 
+    /// <summary>
+    /// Smoothly interpolates between all the different speeds based on status indicators e.g m_IsGrounded, m_IsCrouching
+    /// </summary>
     void SmoothMovment()
     {
         if (!m_IsGrounded || m_IsCrouching) // if in air
@@ -206,6 +224,9 @@ public class Scr_PlayerMotor : MonoBehaviour
         CamEffects.RotateTo += new Vector3(m_ForwardMovement,0,-m_SidewardMovement) * 10 * Time.deltaTime;
     }
 
+    /// <summary>
+    /// Smoothly adds and decays the momentum based on weather the player us airborne 
+    /// </summary>
     void SmoothMomentum() // smoothing for the motor
     {
         m_MomentumMagnuitude = m_MomentumDirection.magnitude; // getting the magnitude once since its quite a costly funcxtion
@@ -240,7 +261,9 @@ public class Scr_PlayerMotor : MonoBehaviour
 
     }
 
-
+    /// <summary>
+    /// sets the movment vector
+    /// </summary>
     void GetMovementInput() // get inputs
     {
         m_SidewardMovement = Input.GetAxisRaw("Horizontal");
@@ -249,8 +272,12 @@ public class Scr_PlayerMotor : MonoBehaviour
         m_MoveDirection = Orientation.forward * m_ForwardMovement + Orientation.right * m_SidewardMovement;
     }
 
+    /// <summary>
+    /// Moves the motor every frame
+    /// </summary>
     void MoveMotor() // movement
-    {
+    {   
+        // checks to see if on slope
         RaycastHit GroundHit;
         if (Physics.Raycast(transform.position, Vector3.down,out GroundHit,2,GroundMask))
         {
@@ -266,7 +293,10 @@ public class Scr_PlayerMotor : MonoBehaviour
 
     }
 
-    void Jump() // jump functionality
+    /// <summary>
+    /// Jump and gravity functionality
+    /// </summary>
+    void Jump()
     {
         Movment.Move(m_VerticalVelocity * Time.deltaTime); // apply gravity
 
@@ -332,11 +362,11 @@ public class Scr_PlayerMotor : MonoBehaviour
             if (m_IsTouchingWall  && !m_IsGrounded)
             {
                 m_MomentumDirection = Orientation.forward * m_MomentumMagnuitude * 0.5f;
-                m_MomentumDirection += WallNormal * m_MomentumMagnuitude * 0.6f;
-                m_MomentumDirection += WallNormal * 5;
-                m_LastWallNormal = WallNormal;
+                m_MomentumDirection += m_WallNormal * m_MomentumMagnuitude * 0.6f;
+                m_MomentumDirection += m_WallNormal * 5;
+                m_LastWallNormal = m_WallNormal;
 
-                if (WallNormal != m_LastWallNormal) // to prevent the ability to keep junmping up on the ame wall
+                if (m_WallNormal != m_LastWallNormal) // to prevent the ability to keep junmping up on the ame wall
                 {
                     m_VerticalVelocity.y = Mathf.Sqrt(2 * m_JumpHeight * m_Gravity);
                 }
@@ -355,7 +385,10 @@ public class Scr_PlayerMotor : MonoBehaviour
         CamEffects.RotateTo.x += VerticalTilt * Time.deltaTime;
     }
 
-    void Dash() // dash functionality
+    /// <summary>
+    /// Dash functionality ads a small impulse, redirects mometum and resets vertical velocity
+    /// </summary>
+    void Dash()
     {
         if (Input.GetKeyDown(KeyCode.LeftShift) && m_DashCooldownTimer <= 0 && m_DashCount > 0 && !m_IsCrouching ) // dash if key press, has cooldown, has enough dashes and not dashing
         {
@@ -364,7 +397,8 @@ public class Scr_PlayerMotor : MonoBehaviour
                 m_VerticalVelocity.y = -1;
             }
 
-            m_MomentumDirection += m_SmoothMoveDirection.normalized * m_DashMomentum; // adding speed to momentum
+            // adds momentum based on movement direction
+            m_MomentumDirection += m_SmoothMoveDirection.normalized * m_DashMomentum;
             m_DashMomentumTimer = 0.25f;
 
             
@@ -372,7 +406,6 @@ public class Scr_PlayerMotor : MonoBehaviour
             m_DashCooldownTimer = m_DashCooldown;
             m_DashRechargeTimer = m_DashRechargeTime;
             IsLaunched = false;
-
 
             StepAS.PlayOneShot(DashSounds[Random.Range(0,DashSounds.Length-1)],1);
 
@@ -412,7 +445,10 @@ public class Scr_PlayerMotor : MonoBehaviour
         }
     }
 
-    void Crouch() // crouch / slide functionality
+    /// <summary>
+    /// Crouching and sliding functionality
+    /// </summary>
+    void Crouch()
     {
         if (Input.GetKeyDown(KeyCode.LeftControl)) // attempting to crouch
         {
@@ -424,22 +460,18 @@ public class Scr_PlayerMotor : MonoBehaviour
             m_IsCrouching = false;
         }
 
-        if (SlideBoostTimer >= 0)
+        if (m_SlideBoostTimer >= 0)
         {
-            SlideBoostTimer-= Time.deltaTime;
+            m_SlideBoostTimer-= Time.deltaTime;
         }
 
         if (m_IsCrouching && m_IsGrounded) // if is grounded then crouch
         {
-            if (m_IsGrounded && !m_WasCrouching && SlideBoostTimer <0) // one off boost to speed
+            if (m_IsGrounded && !m_WasCrouching && m_SlideBoostTimer <0) // one off boost to speed
             {
                 m_MomentumDirection += m_SmoothMoveDirection * m_MovementSpeed;
-                SlideBoostTimer = 1; // cooldown for the speed boost
+                m_SlideBoostTimer = 1; // cooldown for the speed boost
             }
-
-            // Vector3 alignedDir = Vector3.ProjectOnPlane(Orientation.forward, m_GroundNormal);
-            // Debug.Log(alignedDir);
-            // Movment.Move(alignedDir * Time.deltaTime);
 
             Vector3 SlopeDir = m_GroundNormal + Vector3.down;
             m_MomentumDirection += SlopeDir * 50 * Time.deltaTime;
@@ -464,23 +496,15 @@ public class Scr_PlayerMotor : MonoBehaviour
         }
     }
 
-    //Vault functionalty
+    /// <summary>
+    /// Vaulting functionality, lerps position between current position and avaliable lerp positon 
+    /// </summary>
     void Vault()
     {
-
-        if (Physics.Raycast(VaultCheckPos.position, VaultCheckPos.forward,out VaultHit, 1, GroundMask) && !m_IsVaulting) //checks to see if vault is possible
+        if (Physics.Raycast(VaultCheckPos.position, VaultCheckPos.forward,out m_VaultHit, 1, GroundMask) && !m_IsVaulting && !(Physics.Raycast(CamTransform.position,Vector3.up,2))) //checks to see if vault is possible
         {
-            //added by ash, make sure there is no object is above the players head to avoid phasing through walls
-            RaycastHit hit;
-            if (Physics.Linecast(VaultCheckPos.position, Camera.main.transform.position, out hit, GroundMask))
-            {
-                if (hit.transform)
-                {
-                    return;
-                }
-            }
             m_IsVaulting = true;
-            vaultPos = VaultHit.point + Vector3.up; // setting the lerp to position to lerp to
+            m_VaultPos = m_VaultHit.point + Vector3.up; // setting the lerp to position to lerp to
             m_VaultTimer = m_VaultTime; 
             CamEffects.RotateTo.x -= 50;
             CamEffects.ShakeTime += 2;
@@ -500,11 +524,11 @@ public class Scr_PlayerMotor : MonoBehaviour
                 CamEffects.ShakeAmplitude += 0.25f;
                 VaultArms.SetActive(false);
             }
-            VaultArms.transform.position = vaultPos - Vector3.up;
+            VaultArms.transform.position = m_VaultPos - Vector3.up;
             m_VaultTimer -= Time.deltaTime;
             Movment.enabled = false;
-            transform.position = Vector3.Lerp( vaultPos, transform.position, VaultCurve.Evaluate(m_VaultTimer));
-            Debug.Log(vaultPos);
+            transform.position = Vector3.Lerp( m_VaultPos, transform.position, VaultCurve.Evaluate(m_VaultTimer));
+            Debug.Log(m_VaultPos);
             CamEffects.RotateTo.x += 200 * Time.deltaTime;
 
         }
@@ -515,9 +539,9 @@ public class Scr_PlayerMotor : MonoBehaviour
         }
     }
 
-    //Launch pad interaction
-    //_direction - the direction and force of the launch
-    //_Height - the heigth the motor is launched
+    /// <summary>
+    /// launches the player and turns off any momentum decay 
+    /// </summary>
     public void Launch(Vector3 _direction, float _Height)
     {
         if (m_LauncherTimer <= 0)
@@ -536,7 +560,27 @@ public class Scr_PlayerMotor : MonoBehaviour
         }
     }
 
-    //Moves the player based on _Move
+    public void ExplosionForce(Vector3 _direction)
+    {
+        // if (m_LauncherTimer <= 0)
+        // {
+            //m_LauncherTimer = 1;
+            //IsLaunched = true;
+            Movment.Move(new Vector3(0,0.5f,0));
+            m_MomentumDirection += _direction;
+            //m_SmoothMoveDirection = Vector3.zero;
+            m_VerticalVelocity.y += _direction.y;
+            CamEffects.FovTo += 45;
+            CamEffects.RotateTo += new Vector3(45,0,0);
+            StepAS.PlayOneShot(DashSounds[Random.Range(0,DashSounds.Length-1)],1);
+            CamEffects.ShakeTime += 1f;
+            CamEffects.ShakeAmplitude += 1f;
+        // }
+    }
+
+    /// <summary>
+    /// helper function 
+    /// </summary>
     public void MovePlayer(Vector3 _Move)
     {
         Movment.Move(_Move);

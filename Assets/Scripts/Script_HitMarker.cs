@@ -16,8 +16,6 @@ public class Script_HitMarker : MonoBehaviour
  [SerializeField] Image KillImage;
  private void Start() 
  {
-    //rect = gameObject.GetComponent<RectTransform>();
-    //  AS = gameObject.GetComponent<AudioSource>();
     current = this;
  }
     float Timer = 1;
@@ -57,7 +55,7 @@ public class Script_HitMarker : MonoBehaviour
             // {
             //     KillImage.color = new Color(1,1,1,KillTimer);
             // }
-            KillImage.color = new Color(1,0,0,KillTimer);
+            KillImage.color = new Color(1,1,1,KillTimer);
         }
     }
 

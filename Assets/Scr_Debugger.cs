@@ -19,6 +19,9 @@ public class Scr_Debugger : MonoBehaviour
     public float accelerationRatio = 3;
     public float slowDownRatio = 0.2f;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public void ToggleNoClip()
     {
         if (Input.GetKeyDown(Keycode_NoClip))
@@ -27,6 +30,9 @@ public class Scr_Debugger : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     private void NoClipUpdate()
     {
         if (isNoclipEnabled)
@@ -85,7 +91,9 @@ public class Scr_Debugger : MonoBehaviour
         }
     }
   
-
+    /// <summary>
+    /// 
+    /// </summary>
     void switchCamera()
     {
         if (!isNoclipEnabled) //means it is currently disabled. code will enable the flycam. you can NOT use 'enabled' as boolean's name.
@@ -108,6 +116,14 @@ public class Scr_Debugger : MonoBehaviour
             isNoclipEnabled = false;
         }
     }
+
+    void KillPlayer()
+    {
+        if (Input.GetKeyDown(KeyCode.Keypad4))
+        {
+            GetComponent<Scr_PlayerHealth>().TakeDamage(Mathf.Infinity, 0, 0);
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -117,6 +133,7 @@ public class Scr_Debugger : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        KillPlayer();
         ToggleNoClip();
         NoClipUpdate();
     }

@@ -16,11 +16,15 @@ public class script_WeaponSwap : MonoBehaviour
         else
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         InitalseEquippedWeapons();
 
         Weapons[EquippedIndex].SetActive(true);
+        for (int i = 0; i < Weapons.Length; i++)
+        {
+            Weapons[i].GetComponent<Script_WeaponBase>().weaponListIndex = i;
+        }
+        LoadEquipmentLoadout();
     }
 
     // Start is called before the first frame update
@@ -35,6 +39,28 @@ public class script_WeaponSwap : MonoBehaviour
     bool m_IsActive = true;
 
     public int MaxEquippedWeapons = 2;
+
+    public void SaveEquipmentLoadout()
+    {
+        string weaponIndexer = "weapon";
+        
+        for (int i = 0; i < EquippedWeapons.Count; i++)
+        {
+            Script_WeaponBase curWeapon = EquippedWeapons[i].GetComponent<Script_WeaponBase>();
+            PlayerPrefs.SetInt(weaponIndexer + i.ToString(), curWeapon.weaponListIndex);
+            Debug.Log(curWeapon.name + "|" + curWeapon.weaponListIndex.ToString() + " Saved");
+        }
+    }
+
+    public void LoadEquipmentLoadout()
+    {
+        for (int i = 0; i < MaxEquippedWeapons; i++)
+        {
+            EquippedWeapons[i] = Weapons[PlayerPrefs.GetInt("weapon" + i.ToString())];
+            Debug.Log(EquippedWeapons[i].name + "|" + EquippedWeapons[i].GetComponent<Script_WeaponBase>().weaponListIndex.ToString() + " Loaded");
+        }
+    }
+
     public void SetCanShoot(bool _b)
     {
         EquippedWeapons[EquippedIndex].GetComponent<Script_WeaponBase>().enabled = _b;
@@ -49,7 +75,12 @@ public class script_WeaponSwap : MonoBehaviour
         gridcontroller.enabled = true;
         gridcontroller.GetUICanvas().gameObject.SetActive(false);
         m_LastIndex = EquippedIndex;
-        // Load Weapon Stats to Player Stat Manager
+
+
+      
+
+       
+        
 
     }
 
@@ -92,6 +123,11 @@ public class script_WeaponSwap : MonoBehaviour
    
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Keypad5))
+        {
+            SaveEquipmentLoadout();    
+        }
+
         if (m_IsActive)
         {
             if (m_LastIndex != EquippedIndex)

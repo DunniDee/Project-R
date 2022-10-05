@@ -7,19 +7,21 @@ public class Scr_RCSplashProjectile : Script_RCProjectile
     [SerializeField] protected float ExplosionRadius;
 
     [SerializeField] protected GameObject Explosion;
-    new protected void Update()
+    protected void Update()
     {
         Vector3 NextPos = transform.position + transform.forward  * Speed * Time.deltaTime;
 
         float distance = (transform.position - NextPos).magnitude;
 
         RaycastHit hit;
-        if(Physics.Raycast(transform.position, transform.forward, out hit, Speed * Time.deltaTime))
+        if(Physics.Raycast(transform.position, transform.forward, out hit, Speed * Time.deltaTime, layermask,QueryTriggerInteraction.Ignore))
         {
             Hit();
-
-            //Bounce
-            //transform.LookAt(transform.position + Vector3.Reflect(hit.point - transform.position, hit.normal));
+            GameObject Decal = ObjectPooler.Instance.GetObject(BulletHoleDecal);
+            Decal.transform.position  = hit.point - hit.normal * 0.05f;
+            Decal.transform.LookAt (hit.point + hit.normal);
+            Decal.transform.localScale = new Vector3(Random.Range(0.5f, 1),1,Random.Range(0.5f, 1));
+            Decal.transform.localRotation *= Quaternion.Euler(0,0,Random.Range(0, 360));
         }
 
         Debug.DrawLine(transform.position, NextPos, Color.red);
@@ -33,16 +35,18 @@ public class Scr_RCSplashProjectile : Script_RCProjectile
         }
         else
         {
-            GameObject Expl = ObjectPooler.Instance.GetObject(Explosion);
-            Expl.GetComponent<Scr_PAExplosion>().setRadius(ExplosionRadius);
-            Expl.transform.position = transform.position;
-            Disable();
+            // GameObject Expl = ObjectPooler.Instance.GetObject(Explosion);
+            // Expl.GetComponent<Scr_PAExplosion>().setRadius(ExplosionRadius);
+            // Expl.transform.position = transform.position;
+
+            Hit();
         }
     }
 
     protected private void Hit() 
     {
         GameObject Expl = ObjectPooler.Instance.GetObject(Explosion);
+        Expl.transform.position = transform.position;
         //Expl.GetComponent<Scr_PAExplosion>().setRadius(ExplosionRadius);
         //Expl.transform.position = transform.position;
 
@@ -58,12 +62,24 @@ public class Scr_RCSplashProjectile : Script_RCProjectile
                     CustomCollider.TakeDamage(Damage, CustomCollider.DamageType.Normal, -transform.forward);
                     TransfromList.Add(CustomCollider.transform.root);
                 }
-
-                // if (CustomCollider.damageType == CustomCollider.DamageType.Critical)
-                // {
-                //     CustomCollider.TakeDamage(Damage, CustomCollider.DamageType.Normal);
-                // }
             }
+
+            if (hitCollider.GetComponent<Script_InteractEvent>())
+            {
+                var hitEvent = hitCollider.GetComponent<Script_InteractEvent>();
+                if (hitEvent.EventType == Script_InteractEvent.InteractEventType.OnHit)
+                {
+                    hitEvent.Interact();
+                }
+            }
+        }
+
+        float sqrDist = (transform.position - Script_PlayerStatManager.Instance.PlayerTransform.position).sqrMagnitude;
+
+        if (sqrDist < ExplosionRadius*ExplosionRadius)
+        {
+            Vector3 Dir = (transform.position - Script_PlayerStatManager.Instance.PlayerTransform.position).normalized;
+            Script_PlayerStatManager.Instance.Motor.ExplosionForce(-Dir * 10);
         }
 
         Disable();

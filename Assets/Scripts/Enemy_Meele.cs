@@ -125,8 +125,14 @@ public class Enemy_Meele : Scr_BaseAI
     protected override void AttackEnd()
     {
         base.AttackEnd();
+        Debug.Log((PlayerTransform.position - Agent.transform.position).magnitude);
         Agent.isStopped = true;
         m_animator.SetTrigger("Attack");
+
+        if ((PlayerTransform.position - Agent.transform.position).sqrMagnitude < 4 * 4)
+        {
+            PlayerTransform.GetComponentInParent<Scr_PlayerHealth>().TakeDamage(33, 0.25f, 0.3f);
+        }
     }
     
 }

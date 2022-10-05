@@ -163,6 +163,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 2
     m_ConditionEvent: sliding
     m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: isReloading
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1289853758195151391}
   m_Solo: 0
@@ -448,7 +451,7 @@ AnimatorStateMachine:
     m_Position: {x: 900, y: 0, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -5445687209419969233}
-    m_Position: {x: 400, y: -100, z: 0}
+    m_Position: {x: 410, y: -130, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2703684221273743242}
     m_Position: {x: -100, y: 150, z: 0}
@@ -618,6 +621,12 @@ AnimatorController:
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
   - m_Name: hide
+    m_Type: 4
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
+  - m_Name: isReloading
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -992,6 +1001,9 @@ AnimatorStateTransition:
     m_EventTreshold: 0
   - m_ConditionMode: 1
     m_ConditionEvent: sliding
+    m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: isReloading
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -5445687209419969233}

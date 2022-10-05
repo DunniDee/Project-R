@@ -354,7 +354,7 @@ public class LoadoutController: MonoBehaviour
         gridHighlight = GetComponent<GridHighlight>();
         UpgradeUI = FindObjectOfType<Scr_UpgradeUI>();
         FindObjectOfType<script_WeaponSwap>().Start();
-        UpgradeUI.gameObject.SetActive(false);
+        //UpgradeUI.gameObject.SetActive(false);
     }
 
     /// <summary>
