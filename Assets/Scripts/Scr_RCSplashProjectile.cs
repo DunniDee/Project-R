@@ -63,6 +63,15 @@ public class Scr_RCSplashProjectile : Script_RCProjectile
                     TransfromList.Add(CustomCollider.transform.root);
                 }
             }
+
+            if (hitCollider.GetComponent<Script_InteractEvent>())
+            {
+                var hitEvent = hitCollider.GetComponent<Script_InteractEvent>();
+                if (hitEvent.EventType == Script_InteractEvent.InteractEventType.OnHit)
+                {
+                    hitEvent.Interact();
+                }
+            }
         }
 
         float sqrDist = (transform.position - Script_PlayerStatManager.Instance.PlayerTransform.position).sqrMagnitude;
