@@ -566,7 +566,7 @@ public class Scr_PlayerMotor : MonoBehaviour
             //m_SmoothMoveDirection = Vector3.zero;
             m_VerticalVelocity.y += _direction.y;
             CamEffects.FovTo += 45;
-            CamEffects.RotateTo += new Vector3(15,0,0);
+            CamEffects.RotateTo += new Vector3(45,0,0);
             StepAS.PlayOneShot(DashSounds[Random.Range(0,DashSounds.Length-1)],1);
             CamEffects.ShakeTime += 1f;
             CamEffects.ShakeAmplitude += 1f;
