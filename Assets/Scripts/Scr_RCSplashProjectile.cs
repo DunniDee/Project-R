@@ -59,11 +59,6 @@ public class Scr_RCSplashProjectile : Script_RCProjectile
                     TransfromList.Add(CustomCollider.transform.root);
                 }
 
-                // if (CustomCollider.damageType == CustomCollider.DamageType.Critical)
-                // {
-                //     CustomCollider.TakeDamage(Damage, CustomCollider.DamageType.Normal);
-                // }
-
                float sqrDist = (transform.position - Script_PlayerStatManager.Instance.PlayerTransform.position).sqrMagnitude;
 
                 if (sqrDist < ExplosionRadius*ExplosionRadius)
