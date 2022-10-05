@@ -16,7 +16,6 @@ public class script_WeaponSwap : MonoBehaviour
         else
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         InitalseEquippedWeapons();
 
