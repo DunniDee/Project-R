@@ -13,6 +13,19 @@ public class Scr_PlayerHealth : MonoBehaviour
     public AudioClip[] damageNoise;
     public Script_HealthUI m_healthUI;
     public Scr_CameraEffects CamEffects;
+
+    [Header("Death Components")]
+    public GameObject DeathScreen;
+    public CanvasGroup DeathCanvas;
+
+    public Scr_PlayerMotor playerMotor;
+    public Scr_PlayerLook playerLook;
+    public script_WeaponSwap weaponSwap;
+
+    //Disable ondeath so that it doesnt block input on other canvas's
+    public GameObject ScreenSpaceUI;
+
+    [Header("Health & Damage Properties")]
     public float maxHealth = 100.0f;
     public float currentHealth = 0.0f;
 
@@ -29,6 +42,11 @@ public class Scr_PlayerHealth : MonoBehaviour
 
     public delegate void OnTakeDamageDelegate(float Time, float Amplitude);
     public OnTakeDamageDelegate OnTakeDamageEvent;
+
+    public delegate void OnDeathDelegate();
+    public OnDeathDelegate OnDeathEvent;
+
+    bool isDead = false;
 
     #region Member Functions
 
@@ -117,12 +135,70 @@ public class Scr_PlayerHealth : MonoBehaviour
             yield return new WaitForSeconds(0.02f);
         }
     }
+
+    /// <summary>
+    /// Lerps player Death canvas object to _targetValue over _duration.
+    /// </summary>
+    /// <param name="targetValue"></param>
+    /// <param name="duration"></param>
+    /// <returns></returns>
+    IEnumerator FadeDeathScreen(float targetValue, float duration)
+    {
+        float startValue = DeathCanvas.alpha;
+        float time = 0;
+        while (time < duration)
+        {
+            DeathCanvas.alpha = Mathf.Lerp(startValue, targetValue, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        DeathCanvas.alpha = targetValue;
+    }
+
+    /// <summary>
+    /// calls FadeDeathCanvas Coroutine and enables cursor.
+    /// </summary>
+    /// <param name="_targetValue"></param>
+    /// <param name="_duration"></param>
+    public void ShowDeathCanvas(float _targetValue, float _duration)
+    {
+        StartCoroutine(FadeDeathScreen(_targetValue, _duration));
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
+    }
+
+    /// <summary>
+    /// Enable or disable Player components so that they cannot move or interact.
+    /// only used on player death or respawning.
+    /// </summary>
+    /// <param name="_b"></param>
+    public void EnablePlayerComponents(bool _b)
+    {
+        playerMotor.enabled = _b;
+        playerLook.enabled = _b;
+        weaponSwap.EquippedWeapons[weaponSwap.EquippedIndex].SetActive(_b);
+        ScreenSpaceUI.SetActive(_b);
+    }
+
+    public void RespawnPlayer()
+    {
+        EnablePlayerComponents(true);
+        ResetHealth();
+        StartCoroutine(FadeDeathScreen(0, 0.1f));
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        isDead = false;
+    }
     #endregion
 
     // Start is called before the first frame update
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        playerMotor = GetComponent<Scr_PlayerMotor>();
+        playerLook = GetComponent<Scr_PlayerLook>();
+
+        weaponSwap = GetComponentInChildren<script_WeaponSwap>();
         m_healthUI = GetComponentInChildren<Script_HealthUI>();
         CamEffects = GetComponentInChildren<Scr_CameraEffects>();
         
@@ -151,10 +227,14 @@ public class Scr_PlayerHealth : MonoBehaviour
         {
             currentHealth += RegenRate;
         }
-        if (currentHealth <= 0)
+
+        if (currentHealth <= 0 && isDead == false)
         {
-            Scr_CheckPointManager.i.RespawnPlayer();
-            currentHealth = maxHealth;
+            ShowDeathCanvas(1.0f,0.25f);
+            EnablePlayerComponents(false);
+            isDead = true;
+          
+           
         }
         
     }

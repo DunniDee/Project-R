@@ -9,7 +9,6 @@ public class Scr_EnemyProjectile : MonoBehaviour
     float initalY;
     private void OnTriggerEnter(Collider collision)
     {
-        Debug.Log(collision.name);
         if (collision.tag == "Player")
         {
             collision.GetComponent<Scr_PlayerHealth>().TakeDamage(m_fDamage, 0.25f, 0.3f);

@@ -7,6 +7,7 @@ public class Script_PlayerStatManager : MonoBehaviour
     //Singleton Pattern
     public static Script_PlayerStatManager Instance;
     public Transform PlayerTransform;
+    public Scr_PlayerMotor Motor;
     public void Awake()
     {
         if (Instance == null)
