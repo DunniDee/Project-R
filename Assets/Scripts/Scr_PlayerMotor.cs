@@ -45,6 +45,7 @@ public class Scr_PlayerMotor : MonoBehaviour
     public bool m_IsTouchingWall;
     public bool m_WasTouchingWall;
     private bool m_WasCrouching;
+    public bool m_IsHeadHit;
     public bool m_IsCrouching;
     public bool m_IsVaulting;
 
@@ -144,7 +145,11 @@ public class Scr_PlayerMotor : MonoBehaviour
            {
                 m_VerticalVelocity.y = 0;
            }
-           Debug.Log("Hit Head");
+           m_IsHeadHit = true;
+        }
+        else
+        {
+            m_IsHeadHit = false;
         }
 
         if (m_GroundedTimer >= 0)
@@ -496,7 +501,7 @@ public class Scr_PlayerMotor : MonoBehaviour
     /// </summary>
     void Vault()
     {
-        if (Physics.Raycast(VaultCheckPos.position, VaultCheckPos.forward,out m_VaultHit, 1, GroundMask) && !m_IsVaulting) //checks to see if vault is possible
+        if (Physics.Raycast(VaultCheckPos.position, VaultCheckPos.forward,out m_VaultHit, 1, GroundMask) && !m_IsVaulting && !(Physics.Raycast(CamTransform.position,Vector3.up,2))) //checks to see if vault is possible
         {
             m_IsVaulting = true;
             m_VaultPos = m_VaultHit.point + Vector3.up; // setting the lerp to position to lerp to

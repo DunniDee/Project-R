@@ -15,8 +15,6 @@ public class Scr_EnemyProjectile : MonoBehaviour
             Debug.Log("Damage Done " + m_fDamage);
             Disable();
         }
-
-        /*if (collision.tag == "Ground" || collision.tag == "Wallrunable")*/
         else
         {
             Disable();
