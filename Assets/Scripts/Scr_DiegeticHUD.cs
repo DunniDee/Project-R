@@ -79,7 +79,7 @@ public class Scr_DiegeticHUD : MonoBehaviour
 
         AmmoText.text = AmmoCount.ToString();
         AmmoReserveText.text = AmmoReserve.ToString();
-        HealthText.text = playerhealth.currentHealth.ToString();
+        HealthText.text = ((int)playerhealth.currentHealth).ToString();
 
         AmmoAngleLerp = (float)AmmoCount/(float)MagSize;
         HealthAngleLerp = playerhealth.currentHealth / playerhealth.maxHealth;
