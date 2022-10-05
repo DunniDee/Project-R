@@ -138,7 +138,7 @@ public class Scr_PlayerMotor : MonoBehaviour
             m_IsGrounded = false; 
         }
 
-        if (Physics.CheckSphere(CamTransform.position + (Vector3.up * 0.3f), 0.4f, GroundMask))
+        if (Physics.CheckSphere(CamTransform.position + (Vector3.up * 0.3f), 0.35f, GroundMask))
         {
            if (m_VerticalVelocity.y > 0)
            {
@@ -557,20 +557,20 @@ public class Scr_PlayerMotor : MonoBehaviour
 
     public void ExplosionForce(Vector3 _direction)
     {
-        if (m_LauncherTimer <= 0)
-        {
-            m_LauncherTimer = 1;
-            IsLaunched = true;
+        // if (m_LauncherTimer <= 0)
+        // {
+            //m_LauncherTimer = 1;
+            //IsLaunched = true;
             Movment.Move(new Vector3(0,0.5f,0));
             m_MomentumDirection += _direction;
-            m_SmoothMoveDirection = Vector3.zero;
-            m_VerticalVelocity.y = _direction.y;
+            //m_SmoothMoveDirection = Vector3.zero;
+            m_VerticalVelocity.y += _direction.y;
             CamEffects.FovTo += 45;
             CamEffects.RotateTo += new Vector3(15,0,0);
             StepAS.PlayOneShot(DashSounds[Random.Range(0,DashSounds.Length-1)],1);
             CamEffects.ShakeTime += 1f;
             CamEffects.ShakeAmplitude += 1f;
-        }
+        // }
     }
 
     /// <summary>

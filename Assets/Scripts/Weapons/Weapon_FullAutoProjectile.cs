@@ -16,18 +16,20 @@ public class Weapon_FullAutoProjectile : Script_ProjectileWeapon
         HUD.AmmoReserve = CurReserveCount;
         FiringPoint.transform.LookAt(Look.LookPoint);
 
+        
+        Reload();
+        ReloadUpdate();
+        
         if (ShotTimer > 0)
         {
             ShotTimer-= Time.deltaTime;
         }
 
-        if (Input.GetKey(ShootKey) && CurMagCount > 0 && ShotTimer <= 0 && !IsReloading)
+        if (Input.GetKey(ShootKey) && CurMagCount > 0 && ShotTimer <= 0 && (!IsReloading || SingleReload && MagCount > 0))
         {
+            IsReloading = false;
             Shoot();
         }
-        
-        Reload();
-        ReloadUpdate();
 
         Animate();
     }

@@ -89,6 +89,8 @@ public class Scr_ExplosiveBarrel : MonoBehaviour, IDamageable
     
     public bool Damage(float _Damage, CustomCollider.DamageType _DamageType,Vector3 _direction)
     {
+        m_Health -= _Damage;
+
         if (m_Health <= 0)
         {
             Explode();
