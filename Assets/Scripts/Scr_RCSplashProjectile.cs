@@ -17,9 +17,6 @@ public class Scr_RCSplashProjectile : Script_RCProjectile
         if(Physics.Raycast(transform.position, transform.forward, out hit, Speed * Time.deltaTime))
         {
             Hit();
-
-            //Bounce
-            //transform.LookAt(transform.position + Vector3.Reflect(hit.point - transform.position, hit.normal));
         }
 
         Debug.DrawLine(transform.position, NextPos, Color.red);
@@ -58,15 +55,15 @@ public class Scr_RCSplashProjectile : Script_RCProjectile
                     CustomCollider.TakeDamage(Damage, CustomCollider.DamageType.Normal, -transform.forward);
                     TransfromList.Add(CustomCollider.transform.root);
                 }
-
-               float sqrDist = (transform.position - Script_PlayerStatManager.Instance.PlayerTransform.position).sqrMagnitude;
-
-                if (sqrDist < ExplosionRadius*ExplosionRadius)
-                {
-                    Vector3 Dir = (transform.position - Script_PlayerStatManager.Instance.PlayerTransform.position).normalized;
-                    Script_PlayerStatManager.Instance.Motor.ExplosionForce(-Dir * 10);
-                }
             }
+        }
+
+        float sqrDist = (transform.position - Script_PlayerStatManager.Instance.PlayerTransform.position).sqrMagnitude;
+
+        if (sqrDist < ExplosionRadius*ExplosionRadius)
+        {
+            Vector3 Dir = (transform.position - Script_PlayerStatManager.Instance.PlayerTransform.position).normalized;
+            Script_PlayerStatManager.Instance.Motor.ExplosionForce(-Dir * 10);
         }
 
         Disable();
