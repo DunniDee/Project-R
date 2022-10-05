@@ -75,8 +75,33 @@ public class Scr_ExplosiveBarrel : MonoBehaviour, IDamageable
     public float m_Health;
     public float ExplosionRadius;
 
+    bool HasExploded = false;
+
+    [SerializeField] GameObject ExplosionPrefab;
+
     private void Explode()
     {
+        if (HasExploded)
+        {
+            return;
+        }
+        HasExploded = true;
+        
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, ExplosionRadius);
+        List<Transform> TransfromList = new List<Transform>();
+        foreach (var hitCollider in hitColliders)
+        {
+            var CustomCollider = hitCollider.gameObject.GetComponent<CustomCollider>();
+            if (CustomCollider != null)
+            {
+                if (!TransfromList.Contains(CustomCollider.transform.root))
+                {  
+                    CustomCollider.TakeDamage(100, CustomCollider.DamageType.Normal, -transform.forward);
+                    TransfromList.Add(CustomCollider.transform.root);
+                }
+            }
+        }
+
         float sqrDist = (transform.position - Script_PlayerStatManager.Instance.PlayerTransform.position).sqrMagnitude;
 
         if (sqrDist < ExplosionRadius*ExplosionRadius)
@@ -84,7 +109,9 @@ public class Scr_ExplosiveBarrel : MonoBehaviour, IDamageable
             Vector3 Dir = (transform.position - Script_PlayerStatManager.Instance.PlayerTransform.position).normalized;
             Script_PlayerStatManager.Instance.Motor.ExplosionForce(-Dir * 10);
         }
-        Destroy(gameObject);
+
+        Instantiate(ExplosionPrefab,transform.position,transform.rotation);
+        Destroy(gameObject,0.25f);
     }
     
     public bool Damage(float _Damage, CustomCollider.DamageType _DamageType,Vector3 _direction)
