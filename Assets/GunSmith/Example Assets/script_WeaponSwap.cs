@@ -19,12 +19,14 @@ public class script_WeaponSwap : MonoBehaviour
         }
         InitalseEquippedWeapons();
 
-        Weapons[EquippedIndex].SetActive(true);
+       
         for (int i = 0; i < Weapons.Length; i++)
         {
             Weapons[i].GetComponent<Script_WeaponBase>().weaponListIndex = i;
         }
         LoadEquipmentLoadout();
+
+        EquippedWeapons[EquippedIndex].SetActive(true);
     }
 
     // Start is called before the first frame update
