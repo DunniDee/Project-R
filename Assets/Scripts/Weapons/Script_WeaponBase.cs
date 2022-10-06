@@ -270,5 +270,6 @@ public abstract class Script_WeaponBase : MonoBehaviour
     protected void ReloadBullet()
     {
         CurMagCount++;
+        AS.PlayOneShot(ReloadSound);
     }
 }

@@ -14,6 +14,9 @@ public class Script_InteractEvent : MonoBehaviour
         OnHit,
     }
 
+    [SerializeField] AudioClip Activate;
+     [SerializeField] AudioSource AS;
+
     private BoxCollider m_TriggerCollider;
     
     //Custom Editor Properties
@@ -46,6 +49,7 @@ public class Script_InteractEvent : MonoBehaviour
                 if(!hasEventTrigger && InteractEvent != null)
                 {
                     InteractEvent.Invoke();
+                    AS.PlayOneShot(Activate);
                 }
                 hasEventTrigger = true;
             }
