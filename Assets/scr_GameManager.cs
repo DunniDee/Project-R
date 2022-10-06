@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class scr_GameManager : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class scr_GameManager : MonoBehaviour
 
     public bool isLevelComplete = false;
 
+    public List<float> TimesToBeat;
 
     public void IncreaseKillCount()
     {
