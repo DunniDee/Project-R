@@ -355,7 +355,7 @@ public class Scr_PlayerMotor : MonoBehaviour
             CamEffects.RotateTo.x += 5;
             CamEffects.RotateTo += new Vector3(m_ForwardMovement,0,-m_SidewardMovement).normalized * m_DashMomentum;
             CamEffects.FovTo += 10;
-            Movment.Move(new Vector3(0,0.25f,0));
+            Movment.Move(new Vector3(0,0.5f,0));
             Weapons.JumpAnim();
 
             //is touching wall
