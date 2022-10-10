@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2440298316920369449}
   - component: {fileID: 2440298316920369451}
   - component: {fileID: 1055887703902293969}
+  - component: {fileID: 6181125982078639937}
   m_Layer: 6
   m_Name: Explosivebarrel
   m_TagString: Untagged
@@ -77,23 +78,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42512d7b735d23349a50f52a0456db32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 100
-  isDestroyed: 0
-  rigidBody: {fileID: 0}
-  Colldier: {fileID: 0}
-  renderer: {fileID: 3899057083479240119}
-  audiosource: {fileID: 1055887703902293969}
-  DestructSound: {fileID: 8300000, guid: 1b7344e060ab7474f9b2e3e3eb62886b, type: 3}
-  ExplosionForce: 20
+  m_Health: 0
   ExplosionRadius: 5
-  DamageableMask:
-    serializedVersion: 2
-    m_Bits: 64
-  ShowGizmos: 1
-  ExplosionVFX: {fileID: 8747989217092750769, guid: 0d879e78d3db5aa49af19c36e151d158,
-    type: 3}
-  ExplosionDecal: {fileID: 0}
-  LifeTime: 5
+  ExplosionPrefab: {fileID: 0}
 --- !u!82 &1055887703902293969
 AudioSource:
   m_ObjectHideFlags: 0
@@ -190,6 +177,14 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!33 &6181125982078639937
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2440298316920369452}
+  m_Mesh: {fileID: 8108563764783910780, guid: ca4aa80e3e7835149b613cf4d5899342, type: 3}
 --- !u!1 &6680948693849703988
 GameObject:
   m_ObjectHideFlags: 0
@@ -383,12 +378,6 @@ PrefabInstance:
 --- !u!4 &2762702317519099608 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ca4aa80e3e7835149b613cf4d5899342,
-    type: 3}
-  m_PrefabInstance: {fileID: 2440298316305707315}
-  m_PrefabAsset: {fileID: 0}
---- !u!23 &3899057083479240119 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: ca4aa80e3e7835149b613cf4d5899342,
     type: 3}
   m_PrefabInstance: {fileID: 2440298316305707315}
   m_PrefabAsset: {fileID: 0}
