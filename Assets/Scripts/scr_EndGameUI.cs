@@ -42,18 +42,18 @@ public class scr_EndGameUI : MonoBehaviour
             OverRank_TextMesh.text = "C";
             PlayerPrefs.SetString(SceneManager.GetActiveScene().name + "_rank", "C");
         }
-        else if (scr_GameManager.i.CurrentTimePlayed > scr_GameManager.i.TimesToBeat[2]) // B rank
+        else if (scr_GameManager.i.CurrentTimePlayed < scr_GameManager.i.TimesToBeat[2]) // B rank
         {
             OverRank_TextMesh.text = "B";
             PlayerPrefs.SetString(SceneManager.GetActiveScene().name + "_rank", "B");
         }
-        else if (scr_GameManager.i.CurrentTimePlayed > scr_GameManager.i.TimesToBeat[1]) // A rank
+        else if (scr_GameManager.i.CurrentTimePlayed < scr_GameManager.i.TimesToBeat[1]) // A rank
         {
             OverRank_TextMesh.text = "A";
             PlayerPrefs.SetString(SceneManager.GetActiveScene().name + "_rank", "A");
 
         }
-        else if (scr_GameManager.i.CurrentTimePlayed > scr_GameManager.i.TimesToBeat[0]) // S rank
+        else if (scr_GameManager.i.CurrentTimePlayed < scr_GameManager.i.TimesToBeat[0]) // S rank
         {
             OverRank_TextMesh.text = "S";
             PlayerPrefs.SetString(SceneManager.GetActiveScene().name + "_rank", "S");
