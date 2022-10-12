@@ -30,8 +30,8 @@ public class Scr_DamagePopup : MonoBehaviour
         //textColor = text.color;
         MoveDir = new Vector3(Random.Range(-1, 1), 1, 0);
         CurMoveDir = Vector3.zero;
-        text.SetText(_Damage.ToString());
-        transform.localPosition = new Vector3(transform.localPosition.x + 1, transform.localPosition.y + 1, 0.0f);
+        text.SetText("+" + _Damage.ToString());
+        transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, 0.0f);
         transform.parent = null;
     }
     private void LateUpdate()
