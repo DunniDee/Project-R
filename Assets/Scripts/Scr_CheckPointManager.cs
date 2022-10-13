@@ -6,6 +6,10 @@ public class Scr_CheckPointManager : MonoBehaviour
 {
     public static Scr_CheckPointManager i;
 
+    [Header("Internal Components")]
+    public AudioSource audioSource;
+    public AudioClip objectivePopupAudio;
+
     [Header("CheckPoint Properties")]
     public Transform CurrentCheckPoint;
     public GameObject Player;
@@ -88,5 +92,7 @@ public class Scr_CheckPointManager : MonoBehaviour
     public void SetCurrentCheckPoint(GameObject _Gameobject)
     {
         CurrentCheckPoint = _Gameobject.transform;
+
+        scr_ObjectiveHandler.i.ShowObjective("CheckPoint Reached");
     }
 }

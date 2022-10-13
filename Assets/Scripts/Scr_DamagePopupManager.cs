@@ -23,6 +23,8 @@ public class Scr_DamagePopupManager : MonoBehaviour
 
     [Header("Damagepopup Properties")]
     [SerializeField]
+    private Vector2 SpawnRange;
+    [SerializeField]
     private GameObject damagePopupPrefab;
 
     [SerializeField]
@@ -35,7 +37,7 @@ public class Scr_DamagePopupManager : MonoBehaviour
     /// <param name="_PopupParent"></param>
     public void DisplayDamagePopup(int _DamageAmount, Transform _PopupParent)
     {
-        var obj = Instantiate(damagePopupPrefab, _PopupParent.transform.position, Quaternion.identity, _PopupParent);
+        var obj = Instantiate(damagePopupPrefab, _PopupParent.transform.position + new Vector3(Random.Range(SpawnRange.x, SpawnRange.y) * 2, Random.Range(SpawnRange.x, SpawnRange.y), 0), Quaternion.identity, _PopupParent);
         obj.GetComponent<Scr_DamagePopup>().Init(_DamageAmount);
     }
 
