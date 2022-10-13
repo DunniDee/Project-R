@@ -101,8 +101,8 @@ public class Enemy_Shooter : Scr_BaseAI
             switch (m_CurrentState)
             {
                 case State.Idle:
-                    
-                break;
+                    m_CurrentState = State.Attack;
+                    break;
 
                 case State.Move:
                     m_CurrentState = State.Attack;

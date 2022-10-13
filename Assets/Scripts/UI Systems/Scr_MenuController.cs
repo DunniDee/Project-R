@@ -10,24 +10,49 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class Scr_MenuController: MonoBehaviour
 {
     public static Scr_MenuController i;
+
+    private void Awake()
+    {
+        if (i == null)
+        {
+            i = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+    }
 
     [Header("Key Binds")]
     public KeyCode PauseMenuButton = KeyCode.Tab;
     [Header("Internal Components")]
     public RectTransform m_MenuRectTransform;
     public Transform m_MenuCanvasTransform;
-
+    public AudioSource audioSource;
     public bool isMenuActive = false;
+
+    [Header("Audio Assets")]
+    public AudioClip OnMouseClickAudio;
+    public AudioClip OnMouseRollOverAudio;
 
     public Transform GetUICanvas()
     {
         return m_MenuCanvasTransform;
     }
-    public AudioSource audioSource;
 
+    public void PlayRollOverAudio()
+    {
+        audioSource.PlayOneShot(OnMouseRollOverAudio);
+    }
+
+    public void PlayClickAudio()
+    {
+        audioSource.PlayOneShot(OnMouseClickAudio);
+    }
 
     #region Getters & Setters
     /// <summary>
@@ -68,6 +93,7 @@ public class Scr_MenuController: MonoBehaviour
     /// <param name="_b"></param>
     public void SetUIActive(bool _b)
     {
+        m_MenuCanvasTransform.gameObject.SetActive(_b);
         SetCursorActive(_b);
 
     }
