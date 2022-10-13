@@ -38,8 +38,9 @@ public class Script_SceneManager : MonoBehaviour
 
 
     [Header("SceneManager Properties")]
-    public string sceneToLoad;
-    public int currentSceneIndex;
+    private string sceneToLoad;
+    
+    [SerializeField] private int currentSceneIndex;
 
     bool IsTransitioning = false;
 

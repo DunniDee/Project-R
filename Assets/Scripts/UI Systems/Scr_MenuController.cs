@@ -15,6 +15,18 @@ public class Scr_MenuController: MonoBehaviour
 {
     public static Scr_MenuController i;
 
+    private void Awake()
+    {
+        if (i == null)
+        {
+            i = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     [Header("Key Binds")]
     public KeyCode PauseMenuButton = KeyCode.Tab;
     [Header("Internal Components")]
