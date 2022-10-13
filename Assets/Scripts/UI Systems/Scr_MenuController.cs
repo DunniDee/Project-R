@@ -19,15 +19,27 @@ public class Scr_MenuController: MonoBehaviour
     [Header("Internal Components")]
     public RectTransform m_MenuRectTransform;
     public Transform m_MenuCanvasTransform;
-
+    public AudioSource audioSource;
     public bool isMenuActive = false;
+
+    [Header("Audio Assets")]
+    public AudioClip OnMouseClickAudio;
+    public AudioClip OnMouseRollOverAudio;
 
     public Transform GetUICanvas()
     {
         return m_MenuCanvasTransform;
     }
-    public AudioSource audioSource;
 
+    public void PlayRollOverAudio()
+    {
+        audioSource.PlayOneShot(OnMouseRollOverAudio);
+    }
+
+    public void PlayClickAudio()
+    {
+        audioSource.PlayOneShot(OnMouseClickAudio);
+    }
 
     #region Getters & Setters
     /// <summary>
