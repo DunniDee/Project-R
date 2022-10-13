@@ -40,6 +40,12 @@ public class Scr_BaseAI : MonoBehaviour, IDamageable
     [SerializeField] protected AudioSource AS;
     [SerializeField] protected Transform DamagePopupPos;
 
+    public void Start()
+    {
+        PlayerTransform = FindObjectOfType<Scr_PlayerMotor>().transform;
+    }
+
+
     //base classes for the behaviours
     protected void StartAttackUI()
     {
