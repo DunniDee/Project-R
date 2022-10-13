@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-//[System.Serializable]
+[System.Serializable]
 public class Script_InteractEvent : MonoBehaviour
 {
     public enum InteractEventType
@@ -118,11 +118,6 @@ public class Script_InteractEvent : MonoBehaviour
     {
         CheckEventType();
     }
-
-    // void OnValidate()
-    // {
-    //     gameObject.layer = LayerMask.NameToLayer("Interactable");      
-    // }
 
     void OnCollisionEnter(Collision collider)
     {
