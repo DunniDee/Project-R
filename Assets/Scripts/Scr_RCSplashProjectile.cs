@@ -73,13 +73,13 @@ public class Scr_RCSplashProjectile : Script_RCProjectile
                 }
             }
         }
-
-        float sqrDist = (transform.position - Script_PlayerStatManager.Instance.PlayerTransform.position).sqrMagnitude;
+        Transform playerTransform = FindObjectOfType<Scr_PlayerMotor>().transform;
+        float sqrDist = (transform.position - playerTransform.position).sqrMagnitude;
 
         if (sqrDist < ExplosionRadius*ExplosionRadius)
         {
-            Vector3 Dir = (transform.position - Script_PlayerStatManager.Instance.PlayerTransform.position).normalized;
-            Script_PlayerStatManager.Instance.Motor.ExplosionForce(-Dir * 10);
+            Vector3 Dir = (transform.position - playerTransform.position).normalized;
+            playerTransform.GetComponent<Scr_PlayerMotor>().ExplosionForce(-Dir * 10);
         }
 
         Disable();
