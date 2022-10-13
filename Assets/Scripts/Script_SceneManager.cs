@@ -42,30 +42,40 @@ public class Script_SceneManager : MonoBehaviour
     public int currentSceneIndex;
 
     bool IsTransitioning = false;
-    
-    private void OnLevelWasLoaded(int level)
-    {
-      
-    }
+
+    // MAKE SURE TO TURN OFF WHEN BUILDING THE GAME!!!
+    public bool DebugMode = true;
     
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Keypad1))
+        if (Input.GetKeyDown(KeyCode.Keypad1) && DebugMode)
         {
-            if (currentSceneIndex < SceneManager.sceneCount)
-            {
-                currentSceneIndex++;
-                LoadScene(SceneManager.GetSceneAt(currentSceneIndex).name);
-            }
-            else if ((currentSceneIndex + 1) > SceneManager.sceneCount)
-            {
-                currentSceneIndex = 0;
-                LoadScene(SceneManager.GetSceneAt(currentSceneIndex).name);
-            }
+            loadNextSceneInBuildOrder();
         }
     }
+
+
+    #region DebugMethods
+    private void loadNextSceneInBuildOrder()
+    {
+       
+       if (currentSceneIndex < SceneManager.sceneCount)
+       {
+          currentSceneIndex++;
+          LoadScene(SceneManager.GetSceneAt(currentSceneIndex).name);
+       }
+       else if ((currentSceneIndex + 1) > SceneManager.sceneCount)
+       {
+           currentSceneIndex = 0;
+           LoadScene(SceneManager.GetSceneAt(currentSceneIndex).name);
+       }
+        
+    }
+    #endregion
+
     /// <summary>
-    /// 
+    /// load scene methods exectued in ordered seconds for smooth fade in fade out transition.
+    /// Scene name passed in as Parameter for level load.
     /// </summary>
     /// <param name="SceneName"></param>
     public void LoadScene(string SceneName)
@@ -80,9 +90,50 @@ public class Script_SceneManager : MonoBehaviour
             Invoke("UnlockTransition", 2);
         }
     }
+    #region LoadSceneEffects
+    /// <summary>
+    /// Fade to Full Color - Part of LoadScene
+    /// </summary>
+    private void FadeDark()
+    {
+        loadingScreen.SetActive(true);
+        StartCoroutine(FadeLoadingScreen(1, 0.5f));
+    }
 
     /// <summary>
-    /// 
+    /// Fade to No Color - Part of LoadScene
+    /// </summary>
+    private void FadeLight()
+    {
+        StartCoroutine(FadeLoadingScreen(0, 0.5f));
+    }
+
+    /// <summary>
+    /// Start Transition Scene Corotine - Part of LoadScene
+    /// </summary>
+    private void TransitionScene()
+    {
+        StartCoroutine(LoadScene());
+    }
+    /// <summary>
+    /// Set Transistion Bool to True - Part of LoadScene
+    /// </summary>
+    private void LockTransition()
+    {
+        IsTransitioning = true;
+    }
+
+    /// <summary>
+    /// Set transitionting bool to false - Part of LoadScene
+    /// </summary>
+    private void UnlockTransition()
+    {
+        IsTransitioning = false;
+    }
+    #endregion
+
+    /// <summary>
+    /// Async Level Loader waits till level load operation is done.
     /// </summary>
     /// <returns></returns>
     IEnumerator LoadScene()
@@ -95,7 +146,7 @@ public class Script_SceneManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Fade fadeCanvasGroup to target value over X Duration.
     /// </summary>
     /// <param name="targetValue"></param>
     /// <param name="duration"></param>
@@ -112,77 +163,5 @@ public class Script_SceneManager : MonoBehaviour
         }
         canvasGroup.alpha = targetValue;
     }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public void FadeDark()
-    {
-        loadingScreen.SetActive(true);
-        StartCoroutine(FadeLoadingScreen(1,0.5f));
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public void FadeLight()
-    {
-
-        StartCoroutine(FadeLoadingScreen(0,0.5f));
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public void TransitionScene()
-    {
-        StartCoroutine(LoadScene());
-    }
-    /// <summary>
-    /// 
-    /// </summary>
-    public void LockTransition()
-    {
-        IsTransitioning = true;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public void UnlockTransition()
-    {
-        IsTransitioning = false;
-    }
-    /// <summary>
-    /// 
-    /// </summary>
-    public void Respawn()
-    {
-        Look.m_YRotation = SpawnPos.rotation.y;
-        Look.transform.position = SpawnPos.position;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public void SpawnCheckpoint()
-    {
-        if (!IsTransitioning)
-        {
-            LockTransition();
-            FadeDark();
-            Invoke("Respawn", 1);
-            Invoke("FadeLight", 2);
-            Invoke("UnlockTransition", 2);
-        }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="RespawnPoint"></param>
-    public void SetSpawnPoint(Transform RespawnPoint)
-    {
-        SpawnPos = RespawnPoint;
-    }
+   
 }
