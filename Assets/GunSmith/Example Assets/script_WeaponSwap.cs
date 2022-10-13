@@ -72,10 +72,6 @@ public class script_WeaponSwap : MonoBehaviour
   
     public void Start()
     {
-        //Turn UICannvasOff
-        LoadoutController gridcontroller = FindObjectOfType<LoadoutController>();
-        gridcontroller.enabled = true;
-        gridcontroller.GetUICanvas().gameObject.SetActive(false);
         m_LastIndex = EquippedIndex;
 
 
@@ -108,18 +104,6 @@ public class script_WeaponSwap : MonoBehaviour
             i++;
         }
 
-    }
-
-    public void UpdateWeaponStats()
-    {
-        int i = 0;
-        foreach (var Weapon in Weapons)
-        {
-            Script_WeaponBase weaponBase = Weapon.GetComponent<Script_WeaponBase>();
-            weaponBase.SetDamage(Script_PlayerStatManager.Instance.WeaponStatList[i].Modified_Damage);
-            weaponBase.SetFireRate(Script_PlayerStatManager.Instance.WeaponStatList[i].Modified_Firerate);
-            i++;
-        }
     }
 
    
