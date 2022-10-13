@@ -23,7 +23,7 @@ public class Scr_MenuController: MonoBehaviour
         }
         else
         {
-            Destroy(gameObject);
+            Destroy(this);
         }
     }
 
