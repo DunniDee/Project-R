@@ -109,6 +109,15 @@ public class Scr_MenuController: MonoBehaviour
         FindObjectOfType<Scr_PlayerHealth>().enabled = !_b;
         script_WeaponSwap.Instance.SetCanShoot(!_b);
 
+        //If Pausing Game set timeScale to 0 else set tiem scale to 1
+        if (_b == true)
+        {
+            Time.timeScale = 0.0f;
+        }
+        else
+        {
+            Time.timeScale = 1.0f;
+        }
         Cursor.visible = _b;
         Cursor.lockState = Cursor.visible ? CursorLockMode.Confined : CursorLockMode.Locked;
     }
