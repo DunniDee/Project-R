@@ -66,9 +66,9 @@ public class scr_GameManager : MonoBehaviour
         {
             CurrentTimePlayed += Time.deltaTime;
         }
-        if (scoreUpdateTime > 0.0f && isUpdatingScore == true)
+        if (scoreUpdateTimer > 0.0f && isUpdatingScore == true)
         {
-            scoreUpdateTime -= Time.deltaTime;
+            scoreUpdateTimer -= Time.deltaTime;
         }
         else if (scoreUpdateTime <= 0.0f && isUpdatingScore == true)
         {
