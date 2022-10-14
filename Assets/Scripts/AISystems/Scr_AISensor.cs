@@ -18,7 +18,7 @@ public class Scr_AISensor : MonoBehaviour
     public List<GameObject> Objects = new List<GameObject>();
     Collider[] Colliders = new Collider[50];
     [Header("Internal Components")]
-    [SerializeField] Script_BaseAI agent;
+    [SerializeField] Scr_BaseAI agent;
     public delegate void OnPlayerFoundDelegate(AIStateID _State);
     public OnPlayerFoundDelegate OnPlayerFoundEvent;
 
@@ -30,7 +30,7 @@ public class Scr_AISensor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        agent = GetComponent<Script_BaseAI>();
+        agent = GetComponent<Scr_BaseAI>();
         CreateWedgeMesh();
         scanFrequency = 1 / scanFrequency;
     }
@@ -58,43 +58,15 @@ public class Scr_AISensor : MonoBehaviour
                 Objects.Add(obj);
             }
         }
-        // if (agent is AI_Commander && agent.GetIsInCombat())
-        // {
-        //     agent.GetNavMeshAgent().destination = Objects[0].transform.position;
-        // }
-        // foreach (GameObject gameObject in Objects)
-        // {
-            
-           
-        //     if (gameObject.CompareTag("Player"))
-        //     {
 
-        //         // Play Found Event
-        //         if (agent is AI_Melee)
-        //         {
-        //             if (OnPlayerFoundEvent != null && !agent.GetIsInCombat())
-        //             {
-        //                 OnPlayerFoundEvent(AIStateID.ChasePlayer);
-        //             }
-        //         }
-        //         else if (agent is AI_Gun)
-        //         {
-        //             if (OnPlayerFoundEvent != null && !agent.GetIsInCombat())
-        //             {
-        //                 OnPlayerFoundEvent(AIStateID.ShootPlayer);
-        //             }
-        //         }
-        //         else if (agent is AI_Commander)
-        //         {
-        //             if (OnPlayerFoundEvent != null && !agent.GetIsInCombat())
-        //             {
-        //                 OnPlayerFoundEvent(AIStateID.CommanderBuff);
-        //             }
-        //         }
+        foreach (GameObject gameObject in Objects)
+         {
+            if (gameObject.CompareTag("Player") && agent.m_CurrentState == Scr_BaseAI.State.Idle)
+            {
+                agent.m_CurrentState = Scr_BaseAI.State.Attack;
+            }
 
-
-        //     }
-        // }
+        }
     }
 
     public bool IsInSight(GameObject obj)
