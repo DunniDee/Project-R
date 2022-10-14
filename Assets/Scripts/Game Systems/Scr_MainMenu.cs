@@ -30,13 +30,14 @@ public class Scr_MainMenu : MonoBehaviour
     private void Awake()
     {
         InitaliseLevelScores();
+        Scr_MenuController.i.SetCursorActive(true);
     }
 
     private void Start()
     {
         if (Cursor.visible == false)
         {
-            Scr_MenuController.i.SetCursorActive(true);
+            
         }
     }
     public void Play(string _SceneToLoad)
