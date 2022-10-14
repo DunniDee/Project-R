@@ -21,6 +21,7 @@ public class scr_EndGameUI : MonoBehaviour
         FindObjectOfType<Script_HitMarker>().gameObject.SetActive(false);
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
+        Scr_MenuController.i.SetCursorActive(true);
         scr_GameManager.i.isLevelComplete = true;
         SetUIElements();
     }
