@@ -26,12 +26,19 @@ public class Scr_MainMenu : MonoBehaviour
         LevelUIElements[2].BestRank_TextMesh.text = PlayerPrefs.GetString("BoilerRoom_03_rank", null).ToString();
 
     }
+
     private void Awake()
     {
         InitaliseLevelScores();
     }
 
-
+    private void Start()
+    {
+        if (Cursor.visible == false)
+        {
+            Scr_MenuController.i.SetCursorActive(true);
+        }
+    }
     public void Play(string _SceneToLoad)
     {
         SceneManager.LoadScene(_SceneToLoad);
