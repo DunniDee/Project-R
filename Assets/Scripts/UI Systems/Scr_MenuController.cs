@@ -94,6 +94,7 @@ public class Scr_MenuController: MonoBehaviour
     public void SetUIActive(bool _b)
     {
         m_MenuCanvasTransform.gameObject.SetActive(_b);
+        isMenuActive = _b;
         SetCursorActive(_b);
 
     }
