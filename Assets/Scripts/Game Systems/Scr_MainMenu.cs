@@ -30,8 +30,6 @@ public class Scr_MainMenu : MonoBehaviour
     private void Awake()
     {
         InitaliseLevelScores();
-
-       
     }
 
     private void Start()
