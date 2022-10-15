@@ -17,13 +17,13 @@ public class Scr_MainMenu : MonoBehaviour
     public void InitaliseLevelScores()
     {
         LevelUIElements[0].BestTime_TextMesh.text = PlayerPrefs.GetFloat("Construction_01_bestTime", 0).ToString();
-        LevelUIElements[0].BestRank_TextMesh.text = PlayerPrefs.GetString("Construction_01_rank", null).ToString();
+        LevelUIElements[0].BestRank_TextMesh.text = PlayerPrefs.GetString("Construction_01_rank", "C");
 
         LevelUIElements[1].BestTime_TextMesh.text = PlayerPrefs.GetFloat("Wallrun_02_bestTime", 0).ToString();
-        LevelUIElements[1].BestRank_TextMesh.text = PlayerPrefs.GetString("Wallrun_02_rank", null).ToString();
+        LevelUIElements[1].BestRank_TextMesh.text = PlayerPrefs.GetString("Wallrun_02_rank", "C");
 
         LevelUIElements[2].BestTime_TextMesh.text = PlayerPrefs.GetFloat("BoilerRoom_03_bestTime", 0).ToString();
-        LevelUIElements[2].BestRank_TextMesh.text = PlayerPrefs.GetString("BoilerRoom_03_rank", null).ToString();
+        LevelUIElements[2].BestRank_TextMesh.text = PlayerPrefs.GetString("BoilerRoom_03_rank", "C");
 
     }
 

@@ -105,32 +105,28 @@ public class Scr_MenuController: MonoBehaviour
     /// <param name="_b"></param>
     public void SetCursorActive(bool _b)
     {
-        FindObjectOfType<Scr_PlayerMotor>().enabled = !_b;
-        FindObjectOfType<Scr_PlayerLook>().enabled = !_b;
-        FindObjectOfType<Scr_PlayerHealth>().enabled = !_b;
-        script_WeaponSwap.Instance.SetCanShoot(!_b);
+        DisablePlayerControls(_b);
 
-        //If Pausing Game set timeScale to 0 else set tiem scale to 1
-        if (_b == true)
-        {
-            Time.timeScale = 0.0f;
-        }
-        else
-        {
-            Time.timeScale = 1.0f;
-        }
         Cursor.visible = _b;
         Cursor.lockState = Cursor.visible ? CursorLockMode.Confined : CursorLockMode.Locked;
     }
 
-  
+    private static void DisablePlayerControls(bool _b)
+    {
+        FindObjectOfType<Scr_PlayerMotor>().enabled = !_b;
+        FindObjectOfType<Scr_PlayerLook>().enabled = !_b;
+        FindObjectOfType<Scr_PlayerHealth>().enabled = !_b;
+        script_WeaponSwap.Instance.SetCanShoot(!_b);
+    }
+
+
 
     #endregion
 
 
-   
-   
-   
+
+
+
 
 
     /// <summary>
