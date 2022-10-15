@@ -14,15 +14,34 @@ public class Scr_MainMenu : MonoBehaviour
 
     public List<LevelUI_Element> LevelUIElements;
 
+    public string GetMinutesSecondsText(string _LevelName)
+    {
+        float bestTime = PlayerPrefs.GetFloat(_LevelName+"_bestTime");
+        float minutes = Mathf.RoundToInt(bestTime / 60);
+        float seconds = Mathf.RoundToInt(bestTime % 60);
+
+        string minuteText = null;
+        string secondsText = null;
+        if (minutes < 10)
+        {
+            minuteText = "0" + minutes.ToString();
+        }
+        if (seconds < 10)
+        {
+            secondsText = "0" + Mathf.RoundToInt(seconds).ToString();
+        }
+        string finaltext = (minuteText + ":" + secondsText);
+        return finaltext;
+    }
     public void InitaliseLevelScores()
     {
-        LevelUIElements[0].BestTime_TextMesh.text = PlayerPrefs.GetFloat("Construction_01_bestTime", 0).ToString();
+        LevelUIElements[0].BestTime_TextMesh.text = GetMinutesSecondsText("Construction_01");
         LevelUIElements[0].BestRank_TextMesh.text = PlayerPrefs.GetString("Construction_01_rank", "C");
 
-        LevelUIElements[1].BestTime_TextMesh.text = PlayerPrefs.GetFloat("Wallrun_02_bestTime", 0).ToString();
+        LevelUIElements[1].BestTime_TextMesh.text = GetMinutesSecondsText("Wallrun_02");
         LevelUIElements[1].BestRank_TextMesh.text = PlayerPrefs.GetString("Wallrun_02_rank", "C");
 
-        LevelUIElements[2].BestTime_TextMesh.text = PlayerPrefs.GetFloat("BoilerRoom_03_bestTime", 0).ToString();
+        LevelUIElements[2].BestTime_TextMesh.text = GetMinutesSecondsText("BoilerRoom_03");
         LevelUIElements[2].BestRank_TextMesh.text = PlayerPrefs.GetString("BoilerRoom_03_rank", "C");
 
     }
@@ -35,11 +54,8 @@ public class Scr_MainMenu : MonoBehaviour
 
     private void Start()
     {
-        if (Cursor.visible == false)
-        {
-            
-        }
     }
+
     public void Play(string _SceneToLoad)
     {
         SceneManager.LoadScene(_SceneToLoad);

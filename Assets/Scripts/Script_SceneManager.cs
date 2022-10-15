@@ -91,6 +91,24 @@ public class Script_SceneManager : MonoBehaviour
             Invoke("UnlockTransition", 2);
         }
     }
+
+    /// <summary>
+    /// load scene methods exectued in ordered seconds for smooth fade in fade out transition.
+    /// Scene name passed in as Parameter for level load.
+    /// </summary>
+    /// <param name="SceneName"></param>
+    public void LoadCurrentScene()
+    {
+        if (!IsTransitioning)
+        {
+            LockTransition();
+            sceneToLoad = SceneManager.GetActiveScene().name;
+            FadeDark();
+            Invoke("TransitionScene", 1);
+            Invoke("FadeLight", 2);
+            Invoke("UnlockTransition", 2);
+        }
+    }
     #region LoadSceneEffects
     /// <summary>
     /// Fade to Full Color - Part of LoadScene
