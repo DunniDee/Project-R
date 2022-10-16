@@ -41,6 +41,24 @@ public class scr_GameManager : MonoBehaviour
     {
         EnemyKillCount++;
     }
+    public char GetLevelCompletionRank()
+    {
+        if (CurrentTimePlayed > TimesToBeat[2]) // B rank
+        {
+            return 'B';
+        }
+        else if (CurrentTimePlayed > TimesToBeat[1]) // A rank
+        {
+            return 'A';
+        }
+        else if (CurrentTimePlayed > TimesToBeat[0]) //  rank
+        {
+            return 'S';
+        }
+        else
+            return 'C';
+       
+    }
 
     // Start is called before the first frame update
     void Start()
