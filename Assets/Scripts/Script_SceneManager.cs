@@ -10,8 +10,6 @@ public class Script_SceneManager : MonoBehaviour
     // Singleton Pattern
     #region Singleton
     public static Script_SceneManager Instance; 
-    [SerializeField] Scr_PlayerLook Look;
-    public Transform SpawnPos;
     private void Awake()
     {
         if (Instance == null)
