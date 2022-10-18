@@ -54,6 +54,7 @@ public class scr_EndGameUI : MonoBehaviour
         }
        
     }
+
     public string GetMinutesSecondsText(float FinishTime)
     {
         float minutes = Mathf.RoundToInt(FinishTime / 60);
@@ -61,6 +62,7 @@ public class scr_EndGameUI : MonoBehaviour
 
         string minuteText = null;
         string secondsText = null;
+
         if (minutes < 10)
         {
             minuteText = "0" + minutes.ToString();
@@ -95,24 +97,39 @@ public class scr_EndGameUI : MonoBehaviour
             yield return new WaitForSeconds(0.01f/i);
             CompletionTime_TextMesh.text = GetMinutesSecondsText(completionTime);
         }
-       
+
         yield return new WaitUntil(() => completionTime == scr_GameManager.i.CurrentTimePlayed);
         //Display Best Score
 
+
         //Display Medal / Letter Ranking
 
+        if (OverRank_TextMesh.gameObject.activeSelf == false)
+        {
+            OverRank_TextMesh.gameObject.SetActive(true);
+        }
 
+        DisplayCompleteRank();
     }
     /// <summary>
     /// 
     /// </summary>
-    private void SetUIElements()
+    public void SetUIElements()
     {
         //Get Completetion Rank from GameManager
         char CompletetionRank = scr_GameManager.i.GetLevelCompletionRank();
 
         //Set Completetion Time
         StartCoroutine(DisplayCompletionScoreCoroutine());
+
+      /*  DisplayCompleteRank(CompletetionRank);*/
+
+        KillCount_TextMesh.text = scr_GameManager.i.EnemyKillCount.ToString("F0");
+    }
+
+    private void DisplayCompleteRank()
+    {
+        char CompletetionRank = scr_GameManager.i.GetLevelCompletionRank();
 
         if (CompletetionRank == 'C') // C rank
         {
@@ -135,10 +152,8 @@ public class scr_EndGameUI : MonoBehaviour
             OverRank_TextMesh.text = "S";
             PlayerPrefs.SetString(SceneManager.GetActiveScene().name + "_rank", "S");
         }
-
-        KillCount_TextMesh.text = scr_GameManager.i.EnemyKillCount.ToString("F0");
     }
-        
+
     private void Start()
     {
         animator = GetComponent<Animator>();
