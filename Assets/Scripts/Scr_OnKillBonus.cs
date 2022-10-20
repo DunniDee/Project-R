@@ -16,6 +16,8 @@ public class Scr_OnKillBonus : MonoBehaviour
 
     [SerializeField] AudioSource AS;
 
+    [SerializeField] Scr_SpeedLines m_SpeedLines;
+
     bool WasCharged;
 
 
@@ -52,9 +54,10 @@ public class Scr_OnKillBonus : MonoBehaviour
             if (!WasCharged)
             {
                 AS.PlayOneShot(ChargeUp);
+                //SpeedBoostManager.TriggerOn();
             }
 
-
+            m_SpeedLines.m_IsKillBoosting = true;
             WasCharged = true;
         }
         else
@@ -68,7 +71,7 @@ public class Scr_OnKillBonus : MonoBehaviour
                 AS.PlayOneShot(ChargeDown);
             }
 
-
+            m_SpeedLines.m_IsKillBoosting = false;
             WasCharged = false;
         }
     }

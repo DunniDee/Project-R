@@ -10,6 +10,8 @@ public class Scr_SpeedLines : MonoBehaviour
     [SerializeField] ParticleSystem SpeedLines;
     [SerializeField] AudioSource AS;
     public GameObject vfx2; //artist code  fraser ;)
+    public GameObject vfx3; //artist code  fraser ;)
+    public bool m_IsKillBoosting; //artist code  fraser ;)
 
     private void Start() 
     {     
@@ -35,6 +37,17 @@ public class Scr_SpeedLines : MonoBehaviour
             AS.volume = Mathf.Lerp(AS.volume,0.02f,Time.deltaTime);
             vfx2.SetActive(true);//artist code  
         }
+
+        if (m_IsKillBoosting)
+        {
+            vfx3.SetActive(true);
+        }
+        else
+        {
+            vfx3.SetActive(false);
+        }
+
+
     
     }
 }
