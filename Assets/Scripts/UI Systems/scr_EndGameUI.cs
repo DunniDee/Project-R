@@ -31,6 +31,7 @@ public class scr_EndGameUI : MonoBehaviour
         //Show Endgame UI Canvas Animation
         animator.SetTrigger("Show");
 
+        SetUIElements();
         //Hide Hitmarker Gameobject (fixed some bug with UI canvas raycasting -Ash)
         //FindObjectOfType<Script_HitMarker>().gameObject.SetActive(false);
         
@@ -40,7 +41,6 @@ public class scr_EndGameUI : MonoBehaviour
         
         //Set GameState to Complete
         scr_GameManager.i.isLevelComplete = true;
-        SetUIElements();
     }
 
     /// <summary>
@@ -85,46 +85,46 @@ public class scr_EndGameUI : MonoBehaviour
     }
 
     /// <summary>
-    /// Displays the UI Icons in sequence
+    /// Displays the UI Time completed score and medal / overall rank.  in sequence
     /// </summary>
     /// <returns></returns>
     private IEnumerator DisplayCompletionScoreCoroutine()
     {
         float completionTime = 0.0f;
+        CompletionTime_TextMesh.gameObject.GetComponentInParent<GameObject>().SetActive(true);
         for (int i = 0; i < scr_GameManager.i.CurrentTimePlayed; i++)
         {
-            completionTime += 1;
-            yield return new WaitForSeconds(0.01f/i);
+            completionTime++;
+            
             CompletionTime_TextMesh.text = GetMinutesSecondsText(completionTime);
+            yield return new WaitForSeconds(0.1f);
         }
 
         yield return new WaitUntil(() => completionTime == scr_GameManager.i.CurrentTimePlayed);
-        //Display Best Score
 
 
         //Display Medal / Letter Ranking
 
-        if (OverRank_TextMesh.gameObject.activeSelf == false)
+        if (OverRank_TextMesh.gameObject.GetComponentInParent<GameObject>().activeSelf == false)
         {
-            OverRank_TextMesh.gameObject.SetActive(true);
+            //enable parent of overall rank textmesh 
+            OverRank_TextMesh.gameObject.GetComponentInParent<GameObject>().SetActive(true);
         }
 
         DisplayCompleteRank();
+
+        KillCount_TextMesh.text = scr_GameManager.i.EnemyKillCount.ToString("F0");
     }
+
     /// <summary>
-    /// 
+    /// Called when the Animator is played
     /// </summary>
     public void SetUIElements()
     {
-        //Get Completetion Rank from GameManager
-        char CompletetionRank = scr_GameManager.i.GetLevelCompletionRank();
-
         //Set Completetion Time
         StartCoroutine(DisplayCompletionScoreCoroutine());
 
-      /*  DisplayCompleteRank(CompletetionRank);*/
-
-        KillCount_TextMesh.text = scr_GameManager.i.EnemyKillCount.ToString("F0");
+        
     }
 
     private void DisplayCompleteRank()
