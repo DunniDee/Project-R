@@ -253,6 +253,7 @@ Transform:
   - {fileID: 620572750041613301}
   - {fileID: 3735640338068029499}
   - {fileID: 5785738301667309672}
+  - {fileID: 2165744598862684710}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -405,7 +406,7 @@ MonoBehaviour:
   ShootSound: {fileID: 8300000, guid: d705942ddbc4b5b40b0ef0e91f8d642c, type: 3}
   EmptySound: {fileID: 8300000, guid: 41172fa7dad8b6c49bc42be45170e5f1, type: 3}
   ReloadSound: {fileID: 8300000, guid: 94b327f35c268174d92a0dbd7d5dbaf6, type: 3}
-  FiringPoint: {fileID: 0}
+  FiringPoint: {fileID: 2165744598862684710}
   Muzzleflash: {fileID: 6020711641102660322, guid: e9ec1d3261e45584d8e10e37d7d718dc,
     type: 3}
   Anim: {fileID: 850267248430258888}
@@ -876,6 +877,36 @@ Transform:
   - {fileID: 4487401349780951996}
   m_Father: {fileID: 4648803698066190893}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3288962000393475263
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2165744598862684710}
+  m_Layer: 10
+  m_Name: FirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2165744598862684710
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3288962000393475263}
+  m_LocalRotation: {x: -0.00009577172, y: -0.00017566593, z: 0.039202403, w: 0.99923134}
+  m_LocalPosition: {x: 0.287, y: 1.741, z: 1.082}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 884527364420734480}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3369830685736315229
 GameObject:
