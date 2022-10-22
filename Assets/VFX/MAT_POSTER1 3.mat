@@ -8,21 +8,21 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: MAT_POSTER1 3
-  m_Shader: {fileID: -6465566751694194690, guid: de079b3a93079f84083dfa6950338641,
+  m_Shader: {fileID: -6465566751694194690, guid: 5684a689a7906e0419f1fe75adc72bac,
     type: 3}
-  m_ShaderKeywords: _SURFACE_TYPE_TRANSPARENT
+  m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3000
+  m_CustomRenderQueue: 2225
   stringTagMap:
     MotionVector: User
-    RenderType: Transparent
   disabledShaderPasses:
   - MOTIONVECTORS
   - TransparentDepthPostpass
   - TransparentBackface
   - RayTracingPrepass
+  - TransparentDepthPrepass
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -31,7 +31,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_8c103069cd32446a82886ee68a9c014b:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 0d20be2b493dfd24491c22d7d913ebf4, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_b45cf4ffe00848f5be1ead62da41074e:
@@ -148,14 +148,15 @@ Material:
     - Vector1_23e8bccb2d92472da34eb36cc9d033c5: 0.1
     - Vector1_4e813b7054fa44d5a39222f008f4559a: 2.5
     - Vector1_54ab8add73424691a7a54272285d90ef: 1
-    - Vector1_560165f6f1fd4aa1ad5f9df106e3de0d: 1
+    - Vector1_560165f6f1fd4aa1ad5f9df106e3de0d: 0.32
     - Vector1_8547b3cdb52f4c6f93b7e6c213eb3e78: 15
     - Vector1_86f416f415c14669ae348a5b3c752903: 1
-    - Vector1_a8e5b57cf17b4e88a1aa127b900eb270: -0.25
+    - Vector1_8991642accba48678458ef9fd7f7c313: 500
+    - Vector1_a8e5b57cf17b4e88a1aa127b900eb270: 100
     - Vector1_b0276446a5434fe894821ed3f87a316b: 35
     - Vector1_caa540414a0e4a2a8b0af6820bfb4f24: 0.5
     - Vector1_cc2d7d63a0d443bf8ce704fe273e791d: -0.0003
-    - Vector1_ee805278da374823ae48cd3b7d90f260: 22.73
+    - Vector1_ee805278da374823ae48cd3b7d90f260: 20
     - _AORemapMax: 1
     - _AORemapMin: 0
     - _ATDistance: 1
@@ -166,7 +167,7 @@ Material:
     - _AlphaCutoffPostpass: 0.5
     - _AlphaCutoffPrepass: 0.5
     - _AlphaCutoffShadow: 0.5
-    - _AlphaDstBlend: 1
+    - _AlphaDstBlend: 0
     - _AlphaSrcBlend: 1
     - _AlphaToMask: 0
     - _AlphaToMaskInspectorValue: 0
@@ -187,7 +188,7 @@ Material:
     - _DisplacementMode: 0
     - _DoubleSidedEnable: 0
     - _DoubleSidedNormalMode: 1
-    - _DstBlend: 1
+    - _DstBlend: 0
     - _EmissiveColorMode: 1
     - _EmissiveExposureWeight: 1
     - _EmissiveIntensity: 1
@@ -226,7 +227,7 @@ Material:
     - _ReceivesSSR: 1
     - _ReceivesSSRTransparent: 1
     - _RefractionModel: 0
-    - _RenderQueueType: 4
+    - _RenderQueueType: 1
     - _RequireSplitLighting: 0
     - _Smoothness: 0.5
     - _SmoothnessRemapMax: 1
@@ -247,7 +248,7 @@ Material:
     - _StencilWriteMaskMV: 40
     - _SubsurfaceMask: 1
     - _SupportDecals: 1
-    - _SurfaceType: 1
+    - _SurfaceType: 0
     - _TexWorldScale: 1
     - _TexWorldScaleEmissive: 1
     - _Thickness: 1
@@ -264,19 +265,21 @@ Material:
     - _UVEmissive: 0
     - _UseEmissiveIntensity: 0
     - _UseShadowThreshold: 0
-    - _ZTestDepthEqualForOpaque: 4
+    - _ZTestDepthEqualForOpaque: 3
     - _ZTestGBuffer: 4
     - _ZTestTransparent: 4
-    - _ZWrite: 0
+    - _ZWrite: 1
     m_Colors:
     - Color_50ec490cc84a46b69a83a79bebed0b48: {r: 1, g: 0.25899854, b: 0, a: 0}
-    - Color_5c5664b24d4b4e2d9ea771aa66255199: {r: 0, g: 0, b: 0, a: 1}
-    - Color_683ed0da81864791918ef320f9842b40: {r: 0.6313726, g: 0.4172868, b: 0.36078432,
+    - Color_5c5664b24d4b4e2d9ea771aa66255199: {r: 0.745283, g: 0.5976752, b: 0.41131184,
+        a: 1}
+    - Color_683ed0da81864791918ef320f9842b40: {r: 0.6313726, g: 0.41728678, b: 0.3607843,
         a: 0}
-    - Color_78efe8979e624a4db6ce33111cacfad2: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - Color_78efe8979e624a4db6ce33111cacfad2: {r: 1, g: 0.7945537, b: 0.6650944, a: 1}
     - Color_8f505a2df6104d72a60d0ed565876eed: {r: 1, g: 0.5374451, b: 0, a: 0}
     - Color_9613132cfbab466c900658dcedb5f8c0: {r: 0, g: 0, b: 0, a: 0}
-    - Color_a52f25d44e2d4174927256728d2c99a4: {r: 0, g: 0, b: 0, a: 1}
+    - Color_a52f25d44e2d4174927256728d2c99a4: {r: 0.6509434, g: 0.50975573, b: 0.33468315,
+        a: 1}
     - Vector2_60ff6b207cdd46d3a7f40a986c204a8d: {r: 0, g: 0.5, b: 0, a: 0}
     - Vector2_8ee55a0679184f95961890f3ef5d0a1b: {r: 0.001, g: 0.01, b: 0, a: 0}
     - Vector2_af97d359e8cb4e7a9815e953135ca105: {r: 0, g: 0, b: 0, a: 0}
