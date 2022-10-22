@@ -14,9 +14,18 @@ public class AltFire_KnockBack : Scr_AltFireBase
     protected override void OnAbilityStart()
     {
         base.OnAbilityStart();
-        for (int i = 0; i < 4; i++)
+        // for (int i = 0; i < 4; i++)
+        // {
+        //     // Invoke("Shoot", i * 0.1f);
+        // }
+
+        if (Weapon.CurMagCount >= Weapon.GetMagCount()/2 - 1 && Weapon.ShotTimer <= 0 && !Weapon.IsReloading)
         {
-            Invoke("Shoot", i * 0.1f);
+            Weapon.Shoot();
+            Weapon.CurMagCount -= (Weapon.GetMagCount()/2) - 1;
+            Vector3 KnockBackDir = -Look.forward;
+            Motor.m_MomentumDirection += new Vector3(KnockBackDir.x,0,KnockBackDir.z) * KnockBackForce;
+            Motor.m_VerticalVelocity = new Vector3(0,KnockBackDir.y,0) * KnockBackForce;
         }
 
         //Shoot();
