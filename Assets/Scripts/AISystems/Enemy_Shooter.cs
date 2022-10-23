@@ -72,7 +72,7 @@ public class Enemy_Shooter : Scr_BaseAI
 
         FacePlayer();
 
-        ShootPos.LookAt(PlayerTransform);
+        ShootPos.LookAt(PlayerTransform.position + new Vector3(0,1,0));
 
 
         if (ShootTimer < 0)

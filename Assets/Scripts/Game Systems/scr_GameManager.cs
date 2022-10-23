@@ -43,17 +43,17 @@ public class scr_GameManager : MonoBehaviour
     }
     public char GetLevelCompletionRank()
     {
-        if (CurrentTimePlayed > TimesToBeat[2]) // B rank
+        if (CurrentTimePlayed < TimesToBeat[0]) // S rank
         {
-            return 'B';
+            return 'S';
         }
-        else if (CurrentTimePlayed > TimesToBeat[1]) // A rank
+        else if (CurrentTimePlayed < TimesToBeat[1]) // A rank
         {
             return 'A';
         }
-        else if (CurrentTimePlayed > TimesToBeat[0]) //  rank
+        else if (CurrentTimePlayed < TimesToBeat[2]) // B rank
         {
-            return 'S';
+            return 'B';
         }
         else
             return 'C';

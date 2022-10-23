@@ -9,12 +9,23 @@ public class scr_EndGameUI : MonoBehaviour
 {
     public Animator animator;
 
+    [Header("EndGameUI Components")]
+    //Buttons to Assign OnClick
+    public Button Loadout_Button;
+    public Button NextLevel_Button;
+    public Button Retry_Button;
+    public Button MainMenu_Button;
+
+    [SerializeField] AudioSource m_audioSource;
+    [SerializeField] AudioClip m_TickAudio;
+    [SerializeField] AudioClip m_TickFinish;
+
+    [Header("UI Components")]
     public TMP_Text CompletionTime_TextMesh;
     public TMP_Text KillCount_TextMesh;
     public TMP_Text OverRank_TextMesh;
 
     public GameObject NewBestTime_TextObject; // Used to hide unless is new best time.
-    public GameObject EndGameCanvasObject;
 
     private bool isNewBest = false;
 
@@ -25,12 +36,12 @@ public class scr_EndGameUI : MonoBehaviour
 
     public void ShowEndGameUI()
     {
-        //Enable EndGame Canvas
-        EndGameCanvasObject.SetActive(true);
+
 
         //Show Endgame UI Canvas Animation
         animator.SetTrigger("Show");
 
+        SetUIElements();
         //Hide Hitmarker Gameobject (fixed some bug with UI canvas raycasting -Ash)
         //FindObjectOfType<Script_HitMarker>().gameObject.SetActive(false);
         
@@ -40,19 +51,17 @@ public class scr_EndGameUI : MonoBehaviour
         
         //Set GameState to Complete
         scr_GameManager.i.isLevelComplete = true;
-        SetUIElements();
     }
 
     /// <summary>
     /// Save the bestTimePlayed for this Scene
     /// </summary>
-    public void SetPlayerPrefs()
+    public void SavePlayerBestTime()
     {
         if (PlayerPrefs.GetFloat(SceneManager.GetActiveScene().name + "_bestTime", 0) < scr_GameManager.i.CurrentTimePlayed)
         {
             PlayerPrefs.SetFloat(SceneManager.GetActiveScene().name + "_bestTime", scr_GameManager.i.CurrentTimePlayed);
         }
-       
     }
 
     public string GetMinutesSecondsText(float FinishTime)
@@ -85,7 +94,7 @@ public class scr_EndGameUI : MonoBehaviour
     }
 
     /// <summary>
-    /// Displays the UI Icons in sequence
+    /// Displays the UI Time completed score and medal / overall rank.  in sequence
     /// </summary>
     /// <returns></returns>
     private IEnumerator DisplayCompletionScoreCoroutine()
@@ -93,42 +102,53 @@ public class scr_EndGameUI : MonoBehaviour
         float completionTime = 0.0f;
         for (int i = 0; i < scr_GameManager.i.CurrentTimePlayed; i++)
         {
-            completionTime += 1;
-            yield return new WaitForSeconds(0.01f/i);
+            completionTime++;
+            
             CompletionTime_TextMesh.text = GetMinutesSecondsText(completionTime);
+            m_audioSource.pitch += 0.1f;
+            m_audioSource.PlayOneShot(m_TickAudio);
+            yield return new WaitForSeconds(0.01f);
         }
+        m_audioSource.pitch = 1;
+        m_audioSource.PlayOneShot(m_TickFinish);
+       
 
-        yield return new WaitUntil(() => completionTime == scr_GameManager.i.CurrentTimePlayed);
-        //Display Best Score
 
+        //Display Number of Cultists Killed
+        for (int i = 0; i < scr_GameManager.i.EnemyKillCount; i++)
+        {
+            completionTime++;
 
-        //Display Medal / Letter Ranking
+            KillCount_TextMesh.text = i.ToString();
+            m_audioSource.pitch += 0.1f;
+            m_audioSource.PlayOneShot(m_TickAudio);
+            yield return new WaitForSeconds(0.01f);
+        }
+        m_audioSource.pitch = 1;
+        m_audioSource.PlayOneShot(m_TickFinish);
 
+        //Display Map Completetion Rank
+        DisplayCompleteRank();
+
+        yield return null;
+    }
+
+    /// <summary>
+    /// Called when the Animator is played
+    /// </summary>
+    public void SetUIElements()
+    {
+        //Set Completetion Time
+        StartCoroutine(DisplayCompletionScoreCoroutine());
+    }
+
+    private void DisplayCompleteRank()
+    {
         if (OverRank_TextMesh.gameObject.activeSelf == false)
         {
             OverRank_TextMesh.gameObject.SetActive(true);
         }
 
-        DisplayCompleteRank();
-    }
-    /// <summary>
-    /// 
-    /// </summary>
-    public void SetUIElements()
-    {
-        //Get Completetion Rank from GameManager
-        char CompletetionRank = scr_GameManager.i.GetLevelCompletionRank();
-
-        //Set Completetion Time
-        StartCoroutine(DisplayCompletionScoreCoroutine());
-
-      /*  DisplayCompleteRank(CompletetionRank);*/
-
-        KillCount_TextMesh.text = scr_GameManager.i.EnemyKillCount.ToString("F0");
-    }
-
-    private void DisplayCompleteRank()
-    {
         char CompletetionRank = scr_GameManager.i.GetLevelCompletionRank();
 
         if (CompletetionRank == 'C') // C rank
@@ -154,11 +174,20 @@ public class scr_EndGameUI : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Called before the FirstFrame
+    /// </summary>
     private void Start()
     {
         animator = GetComponent<Animator>();
+
+        Retry_Button.onClick.AddListener(delegate { Script_SceneManager.Instance.LoadScene(SceneManager.GetActiveScene().name);} );
+/*        NextLevel_Button.onClick.AddListener(delegate { Script_SceneManager.Instance.LoadScene(SceneManager.GetSceneAt(SceneManager.GetActiveScene().buildIndex + 1).name); });*/
+        MainMenu_Button.onClick.AddListener(delegate { Script_SceneManager.Instance.LoadScene("MenuLevelScene"); });
+/*        Loadout_Button.onClick.AddListener(delegate { Script_SceneManager.Instance.LoadScene("MenuLevelScene"); });*/
     }
 
+    //Called Everyframe
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.Keypad7) && DebugMode == true)

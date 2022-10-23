@@ -13,7 +13,6 @@ public class Scr_CheckPointManager : MonoBehaviour
     [Header("CheckPoint Properties")]
     public Transform CurrentCheckPoint;
     public GameObject Player;
-    public Scr_PlayerLook PlayerLook;
 
     [Header("Fade Properties")]
     public CanvasGroup canvas;
@@ -66,7 +65,6 @@ public class Scr_CheckPointManager : MonoBehaviour
     public void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
-        PlayerLook = Player.GetComponent<Scr_PlayerLook>();
         CurrentCheckPoint = Player.transform;
     }
 
@@ -75,7 +73,6 @@ public class Scr_CheckPointManager : MonoBehaviour
         Debug.Log("RespawningPlayer");
         Player.transform.position = CurrentCheckPoint.position;
         Scr_PlayerHealth playerHealth = Player.GetComponent<Scr_PlayerHealth>();
-        PlayerLook.m_YRotation = CurrentCheckPoint.rotation.eulerAngles.y;
         playerHealth.RespawnPlayer();
         
     }
