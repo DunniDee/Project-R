@@ -499,6 +499,8 @@ public class Scr_PlayerMotor : MonoBehaviour
     /// <summary>
     /// Vaulting functionality, lerps position between current position and avaliable lerp positon 
     /// </summary>
+
+    bool vaultDoOnce = false;
     void Vault()
     {
         if (Physics.Raycast(VaultCheckPos.position, VaultCheckPos.forward,out m_VaultHit, 1, GroundMask) && !m_IsVaulting && !(Physics.Raycast(CamTransform.position,Vector3.up,2))) //checks to see if vault is possible
@@ -523,6 +525,7 @@ public class Scr_PlayerMotor : MonoBehaviour
                 CamEffects.ShakeTime += 1;
                 CamEffects.ShakeAmplitude += 0.25f;
                 VaultArms.SetActive(false);
+                vaultDoOnce = false;
             }
             VaultArms.transform.position = m_VaultPos - Vector3.up;
             m_VaultTimer -= Time.deltaTime;
@@ -534,7 +537,11 @@ public class Scr_PlayerMotor : MonoBehaviour
         }
         else // renable motor and weapons
         {
-            Weapons.SetActiveAnim(false);
+            if (!vaultDoOnce)
+            {
+                Weapons.SetActiveAnim(false);
+                vaultDoOnce = true;
+            }
             Movment.enabled = true;
         }
     }
