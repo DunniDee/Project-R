@@ -19,6 +19,7 @@ public class Scr_Melee : MonoBehaviour
         {
             MeeleTimer -= Time.deltaTime;
             IsAttacking = true;
+            Anim.transform.localRotation = Quaternion.Euler(0,0,0);
             Weapons.SetActiveAnim(true);
         }
         else
@@ -27,6 +28,7 @@ public class Scr_Melee : MonoBehaviour
             {
                 MeleeAttack();
             }
+            Anim.transform.localRotation = Quaternion.Euler(0,180,0);
             Weapons.SetActiveAnim(false);
             IsAttacking = false;
         }
