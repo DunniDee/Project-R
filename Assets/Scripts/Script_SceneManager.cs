@@ -107,6 +107,19 @@ public class Script_SceneManager : MonoBehaviour
             Invoke("UnlockTransition", 2);
         }
     }
+
+    public void LoadNextScene()
+    {
+        if (!IsTransitioning)
+        {
+            LockTransition();
+            sceneToLoad = SceneManager.GetSceneByBuildIndex(SceneManager.GetActiveScene().buildIndex + 1).name;
+            FadeDark();
+            Invoke("TransitionScene", 1);
+            Invoke("FadeLight", 2);
+            Invoke("UnlockTransition", 2);
+        }
+    }
     #region LoadSceneEffects
     /// <summary>
     /// Fade to Full Color - Part of LoadScene
