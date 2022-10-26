@@ -35,8 +35,8 @@ public class Scr_MainMenu : MonoBehaviour
     }
     public void InitaliseLevelScores()
     {
-        LevelUIElements[0].BestTime_TextMesh.text = GetMinutesSecondsText("Construction_01");
-        LevelUIElements[0].BestRank_TextMesh.text = PlayerPrefs.GetString("Construction_01_rank", "C");
+        LevelUIElements[0].BestTime_TextMesh.text = GetMinutesSecondsText("Construction 01");
+        LevelUIElements[0].BestRank_TextMesh.text = PlayerPrefs.GetString("Construction 01_rank", "C");
 
         LevelUIElements[1].BestTime_TextMesh.text = GetMinutesSecondsText("Wallrun_02");
         LevelUIElements[1].BestRank_TextMesh.text = PlayerPrefs.GetString("Wallrun_02_rank", "C");
