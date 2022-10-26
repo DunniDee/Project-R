@@ -116,8 +116,7 @@ public class Script_SceneManager : MonoBehaviour
             sceneToLoad = SceneManager.GetSceneByBuildIndex(SceneManager.GetActiveScene().buildIndex + 1).name;
             FadeDark();
             Invoke("TransitionScene", 1);
-            Invoke("FadeLight", 2);
-            Invoke("UnlockTransition", 2);
+
         }
     }
     #region LoadSceneEffects
@@ -173,6 +172,8 @@ public class Script_SceneManager : MonoBehaviour
         {
             yield return null;
         }
+        FadeLight();
+        UnlockTransition();
     }
 
     /// <summary>

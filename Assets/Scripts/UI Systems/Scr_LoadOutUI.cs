@@ -90,13 +90,13 @@ public class Scr_LoadOutUI : MonoBehaviour
     /// </summary>
     public void EquipWeapon()
     {
-        //Dont equip weapon that is already equipped
+/*        //Dont equip weapon that is already equipped
         if (selectedButton.GetEquipIndex() == weaponToSwapIndex) return;
 
 
         //Set the currently active weapon to false as its no longer equipped
         script_WeaponSwap.Instance.EquippedWeapons[script_WeaponSwap.Instance.EquippedIndex].SetActive(false);
-
+*/
         script_WeaponSwap.Instance.EquippedWeapons[weaponToSwapIndex] = script_WeaponSwap.Instance.Weapons[selectedButton.GetEquipIndex()];
 
         script_WeaponSwap.Instance.EquippedWeapons[weaponToSwapIndex].SetActive(true);
