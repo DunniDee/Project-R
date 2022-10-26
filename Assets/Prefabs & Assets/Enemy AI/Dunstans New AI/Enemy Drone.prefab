@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 8734254713289972258}
   - component: {fileID: 8734254713289972257}
   - component: {fileID: 8734254713289972256}
+  - component: {fileID: 5768964125890501519}
   m_Layer: 6
   m_Name: Enemy Drone
   m_TagString: Untagged
@@ -232,6 +233,29 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5768964125890501519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8734254713289972263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4cc185638c4f52449de0bb2821287ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distance: 21.35
+  angle: 180
+  height: 10
+  meshColor: {r: 1, g: 0, b: 0, a: 1}
+  scanFrequency: 30
+  Layers:
+    serializedVersion: 2
+    m_Bits: 8
+  Objects: []
+  agent: {fileID: 0}
+  scanTimer: 0
 --- !u!1 &8734254713509089211
 GameObject:
   m_ObjectHideFlags: 0

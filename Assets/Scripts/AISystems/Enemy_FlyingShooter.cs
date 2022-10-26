@@ -49,8 +49,8 @@ public class Enemy_FlyingShooter : Enemy_Shooter
         StartAttackUI();
         StateTimer -= Time.deltaTime;
 
-        AgentRotator.LookAt(PlayerTransform);
-        ShootPos.LookAt(PlayerTransform);
+        AgentRotator.LookAt(PlayerTransform.position + new Vector3(0,1,0));
+        ShootPos.LookAt(PlayerTransform.position + new Vector3(0, 1, 0));
         if (ShootTimer < 0)
         {
             ShootTimer = FireRate; 
