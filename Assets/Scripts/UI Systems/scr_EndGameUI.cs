@@ -172,6 +172,7 @@ public class scr_EndGameUI : MonoBehaviour
             OverRank_TextMesh.text = "S";
             PlayerPrefs.SetString(SceneManager.GetActiveScene().name + "_rank", "S");
         }
+        SavePlayerBestTime();
     }
 
     /// <summary>
@@ -181,10 +182,10 @@ public class scr_EndGameUI : MonoBehaviour
     {
         animator = GetComponent<Animator>();
 
-        Retry_Button.onClick.AddListener(delegate { Script_SceneManager.Instance.LoadScene(SceneManager.GetActiveScene().name);} );
-/*        NextLevel_Button.onClick.AddListener(delegate { Script_SceneManager.Instance.LoadScene(SceneManager.GetSceneAt(SceneManager.GetActiveScene().buildIndex + 1).name); });*/
+        Retry_Button.onClick.AddListener(delegate { Script_SceneManager.Instance.LoadCurrentScene();} );
+        NextLevel_Button.onClick.AddListener(delegate { Script_SceneManager.Instance.LoadNextScene(); });
         MainMenu_Button.onClick.AddListener(delegate { Script_SceneManager.Instance.LoadScene("MenuLevelScene"); });
-/*        Loadout_Button.onClick.AddListener(delegate { Script_SceneManager.Instance.LoadScene("MenuLevelScene"); });*/
+        Loadout_Button.onClick.AddListener(delegate { Script_SceneManager.Instance.LoadScene("LoadoutScene"); });
     }
 
     //Called Everyframe
