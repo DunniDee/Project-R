@@ -162,6 +162,8 @@ public class Scr_PlayerHealth : MonoBehaviour
     /// <param name="_duration"></param>
     public void ShowDeathCanvas(float _targetValue, float _duration)
     {
+        DeathScreen.SetActive(true);
+
         StartCoroutine(FadeDeathScreen(_targetValue, _duration));
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Confined;
