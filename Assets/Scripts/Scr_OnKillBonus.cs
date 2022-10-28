@@ -18,6 +18,8 @@ public class Scr_OnKillBonus : MonoBehaviour
 
     bool WasCharged;
 
+    [SerializeField] GameObject SpeedBoostParticles;
+
 
     public enum KillBonus
     {
@@ -54,6 +56,7 @@ public class Scr_OnKillBonus : MonoBehaviour
                 AS.PlayOneShot(ChargeUp);
             }
 
+            SpeedBoostParticles.SetActive(true);
 
             WasCharged = true;
         }
@@ -61,6 +64,8 @@ public class Scr_OnKillBonus : MonoBehaviour
         {
             Motor.MoveSpeed = DefaultSpeed;
             Motor.AirSpeed = DefaultAirSpeed;
+
+            SpeedBoostParticles.SetActive(false);
 
 
             if (WasCharged)
