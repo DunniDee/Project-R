@@ -106,7 +106,7 @@ MonoBehaviour:
   AgentRotator: {fileID: 7613878522615329436}
   PlayerTransform: {fileID: 6585070362224872162}
   m_Health: 50
-  m_MoveSpeed: 4
+  m_MoveSpeed: 6
   m_Ragdoll: {fileID: 8124596036653050151}
   m_animator: {fileID: 9190001096048584821}
   AlertPos: {fileID: 5569053599902601898}
@@ -116,9 +116,9 @@ MonoBehaviour:
   ShootPos: {fileID: 4900923625195398576}
   Projectile: {fileID: 3272860189397787726, guid: de8f86bd37fa88e4b97cf1cd0a3969bd,
     type: 3}
-  FireRate: 1
-  MoveTimeRange: {x: 0, y: 2}
-  AttackTimeRange: {x: 1.5, y: 2}
+  FireRate: 0.5
+  MoveTimeRange: {x: 0, y: 1}
+  AttackTimeRange: {x: 0.5, y: 0.6}
   Anim: {fileID: 9190001096048584821}
 --- !u!114 &8124596036653050151
 MonoBehaviour:
@@ -242,8 +242,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4cc185638c4f52449de0bb2821287ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 20
-  angle: 100
+  distance: 60
+  angle: 140
   height: 10
   meshColor: {r: 1, g: 0, b: 0, a: 0.14117648}
   scanFrequency: 30
