@@ -42,9 +42,6 @@ public class scr_EndGameUI : MonoBehaviour
         animator.SetTrigger("Show");
 
         SetUIElements();
-        //Hide Hitmarker Gameobject (fixed some bug with UI canvas raycasting -Ash)
-        //FindObjectOfType<Script_HitMarker>().gameObject.SetActive(false);
-        
         
         //Activate Cursor And Pause Player Motor Controls
         Scr_MenuController.i.SetCursorActive(true);
