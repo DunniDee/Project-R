@@ -14,15 +14,15 @@ public class Script_InteractEvent : MonoBehaviour
         OnHit,
     }
 
-    [SerializeField] AudioClip Activate;
-     [SerializeField] AudioSource AS;
-
+    [SerializeField] AudioClip m_ActivateClip;
+    private AudioSource m_audioSource;
+    private ParticleSystem m_particleSystem;
     private BoxCollider m_TriggerCollider;
-    
+
+    #region Editor Properties
     //Custom Editor Properties
     [HideInInspector]
-    public  InteractEventType EventType;
-
+    public InteractEventType EventType;
 
     [HideInInspector]
     public UnityEvent InteractEvent;
@@ -31,14 +31,16 @@ public class Script_InteractEvent : MonoBehaviour
     public Vector3 TriggerCenter;
     [HideInInspector]
     public Vector3 TriggerSize = Vector3.one;
-        [HideInInspector]
+    [HideInInspector]
     public Color TriggerColor = Color.green;
     [HideInInspector]
     public bool DoEventOnce = false;
     [HideInInspector]
     public bool IsActive = true;
+    #endregion
 
     private bool hasEventTrigger = false;
+
 
     public void Interact()
     {
@@ -49,7 +51,8 @@ public class Script_InteractEvent : MonoBehaviour
                 if(!hasEventTrigger && InteractEvent != null)
                 {
                     InteractEvent.Invoke();
-                    AS.PlayOneShot(Activate);
+                    m_particleSystem.Play();
+                    m_audioSource.PlayOneShot(m_ActivateClip);
                 }
                 hasEventTrigger = true;
             }
@@ -58,6 +61,8 @@ public class Script_InteractEvent : MonoBehaviour
                 if(InteractEvent != null)
                 {
                     InteractEvent.Invoke();
+                    m_audioSource.PlayOneShot(m_ActivateClip);
+                    m_particleSystem.Play();
                 }
             }
         }
@@ -68,17 +73,7 @@ public class Script_InteractEvent : MonoBehaviour
     {
         return hasEventTrigger;
     }
-    public void ShowCursor()
-    {
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.Confined;
-    }
 
-    public void HideCursor()
-    {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-    }
     public void SetEventActive(bool _bool)
     {
         IsActive = _bool;
@@ -114,11 +109,17 @@ public class Script_InteractEvent : MonoBehaviour
         
     }
 
+    //Runs before the first frame
     void Start()
     {
+        m_audioSource = GetComponent<AudioSource>();
+        m_particleSystem = GetComponentInChildren<ParticleSystem>();
+
         CheckEventType();
+
     }
 
+    #region EventTriggers
     void OnCollisionEnter(Collision collider)
     {
         if (EventType == InteractEventType.OnHit)
@@ -153,7 +154,7 @@ public class Script_InteractEvent : MonoBehaviour
            
         }
     }
-
+    #endregion
     async void OnDrawGizmos()
     {
         if(EventType == InteractEventType.ColliderEnter || EventType == InteractEventType.ColliderExit)
