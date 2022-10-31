@@ -22,22 +22,22 @@ public class scr_EndGameUI : MonoBehaviour
 
     [Header("UI Components")]
     public TMP_Text CompletionTime_TextMesh;
+    public TMP_Text ScorePrompt_TextMesh;
     public TMP_Text KillCount_TextMesh;
     public TMP_Text OverRank_TextMesh;
 
     public GameObject NewBestTime_TextObject; // Used to hide unless is new best time.
 
+
+    public List<string> ScorePrompts; // Score Prompts order from 0 - 3 (Lowest score to Heighest score)
+
     private bool isNewBest = false;
-
-
 
     // TURN OFF WHEN BUILDING THE GAME!!! - Added by Ash
     public bool DebugMode = true;
 
     public void ShowEndGameUI()
     {
-
-
         //Show Endgame UI Canvas Animation
         animator.SetTrigger("Show");
 
@@ -55,9 +55,11 @@ public class scr_EndGameUI : MonoBehaviour
     /// </summary>
     public void SavePlayerBestTime()
     {
-        if (PlayerPrefs.GetFloat(SceneManager.GetActiveScene().name + "_bestTime", 0) < scr_GameManager.i.CurrentTimePlayed)
+        //If the current time played is less than the previous best time. save the current time played.
+        if (scr_GameManager.i.CurrentTimePlayed < PlayerPrefs.GetFloat(SceneManager.GetActiveScene().name + "_bestTime", 0))
         {
             PlayerPrefs.SetFloat(SceneManager.GetActiveScene().name + "_bestTime", scr_GameManager.i.CurrentTimePlayed);
+            NewBestTime_TextObject.SetActive(true);
         }
     }
 
@@ -144,6 +146,7 @@ public class scr_EndGameUI : MonoBehaviour
         if (OverRank_TextMesh.gameObject.activeSelf == false)
         {
             OverRank_TextMesh.gameObject.SetActive(true);
+            ScorePrompt_TextMesh.gameObject.SetActive(true);
         }
 
         char CompletetionRank = scr_GameManager.i.GetLevelCompletionRank();
@@ -151,22 +154,27 @@ public class scr_EndGameUI : MonoBehaviour
         if (CompletetionRank == 'C') // C rank
         {
             OverRank_TextMesh.text = "C";
+            ScorePrompt_TextMesh.text = ScorePrompts[0];
             PlayerPrefs.SetString(SceneManager.GetActiveScene().name + "_rank", "C");
+
         }
         else if (CompletetionRank == 'B') // B rank
         {
             OverRank_TextMesh.text = "B";
+            ScorePrompt_TextMesh.text = ScorePrompts[1];
             PlayerPrefs.SetString(SceneManager.GetActiveScene().name + "_rank", "B");
         }
         else if (CompletetionRank == 'A') // A rank
         {
             OverRank_TextMesh.text = "A";
+            ScorePrompt_TextMesh.text = ScorePrompts[2];
             PlayerPrefs.SetString(SceneManager.GetActiveScene().name + "_rank", "A");
 
         }
         else if (CompletetionRank == 'S') // S rank
         {
             OverRank_TextMesh.text = "S";
+            ScorePrompt_TextMesh.text = ScorePrompts[3];
             PlayerPrefs.SetString(SceneManager.GetActiveScene().name + "_rank", "S");
         }
         SavePlayerBestTime();
@@ -188,7 +196,7 @@ public class scr_EndGameUI : MonoBehaviour
     //Called Everyframe
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Keypad7) && DebugMode == true)
+        if (Input.GetKeyDown(KeyCode.Alpha0) && DebugMode == true)
         {
             ShowEndGameUI();
         }
