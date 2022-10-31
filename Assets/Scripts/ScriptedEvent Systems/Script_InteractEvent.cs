@@ -51,8 +51,12 @@ public class Script_InteractEvent : MonoBehaviour
                 if(!hasEventTrigger && InteractEvent != null)
                 {
                     InteractEvent.Invoke();
-                    m_particleSystem.Play();
                     m_audioSource.PlayOneShot(m_ActivateClip);
+
+                    if (m_particleSystem)
+                    {
+                        m_particleSystem.Play();
+                    }
                 }
                 hasEventTrigger = true;
             }
@@ -62,7 +66,12 @@ public class Script_InteractEvent : MonoBehaviour
                 {
                     InteractEvent.Invoke();
                     m_audioSource.PlayOneShot(m_ActivateClip);
-                    m_particleSystem.Play();
+                    
+                    if (m_particleSystem)
+                    {
+                        m_particleSystem.Play();
+                    }
+
                 }
             }
         }
