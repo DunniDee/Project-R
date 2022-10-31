@@ -10,13 +10,14 @@ Material:
   m_Name: MAT_Melee_Blade
   m_Shader: {fileID: -6465566751694194690, guid: c09b9d703a1df4e429005e7a8f3737db,
     type: 3}
-  m_ShaderKeywords: _DOUBLESIDED_ON
+  m_ShaderKeywords: _DOUBLESIDED_ON _ENABLE_FOG_ON_TRANSPARENT _SURFACE_TYPE_TRANSPARENT
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 1
-  m_CustomRenderQueue: 2000
+  m_CustomRenderQueue: 3000
   stringTagMap:
     MotionVector: User
+    RenderType: Transparent
   disabledShaderPasses:
   - TransparentDepthPrepass
   - TransparentDepthPostpass
@@ -120,14 +121,14 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - Vector1_03251632af4d4c50874cc117555605c0: 5000
-    - Vector1_0bc4cec34df44e639837e5ad09f4087c: 1
-    - Vector1_50bea40bf42f44df84f3c722cdfeadcb: 0.5
+    - Vector1_0bc4cec34df44e639837e5ad09f4087c: -1
+    - Vector1_50bea40bf42f44df84f3c722cdfeadcb: 100000000
     - Vector1_5b78de851c7146608a251f7e5ef9118f: 2
     - Vector1_61eecb6dbfbd4ca188a8b27c45290ee8: 50
-    - Vector1_774405bec5834e2ba35531185ea4de3a: 2.5
-    - Vector1_b168a4e9fd4b4ebe923573a440ee813b: 1
+    - Vector1_774405bec5834e2ba35531185ea4de3a: 3
+    - Vector1_b168a4e9fd4b4ebe923573a440ee813b: 500
     - Vector1_e7597a9e084e484a8b4d6849bda3f08c: 0.01
-    - Vector1_ed3596cbebc54cc684a9859dbc390175: 0
+    - Vector1_ed3596cbebc54cc684a9859dbc390175: -2
     - Vector1_fde794d21024423bae948462595162bd: 50
     - _AORemapMax: 1
     - _AORemapMin: 0
@@ -139,7 +140,7 @@ Material:
     - _AlphaCutoffPostpass: 0.5
     - _AlphaCutoffPrepass: 0.5
     - _AlphaCutoffShadow: 0.5
-    - _AlphaDstBlend: 0
+    - _AlphaDstBlend: 10
     - _AlphaSrcBlend: 1
     - _AlphaToMask: 0
     - _AlphaToMaskInspectorValue: 0
@@ -160,7 +161,7 @@ Material:
     - _DisplacementMode: 0
     - _DoubleSidedEnable: 1
     - _DoubleSidedNormalMode: 1
-    - _DstBlend: 0
+    - _DstBlend: 10
     - _EmissiveColorMode: 1
     - _EmissiveExposureWeight: 1
     - _EmissiveIntensity: 1
@@ -199,7 +200,7 @@ Material:
     - _ReceivesSSR: 1
     - _ReceivesSSRTransparent: 0
     - _RefractionModel: 0
-    - _RenderQueueType: 1
+    - _RenderQueueType: 4
     - _Smoothness: 0.5
     - _SmoothnessRemapMax: 1
     - _SmoothnessRemapMin: 0
@@ -219,7 +220,7 @@ Material:
     - _StencilWriteMaskMV: 40
     - _SubsurfaceMask: 1
     - _SupportDecals: 1
-    - _SurfaceType: 0
+    - _SurfaceType: 1
     - _TexWorldScale: 1
     - _TexWorldScaleEmissive: 1
     - _Thickness: 1
@@ -236,15 +237,15 @@ Material:
     - _UVEmissive: 0
     - _UseEmissiveIntensity: 0
     - _UseShadowThreshold: 0
-    - _ZTestDepthEqualForOpaque: 3
+    - _ZTestDepthEqualForOpaque: 4
     - _ZTestGBuffer: 4
     - _ZTestTransparent: 4
-    - _ZWrite: 1
+    - _ZWrite: 0
     m_Colors:
-    - Color_1da0d4091e7344249950eaf434c90a3f: {r: 0.28627452, g: 0.5764706, b: 0.9921569,
+    - Color_1da0d4091e7344249950eaf434c90a3f: {r: 0, g: 0.1282184, b: 0.36862746,
         a: 1}
     - Color_6d45d19c6a4344438e616735acfa390a: {r: 0, g: 0, b: 0, a: 0}
-    - Color_8d0217a63c45414a8f1e331325e273d0: {r: 0.4666667, g: 0, b: 1, a: 1}
+    - Color_8d0217a63c45414a8f1e331325e273d0: {r: 0, g: 0.24035478, b: 1, a: 1}
     - Vector2_452266111b14432a88d1fbef6e032e05: {r: 1, g: 1, b: 0, a: 0}
     - Vector2_5eb3782eb0814955aaf717d4a7d4b9bf: {r: 1, g: 1, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
