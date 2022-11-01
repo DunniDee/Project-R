@@ -18,6 +18,8 @@ public class Scr_Melee : MonoBehaviour
     [SerializeField] AudioClip[] MeeleSounds;
     [SerializeField] AudioSource AS;
 
+    [SerializeField] Transform HitPoint;
+
     // Update is called once per frame
     void Update()
     {
