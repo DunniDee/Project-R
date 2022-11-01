@@ -6976,53 +6976,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &539124515323770467
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5859090398138424639}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc66fac0bf2b0b54ebc0c23116e485f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GunName: Ballin
-  ShootKey: 323
-  ReloadKey: 114
-  weaponListIndex: 0
-  Damage: 100
-  FireRate: 0.5
-  ShotTimer: 0
-  ShotCount: 1
-  SpreadAngle: 0
-  RecoilVec: {x: 0, y: 0}
-  MaxReserveCount: 100
-  CurReserveCount: 100
-  MagCount: 1
-  SingleReload: 0
-  CurMagCount: 1
-  ReloadTime: 0.25
-  IsReloading: 0
-  ShotShake: 1
-  ShotFov: 15
-  ShootSound: {fileID: 8300000, guid: 145648cb90d295844b0e8deac5a4f658, type: 3}
-  EmptySound: {fileID: 8300000, guid: 41172fa7dad8b6c49bc42be45170e5f1, type: 3}
-  ReloadSound: {fileID: 8300000, guid: 41172fa7dad8b6c49bc42be45170e5f1, type: 3}
-  FiringPoint: {fileID: 6486444603338721157}
-  Muzzleflash: {fileID: 566064062114797228, guid: 43d3320c452c9da4e9c33c037dc8229a,
-    type: 3}
-  Anim: {fileID: 2542338206945125794}
-  GunImage: {fileID: 0}
-  HUD: {fileID: 7502889656749925300}
-  HandEffects: {fileID: 6804544529527934117}
-  CamEffects: {fileID: 6804544530196205925}
-  WeaponSwap: {fileID: 7502889657327085115}
-  Projectile: {fileID: 5964571975337414563, guid: b61557a25f3cdec4fab0698c18242718,
-    type: 3}
-  ProjectileLifetime: 0
-  ProjectileForce: 0
 --- !u!114 &1854660353
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7082,6 +7035,53 @@ MonoBehaviour:
   Anim: {fileID: 2542338206945125794}
   AS: {fileID: 1114888070337043713}
   Rahhh: {fileID: 0}
+--- !u!114 &539124515323770467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5859090398138424639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc66fac0bf2b0b54ebc0c23116e485f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GunName: Ballin
+  ShootKey: 323
+  ReloadKey: 114
+  weaponListIndex: 0
+  Damage: 100
+  FireRate: 0.5
+  ShotTimer: 0
+  ShotCount: 1
+  SpreadAngle: 0
+  RecoilVec: {x: 0, y: 0}
+  MaxReserveCount: 100
+  CurReserveCount: 100
+  MagCount: 1
+  SingleReload: 0
+  CurMagCount: 1
+  ReloadTime: 0.25
+  IsReloading: 0
+  ShotShake: 1
+  ShotFov: 15
+  ShootSound: {fileID: 8300000, guid: 145648cb90d295844b0e8deac5a4f658, type: 3}
+  EmptySound: {fileID: 8300000, guid: 41172fa7dad8b6c49bc42be45170e5f1, type: 3}
+  ReloadSound: {fileID: 8300000, guid: 41172fa7dad8b6c49bc42be45170e5f1, type: 3}
+  FiringPoint: {fileID: 6486444603338721157}
+  Muzzleflash: {fileID: 566064062114797228, guid: 43d3320c452c9da4e9c33c037dc8229a,
+    type: 3}
+  Anim: {fileID: 2542338206945125794}
+  GunImage: {fileID: 0}
+  HUD: {fileID: 7502889656749925300}
+  HandEffects: {fileID: 6804544529527934117}
+  CamEffects: {fileID: 6804544530196205925}
+  WeaponSwap: {fileID: 7502889657327085115}
+  Projectile: {fileID: 5964571975337414563, guid: b61557a25f3cdec4fab0698c18242718,
+    type: 3}
+  ProjectileLifetime: 0
+  ProjectileForce: 0
 --- !u!95 &7502889658585500634
 Animator:
   serializedVersion: 3
@@ -7854,25 +7854,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Weapons:
-  - {fileID: 5859090398138424639}
-  - {fileID: 919132148439623601}
   - {fileID: 3451609598513595432}
   - {fileID: 1021031008345105174}
+  - {fileID: 919132148439623601}
   - {fileID: 7134737314713546247}
   - {fileID: 919132148333090464}
+  - {fileID: 5859090398138424639}
   EquippedWeapons: []
   WeaponAnimations:
-  - {fileID: 2542338206945125794}
-  - {fileID: 258894291}
-  - {fileID: 197228771}
   - {fileID: 2401336377461184391}
   - {fileID: 209988695885651521}
+  - {fileID: 258894291}
   - {fileID: 8053214693956031316}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 197228771}
+  - {fileID: 2542338206945125794}
   ScrollLeft: 113
   ScrollRight: 101
   EquippedIndex: 0
