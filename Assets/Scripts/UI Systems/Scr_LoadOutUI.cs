@@ -19,9 +19,7 @@ public class Scr_LoadOutUI : MonoBehaviour
             Destroy(gameObject);
         }
 
-        //Initalise Avaliable & Equipped Weapon Arrays
-        UI_AvaliableWeapons = GetComponentsInChildren<Scr_ScrollableButton>();
-        UI_EquippedWeapons = GetComponentsInChildren<scr_EquippedWeaponButton>();
+
     }
 
     private Scr_ScrollableButton[] UI_AvaliableWeapons;
@@ -131,6 +129,10 @@ public class Scr_LoadOutUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Initalise Avaliable & Equipped Weapon Arrays
+        UI_AvaliableWeapons = GetComponentsInChildren<Scr_ScrollableButton>();
+        UI_EquippedWeapons = GetComponentsInChildren<scr_EquippedWeaponButton>();
+
         InitaliseLoadout();
     }
 
