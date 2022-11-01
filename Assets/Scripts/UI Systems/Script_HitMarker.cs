@@ -19,6 +19,7 @@ public class Script_HitMarker : MonoBehaviour
     current = this;
  }
     float Timer = 1;
+    float HitDelay = 0.1f;
     float KillTimer = 1;
     [SerializeField] Image[] Cross;
     // Update is called once per frame
@@ -27,6 +28,7 @@ public class Script_HitMarker : MonoBehaviour
         if (Timer > 0)
         {
             Timer -= Time.deltaTime;
+            HitDelay -= Time.deltaTime;
 
             for (int i = 0; i < 4; i++)
             {
@@ -66,10 +68,15 @@ public class Script_HitMarker : MonoBehaviour
         {
             onHit();
         }
+        
+        if (HitDelay < 0)
+        {
+            AS.PlayOneShot(HitSound);
+        }
 
-        AS.PlayOneShot(HitSound);
         IsCritical = false;
         Timer = 1;
+        HitDelay = 0.1f;
     }
 
     public event Action onCritHit;
@@ -79,10 +86,15 @@ public class Script_HitMarker : MonoBehaviour
         {
             onCritHit();
         }
+            
+        if (HitDelay < 0)
+        {
+            AS.PlayOneShot(CritSound);
+        }
 
-        AS.PlayOneShot(CritSound);
         IsCritical = true;
         Timer = 1;
+        HitDelay = 0.1f;
     }
 
     public event Action onKillHit;
@@ -93,10 +105,15 @@ public class Script_HitMarker : MonoBehaviour
             onKillHit();
         }
 
-        AS.PlayOneShot(KillSound);
+        if (HitDelay < 0)
+        {
+            AS.PlayOneShot(KillSound);
+        }
+
         IsCritical = true;
         Timer = 1;
         KillTimer = 0.5f;
+        HitDelay = 0.1f;
     }
 
 }
