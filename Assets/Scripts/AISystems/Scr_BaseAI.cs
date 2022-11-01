@@ -40,9 +40,13 @@ public class Scr_BaseAI : MonoBehaviour, IDamageable
     [SerializeField] protected AudioSource AS;
     [SerializeField] protected Transform DamagePopupPos;
 
+    public delegate void healthOnKillDelegate(float _healAmount);
+    public event healthOnKillDelegate healthOnKillEvent;
+
     public void Start()
     {
         PlayerTransform = FindObjectOfType<Scr_PlayerMotor>().transform;
+        healthOnKillEvent += FindObjectOfType<Scr_PlayerHealth>().Heal;
     }
 
 
@@ -68,16 +72,12 @@ public class Scr_BaseAI : MonoBehaviour, IDamageable
         {
             case CustomCollider.DamageType.Critical:
                 m_Health -= _Damage * 2;
-                Scr_DamagePopupManager.Instance.DisplayDamagePopup((int)50.0f, DamagePopupPos);
-                //Scr_DamagePopupManager.Instance.CreateHealthOrb(this.gameObject.transform);
-                scr_GameManager.i.IncreaseTotalScore(50.0f);
-                Scr_StyleManager.i.IncreaseStylePoints(50.0f);
+                /*Scr_DamagePopupManager.Instance.DisplayDamagePopup((int)50.0f, DamagePopupPos);*/
+
                 break;
             case CustomCollider.DamageType.Normal:
                 m_Health -= _Damage;
-                Scr_DamagePopupManager.Instance.DisplayDamagePopup((int)10.0f, DamagePopupPos);
-                scr_GameManager.i.IncreaseTotalScore(10.0f);
-                Scr_StyleManager.i.IncreaseStylePoints(10.0f);
+                /*Scr_DamagePopupManager.Instance.DisplayDamagePopup((int)10.0f, DamagePopupPos);*/
             break;
         }
 
@@ -231,6 +231,8 @@ public class Scr_BaseAI : MonoBehaviour, IDamageable
         m_Ragdoll.ActivateRagdoll();
         m_Ragdoll.ApplyForce(Vector3.up * 10);
         scr_GameManager.i.IncreaseKillCount(); // Added by Ash
+
+        healthOnKillEvent?.Invoke(10);
     }
 
     protected float DeadTimer = 2;
