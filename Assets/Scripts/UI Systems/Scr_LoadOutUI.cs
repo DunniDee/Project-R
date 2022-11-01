@@ -19,9 +19,7 @@ public class Scr_LoadOutUI : MonoBehaviour
             Destroy(gameObject);
         }
 
-        //Initalise Avaliable & Equipped Weapon Arrays
-        UI_AvaliableWeapons = GetComponentsInChildren<Scr_ScrollableButton>();
-        UI_EquippedWeapons = GetComponentsInChildren<scr_EquippedWeaponButton>();
+
     }
 
     private Scr_ScrollableButton[] UI_AvaliableWeapons;
@@ -90,13 +88,6 @@ public class Scr_LoadOutUI : MonoBehaviour
     /// </summary>
     public void EquipWeapon()
     {
-/*        //Dont equip weapon that is already equipped
-        if (selectedButton.GetEquipIndex() == weaponToSwapIndex) return;
-
-
-        //Set the currently active weapon to false as its no longer equipped
-        script_WeaponSwap.Instance.EquippedWeapons[script_WeaponSwap.Instance.EquippedIndex].SetActive(false);
-*/
         script_WeaponSwap.Instance.EquippedWeapons[weaponToSwapIndex] = script_WeaponSwap.Instance.Weapons[selectedButton.GetEquipIndex()];
 
         script_WeaponSwap.Instance.EquippedWeapons[weaponToSwapIndex].SetActive(true);
@@ -138,8 +129,15 @@ public class Scr_LoadOutUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Initalise Avaliable & Equipped Weapon Arrays
+        UI_AvaliableWeapons = GetComponentsInChildren<Scr_ScrollableButton>();
+        UI_EquippedWeapons = GetComponentsInChildren<scr_EquippedWeaponButton>();
 
+        InitaliseLoadout();
+    }
 
+    public void InitaliseLoadout()
+    {
         //Set UI Elemements
         SetEquippedWeaponSlots();
         SetAvaliableWeapons();

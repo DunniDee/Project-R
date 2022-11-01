@@ -5,12 +5,20 @@ using UnityEngine;
 public class Scr_Melee : MonoBehaviour
 {
     [SerializeField] KeyCode MeleeKey;
+    private AudioSource m_audiosource;
+    [SerializeField] AudioClip m_audioClip;
     [SerializeField] Animator Anim;
     [SerializeField] script_WeaponSwap Weapons;
     [SerializeField] float MeeleTime = 1.2f;
+    public float Damage = 50;
     float MeeleTimer = 0;
     [SerializeField] bool IsAttacking;
     [SerializeField] Scr_CameraEffects CameraEffects;
+
+    [SerializeField] AudioClip[] MeeleSounds;
+    [SerializeField] AudioSource AS;
+
+    [SerializeField] Transform HitPoint;
 
     // Update is called once per frame
     void Update()
@@ -36,10 +44,7 @@ public class Scr_Melee : MonoBehaviour
 
     void MeleeAttack()
     {
-        //Expl.GetComponent<Scr_PAExplosion>().setRadius(ExplosionRadius);
-        //Expl.transform.position = transform.position;
-
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 5);
+        Collider[] hitColliders = Physics.OverlapSphere(HitPoint.position, 2.5f);
         List<Transform> TransfromList = new List<Transform>();
         foreach (var hitCollider in hitColliders)
         {
@@ -47,10 +52,15 @@ public class Scr_Melee : MonoBehaviour
             if (CustomCollider != null)
             {
                 if (!TransfromList.Contains(CustomCollider.transform.root))
-                {  
-                    CustomCollider.TakeDamage(75, CustomCollider.DamageType.Normal, -transform.forward);
+                {
+                    CustomCollider.TakeDamage(Damage, CustomCollider.DamageType.Normal, -transform.forward);
                     TransfromList.Add(CustomCollider.transform.root);
                 }
+            }
+            else if (hitCollider.CompareTag("Projectile"))
+            {
+                Destroy(hitCollider);
+
             }
 
             if (hitCollider.GetComponent<Script_InteractEvent>())
@@ -69,5 +79,7 @@ public class Scr_Melee : MonoBehaviour
         CameraEffects.RotateTo += new Vector3(0,90,-05);
         CameraEffects.ShakeTime += 0.5f;
         CameraEffects.ShakeAmplitude += 2;
+
+        AS.PlayOneShot(MeeleSounds[Random.Range(0,MeeleSounds.Length)]);
     }
 }

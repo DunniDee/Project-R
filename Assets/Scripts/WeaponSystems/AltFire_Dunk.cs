@@ -27,7 +27,7 @@ public class AltFire_Dunk : Scr_AltFireBase
         Motor.m_VerticalVelocity.y = JumpForce;
         Motor.MovePlayer(new Vector3(0, 0.25f,0));
 
-        Anim.SetTrigger("Dunk");
+        Anim.SetTrigger("altfire");
     }
     
     protected override void OnAbilityDurration()
