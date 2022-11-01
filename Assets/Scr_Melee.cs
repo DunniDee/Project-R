@@ -15,6 +15,9 @@ public class Scr_Melee : MonoBehaviour
     [SerializeField] bool IsAttacking;
     [SerializeField] Scr_CameraEffects CameraEffects;
 
+    [SerializeField] AudioClip[] MeeleSounds;
+    [SerializeField] AudioSource AS;
+
     // Update is called once per frame
     void Update()
     {
@@ -74,5 +77,7 @@ public class Scr_Melee : MonoBehaviour
         CameraEffects.RotateTo += new Vector3(0,90,-05);
         CameraEffects.ShakeTime += 0.5f;
         CameraEffects.ShakeAmplitude += 2;
+
+        AS.PlayOneShot(MeeleSounds[Random.Range(0,MeeleSounds.Length)]);
     }
 }
