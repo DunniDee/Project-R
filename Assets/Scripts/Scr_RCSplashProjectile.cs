@@ -79,6 +79,7 @@ public class Scr_RCSplashProjectile : Script_RCProjectile
         if (sqrDist < ExplosionRadius*ExplosionRadius)
         {
             Vector3 Dir = (transform.position - playerTransform.position).normalized;
+            Dir.y = -1;
             playerTransform.GetComponent<Scr_PlayerMotor>().ExplosionForce(-Dir * 10);
         }
 
