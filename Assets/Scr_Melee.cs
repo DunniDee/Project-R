@@ -44,7 +44,7 @@ public class Scr_Melee : MonoBehaviour
 
     void MeleeAttack()
     {
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 5);
+        Collider[] hitColliders = Physics.OverlapSphere(HitPoint.position, 2.5f);
         List<Transform> TransfromList = new List<Transform>();
         foreach (var hitCollider in hitColliders)
         {
