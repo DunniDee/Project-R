@@ -8,6 +8,7 @@ public class Scr_Melee : MonoBehaviour
     [SerializeField] Animator Anim;
     [SerializeField] script_WeaponSwap Weapons;
     [SerializeField] float MeeleTime = 1.2f;
+    public float Damage = 50;
     float MeeleTimer = 0;
     [SerializeField] bool IsAttacking;
     [SerializeField] Scr_CameraEffects CameraEffects;
@@ -47,10 +48,14 @@ public class Scr_Melee : MonoBehaviour
             if (CustomCollider != null)
             {
                 if (!TransfromList.Contains(CustomCollider.transform.root))
-                {  
-                    CustomCollider.TakeDamage(75, CustomCollider.DamageType.Normal, -transform.forward);
+                {
+                    CustomCollider.TakeDamage(Damage, CustomCollider.DamageType.Normal, -transform.forward);
                     TransfromList.Add(CustomCollider.transform.root);
                 }
+            }
+            else if (hitCollider.CompareTag("Projectile"))
+            {
+                Destroy(hitCollider);
             }
 
             if (hitCollider.GetComponent<Script_InteractEvent>())
