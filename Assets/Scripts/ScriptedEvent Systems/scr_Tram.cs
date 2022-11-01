@@ -122,9 +122,9 @@ public class scr_Tram : MonoBehaviour
         {
             //Stop along the X Axis
             case MoveAlignment.X:
-                Velocity = MoveDirection * (Speed);
+                Velocity = -MoveDirection * (Speed);
                 transform.position += Velocity * Time.deltaTime;
-                if (transform.position.x >= StopPosition.x)
+                if (transform.position.x <= StopPosition.x)
                 {
                     isMoving = false;
                     Velocity = Vector3.zero;
