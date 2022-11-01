@@ -5,6 +5,8 @@ using UnityEngine;
 public class Scr_Melee : MonoBehaviour
 {
     [SerializeField] KeyCode MeleeKey;
+    private AudioSource m_audiosource;
+    [SerializeField] AudioClip m_audioClip;
     [SerializeField] Animator Anim;
     [SerializeField] script_WeaponSwap Weapons;
     [SerializeField] float MeeleTime = 1.2f;
@@ -37,9 +39,6 @@ public class Scr_Melee : MonoBehaviour
 
     void MeleeAttack()
     {
-        //Expl.GetComponent<Scr_PAExplosion>().setRadius(ExplosionRadius);
-        //Expl.transform.position = transform.position;
-
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, 5);
         List<Transform> TransfromList = new List<Transform>();
         foreach (var hitCollider in hitColliders)
@@ -56,6 +55,7 @@ public class Scr_Melee : MonoBehaviour
             else if (hitCollider.CompareTag("Projectile"))
             {
                 Destroy(hitCollider);
+
             }
 
             if (hitCollider.GetComponent<Script_InteractEvent>())
