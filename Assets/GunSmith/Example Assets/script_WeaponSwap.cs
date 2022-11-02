@@ -176,6 +176,11 @@ public class script_WeaponSwap : MonoBehaviour
     {
         Debug.Log("Setting anim to " + _isActive);
         WeaponAnimations[EquippedIndex].SetBool("hide", _isActive);
+
+        if (_isActive)
+        {
+            WeaponAnimations[EquippedIndex].gameObject.GetComponent<Script_WeaponBase>().ShotTimer = 1;
+        }
     }
 }
 
