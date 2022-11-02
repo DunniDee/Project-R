@@ -46,12 +46,28 @@ public class Scr_MenuController: MonoBehaviour
 
     public void PlayRollOverAudio()
     {
-        audioSource.PlayOneShot(OnMouseRollOverAudio);
+        if (audioSource.isPlaying == false)
+        {
+            audioSource.PlayOneShot(OnMouseRollOverAudio);
+        }
+        else {
+            audioSource.Stop();
+            audioSource.PlayOneShot(OnMouseRollOverAudio);
+        }
+        
     }
 
     public void PlayClickAudio()
     {
-        audioSource.PlayOneShot(OnMouseClickAudio);
+        if (audioSource.isPlaying == false)
+        {
+            audioSource.PlayOneShot(OnMouseClickAudio);
+        }
+        else
+        {
+            audioSource.Stop();
+            audioSource.PlayOneShot(OnMouseClickAudio);
+        }
     }
 
     #region Getters & Setters
