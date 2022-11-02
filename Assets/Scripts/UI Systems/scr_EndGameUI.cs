@@ -11,7 +11,6 @@ public class scr_EndGameUI : MonoBehaviour
 
     [Header("EndGameUI Components")]
     //Buttons to Assign OnClick
-    public Button Loadout_Button;
     public Button NextLevel_Button;
     public Button Retry_Button;
     public Button MainMenu_Button;
@@ -190,7 +189,6 @@ public class scr_EndGameUI : MonoBehaviour
         Retry_Button.onClick.AddListener(delegate { Script_SceneManager.Instance.LoadCurrentScene();} );
         NextLevel_Button.onClick.AddListener(delegate { Script_SceneManager.Instance.LoadNextScene(); });
         MainMenu_Button.onClick.AddListener(delegate { Script_SceneManager.Instance.LoadScene("MenuLevelScene"); });
-        Loadout_Button.onClick.AddListener(delegate { Script_SceneManager.Instance.LoadScene("LoadoutScene"); });
     }
 
     //Called Everyframe
