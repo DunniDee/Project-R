@@ -66,12 +66,6 @@ public class Scr_Melee : MonoBehaviour
                     TransfromList.Add(CustomCollider.transform.root);
                     hasDoneDamage = true;
                 }
-                
-            }
-            else if (hitCollider.CompareTag("Projectile"))
-            {
-                Destroy(hitCollider);
-
             }
 
             if (hitCollider.GetComponent<Script_InteractEvent>())
