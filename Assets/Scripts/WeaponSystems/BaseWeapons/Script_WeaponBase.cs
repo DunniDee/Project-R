@@ -155,7 +155,7 @@ public abstract class Script_WeaponBase : MonoBehaviour
         //     m_ReloadTimer = ReloadTime;
         // }
 
-        if ((CurMagCount <= 0 && ShotTimer <= 0 || Input.GetKey(ReloadKey) && CurMagCount < MagCount) && !IsReloading )
+        if ((CurMagCount <= 0 && ShotTimer <= 0 || Input.GetKey(ReloadKey) && CurMagCount < MagCount && ShotTimer <= 0) && !IsReloading )
         {
             IsReloading = true;
             Anim.SetBool("isReloading",IsReloading);
