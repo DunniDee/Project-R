@@ -20,6 +20,8 @@ public class Scr_Melee : MonoBehaviour
 
     [SerializeField] Transform HitPoint;
 
+    bool meeleDoOnce = true;
+
     // Update is called once per frame
     void Update()
     {
@@ -28,7 +30,12 @@ public class Scr_Melee : MonoBehaviour
             MeeleTimer -= Time.deltaTime;
             IsAttacking = true;
             Anim.transform.localRotation = Quaternion.Euler(0,0,0);
-            Weapons.SetActiveAnim(true);
+
+            if (meeleDoOnce)
+            {
+                Weapons.SetActiveAnim(true);
+                meeleDoOnce = false;
+            }
         }
         else
         {
@@ -37,8 +44,13 @@ public class Scr_Melee : MonoBehaviour
                 MeleeAttack();
             }
             Anim.transform.localRotation = Quaternion.Euler(0,180,0);
-            Weapons.SetActiveAnim(false);
             IsAttacking = false;
+
+            if (!meeleDoOnce)
+            {
+                Weapons.SetActiveAnim(false);
+                meeleDoOnce = true;
+            }
         }
     }
 
