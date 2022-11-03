@@ -33,8 +33,8 @@ public class script_WeaponSwap : MonoBehaviour
     public GameObject[] Weapons;
      public List<GameObject> EquippedWeapons;
     [SerializeField] Animator[] WeaponAnimations;
-    [SerializeField] KeyCode ScrollLeft = KeyCode.Q;
-    [SerializeField] KeyCode ScrollRight = KeyCode.E;
+    [SerializeField] KeyCode weapon1_Input = KeyCode.Alpha1;
+    [SerializeField] KeyCode weapon2_Input = KeyCode.Alpha2;
 
     [SerializeField] public int EquippedIndex = 0;
     int m_LastIndex = 0;
@@ -109,10 +109,6 @@ public class script_WeaponSwap : MonoBehaviour
    
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Keypad5))
-        {
-            SaveEquipmentLoadout();    
-        }
 
         if (m_IsActive)
         {
@@ -128,7 +124,16 @@ public class script_WeaponSwap : MonoBehaviour
                 EquippedWeapons[EquippedIndex].SetActive(true);
             }
 
-            if (Input.GetKeyDown(ScrollRight))
+            if (Input.GetKeyDown(weapon1_Input))
+            {
+                EquippedIndex = 0;
+            }
+            else if (Input.GetKeyDown(weapon2_Input))
+            {
+                EquippedIndex = 1;
+            }
+
+            if (Input.mouseScrollDelta.y >= 1)
             {
                 EquippedIndex++;
                 if (EquippedIndex > EquippedWeapons.Count - 1)
@@ -136,13 +141,12 @@ public class script_WeaponSwap : MonoBehaviour
                     EquippedIndex = 0;
                 }
             }
-
-            if (Input.GetKeyDown(ScrollLeft))
+            else if (Input.mouseScrollDelta.y <= -1)
             {
-                EquippedIndex--;
-                if (EquippedIndex < 0)
+                EquippedIndex++;
+                if (EquippedIndex > EquippedWeapons.Count - 1)
                 {
-                    EquippedIndex = EquippedWeapons.Count - 1;
+                    EquippedIndex = 0;
                 }
             }
         }
