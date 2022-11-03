@@ -113,7 +113,7 @@ public class Script_SceneManager : MonoBehaviour
         if (!IsTransitioning)
         {
             LockTransition();
-            sceneToLoad = SceneManager.GetSceneByBuildIndex(SceneManager.GetActiveScene().buildIndex + 1).name;
+            sceneToLoad = SceneManager.GetSceneAt(SceneManager.GetActiveScene().buildIndex + 1).name;
             FadeDark();
             Invoke("TransitionScene", 1);
 

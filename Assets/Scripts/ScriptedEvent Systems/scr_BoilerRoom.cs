@@ -6,24 +6,21 @@ using UnityEngine.EventSystems;
 
 public class scr_BoilerRoom : MonoBehaviour
 {
-
     public UnityEvent OnRoomCompletedEvent;
-    [SerializeField] int ButtonsPressed = 0;
 
-    public void IncrementButton()
-    {
-        ButtonsPressed++;
-        if (ButtonsPressed >= 3)
-        {
-            //Do Thing
-            if (OnRoomCompletedEvent != null)
-            {
-                OnRoomCompletedEvent.Invoke();
+    public List<Transform> SpawnPosition;
 
-            }
-          
-        }
+    public float MaxTime = 60;
+    public float currentTime = 0;
+
+    public void SpawnEnemys()
+    { 
         
     }
-   
+
+
+    void Update()
+    {
+        
+    }
 }

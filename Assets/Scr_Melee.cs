@@ -44,8 +44,17 @@ public class Scr_Melee : MonoBehaviour
 
     void MeleeAttack()
     {
+        MeeleTimer = MeeleTime;
+        Anim.SetTrigger("melee");
+        CameraEffects.RotateTo += new Vector3(0, 90, -05);
+        CameraEffects.ShakeTime += 0.5f;
+        CameraEffects.ShakeAmplitude += 2;
+
+        AS.PlayOneShot(MeeleSounds[Random.Range(0, MeeleSounds.Length)]);
+        
         Collider[] hitColliders = Physics.OverlapSphere(HitPoint.position, 2.5f);
         List<Transform> TransfromList = new List<Transform>();
+        bool hasDoneDamage = false;
         foreach (var hitCollider in hitColliders)
         {
             var CustomCollider = hitCollider.gameObject.GetComponent<CustomCollider>();
@@ -55,12 +64,8 @@ public class Scr_Melee : MonoBehaviour
                 {
                     CustomCollider.TakeDamage(Damage, CustomCollider.DamageType.Normal, -transform.forward);
                     TransfromList.Add(CustomCollider.transform.root);
+                    hasDoneDamage = true;
                 }
-            }
-            else if (hitCollider.CompareTag("Projectile"))
-            {
-                Destroy(hitCollider);
-
             }
 
             if (hitCollider.GetComponent<Script_InteractEvent>())
@@ -71,15 +76,11 @@ public class Scr_Melee : MonoBehaviour
                     hitEvent.Interact();
                 }
             }
+
+            if (hasDoneDamage) { return; }
         }
 
 
-        MeeleTimer = MeeleTime;
-        Anim.SetTrigger("melee");
-        CameraEffects.RotateTo += new Vector3(0,90,-05);
-        CameraEffects.ShakeTime += 0.5f;
-        CameraEffects.ShakeAmplitude += 2;
-
-        AS.PlayOneShot(MeeleSounds[Random.Range(0,MeeleSounds.Length)]);
+      
     }
 }
