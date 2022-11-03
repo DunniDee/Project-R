@@ -7,6 +7,7 @@ public class Enemy_FlyingShooter : Enemy_Shooter
     [SerializeField] Vector3 LerpPos;
     [SerializeField] Transform Drone;
     [SerializeField] protected AudioSource DroneAS;
+    [SerializeField] ParticleSystem dronedeath;
     protected override void Strafe()
     {
         base.Strafe();
@@ -64,12 +65,12 @@ public class Enemy_FlyingShooter : Enemy_Shooter
         Drone.localRotation = Quaternion.Lerp(Drone.localRotation,Quaternion.Euler(Vector3.zero), Time.deltaTime * 5);
     }
 
-    protected virtual void DeadStart()
+    protected override void DeadStart()
     {
+        dronedeath.Play();
         Anim.enabled = false;
         m_Ragdoll.ActivateRagdoll();
-        m_Ragdoll.ApplyForce(Vector3.up * 10);
-
+        m_Ragdoll.ApplyForce(Vector3.up * 3);
         DroneAS.volume = 1;
         DroneAS.pitch = 1.25f;
     }
@@ -79,7 +80,7 @@ public class Enemy_FlyingShooter : Enemy_Shooter
         FadeAttackUI();
         DroneAS.volume = Mathf.Lerp(DroneAS.volume,0, Time.deltaTime  * 2);
         DroneAS.pitch = Mathf.Lerp(DroneAS.pitch,0.25f, Time.deltaTime * 2);
-
+        
         if (DeadTimer > 0)
         {
             DeadTimer -= Time.deltaTime;
