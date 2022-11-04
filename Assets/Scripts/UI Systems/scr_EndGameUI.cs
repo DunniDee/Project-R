@@ -52,12 +52,13 @@ public class scr_EndGameUI : MonoBehaviour
     /// <summary>
     /// Save the bestTimePlayed for this Scene
     /// </summary>
-    public void SavePlayerBestTime()
+    public void SavePlayerBestTime(char _bestTime)
     {
         //If the current time played is less than the previous best time. save the current time played.
         if (scr_GameManager.i.CurrentTimePlayed < PlayerPrefs.GetFloat(SceneManager.GetActiveScene().name + "_bestTime", 0))
         {
             PlayerPrefs.SetFloat(SceneManager.GetActiveScene().name + "_bestTime", scr_GameManager.i.CurrentTimePlayed);
+            PlayerPrefs.SetString(SceneManager.GetActiveScene().name + "_rank", _bestTime.ToString());
             NewBestTime_TextObject.SetActive(true);
         }
     }
@@ -154,29 +155,29 @@ public class scr_EndGameUI : MonoBehaviour
         {
             OverRank_TextMesh.text = "C";
             ScorePrompt_TextMesh.text = ScorePrompts[0];
-            PlayerPrefs.SetString(SceneManager.GetActiveScene().name + "_rank", "C");
+           
 
         }
         else if (CompletetionRank == 'B') // B rank
         {
             OverRank_TextMesh.text = "B";
             ScorePrompt_TextMesh.text = ScorePrompts[1];
-            PlayerPrefs.SetString(SceneManager.GetActiveScene().name + "_rank", "B");
+         
         }
         else if (CompletetionRank == 'A') // A rank
         {
             OverRank_TextMesh.text = "A";
             ScorePrompt_TextMesh.text = ScorePrompts[2];
-            PlayerPrefs.SetString(SceneManager.GetActiveScene().name + "_rank", "A");
+           
 
         }
         else if (CompletetionRank == 'S') // S rank
         {
             OverRank_TextMesh.text = "S";
             ScorePrompt_TextMesh.text = ScorePrompts[3];
-            PlayerPrefs.SetString(SceneManager.GetActiveScene().name + "_rank", "S");
+          
         }
-        SavePlayerBestTime();
+        SavePlayerBestTime(CompletetionRank);
     }
 
     /// <summary>
