@@ -14,6 +14,11 @@ public class Scr_MainMenu : MonoBehaviour
 
     public List<LevelUI_Element> LevelUIElements;
 
+    public void SetMouseSensitivity(float _MouseSense)
+    {
+        PlayerPrefs.SetFloat("MouseSensitivity", _MouseSense);
+
+    }
     public string GetMinutesSecondsText(string _LevelName)
     {
         float bestTime = PlayerPrefs.GetFloat(_LevelName+"_bestTime");
