@@ -18,6 +18,9 @@ public class scr_BoilerRoom : MonoBehaviour
     public float MaxTime = 60;
     public float currentTime = 0;
 
+    [SerializeField] float SpawnInterval = 2.5f;
+    float SpawnTimer = 0.0f;
+
     private int maxAmountEnemies = 5;
 
     [SerializeField] List<GameObject> AI_Prefabs;
@@ -25,6 +28,9 @@ public class scr_BoilerRoom : MonoBehaviour
     [SerializeField] List<GameObject> InstantiatedAI;
     [SerializeField] bool isArenaActive = false;
 
+    private int PressedButtons = 0 ;
+    [SerializeField] int MaxButtons = 3;
+    public void IncreaseButtonCount() { PressedButtons++; }
     public void Start()
     {
         
@@ -53,7 +59,14 @@ public class scr_BoilerRoom : MonoBehaviour
     }
     private void UpdateTimer()
     {
-         currentTime -= Time.deltaTime;
+        SpawnTimer -= Time.deltaTime;
+        if (SpawnTimer <= 0.0f)
+        {
+            SpawnAI();
+            SpawnTimer = SpawnInterval;
+        }
+        //Update Time Till Explosion UI
+        currentTime -= Time.deltaTime;
         Timer.text = "Time Till Explosion 00:" + currentTime.ToString("F0");
     }
     public void StartFinalEvent()
@@ -61,15 +74,15 @@ public class scr_BoilerRoom : MonoBehaviour
         ArenaCanvas.SetActive(true);
         UIAnimator.SetTrigger("FadeIn");
         StartCoroutine(SpawnAICoroutine());
+        SpawnTimer = SpawnInterval;
         isArenaActive = true;
         currentTime = MaxTime;
     }
 
     public void SpawnAI()
     {
-        int k = Random.Range(0, AI_Prefabs.Count);
-        int j = Random.Range(0, SpawnPosition.Count);
-        InstantiatedAI.Add(Instantiate(AI_Prefabs[k], SpawnPosition[j], false));
+       
+        Instantiate(AI_Prefabs[Random.Range(0, AI_Prefabs.Count)], SpawnPosition[Random.Range(0, SpawnPosition.Count)], false);
     }
     public void FinishFinalEvent()
     {
@@ -84,10 +97,6 @@ public class scr_BoilerRoom : MonoBehaviour
         {
             UpdateInstancedAI();
             UpdateTimer();
-            if (InstantiatedAI.Count < maxAmountEnemies)
-            {
-                SpawnAI();
-            }
 
             if (currentTime <= 0)
             {
