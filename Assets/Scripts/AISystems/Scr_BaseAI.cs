@@ -40,6 +40,8 @@ public class Scr_BaseAI : MonoBehaviour, IDamageable
     [SerializeField] protected AudioSource AS;
     [SerializeField] protected Transform DamagePopupPos;
 
+    [SerializeField] protected scr_DeathParticles DeathVFX;
+
     public delegate void healthOnKillDelegate(float _healAmount);
     public event healthOnKillDelegate healthOnKillEvent;
 
@@ -233,6 +235,8 @@ public class Scr_BaseAI : MonoBehaviour, IDamageable
         scr_GameManager.i.IncreaseKillCount(); // Added by Ash
 
         healthOnKillEvent?.Invoke(10);
+
+        DeathVFX.PlayParticles();
     }
 
     protected float DeadTimer = 2;
