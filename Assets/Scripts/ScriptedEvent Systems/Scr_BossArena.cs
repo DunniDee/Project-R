@@ -44,12 +44,11 @@ public class Scr_BossArena : MonoBehaviour
     {
         if (InstantiatedAI.Count > 0)
         {
-            int deathcount = 0;
             for (int i = 0; i < SpawnCount; i++)
             {
                 if (InstantiatedAI[i] == null)
                 {
-                    deathcount++;
+                    InstantiatedAI.RemoveAt(i);
                 }
             }
         }
