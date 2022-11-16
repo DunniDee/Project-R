@@ -21,4 +21,10 @@ public class Scr_ExplosionForce : MonoBehaviour
             hit.rigidbody.AddForce(-(transform.position - hit.transform.position) * ExplosionForce, ForceMode.Impulse);
         } 
     }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, ExplosionRadius);
+    }
 }

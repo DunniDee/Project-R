@@ -31,6 +31,16 @@ public class Scr_BossArena : MonoBehaviour
     float BossArenaCurrentTime = 0.0f;
     [SerializeField] float BossArenaMaxTime = 60.0f;
 
+    [SerializeField]
+    private int currentArmedBombs = 0;
+    public void IncreaseArmedBombs() {
+        int maxArmedBombs = 4; //Hard set balue from amount in level.
+        currentArmedBombs++;
+        if (currentArmedBombs == maxArmedBombs)
+        {
+            EnableBossFight();
+        }
+    }
 
     private string GetMinutesSecondsText(float FinishTime)
     {
