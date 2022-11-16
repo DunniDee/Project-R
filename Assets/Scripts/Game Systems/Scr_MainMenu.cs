@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 
@@ -12,12 +13,14 @@ public class Scr_MainMenu : MonoBehaviour
         public TMP_Text BestTime_TextMesh;
     }
 
+    public Slider SenseSlider;
+
     public List<LevelUI_Element> LevelUIElements;
 
-    public void SetMouseSensitivity(float _MouseSense)
+    public void SetMouseSensitivity()
     {
-        PlayerPrefs.SetFloat("MouseSensitivity", _MouseSense);
-
+        PlayerPrefs.SetFloat("MouseSensitivity", (SenseSlider.value));
+        Debug.Log (PlayerPrefs.GetFloat("MouseSensitivity", 25));
     }
     public string GetMinutesSecondsText(string _LevelName)
     {
@@ -55,10 +58,17 @@ public class Scr_MainMenu : MonoBehaviour
     {
         InitaliseLevelScores();
         Scr_MenuController.i.SetCursorActive(true);
+        GameObject.Find("Mouse Sensitivity").GetComponent<Slider>().value = 35;
+    }
+
+    private void Update() 
+    {
+       SenseSlider.value = 35;
     }
 
     private void Start()
     {
+        //GameObject.Find("Mouse Sensitivity").GetComponent<Slider>().value = 35;
     }
 
     public void Play(string _SceneToLoad)

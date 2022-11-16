@@ -30,11 +30,17 @@ public class Scr_PlayerLook : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        SenseX = PlayerPrefs.GetFloat("MouseSensitivity", 25);
+        SenseY = PlayerPrefs.GetFloat("MouseSensitivity", 25);
     }
 
     // Update is called once per frame
     void Update()
     {
+        SenseX = PlayerPrefs.GetFloat("MouseSensitivity", 25);
+        SenseY = PlayerPrefs.GetFloat("MouseSensitivity", 25);
+
         m_MouseX = Input.GetAxisRaw("Mouse X");
         m_MouseY = Input.GetAxisRaw("Mouse Y");
 
