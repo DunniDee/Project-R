@@ -133,8 +133,8 @@ public class Scr_Debugger : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        KillPlayer();
+       /* KillPlayer();
         ToggleNoClip();
-        NoClipUpdate();
+        NoClipUpdate();*/
     }
 }
