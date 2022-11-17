@@ -27,4 +27,11 @@ public class Scr_SenseSlider : MonoBehaviour
         Debug.Log("Sensitivity Value : " + m_Slider.value);
         SliderText.text = "Mouse Sensitivity : " + (m_Slider.value - 25);
     }
+
+    public void SetMouseSensitivity()
+    {
+        PlayerPrefs.SetFloat("MouseSensitivity", (m_Slider.value));
+        SliderText.text = "Mouse Sensitivity : " + (m_Slider.value - 25);
+        Debug.Log (PlayerPrefs.GetFloat("MouseSensitivity", 25));
+    }
 }
