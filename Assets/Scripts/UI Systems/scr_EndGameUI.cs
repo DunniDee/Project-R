@@ -54,12 +54,17 @@ public class scr_EndGameUI : MonoBehaviour
     /// </summary>
     public void SavePlayerBestTime(char _bestTime)
     {
+        Debug.Log("gwetuprhioq0uhipgewtr " + PlayerPrefs.GetFloat(SceneManager.GetActiveScene().name + "_bestTime", 0));
+
         //If the current time played is less than the previous best time. save the current time played.
-        if (scr_GameManager.i.CurrentTimePlayed < PlayerPrefs.GetFloat(SceneManager.GetActiveScene().name + "_bestTime", 0))
+        if (scr_GameManager.i.CurrentTimePlayed < PlayerPrefs.GetFloat(SceneManager.GetActiveScene().name + "_bestTime", 0) || PlayerPrefs.GetFloat(SceneManager.GetActiveScene().name + "_bestTime", 0) == 0)
         {
             PlayerPrefs.SetFloat(SceneManager.GetActiveScene().name + "_bestTime", scr_GameManager.i.CurrentTimePlayed);
             PlayerPrefs.SetString(SceneManager.GetActiveScene().name + "_rank", _bestTime.ToString());
+
             NewBestTime_TextObject.SetActive(true);
+            Debug.Log(SceneManager.GetActiveScene().name + "_bestTime : " + scr_GameManager.i.CurrentTimePlayed);
+            Debug.Log((SceneManager.GetActiveScene().name + "_rank : " + _bestTime.ToString()));
         }
     }
     
