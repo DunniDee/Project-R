@@ -62,33 +62,13 @@ public class scr_EndGameUI : MonoBehaviour
             NewBestTime_TextObject.SetActive(true);
         }
     }
+    
 
     public string GetMinutesSecondsText(float FinishTime)
     {
         float minutes = Mathf.RoundToInt(FinishTime / 60);
         float seconds = Mathf.RoundToInt(FinishTime % 60);
-
-        string minuteText = null;
-        string secondsText = null;
-
-        if (minutes < 10)
-        {
-            minuteText = "0" + minutes.ToString();
-        }
-        else
-        {
-            minuteText = Mathf.RoundToInt(minutes).ToString();
-        }
-
-        if (seconds < 10)
-        {
-            secondsText = "0" + Mathf.RoundToInt(seconds).ToString();
-        }
-        else
-        { 
-            secondsText = Mathf.RoundToInt(seconds).ToString();
-        }
-        string finaltext = (minuteText + ":" + secondsText);
+        string finaltext = string.Format("{0:00}:{1:00}", minutes,seconds);
         return finaltext;
     }
 
