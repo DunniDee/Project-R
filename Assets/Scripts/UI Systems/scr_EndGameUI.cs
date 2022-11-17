@@ -87,11 +87,17 @@ public class scr_EndGameUI : MonoBehaviour
         for (int i = 0; i < scr_GameManager.i.CurrentTimePlayed; i++)
         {
             completionTime++;
-            
+            if (completionTime >= 200)
+            {
+                CompletionTime_TextMesh.text = GetMinutesSecondsText(scr_GameManager.i.CurrentTimePlayed);
+                break;
+            }
+
             CompletionTime_TextMesh.text = GetMinutesSecondsText(completionTime);
             m_audioSource.pitch += 0.1f;
             m_audioSource.PlayOneShot(m_TickAudio);
-            yield return new WaitForSeconds(0.01f);
+           
+            yield return new WaitForSecondsRealtime(0.001f);
         }
         m_audioSource.pitch = 1;
         m_audioSource.PlayOneShot(m_TickFinish);
