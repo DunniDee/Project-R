@@ -27,18 +27,7 @@ public class Scr_MainMenu : MonoBehaviour
         float bestTime = PlayerPrefs.GetFloat(_LevelName+"_bestTime");
         float minutes = Mathf.RoundToInt(bestTime / 60);
         float seconds = Mathf.RoundToInt(bestTime % 60);
-
-        string minuteText = null;
-        string secondsText = null;
-        if (minutes < 10)
-        {
-            minuteText = "0" + minutes.ToString();
-        }
-        if (seconds < 10)
-        {
-            secondsText = "0" + Mathf.RoundToInt(seconds).ToString();
-        }
-        string finaltext = (minuteText + ":" + secondsText);
+        string finaltext = string.Format("{0:00}:{1:00}", minutes, seconds);
         return finaltext;
     }
     public void InitaliseLevelScores()

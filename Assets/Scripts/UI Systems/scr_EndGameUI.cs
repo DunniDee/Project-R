@@ -54,41 +54,26 @@ public class scr_EndGameUI : MonoBehaviour
     /// </summary>
     public void SavePlayerBestTime(char _bestTime)
     {
+        Debug.Log("gwetuprhioq0uhipgewtr " + PlayerPrefs.GetFloat(SceneManager.GetActiveScene().name + "_bestTime", 0));
+
         //If the current time played is less than the previous best time. save the current time played.
-        if (scr_GameManager.i.CurrentTimePlayed < PlayerPrefs.GetFloat(SceneManager.GetActiveScene().name + "_bestTime", 0))
+        if (scr_GameManager.i.CurrentTimePlayed < PlayerPrefs.GetFloat(SceneManager.GetActiveScene().name + "_bestTime", 0) || PlayerPrefs.GetFloat(SceneManager.GetActiveScene().name + "_bestTime", 0) == 0)
         {
             PlayerPrefs.SetFloat(SceneManager.GetActiveScene().name + "_bestTime", scr_GameManager.i.CurrentTimePlayed);
             PlayerPrefs.SetString(SceneManager.GetActiveScene().name + "_rank", _bestTime.ToString());
+
             NewBestTime_TextObject.SetActive(true);
+            Debug.Log(SceneManager.GetActiveScene().name + "_bestTime : " + scr_GameManager.i.CurrentTimePlayed);
+            Debug.Log((SceneManager.GetActiveScene().name + "_rank : " + _bestTime.ToString()));
         }
     }
+    
 
     public string GetMinutesSecondsText(float FinishTime)
     {
         float minutes = Mathf.RoundToInt(FinishTime / 60);
         float seconds = Mathf.RoundToInt(FinishTime % 60);
-
-        string minuteText = null;
-        string secondsText = null;
-
-        if (minutes < 10)
-        {
-            minuteText = "0" + minutes.ToString();
-        }
-        else
-        {
-            minuteText = Mathf.RoundToInt(minutes).ToString();
-        }
-
-        if (seconds < 10)
-        {
-            secondsText = "0" + Mathf.RoundToInt(seconds).ToString();
-        }
-        else
-        { 
-            secondsText = Mathf.RoundToInt(seconds).ToString();
-        }
-        string finaltext = (minuteText + ":" + secondsText);
+        string finaltext = string.Format("{0:00}:{1:00}", minutes,seconds);
         return finaltext;
     }
 
@@ -102,11 +87,17 @@ public class scr_EndGameUI : MonoBehaviour
         for (int i = 0; i < scr_GameManager.i.CurrentTimePlayed; i++)
         {
             completionTime++;
-            
+            if (completionTime >= 200)
+            {
+                CompletionTime_TextMesh.text = GetMinutesSecondsText(scr_GameManager.i.CurrentTimePlayed);
+                break;
+            }
+
             CompletionTime_TextMesh.text = GetMinutesSecondsText(completionTime);
             m_audioSource.pitch += 0.1f;
             m_audioSource.PlayOneShot(m_TickAudio);
-            yield return new WaitForSeconds(0.01f);
+           
+            yield return new WaitForSecondsRealtime(0.001f);
         }
         m_audioSource.pitch = 1;
         m_audioSource.PlayOneShot(m_TickFinish);
